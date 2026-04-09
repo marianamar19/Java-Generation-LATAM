@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mi Carrito — HERA Perfumes & Joyería</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{--red:#E1222B;--cream:#F9F9F9;--black:#0F0F0F;--lgray:#E6E6E6;--dgray:#2E2E2E;--sans:'Instrument Sans',sans-serif;--serif:'Cormorant Garamond',serif;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:clip;}
+  body{font-family:var(--sans);background:var(--cream);color:var(--black);overflow-x:clip;}
+  ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--black);}::-webkit-scrollbar-thumb{background:var(--red);}
+  .site-wrap{max-width:1440px;margin:0 auto;overflow-x:clip;position:relative;}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:100;background:rgba(249,249,249,.92);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(249,249,249,.35);display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;width:100%;}
+  .nav-links{display:flex;gap:32px;list-style:none;align-items:center;height:64px;}
+  .nav-links li{display:flex;align-items:center;height:100%;}
+  .nav-links a{text-decoration:none;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dgray);transition:color .2s;display:flex;align-items:center;height:100%;}
+  .nav-links a:hover{color:var(--red);}
+  .nav-logo{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;text-decoration:none;z-index:101;}
+  #logo-placeholder{height:36px;min-width:130px;border:1.5px dashed rgba(15,15,15,.18);display:flex;align-items:center;justify-content:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(15,15,15,.3);padding:0 16px;background:var(--cream);}
+  .nav-icons{display:flex;gap:22px;align-items:center;}
+  .nav-icons button,.nav-icons a{background:none;border:none;cursor:pointer;color:var(--black);text-decoration:none;transition:color .2s;}
+  .nav-icons button:hover,.nav-icons a:hover{color:var(--red);}
+  .nav-hamburger{display:none;background:none;border:none;cursor:pointer;color:var(--black);padding:6px;flex-direction:column;gap:5px;align-items:center;justify-content:center;z-index:102;}
+  .nav-hamburger span{display:block;width:22px;height:2px;background:currentColor;transition:transform .25s ease,opacity .25s ease;}
+
+  /* CURSOR */
+  .cursor{width:8px;height:8px;background:var(--red);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transition:transform .15s;transform:translate(-50%,-50%);}
+  .cursor-ring{width:36px;height:36px;border:1px solid rgba(225,34,43,.3);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transition:transform .08s linear,width .25s,height .25s;transform:translate(-50%,-50%);}
+
+  /* PAGE HEADER */
+  .page-header{padding:48px 80px 36px;display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--lgray);}
+  .checkout-eyebrow{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--red);margin-bottom:20px;}
+  .checkout-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--red);flex-shrink:0;}
+  .page-title{line-height:.92;margin-bottom:8px;}
+  .page-title .t-sans{font-family:var(--sans);font-size:clamp(36px,5vw,56px);font-weight:700;letter-spacing:-.02em;display:inline;}
+  .page-title .t-serif{font-family:var(--serif);font-size:clamp(36px,5vw,56px);font-weight:300;font-style:italic;color:rgba(15,15,15,.30);display:inline;}
+  .page-subtitle{font-family:var(--serif);font-size:17px;font-weight:400;color:rgba(15,15,15,.70);line-height:1.65;max-width:440px;}
+
+  /* STEPS */
+  .step-indicator{display:flex;align-items:center;gap:0;margin-bottom:12px;}
+  .step{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(15,15,15,.35);transition:color .3s;cursor:pointer;}
+  .step.active{color:var(--black);}.step.done{color:var(--red);}
+  .step-num{width:28px;height:28px;border:1px solid var(--lgray);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:rgba(15,15,15,.35);transition:background .3s,border-color .3s,color .3s;}
+  .step.active .step-num{background:var(--red);border-color:var(--red);color:#fff;}
+  .step.done .step-num{background:var(--red);border-color:var(--red);color:#fff;}
+  .step-line{width:40px;height:1px;background:var(--lgray);margin:0 4px;}
+
+  /* LAYOUT */
+  .checkout-layout{display:grid;grid-template-columns:1fr 420px;gap:0;min-height:60vh;}
+  .checkout-form-area{padding:52px 64px 80px 80px;border-right:1px solid var(--lgray);}
+  .step-panel{display:none;animation:fadeStepIn .45s ease forwards;}
+  .step-panel.active{display:block;}
+  @keyframes fadeStepIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  .form-section-title{font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--black);margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid var(--lgray);display:flex;align-items:center;gap:12px;}
+  .section-num{width:24px;height:24px;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+  .form-row.single{grid-template-columns:1fr;}.form-row.triple{grid-template-columns:2fr 1fr 1fr;}
+  .form-row:last-child{margin-bottom:0;}
+  .form-group{display:flex;flex-direction:column;}
+  .form-label{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(15,15,15,.45);margin-bottom:8px;}
+
+  /* INPUTS */
+  .input-wrap{position:relative;}
+  .form-input{background:transparent;border:none;border-bottom:1px solid var(--lgray);padding:10px 0;font-family:var(--sans);font-size:14px;color:var(--black);outline:none;transition:border-color .2s;width:100%;border-radius:0;-webkit-appearance:none;}
+  .form-input::placeholder{color:rgba(15,15,15,.28);font-size:13px;}
+  .form-input:focus{border-bottom-color:var(--black);}
+  .form-input.error{border-bottom-color:var(--red)!important;}
+  .input-line{position:absolute;bottom:0;left:0;width:100%;height:1.5px;background:var(--black);transform:scaleX(0);transform-origin:left;transition:transform .25s ease;}
+  .form-input:focus~.input-line{transform:scaleX(1);}
+  .form-input.error~.input-line{background:var(--red);transform:scaleX(1);}
+  .form-err{font-size:11px;color:var(--red);margin-top:5px;display:none;}.form-err.show{display:block;}
+
+  /* CUSTOM SELECT */
+  .custom-select{position:relative;width:100%;}
+  .custom-select-trigger{background:transparent;border:none;border-bottom:1px solid var(--lgray);padding:10px 24px 10px 0;font-family:var(--sans);font-size:14px;color:var(--black);cursor:pointer;width:100%;text-align:left;transition:border-color .2s;display:flex;align-items:center;justify-content:space-between;border-radius:0;}
+  .custom-select-trigger.placeholder{color:rgba(15,15,15,.28);}
+  .custom-select-trigger.error{border-bottom-color:var(--red)!important;}
+  .custom-select-trigger:focus{border-bottom-color:var(--black);outline:none;}
+  .custom-select-trigger svg{position:absolute;right:0;top:50%;transform:translateY(-50%);transition:transform .2s;color:rgba(15,15,15,.4);}
+  .custom-select.open .custom-select-trigger svg{transform:translateY(-50%) rotate(180deg);}
+  .custom-select-dropdown{position:absolute;top:calc(100% + 2px);left:0;right:0;background:#fff;border:1px solid var(--lgray);max-height:240px;overflow-y:auto;z-index:50;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,transform .2s,visibility .2s;}
+  .custom-select.open .custom-select-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  .custom-select-dropdown::-webkit-scrollbar{width:3px;}.custom-select-dropdown::-webkit-scrollbar-track{background:var(--lgray);}.custom-select-dropdown::-webkit-scrollbar-thumb{background:rgba(15,15,15,.25);}
+  .custom-select-option{padding:11px 16px;font-family:var(--sans);font-size:13px;color:var(--dgray);cursor:pointer;transition:background .15s,color .15s;letter-spacing:.02em;}
+  .custom-select-option:hover{background:rgba(225,34,43,.04);color:var(--red);}
+  .custom-select-option.selected{background:rgba(15,15,15,.04);color:var(--black);font-weight:600;}
+
+  /* NAV BUTTONS */
+  .step-nav{display:flex;gap:12px;margin-top:36px;}
+  .btn-continue{background:var(--red);color:#fff;border:none;padding:16px 36px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;border-radius:0;transition:background .2s,transform .15s;}
+  .btn-continue:hover{background:#c41c24;transform:translateY(-1px);}
+  .btn-back-step{background:transparent;color:rgba(15,15,15,.4);border:1px solid var(--lgray);padding:16px 28px;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:0;transition:border-color .2s,color .2s;}
+  .btn-back-step:hover{border-color:var(--black);color:var(--black);}
+
+/* MOBILE NAV */
+  .nav-mobile-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.5); z-index: 150; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s, visibility .3s; }
+  .nav-mobile-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .nav-mobile-panel { position: fixed; top: 0; left: 0; bottom: 0; width: min(300px, 85vw); background: var(--cream); z-index: 160; transform: translateX(-100%); transition: transform .35s cubic-bezier(.4,0,.2,1); overflow-y: auto; overflow-x: hidden; pointer-events: none; }
+  .nav-mobile-panel.open { transform: translateX(0); pointer-events: auto; }
+  .nav-mobile-header { padding: 16px 20px; border-bottom: 1px solid var(--lgray); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .nav-mobile-close { background: none; border: none; cursor: pointer; color: var(--dgray); padding: 4px; }
+  .nav-mobile-links { padding: 8px 0; }
+  .nav-mobile-link { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); cursor: pointer; transition: color .2s; }
+  .nav-mobile-link:hover, .nav-mobile-link.active { color: var(--red); }
+  .nav-mobile-link svg { transition: transform .2s; }
+  .nav-mobile-link.active svg { transform: rotate(180deg); }
+  .nav-mobile-sub { max-height: 0; overflow: hidden; transition: max-height .3s ease; background: rgba(15,15,15,.02); }
+  .nav-mobile-sub.open { max-height: 500px; }
+  .nav-mobile-sub-label { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.28); padding: 12px 32px 4px; }
+  .nav-mobile-sub a { display: flex; align-items: center; gap: 8px; padding: 12px 32px; font-size: 12px; font-weight: 500; color: var(--dgray); text-decoration: none; border-bottom: 1px solid rgba(15,15,15,.05); transition: color .2s; letter-spacing: .06em; }
+  .nav-mobile-sub a::before { content: ''; width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: .4; flex-shrink: 0; }
+  .nav-mobile-sub a:hover { color: var(--red); }
+
+  /* SEARCH */
+  .search-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.7); z-index: 1000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .25s, visibility .25s; }
+  .search-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .search-box { position: absolute; top: 0; left: 0; right: 0; background: var(--cream); padding: 20px 24px 24px; box-shadow: 0 8px 40px rgba(15,15,15,.2); transform: translateY(-100%); transition: transform .3s cubic-bezier(.4,0,.2,1); }
+  .search-overlay.open .search-box { transform: translateY(0); }
+  .search-input-row { display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--black); padding-bottom: 12px; margin-bottom: 16px; }
+  .search-input-row svg { color: rgba(15,15,15,.4); flex-shrink: 0; }
+  #search-input { flex: 1; border: none; background: transparent; font-family: var(--sans); font-size: 18px; font-weight: 500; color: var(--black); outline: none; border-radius: 0; }
+  #search-input::placeholder { color: rgba(15,15,15,.35); }
+  #search-close-btn { background: none; border: none; cursor: pointer; color: rgba(15,15,15,.5); padding: 4px; flex-shrink: 0; transition: color .2s; }
+  #search-close-btn:hover { color: var(--red); }
+  #search-results { max-height: 60vh; overflow-y: auto; }
+  .search-hint { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.35); padding: 8px 0; }
+
+  /* SHIPPING */
+  .shipping-label{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(15,15,15,.45);margin-top:32px;margin-bottom:16px;}
+  .shipping-options{display:flex;flex-direction:column;gap:0;}
+  .shipping-option{display:flex;align-items:center;gap:16px;padding:18px 20px;border:1px solid var(--lgray);margin-bottom:-1px;cursor:pointer;transition:background .2s,border-color .2s;}
+  .shipping-option:hover{border-color:rgba(15,15,15,.25);}
+  .shipping-option.selected{background:rgba(15,15,15,.03);border-color:var(--black);z-index:1;position:relative;}
+  .ship-radio{width:18px;height:18px;border:1.5px solid var(--lgray);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .2s;}
+  .shipping-option.selected .ship-radio{border-color:var(--red);}
+  .ship-dot{width:8px;height:8px;border-radius:50%;background:var(--red);display:none;}
+  .shipping-option.selected .ship-dot{display:block;}
+  .shipping-details{flex:1;}.shipping-name{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;}
+  .shipping-desc{font-size:11px;color:rgba(15,15,15,.45);margin-top:2px;}
+  .shipping-price{font-size:13px;font-weight:700;flex-shrink:0;}.shipping-price.free-tag{color:#2e7d32;}
+
+  /* SKYDROPX — ESTADO DE CARGA */
+  .carriers-loading{display:none;flex-direction:column;gap:0;}
+  .carriers-loading.active{display:flex;}
+  .carrier-skeleton{display:flex;align-items:center;gap:16px;padding:18px 20px;border:1px solid var(--lgray);margin-bottom:-1px;}
+  .skel-circle{width:18px;height:18px;border-radius:50%;background:var(--lgray);animation:skelPulse 1.2s ease-in-out infinite;flex-shrink:0;}
+  .skel-lines{flex:1;display:flex;flex-direction:column;gap:6px;}
+  .skel-line{height:10px;background:var(--lgray);animation:skelPulse 1.2s ease-in-out infinite;}
+  .skel-line.short{width:55%;}
+  .skel-line.narrow{width:35%;animation-delay:.15s;}
+  .skel-price{width:52px;height:13px;background:var(--lgray);animation:skelPulse 1.2s ease-in-out infinite;flex-shrink:0;}
+  @keyframes skelPulse{0%,100%{opacity:1}50%{opacity:.45}}
+  /* SKYDROPX — NOTA DE COSTO */
+  .shipping-cost-note{display:none;margin-top:12px;padding:12px 16px;border-left:2px solid var(--red);background:rgba(225,34,43,.04);}
+  .shipping-cost-note.active{display:flex;align-items:flex-start;gap:10px;}
+  .shipping-cost-note svg{flex-shrink:0;margin-top:1px;color:var(--red);}
+  .shipping-cost-note p{font-size:11px;line-height:1.6;color:rgba(15,15,15,.55);letter-spacing:.01em;}
+  .shipping-cost-note strong{color:var(--black);font-weight:700;}
+  /* SKYDROPX — ERROR / SIN COBERTURA */
+  .carriers-error{display:none;padding:20px;border:1px solid var(--lgray);text-align:center;}
+  .carriers-error.active{display:block;}
+  .carriers-error p{font-size:12px;color:rgba(15,15,15,.45);letter-spacing:.04em;}
+  .carriers-error a{color:var(--red);text-decoration:none;font-weight:600;}
+  /* SKYDROPX — CP HINT */
+  .cp-hint{font-size:11px;color:rgba(15,15,15,.35);margin-top:6px;letter-spacing:.04em;min-height:16px;transition:color .2s;}
+  .cp-hint.searching{color:var(--red);}
+
+  /* PAYMENT */
+  .payment-methods{display:flex;flex-direction:column;gap:0;}
+  .payment-option{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border:1px solid var(--lgray);margin-bottom:-1px;cursor:pointer;transition:background .2s,border-color .2s;}
+  .payment-option:hover{border-color:rgba(15,15,15,.25);}
+  .payment-option.selected{background:rgba(15,15,15,.03);border-color:var(--black);z-index:1;position:relative;}
+  .payment-option-left{display:flex;align-items:center;gap:14px;}
+  .pay-radio{width:18px;height:18px;border:1.5px solid var(--lgray);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:border-color .2s;flex-shrink:0;}
+  .pay-dot{width:8px;height:8px;border-radius:50%;background:var(--red);display:none;}
+  .payment-option.selected .pay-radio{border-color:var(--red);}
+  .payment-option.selected .pay-dot{display:block;}
+  .payment-label{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--black);}
+  .payment-logo{height:24px;display:flex;align-items:center;gap:8px;}
+  .card-icons{display:flex;gap:8px;align-items:center;margin-left:auto;}
+  .card-icon{width:40px;height:26px;border:1px solid var(--lgray);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(15,15,15,.35);}
+  .card-icon.visa{color:#1434CB;font-size:11px;font-weight:800;}
+  .card-icon.mc{background:linear-gradient(90deg,#EB001B 40%,#F79E1B 60%);border:none;}
+
+  /* Payment detail panels */
+  .pay-detail-panel{border:1px solid var(--lgray);border-top:none;padding:24px 20px;background:rgba(15,15,15,.015);display:none;}
+  .pay-detail-panel.show{display:block;}
+  .pay-detail-panel .form-row{margin-bottom:0;}
+
+  /* SUMMARY */
+  .order-summary{padding:52px 48px 52px;background:var(--cream);position:sticky;top:64px;align-self:start;}
+  .summary-title{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--black);margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;}
+  .summary-count{font-size:11px;font-weight:600;letter-spacing:.1em;color:rgba(15,15,15,.4);}
+  .summary-items{display:flex;flex-direction:column;gap:0;margin-bottom:24px;}
+  .summary-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--lgray);align-items:flex-start;}
+  .summary-item:first-child{border-top:1px solid var(--lgray);}
+  .summary-item-img{width:64px;height:64px;flex-shrink:0;background:var(--lgray);border:1px solid rgba(15,15,15,.08);display:flex;align-items:center;justify-content:center;position:relative;}
+  .item-qty-badge{position:absolute;top:-8px;right:-8px;width:20px;height:20px;background:var(--red);color:#fff;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+  .summary-item-info{flex:1;min-width:0;}
+  .summary-item-brand{font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(15,15,15,.38);margin-bottom:3px;}
+  .summary-item-name{font-family:var(--serif);font-size:15px;font-weight:300;font-style:italic;color:var(--black);line-height:1.3;margin-bottom:6px;}
+  .summary-item-unit{font-size:11px;color:rgba(15,15,15,.38);}
+  .summary-item-actions{display:flex;align-items:center;gap:0;margin-top:8px;}
+  .summary-qty-btn{width:26px;height:26px;border:1px solid var(--lgray);background:transparent;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--dgray);cursor:pointer;transition:border-color .2s,color .2s;font-family:var(--sans);}
+  .summary-qty-btn:hover{border-color:var(--black);color:var(--black);}
+  .summary-qty-val{width:32px;height:26px;border-top:1px solid var(--lgray);border-bottom:1px solid var(--lgray);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--black);}
+  .summary-remove{background:none;border:none;color:rgba(15,15,15,.25);font-size:11px;font-family:var(--sans);cursor:pointer;margin-left:10px;transition:color .2s;padding:2px 0;letter-spacing:.04em;}
+  .summary-remove:hover{color:var(--red);}
+  .summary-item-right{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;align-self:stretch;flex-shrink:0;}
+  .summary-item-total{font-size:13px;font-weight:700;color:var(--black);white-space:nowrap;}
+  .promo-row{display:flex;gap:0;margin-bottom:24px;}
+  .promo-input{flex:1;background:transparent;border:1px solid var(--lgray);border-right:none;padding:12px 14px;font-family:var(--sans);font-size:12px;color:var(--black);outline:none;transition:border-color .2s;letter-spacing:.04em;border-radius:0;}
+  .promo-input::placeholder{color:rgba(15,15,15,.3);}.promo-input:focus{border-color:var(--black);}
+  .promo-btn{background:var(--black);color:#fff;border:none;padding:12px 18px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:background .2s;border-radius:0;}.promo-btn:hover{background:var(--red);}
+  .summary-totals{border-top:1px solid var(--lgray);padding-top:20px;display:flex;flex-direction:column;gap:12px;}
+  .total-row{display:flex;justify-content:space-between;align-items:center;}
+  .total-label{font-size:12px;font-weight:600;letter-spacing:.08em;color:rgba(15,15,15,.55);}
+  .total-value{font-size:13px;font-weight:700;color:var(--black);}
+  .total-value.discount{color:var(--red);}.total-value.free{color:#2e7d32;}
+  .grand-total-row{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:2px solid var(--black);margin-top:4px;}
+  .grand-label{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--black);}
+  .grand-value{font-size:22px;font-weight:700;letter-spacing:-.01em;color:var(--black);}
+  .shipping-notice{margin-top:16px;padding:12px 14px;background:rgba(46,125,50,.06);border-left:2px solid #2e7d32;display:flex;align-items:center;gap:10px;}
+  .shipping-notice span{font-size:11px;font-weight:600;letter-spacing:.06em;color:#2e7d32;}
+
+  /* PAY BUTTON — disabled state = black, active = red */
+  .pay-btn{width:100%;background:var(--dgray);color:rgba(255,255,255,.5);border:none;padding:18px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:not-allowed;transition:background .3s,color .3s,transform .15s;border-radius:0;display:flex;align-items:center;justify-content:center;gap:12px;margin-top:20px;}
+  .pay-btn.ready{background:var(--red);color:#fff;cursor:pointer;}
+  .pay-btn.ready:hover{background:#c41c24;transform:translateY(-1px);}
+  .pay-btn:disabled{opacity:.7;cursor:not-allowed;transform:none;}
+  .pay-btn svg{flex-shrink:0;opacity:.5;transition:opacity .3s;}.pay-btn.ready svg{opacity:1;}
+  .pay-security{margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:11px;color:rgba(15,15,15,.4);letter-spacing:.06em;}
+  .summary-disclaimer{font-size:11px;color:rgba(15,15,15,.35);line-height:1.6;margin-top:14px;text-align:center;}
+  .summary-disclaimer a{color:rgba(15,15,15,.35);text-decoration:underline;transition:color .2s;}.summary-disclaimer a:hover{color:var(--red);}
+
+  /* EMPTY */
+  .checkout-empty{display:none;flex-direction:column;align-items:center;justify-content:center;padding:100px 40px;text-align:center;min-height:50vh;}
+  .checkout-empty svg{opacity:.15;margin-bottom:24px;}
+  .checkout-empty-title{font-family:var(--serif);font-size:24px;font-weight:300;font-style:italic;color:rgba(15,15,15,.4);margin-bottom:8px;}
+  .checkout-empty-text{font-size:13px;color:rgba(15,15,15,.35);margin-bottom:32px;}
+  .checkout-empty .btn-back{background:var(--black);color:#fff;border:none;padding:16px 36px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;border-radius:0;transition:background .2s;}
+  .checkout-empty .btn-back:hover{background:var(--red);}
+
+  /* FOOTER */
+  .footer-min{background:var(--black);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid rgba(249,249,249,.06);}
+  .footer-min-copy{font-size:11px;color:rgba(249,249,249,.2);}
+  .footer-min-links{display:flex;gap:24px;}
+  .footer-min-links a{font-size:11px;color:rgba(249,249,249,.25);text-decoration:none;letter-spacing:.06em;transition:color .2s;}
+  .footer-min-links a:hover{color:rgba(249,249,249,.7);}
+
+  /* SUCCESS */
+  .checkout-success-overlay{position:fixed;inset:0;background:rgba(12,9,7,.92);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s;}
+  .checkout-success-overlay.show{opacity:1;visibility:visible;}
+  .checkout-success-box{text-align:center;padding:60px 48px;border:1px solid rgba(249,249,249,.1);max-width:420px;width:90%;display:flex;flex-direction:column;align-items:center;}
+  .checkout-success-icon{width:52px;height:52px;border:1px solid rgba(249,249,249,.18);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;}
+  .checkout-success-eyebrow{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:16px;}
+  .checkout-success-msg{font-family:var(--serif);font-size:30px;font-weight:300;font-style:italic;color:rgba(249,249,249,.6);line-height:1.3;margin-bottom:20px;}
+  .checkout-success-order{font-size:11px;font-weight:600;letter-spacing:.12em;color:rgba(249,249,249,.3);margin-bottom:6px;text-transform:uppercase;}
+  .checkout-success-order-num{font-size:16px;font-weight:700;letter-spacing:.06em;color:rgba(249,249,249,.55);margin-bottom:24px;}
+  .checkout-success-next{font-size:12px;color:rgba(249,249,249,.3);line-height:1.7;max-width:300px;}
+  .checkout-success-link{margin-top:28px;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(249,249,249,.35);text-decoration:none;border-bottom:1px solid rgba(249,249,249,.15);padding-bottom:2px;transition:color .2s;display:inline-block;}
+  .checkout-success-link:hover{color:rgba(249,249,249,.8);}
+  .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:var(--black);color:var(--cream);padding:14px 28px;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.1em;z-index:9999;opacity:0;transition:opacity .3s;border-left:3px solid var(--red);}
+  .toast.err{border-left-color:var(--lgray);background:var(--dgray);}.toast.show{opacity:1;}
+
+  /* RESPONSIVE */
+  @media(max-width:1100px){.checkout-layout{grid-template-columns:1fr 360px;}.checkout-form-area{padding:40px 40px 60px 40px;}.order-summary{padding:40px 32px 40px;}.page-header{padding:40px 40px 28px;}nav{padding:0 24px;}}
+  @media(max-width:900px){.step-indicator{display:none;}.checkout-layout{grid-template-columns:1fr;}.checkout-form-area{padding:32px 20px 48px;border-right:none;border-bottom:1px solid var(--lgray);}.order-summary{position:static;padding:32px 20px 40px;}.page-header{padding:28px 20px 20px;flex-direction:column;align-items:flex-start;gap:16px;}.form-row.triple{grid-template-columns:1fr 1fr;}}
+  @media(max-width:600px){.form-row{grid-template-columns:1fr;}.form-row.triple{grid-template-columns:1fr;}.page-title .t-sans,.page-title .t-serif{font-size:clamp(30px,8vw,40px);}.nav-links{display:none!important;}.nav-hamburger{display:flex;}#logo-placeholder{min-width:88px;font-size:10px;padding:0 10px;height:30px;}.nav-icons{gap:14px;}nav{padding:0 16px;height:56px;background:rgba(249,249,249,.98);backdrop-filter:none;}}
+  @media(max-width:768px){.cursor,.cursor-ring{display:none;}.footer-min{padding:16px 20px;flex-direction:column;align-items:flex-start;gap:10px;}.footer-min-links{gap:16px;flex-wrap:wrap;}.checkout-success-box{padding:48px 28px;}.checkout-success-msg{font-size:24px;}}
+  button,a,select,.shipping-option,.payment-option,.custom-select-trigger,.custom-select-option{cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div><div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Mobile overlays — FUERA del site-wrap (position:fixed) -->
+<div class="nav-mobile-overlay" id="navMobileOverlay"></div>
+<div class="nav-mobile-panel" id="navMobilePanel">
+  <div class="nav-mobile-header">
+    <div style="width:32px;"></div>
+    <div style="flex:1;display:flex;justify-content:center;">
+      <div style="height:32px;min-width:110px;border:1.5px dashed rgba(15,15,15,.18);display:flex;align-items:center;justify-content:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(15,15,15,.3);padding:0 14px;background:var(--cream);">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg>
+        Tu logo aquí
+      </div>
+    </div>
+    <button class="nav-mobile-close" id="navMobileClose">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="nav-mobile-links">
+    <a href="index.html" class="nav-mobile-link">Inicio</a>
+    <div class="nav-mobile-link" id="mobileProductosToggle">Productos
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <div class="nav-mobile-sub" id="mobileProductosSub">
+      <div class="nav-mobile-sub-label">Perfumes</div>
+      <a href="catalogo.html?cat=diseñador">Diseñador</a><a href="catalogo.html?cat=nicho">Nicho</a><a href="catalogo.html?cat=arabes">Árabes</a>
+      <a href="catalogo.html?cat=body-mist">Body Mist</a><a href="catalogo.html?cat=testers">Testers</a><a href="catalogo.html?cat=decants">Decants</a><a href="catalogo.html?cat=sets">Sets</a>
+      <div class="nav-mobile-sub-label" style="margin-top:8px;">Joyería</div>
+      <a href="catalogo.html?tab=joyeria&cat=anillos">Anillos</a><a href="catalogo.html?tab=joyeria&cat=brazaletes">Brazaletes</a><a href="catalogo.html?tab=joyeria&cat=aretes">Aretes</a><a href="catalogo.html?tab=joyeria&cat=collares">Collares</a>
+    </div>
+    <a href="nosotros.html" class="nav-mobile-link">Nosotros</a>
+    <div class="nav-mobile-link" id="mobileCuentaToggle" style="border-top:1px solid var(--lgray);">Mi cuenta
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <div class="nav-mobile-sub" id="mobileCuentaSub">
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;color:var(--dgray);text-decoration:none;border-bottom:1px solid rgba(15,15,15,.05);letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>Mis pedidos</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;color:var(--dgray);text-decoration:none;border-bottom:1px solid rgba(15,15,15,.05);letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>Datos personales</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;color:var(--dgray);text-decoration:none;letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Direcciones guardadas</a>
+    </div>
+    <div style="padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--lgray);">
+      <span style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--black);">Mis favoritos</span>
+      <span id="fav-count-mobile" style="font-size:11px;color:rgba(15,15,15,.4);">0 productos</span>
+    </div>
+    <div id="fav-list-mobile" style="max-height:280px;overflow-y:auto;">
+      <div id="fav-empty-mobile" style="padding:28px 24px;text-align:center;">
+        <p style="font-size:13px;color:rgba(15,15,15,.35);font-family:var(--serif);font-style:italic;">Aún no tienes favoritos</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Search overlay — FUERA del site-wrap (position:fixed) -->
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-input-row">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="Buscar perfumes, marcas..." autocomplete="off" />
+      <button id="search-close-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div id="search-results"><p class="search-hint">Busca por nombre o marca</p></div>
+  </div>
+</div>
+
+<div class="site-wrap">
+
+<!-- NAV -->
+<nav>
+  <button class="nav-hamburger" id="navHamburger" type="button" aria-label="Menú"><span></span><span></span><span></span></button>
+  <ul class="nav-links"><li><a href="index.html">Inicio</a></li><li><a href="catalogo.html">Productos</a></li><li><a href="nosotros.html">Nosotros</a></li></ul>
+  <a href="#" class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;"><div id="logo-placeholder"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg>Tu logo aquí</div></a>
+  <div class="nav-icons">
+    <button id="search-btn" title="Buscar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+    <a href="cuenta.html" title="Cuenta" style="display:flex;align-items:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg></a>
+    <div style="position:relative;" id="fav-menu-wrap">
+      <button title="Favoritos" id="fav-toggle" style="position:relative;display:flex;align-items:center;background:none;border:none;cursor:pointer;color:var(--black);transition:color .2s;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span id="fav-count" style="position:absolute;top:-4px;right:-6px;width:16px;height:16px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center;">0</span>
+      </button>
+      <div id="fav-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;width:320px;background:var(--cream);border:1px solid var(--lgray);z-index:500;box-shadow:0 8px 32px rgba(15,15,15,.12);">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--lgray);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--black);">Mis favoritos</span>
+          <span id="fav-count-label" style="font-size:11px;color:rgba(15,15,15,.4);">0 productos</span>
+        </div>
+        <div id="fav-list" style="max-height:360px;overflow-y:auto;">
+          <div id="fav-empty" style="padding:40px 20px;text-align:center;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,0.2)" stroke-width="1.5" style="margin:0 auto 12px;display:block;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <p style="font-size:13px;color:rgba(15,15,15,.35);font-family:var(--serif);font-style:italic;">Aún no tienes favoritos</p>
+          </div>
+        </div>
+        <div id="fav-add-all" style="display:none;padding:12px 20px;border-top:1px solid var(--lgray);">
+          <button onclick="addAllFavsToCheckoutCart()" style="width:100%;background:var(--black);color:#fff;border:none;padding:12px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s;border-radius:0;display:flex;align-items:center;justify-content:center;gap:8px;" onmouseover="this.style.background='var(--red)'" onmouseout="this.style.background='var(--black)'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>Agregar todo al carrito</button>
+        </div>
+      </div>
+    </div>
+    <a href="#" title="Carrito" onclick="document.querySelector('.order-summary').scrollIntoView({behavior:'smooth',block:'start'});return false;" style="position:relative;display:flex;align-items:center;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span id="nav-cart-count" style="position:absolute;top:-4px;right:-6px;width:16px;height:16px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center;">0</span>
+    </a>
+  </div>
+</nav>
+
+<div class="page-header" id="pageHeader" style="display:none;">
+  <div>
+    <div class="checkout-eyebrow">Mi carrito</div>
+    <div class="page-title"><span class="t-sans">Finaliza </span><span class="t-serif">tu compra.</span></div>
+    <p class="page-subtitle">Completa tus datos para procesar el envío de tu pedido.</p>
+  </div>
+  <div class="step-indicator" aria-label="Progreso">
+    <div class="step active" id="step1" onclick="goToStep(1)"><div class="step-num">1</div> Datos</div><div class="step-line"></div>
+    <div class="step" id="step2" onclick="goToStep(2)"><div class="step-num">2</div> Envío</div><div class="step-line"></div>
+    <div class="step" id="step3" onclick="goToStep(3)"><div class="step-num">3</div> Pago</div><div class="step-line"></div>
+    <div class="step" id="step4"><div class="step-num">4</div> Confirmación</div>
+  </div>
+</div>
+
+<div class="checkout-empty" id="checkoutEmpty">
+  <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+  <p class="checkout-empty-title">Tu carrito está vacío.</p>
+  <p class="checkout-empty-text">Agrega productos antes de continuar.</p>
+  <button class="btn-back" onclick="window.location.href='catalogo.html'">Explorar colección</button>
+</div>
+
+<div id="checkoutFlow" style="display:none;">
+<div class="checkout-layout">
+  <div class="checkout-form-area" id="formArea">
+
+    <!-- STEP 1 -->
+    <div class="step-panel active" id="panel1">
+      <div class="form-section-title"><span class="section-num">1</span> Información de contacto</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label" for="ck-nombre">Nombre(s)</label><div class="input-wrap"><input class="form-input" id="ck-nombre" type="text" placeholder="Tu nombre" autocomplete="given-name" /><div class="input-line"></div></div><span class="form-err" id="err-nombre">Este campo es obligatorio.</span></div>
+        <div class="form-group"><label class="form-label" for="ck-apellidos">Apellidos</label><div class="input-wrap"><input class="form-input" id="ck-apellidos" type="text" placeholder="Tus apellidos" autocomplete="family-name" /><div class="input-line"></div></div><span class="form-err" id="err-apellidos">Este campo es obligatorio.</span></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label" for="ck-telefono">Número de teléfono</label><div class="input-wrap"><input class="form-input" id="ck-telefono" type="tel" placeholder="+52 81 0000 0000" autocomplete="tel" /><div class="input-line"></div></div><span class="form-err" id="err-telefono">Ingresa un teléfono válido.</span></div>
+        <div class="form-group"><label class="form-label" for="ck-email">Correo electrónico</label><div class="input-wrap"><input class="form-input" id="ck-email" type="email" placeholder="tu@correo.com" autocomplete="email" /><div class="input-line"></div></div><span class="form-err" id="err-email">Ingresa un email válido.</span></div>
+      </div>
+      <div class="step-nav"><button class="btn-continue" onclick="nextStep(1)">Continuar a envío →</button></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-panel" id="panel2">
+      <div class="form-section-title"><span class="section-num">2</span> Información de envío</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label" for="ck-calle">Calle y colonia</label><div class="input-wrap"><input class="form-input" id="ck-calle" type="text" placeholder="Av. Insurgentes Sur 123, Col. Narvarte" autocomplete="street-address" /><div class="input-line"></div></div><span class="form-err" id="err-calle">Este campo es obligatorio.</span></div>
+        <div class="form-group"><label class="form-label" for="ck-interior">Número interior</label><div class="input-wrap"><input class="form-input" id="ck-interior" type="text" placeholder="Depto 4B (opcional)" /><div class="input-line"></div></div></div>
+      </div>
+      <div class="form-row triple">
+        <div class="form-group"><label class="form-label" for="ck-ciudad">Ciudad</label><div class="input-wrap"><input class="form-input" id="ck-ciudad" type="text" placeholder="Tu ciudad" autocomplete="address-level2" /><div class="input-line"></div></div><span class="form-err" id="err-ciudad">Este campo es obligatorio.</span></div>
+        <div class="form-group">
+          <label class="form-label">Estado</label>
+          <div class="custom-select" id="estadoSelect">
+            <button type="button" class="custom-select-trigger placeholder" id="estadoTrigger" onclick="toggleSelect()">
+              Seleccionar
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="custom-select-dropdown" id="estadoDropdown"></div>
+            <input type="hidden" id="ck-estado" value="" />
+          </div>
+          <span class="form-err" id="err-estado">Selecciona un estado.</span>
+        </div>
+        <div class="form-group"><label class="form-label" for="ck-cp">Código postal</label><div class="input-wrap"><input class="form-input" id="ck-cp" type="text" placeholder="00000" maxlength="5" autocomplete="postal-code" /><div class="input-line"></div></div><span class="form-err" id="err-cp">Ingresa un código postal.</span><span class="cp-hint" id="cpHint">Ingresa tu CP para ver las paqueterías disponibles.</span></div>
+      </div>
+      <div class="shipping-label">Método de envío</div>
+      <!-- Skeleton de carga (visible mientras se consulta) -->
+      <div class="carriers-loading" id="carriersLoading">
+        <div class="carrier-skeleton"><div class="skel-circle"></div><div class="skel-lines"><div class="skel-line short"></div><div class="skel-line narrow"></div></div><div class="skel-price"></div></div>
+        <div class="carrier-skeleton"><div class="skel-circle"></div><div class="skel-lines"><div class="skel-line short"></div><div class="skel-line narrow"></div></div><div class="skel-price"></div></div>
+        <div class="carrier-skeleton"><div class="skel-circle"></div><div class="skel-lines"><div class="skel-line short"></div><div class="skel-line narrow"></div></div><div class="skel-price"></div></div>
+      </div>
+      <!-- Opciones de envío (placeholder por defecto; se reemplaza con carriers reales al ingresar CP) -->
+      <div class="shipping-options" id="shippingOptions">
+        <div class="shipping-option selected" data-shipping="standard" data-cost="0" onclick="selectShipping(this)"><div class="ship-radio"><div class="ship-dot"></div></div><div class="shipping-details"><div class="shipping-name">Envío nacional</div><div class="shipping-desc">Ingresa tu CP para ver paqueterías disponibles</div></div><div class="shipping-price" style="color:rgba(15,15,15,.35);font-size:11px;">Por confirmar</div></div>
+        <div class="shipping-option" data-shipping="gdl" data-cost="0" onclick="selectShipping(this)" id="shippingGDL" style="display:none;"><div class="ship-radio"><div class="ship-dot"></div></div><div class="shipping-details"><div class="shipping-name">Entrega en GDL — Casa Blanca</div><div class="shipping-desc">Retiro en sucursal · Disponible a partir del día hábil siguiente</div></div><div class="shipping-price free-tag">Sin costo</div></div>
+        <div class="shipping-option" data-shipping="free" data-cost="0" id="shippingFreeOption" style="display:none;" onclick="selectShipping(this)"><div class="ship-radio"><div class="ship-dot"></div></div><div class="shipping-details"><div class="shipping-name">Envío gratis</div><div class="shipping-desc">Compras mayores a $1,500 MXN</div></div><div class="shipping-price free-tag">Gratis</div></div>
+      </div>
+      <!-- Nota de costo — visible cuando hay carriers cargados -->
+      <div class="shipping-cost-note" id="shippingCostNote">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <p><strong>El costo de envío se confirma antes del despacho.</strong> Al empacar tu pedido el sábado calculamos el costo real con base en el peso y dimensiones. Te lo comunicamos por WhatsApp antes de proceder.</p>
+      </div>
+      <!-- Error / sin cobertura -->
+      <div class="carriers-error" id="carriersError">
+        <p>No pudimos consultar las paqueterías para este CP. <a href="https://wa.me/5213310050843?text=Hola%2C%20quiero%20saber%20opciones%20de%20env%C3%ADo" target="_blank">Escríbenos por WhatsApp</a> y te ayudamos.</p>
+      </div>
+      <div class="step-nav"><button class="btn-back-step" onclick="goToStep(1)">← Datos</button><button class="btn-continue" onclick="nextStep(2)">Continuar a pago →</button></div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-panel" id="panel3">
+      <div class="form-section-title">
+        <span class="section-num">3</span> Método de pago
+        <div class="card-icons">
+          <div class="card-icon visa">VISA</div>
+          <div class="card-icon mc"><svg width="28" height="18" viewBox="0 0 28 18"><circle cx="10" cy="9" r="8" fill="#EB001B" opacity=".9"/><circle cx="18" cy="9" r="8" fill="#F79E1B" opacity=".9"/></svg></div>
+          <div class="card-icon" style="font-size:8px;color:#003087;font-weight:800;letter-spacing:0;">PayPal</div>
+          <div class="card-icon" style="font-size:8px;color:#00796B;font-weight:800;letter-spacing:.04em;">SPEI</div>
+        </div>
+      </div>
+      <div class="payment-methods">
+        <!-- Card -->
+        <div class="payment-option selected" data-method="card" onclick="selectPayment(this)">
+          <div class="payment-option-left"><div class="pay-radio"><div class="pay-dot"></div></div><span class="payment-label">Tarjeta de crédito / débito</span></div>
+          <div class="payment-logo"><svg width="36" height="24" viewBox="0 0 36 24"><rect width="36" height="24" fill="#1434CB"/><text x="18" y="16" text-anchor="middle" fill="white" font-size="10" font-weight="bold" font-family="sans-serif">VISA</text></svg><svg width="36" height="24" viewBox="0 0 36 24"><circle cx="14" cy="12" r="9" fill="#EB001B"/><circle cx="22" cy="12" r="9" fill="#F79E1B"/></svg></div>
+        </div>
+        <div id="cardPanel" class="pay-detail-panel show">
+          <div class="form-row single" style="margin:0 0 16px;"><div class="form-group"><label class="form-label" for="cardnum">Número en la tarjeta</label><div class="input-wrap"><input class="form-input" id="cardnum" type="text" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number" /><div class="input-line"></div></div></div></div>
+          <div class="form-row single" style="margin:0 0 16px;"><div class="form-group"><label class="form-label" for="cardname">Nombre en la tarjeta</label><div class="input-wrap"><input class="form-input" id="cardname" type="text" placeholder="Como aparece en tu tarjeta" autocomplete="cc-name" /><div class="input-line"></div></div></div></div>
+          <div class="form-row" style="margin:0;"><div class="form-group"><label class="form-label" for="expiry">Fecha de expiración</label><div class="input-wrap"><input class="form-input" id="expiry" type="text" placeholder="MM / AA" maxlength="7" autocomplete="cc-exp" /><div class="input-line"></div></div></div><div class="form-group"><label class="form-label" for="cvv">Código CVV</label><div class="input-wrap"><input class="form-input" id="cvv" type="text" placeholder="•••" maxlength="4" autocomplete="cc-csc" /><div class="input-line"></div></div></div></div>
+        </div>
+        <!-- PayPal -->
+        <div class="payment-option" data-method="paypal" onclick="selectPayment(this)">
+          <div class="payment-option-left"><div class="pay-radio"><div class="pay-dot"></div></div><span class="payment-label">PayPal</span></div>
+          <div class="payment-logo"><svg width="70" height="22" viewBox="0 0 70 22"><text x="0" y="16" font-family="sans-serif" font-size="14" font-weight="bold" fill="#003087">Pay</text><text x="24" y="16" font-family="sans-serif" font-size="14" font-weight="bold" fill="#009cde">Pal</text></svg></div>
+        </div>
+        <div id="paypalPanel" class="pay-detail-panel">
+          <div style="padding:8px 0;text-align:center;">
+            <svg width="80" height="24" viewBox="0 0 80 24" style="margin-bottom:12px;"><text x="12" y="18" font-family="sans-serif" font-size="16" font-weight="bold" fill="#003087">Pay</text><text x="38" y="18" font-family="sans-serif" font-size="16" font-weight="bold" fill="#009cde">Pal</text></svg>
+            <p style="font-size:13px;color:rgba(15,15,15,.5);line-height:1.7;">Al presionar <strong>"Pagar ahora"</strong> serás redirigido a PayPal para iniciar sesión y completar tu pago de forma segura.</p>
+          </div>
+        </div>
+        <!-- SPEI -->
+        <div class="payment-option" data-method="transfer" onclick="selectPayment(this)">
+          <div class="payment-option-left"><div class="pay-radio"><div class="pay-dot"></div></div><span class="payment-label">Transferencia bancaria</span></div>
+          <div class="payment-logo"><span style="font-size:10px;font-weight:700;letter-spacing:.08em;color:#00796B;text-transform:uppercase;">SPEI</span></div>
+        </div>
+        <div id="transferPanel" class="pay-detail-panel">
+          <div style="padding:8px 0;">
+            <p style="font-size:13px;color:rgba(15,15,15,.5);line-height:1.7;margin-bottom:12px;">Al confirmar tu pedido, te proporcionaremos los datos bancarios para realizar tu transferencia SPEI.</p>
+            <p style="font-size:11px;color:rgba(15,15,15,.4);line-height:1.6;">Tu pedido se reservará por 48 horas mientras se verifica el pago. Recibirás los datos por email y en la pantalla de confirmación.</p>
+          </div>
+        </div>
+      </div>
+      <div class="step-nav"><button class="btn-back-step" onclick="goToStep(2)">← Envío</button></div>
+    </div>
+
+  </div>
+
+  <!-- SUMMARY -->
+  <aside class="order-summary">
+    <div class="summary-title">Carrito de compras <span class="summary-count" id="summaryCount">(0)</span></div>
+    <div class="summary-items" id="summaryItems"></div>
+    <div class="promo-row"><input class="promo-input" type="text" placeholder="Código promocional" id="promoInput" /><button class="promo-btn" onclick="applyPromo()">Aplicar</button></div>
+    <div class="summary-totals">
+      <div class="total-row"><span class="total-label">Subtotal</span><span class="total-value" id="valSubtotal">$0 MXN</span></div>
+      <div class="total-row"><span class="total-label">Descuentos</span><span class="total-value discount" id="valDiscount">$0.00 MXN</span></div>
+      <div class="total-row"><span class="total-label">Envío</span><span class="total-value" id="valShipping">$99 MXN</span></div>
+      <div class="grand-total-row"><span class="grand-label">Total</span><span class="grand-value" id="valTotal">$0 MXN</span></div>
+    </div>
+    <div class="shipping-notice" id="shippingNotice" style="display:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg><span>¡Envío gratis en compras mayores a $1,500 MXN!</span></div>
+    <button class="pay-btn" id="payBtn" onclick="submitCheckout()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+      <span id="payBtnText">Pagar ahora — $0 MXN</span>
+    </button>
+    <div class="pay-security"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Pago seguro con encriptación SSL de 256 bits</div>
+    <p class="summary-disclaimer">Al pagar aceptas nuestros <a href="terminos.html">Términos y condiciones</a> y <a href="aviso-privacidad.html">Política de privacidad</a>.</p>
+  </aside>
+</div>
+</div>
+
+<footer class="footer-min">
+  <span class="footer-min-copy">© 2025 HERA Perfumes & Joyería. Todos los derechos reservados.</span>
+  <div class="footer-min-links"><a href="terminos.html">Términos y condiciones</a><a href="aviso-privacidad.html">Política de privacidad</a><a href="contacto.html">Contacto</a></div>
+</footer>
+</div>
+
+<div class="checkout-success-overlay" id="successOverlay">
+  <div class="checkout-success-box">
+    <div class="checkout-success-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,.55)" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg></div>
+    <p class="checkout-success-eyebrow">Pedido confirmado</p>
+    <p class="checkout-success-msg">Gracias por tu compra.</p>
+    <p class="checkout-success-order">Número de orden</p>
+    <p class="checkout-success-order-num" id="orderNumber">HERA-000000</p>
+    <p class="checkout-success-next">Recibirás un email de confirmación con los detalles de tu pedido y la información de rastreo.</p>
+    <!-- Bank details shown only for SPEI -->
+    <div id="successTransferDetails" style="display:none;width:100%;margin-top:20px;border-top:1px solid rgba(249,249,249,.1);padding-top:20px;text-align:left;">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:14px;">Datos para transferencia</p>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(249,249,249,.08);"><span style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(249,249,249,.3);">Banco</span><span style="font-size:12px;font-weight:600;color:rgba(249,249,249,.55);">BBVA México</span></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(249,249,249,.08);"><span style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(249,249,249,.3);">CLABE</span><span style="font-size:12px;font-weight:600;color:rgba(249,249,249,.55);user-select:all;">0121 8001 2345 6789 01</span></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(249,249,249,.08);"><span style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(249,249,249,.3);">Beneficiario</span><span style="font-size:12px;font-weight:600;color:rgba(249,249,249,.55);">HERA Perfumes S.A. de C.V.</span></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;"><span style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(249,249,249,.3);">Referencia</span><span id="successTransferRef" style="font-size:12px;font-weight:700;color:rgba(249,249,249,.7);">—</span></div>
+      <p style="font-size:11px;color:rgba(249,249,249,.3);line-height:1.6;margin-top:10px;">Pedido reservado por 48 hrs. Se confirma al verificar el pago.</p>
+    </div>
+    <a href="index.html" class="checkout-success-link">Volver a la tienda →</a>
+  </div>
+</div>
+
+<script>
+/* CATALOG */
+var CATALOG = [
+  {id:'jenny-1',brand:'Jenny Rivera',name:'Inolvidable EDP',price:'$1,210 MXN'},
+  {id:'fierce-2',brand:'Abercrombie & Fitch',name:'Fierce EDT',price:'$760 MXN'},
+  {id:'authentic-3',brand:'Abercrombie & Fitch',name:'Authentic EDP',price:'$975 MXN'},
+  {id:'signature-4',brand:'HERA Exclusivo',name:'Signature Blanc',price:'$1,490 MXN'},
+];
+
+/* SEARCH */
+var searchOverlay=document.getElementById('search-overlay');
+var searchInput=document.getElementById('search-input');
+var searchResults=document.getElementById('search-results');
+function openSearch(){ searchOverlay.classList.add('open'); document.body.style.overflow='hidden'; setTimeout(function(){ searchInput.focus(); },280); }
+function closeSearch(){ searchOverlay.classList.remove('open'); document.body.style.overflow=''; searchInput.value=''; searchResults.innerHTML='<p class="search-hint">Busca por nombre o marca</p>'; }
+document.getElementById('search-btn').addEventListener('click',openSearch);
+document.getElementById('search-close-btn').addEventListener('click',closeSearch);
+searchOverlay.addEventListener('click',function(e){ if(e.target===searchOverlay) closeSearch(); });
+var sd; searchInput.addEventListener('input',function(){
+  clearTimeout(sd); sd=setTimeout(function(){
+    var q=searchInput.value.trim().toLowerCase();
+    if(!q){ searchResults.innerHTML='<p class="search-hint">Busca por nombre o marca</p>'; return; }
+    var hits=CATALOG.filter(function(p){ return (p.name+' '+p.brand).toLowerCase().includes(q); });
+    if(!hits.length){ searchResults.innerHTML='<p class="search-hint">Sin resultados</p>'; return; }
+    searchResults.innerHTML=hits.map(function(p){ return '<div style="display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid #E6E6E6;cursor:pointer;"><div style="width:44px;height:44px;background:#2E2E2E;flex-shrink:0;"></div><div><div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(15,15,15,.4);">'+p.brand+'</div><div style="font-family:var(--serif);font-size:15px;font-style:italic;font-weight:300;color:var(--black);">'+p.name+'</div><div style="font-size:12px;font-weight:700;color:var(--black);">'+p.price+'</div></div></div>'; }).join('');
+  },180);
+});
+
+/* MOBILE NAV */
+var hamburger=document.getElementById('navHamburger');
+var mobilePanel=document.getElementById('navMobilePanel');
+var mobOvl=document.getElementById('navMobileOverlay');
+function openNav(){ hamburger.classList.add('open'); mobilePanel.classList.add('open'); mobOvl.classList.add('open'); document.body.style.overflow='hidden'; }
+function closeNav(){ hamburger.classList.remove('open'); mobilePanel.classList.remove('open'); mobOvl.classList.remove('open'); document.body.style.overflow=''; }
+hamburger.addEventListener('click',function(e){ e.stopPropagation(); mobilePanel.classList.contains('open')?closeNav():openNav(); });
+document.getElementById('navMobileClose').addEventListener('click',closeNav);
+mobOvl.addEventListener('click',closeNav);
+document.getElementById('mobileProductosToggle').addEventListener('click',function(e){ e.stopPropagation(); document.getElementById('mobileProductosSub').classList.toggle('open'); this.classList.toggle('active'); });
+document.getElementById('mobileCuentaToggle').addEventListener('click',function(e){ e.stopPropagation(); document.getElementById('mobileCuentaSub').classList.toggle('open'); this.classList.toggle('active'); });
+
+/* Esc */
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeSearch(); closeNav(); closeFavDropdown(); } });
+
+/* ══════════════════════════════════════
+   FAVORITOS — leer de localStorage y renderizar
+══════════════════════════════════════ */
+var favToggle=document.getElementById('fav-toggle');
+var favDropdown=document.getElementById('fav-dropdown');
+var favCountBadge=document.getElementById('fav-count');
+var favCountLabel=document.getElementById('fav-count-label');
+var favList=document.getElementById('fav-list');
+var favEmptyEl=document.getElementById('fav-empty');
+var favCountMobile=document.getElementById('fav-count-mobile');
+var favListMobile=document.getElementById('fav-list-mobile');
+var favEmptyMobile=document.getElementById('fav-empty-mobile');
+var favs=[];
+
+try{var sf=localStorage.getItem('hera_favs');if(sf)favs=JSON.parse(sf);}catch(e){favs=[];}
+
+function closeFavDropdown(){if(favDropdown)favDropdown.style.display='none';}
+
+if(favToggle){
+  favToggle.addEventListener('click',function(e){
+    e.stopPropagation();
+    favDropdown.style.display=favDropdown.style.display==='block'?'none':'block';
+  });
+  favDropdown.addEventListener('click',function(e){e.stopPropagation();});
+}
+document.addEventListener('click',function(){closeFavDropdown();});
+
+function renderFavsCheckout(){
+  var label=favs.length+(favs.length===1?' producto':' productos');
+  if(favCountLabel)favCountLabel.textContent=label;
+  if(favCountMobile)favCountMobile.textContent=label;
+  if(favs.length>0){
+    if(favCountBadge){favCountBadge.style.display='flex';favCountBadge.textContent=favs.length;}
+    if(favEmptyEl)favEmptyEl.style.display='none';
+    if(favEmptyMobile)favEmptyMobile.style.display='none';
+  }else{
+    if(favCountBadge)favCountBadge.style.display='none';
+    if(favEmptyEl)favEmptyEl.style.display='block';
+    if(favEmptyMobile)favEmptyMobile.style.display='block';
+  }
+  if(favList){
+    Array.from(favList.children).forEach(function(c){if(c.id!=='fav-empty'&&c.id!=='fav-add-all')c.remove();});
+    favs.forEach(function(item){favList.insertBefore(buildFavRowCheckout(item,false),favEmptyEl);});
+  }
+  if(favListMobile){
+    Array.from(favListMobile.children).forEach(function(c){if(c.id!=='fav-empty-mobile')c.remove();});
+    favs.forEach(function(item){favListMobile.insertBefore(buildFavRowCheckout(item,true),favEmptyMobile);});
+  }
+  var addAllBtn=document.getElementById('fav-add-all');
+  if(addAllBtn)addAllBtn.style.display=favs.length>0?'block':'none';
+}
+
+function buildFavRowCheckout(item,isMobile){
+  var row=document.createElement('div');row.dataset.favId=item.id;
+  row.style.cssText='display:flex;align-items:center;gap:14px;padding:14px '+(isMobile?'24px':'20px')+';border-bottom:1px solid var(--lgray);';
+  row.innerHTML='<div style="width:52px;height:52px;flex-shrink:0;background:var(--lgray);display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.25)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><div style="flex:1;min-width:0;"><div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(15,15,15,.4);margin-bottom:3px;">'+item.brand+'</div><div style="font-family:var(--serif);font-size:15px;font-weight:300;font-style:italic;color:var(--black);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+item.name+'</div><div style="font-size:12px;font-weight:700;color:var(--black);margin-top:2px;">'+item.price+'</div></div><div style="display:flex;gap:6px;flex-shrink:0;"><button data-add-cart="'+item.id+'" style="background:var(--black);border:none;cursor:pointer;color:#fff;width:26px;height:26px;display:flex;align-items:center;justify-content:center;transition:background .2s;" title="Agregar al carrito"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button><button data-remove="'+item.id+'" style="background:var(--red);border:none;cursor:pointer;color:#fff;width:26px;height:26px;display:flex;align-items:center;justify-content:center;" title="Quitar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>';
+  row.querySelector('[data-add-cart]').addEventListener('click',function(e){
+    e.stopPropagation();
+    addFavToCheckoutCart(item);
+    this.style.background='#2e7d32';
+    this.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>';
+    var btn=this;setTimeout(function(){btn.style.background='var(--black)';btn.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>';},1200);
+  });
+  row.querySelector('[data-remove]').addEventListener('click',function(e){
+    e.stopPropagation();
+    var id=e.currentTarget.dataset.remove;
+    favs=favs.filter(function(f){return f.id!==id;});
+    localStorage.setItem('hera_favs',JSON.stringify(favs));
+    renderFavsCheckout();
+  });
+  return row;
+}
+
+/* Agregar favorito al carrito del checkout */
+function addFavToCheckoutCart(item){
+  var existing=cartData.find(function(c){return c.id===item.id;});
+  if(existing){existing.qty++;}
+  else{cartData.push({id:item.id,brand:item.brand,name:item.name,price:item.price,qty:1});}
+  renderItems();checkFreeShipping();updateTotals();updateNavBadge();
+  if(discountAmount>0){discountAmount=0;document.getElementById('promoInput').value='';showToast('Carrito actualizado. Aplica el código de nuevo.',true);return;}
+  showToast('Agregado al carrito.');
+}
+
+function addAllFavsToCheckoutCart(){
+  if(!favs.length)return;
+  favs.forEach(function(f){addFavToCheckoutCart(f);});
+}
+
+renderFavsCheckout();
+
+/* CURSOR */
+var cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+if(cursor&&ring&&window.matchMedia('(pointer:fine)').matches){
+  document.addEventListener('mousemove',function(e){cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';});
+  document.querySelectorAll('a,button,select,input,.shipping-option,.payment-option,.custom-select-trigger,.custom-select-option').forEach(function(el){
+    el.addEventListener('mouseenter',function(){cursor.style.transform='translate(-50%,-50%) scale(2)';ring.style.width='60px';ring.style.height='60px';});
+    el.addEventListener('mouseleave',function(){cursor.style.transform='translate(-50%,-50%) scale(1)';ring.style.width='36px';ring.style.height='36px';});
+  });
+}
+
+/* CUSTOM SELECT — Estados */
+var estados=['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Ciudad de México','Coahuila','Colima','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro','Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas'];
+var selectEl=document.getElementById('estadoSelect'),trigger=document.getElementById('estadoTrigger'),dropdown=document.getElementById('estadoDropdown'),hiddenInput=document.getElementById('ck-estado');
+
+estados.forEach(function(name){
+  var opt=document.createElement('div');opt.className='custom-select-option';opt.textContent=name;
+  opt.addEventListener('click',function(){
+    hiddenInput.value=name;trigger.textContent=name;
+    trigger.classList.remove('placeholder');
+    dropdown.querySelectorAll('.custom-select-option').forEach(function(o){o.classList.remove('selected');});
+    opt.classList.add('selected');
+    selectEl.classList.remove('open');
+    trigger.appendChild(createChevron());
+    clrErr('ck-estado','err-estado');trigger.classList.remove('error');
+  });
+  dropdown.appendChild(opt);
+});
+function createChevron(){var s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('width','12');s.setAttribute('height','12');s.setAttribute('viewBox','0 0 24 24');s.setAttribute('fill','none');s.setAttribute('stroke','currentColor');s.setAttribute('stroke-width','2');var p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d','m6 9 6 6 6-6');s.appendChild(p);return s;}
+function toggleSelect(){selectEl.classList.toggle('open');}
+document.addEventListener('click',function(e){if(!selectEl.contains(e.target))selectEl.classList.remove('open');});
+
+/* CART DATA */
+var FREE_SHIPPING=1500,cartData=[],shippingCost=99,discountAmount=0,currentStep=1,maxStepReached=1;
+function parseMXN(s){return parseInt(String(s).replace(/[^0-9]/g,''))||0;}
+function fmtMXN(n){return '$'+n.toLocaleString('es-MX')+' MXN';}
+
+function loadCart(){
+  try{var r=localStorage.getItem('hera_cart');if(r)cartData=JSON.parse(r);}catch(e){cartData=[];}
+  if(!cartData||!cartData.length){
+    cartData=[{id:'jenny-1',brand:'Jenny Rivera',name:'Inolvidable EDP',price:'$1,210 MXN',qty:2},{id:'fierce-2',brand:'Abercrombie & Fitch',name:'Fierce EDT',price:'$786 MXN',qty:1},{id:'signature-4',brand:'HERA Exclusivo',name:'Signature Blanc',price:'$1,490 MXN',qty:1}];
+  }
+  if(!cartData.length)showEmpty();else showCheckout();
+}
+function showEmpty(){document.getElementById('checkoutEmpty').style.display='flex';document.getElementById('checkoutFlow').style.display='none';document.getElementById('pageHeader').style.display='none';}
+function showCheckout(){document.getElementById('checkoutEmpty').style.display='none';document.getElementById('checkoutFlow').style.display='block';document.getElementById('pageHeader').style.display='flex';renderItems();checkFreeShipping();updateTotals();updateNavBadge();updatePayBtn();}
+
+function renderItems(){
+  var c=document.getElementById('summaryItems');c.innerHTML='';
+  cartData.forEach(function(item,idx){var u=parseMXN(item.price),t=u*item.qty,el=document.createElement('div');el.className='summary-item';
+    el.innerHTML='<div class="summary-item-img"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,0.2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span class="item-qty-badge">'+item.qty+'</span></div><div class="summary-item-info"><div class="summary-item-brand">'+item.brand+'</div><div class="summary-item-name">'+item.name+'</div><div class="summary-item-unit">'+fmtMXN(u)+' c/u</div><div class="summary-item-actions"><button class="summary-qty-btn" onclick="changeQty('+idx+',-1)">−</button><div class="summary-qty-val">'+item.qty+'</div><button class="summary-qty-btn" onclick="changeQty('+idx+',1)">+</button><button class="summary-remove" onclick="removeItem('+idx+')">Eliminar</button></div></div><div class="summary-item-right"><div class="summary-item-total">'+fmtMXN(t)+'</div></div>';
+    c.appendChild(el);
+  });
+}
+function changeQty(idx,delta){
+  cartData[idx].qty=Math.max(1,cartData[idx].qty+delta);
+  renderItems();checkFreeShipping();updateTotals();updateNavBadge();
+  if(discountAmount>0){discountAmount=0;document.getElementById('promoInput').value='';showToast('Descuento recalculado. Aplica el código de nuevo.',true);}
+}
+function removeItem(idx){
+  cartData.splice(idx,1);
+  if(cartData.length===0){showEmpty();return;}
+  renderItems();checkFreeShipping();updateTotals();updateNavBadge();
+  if(discountAmount>0){discountAmount=0;document.getElementById('promoInput').value='';}
+}
+function getSub(){return cartData.reduce(function(s,i){return s+parseMXN(i.price)*i.qty;},0);}
+function getQty(){return cartData.reduce(function(s,i){return s+i.qty;},0);}
+function checkFreeShipping(){var sub=getSub(),f=document.getElementById('shippingFreeOption'),n=document.getElementById('shippingNotice');if(sub>=FREE_SHIPPING){f.style.display='flex';n.style.display='flex';selectShipping(f);}else{f.style.display='none';n.style.display='none';if(shippingCost===0)selectShipping(document.querySelector('[data-shipping="standard"]'));}}
+function updateTotals(){
+  var sub=getSub(),qty=getQty(),total=sub-discountAmount+shippingCost;
+  document.getElementById('valSubtotal').textContent=fmtMXN(sub);
+  document.getElementById('summaryCount').textContent='('+qty+(qty===1?' artículo':' artículos')+')';
+  var sEl=document.getElementById('valShipping');
+  var selShip=document.querySelector('.shipping-option.selected');
+  var shipType=selShip?selShip.dataset.shipping:'';
+  var isPending=(shippingCost===0&&shipType!=='free'&&shipType!=='gdl'&&shipType!=='');
+  if(isPending){
+    sEl.textContent='Por confirmar';sEl.className='total-value';
+  }else if(shippingCost===0){
+    sEl.textContent='Gratis';sEl.className='total-value free';
+  }else{
+    sEl.textContent=fmtMXN(shippingCost);sEl.className='total-value';
+  }
+  document.getElementById('valDiscount').textContent=discountAmount>0?'−'+fmtMXN(discountAmount):'$0.00 MXN';
+  document.getElementById('valTotal').textContent=fmtMXN(total);
+  document.getElementById('payBtnText').textContent='Pagar ahora — '+fmtMXN(total);
+}
+function updateNavBadge(){var b=document.getElementById('nav-cart-count'),q=getQty();if(q>0){b.textContent=q;b.style.display='flex';}else b.style.display='none';}
+
+/* PAY BUTTON STATE */
+function updatePayBtn(){
+  var btn=document.getElementById('payBtn');
+  if(currentStep>=3){btn.classList.add('ready');}
+  else{btn.classList.remove('ready');}
+}
+
+/* MULTI-STEP */
+function showPanel(n){
+  document.querySelectorAll('.step-panel').forEach(function(p){p.classList.remove('active');});
+  var panel=document.getElementById('panel'+n);
+  if(panel){panel.classList.remove('active');void panel.offsetWidth;panel.classList.add('active');}
+  updateStepIndicator(n);currentStep=n;updatePayBtn();
+  document.getElementById('formArea').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function updateStepIndicator(active){for(var i=1;i<=4;i++){var s=document.getElementById('step'+i);s.className='step';if(i<active)s.className='step done';else if(i===active)s.className='step active';}}
+function goToStep(n){if(n<=maxStepReached)showPanel(n);}
+function nextStep(from){
+  if(from===1&&!validateStep1())return;
+  if(from===2&&!validateStep2())return;
+  var next=from+1;if(next>maxStepReached)maxStepReached=next;showPanel(next);
+}
+
+/* VALIDATION */
+function isEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}
+function isPhone(v){return /^[\d\s+()-]{7,}$/.test(v);}
+function setErr(i,e){var inp=document.getElementById(i),err=document.getElementById(e);if(inp)inp.classList.add('error');if(err)err.classList.add('show');}
+function clrErr(i,e){var inp=document.getElementById(i),err=document.getElementById(e);if(inp)inp.classList.remove('error');if(err)err.classList.remove('show');}
+var fm={'ck-nombre':'err-nombre','ck-apellidos':'err-apellidos','ck-telefono':'err-telefono','ck-email':'err-email','ck-calle':'err-calle','ck-ciudad':'err-ciudad','ck-estado':'err-estado','ck-cp':'err-cp'};
+Object.keys(fm).forEach(function(id){var el=document.getElementById(id);if(el){el.addEventListener('input',function(){clrErr(id,fm[id]);});el.addEventListener('change',function(){clrErr(id,fm[id]);});}});
+
+function validateStep1(){
+  var ok=true;['ck-nombre','ck-apellidos','ck-telefono','ck-email'].forEach(function(id){clrErr(id,fm[id]);});
+  if(!document.getElementById('ck-nombre').value.trim()){setErr('ck-nombre','err-nombre');ok=false;}
+  if(!document.getElementById('ck-apellidos').value.trim()){setErr('ck-apellidos','err-apellidos');ok=false;}
+  if(!isPhone(document.getElementById('ck-telefono').value)){setErr('ck-telefono','err-telefono');ok=false;}
+  if(!isEmail(document.getElementById('ck-email').value)){setErr('ck-email','err-email');ok=false;}
+  if(!ok){var f=document.querySelector('#panel1 .form-input.error');if(f)f.focus();showToast('Completa los campos de contacto.',true);}
+  return ok;
+}
+function validateStep2(){
+  var ok=true;['ck-calle','ck-ciudad','ck-estado','ck-cp'].forEach(function(id){clrErr(id,fm[id]);});
+  if(!document.getElementById('ck-calle').value.trim()){setErr('ck-calle','err-calle');ok=false;}
+  if(!document.getElementById('ck-ciudad').value.trim()){setErr('ck-ciudad','err-ciudad');ok=false;}
+  if(!document.getElementById('ck-estado').value){setErr('ck-estado','err-estado');document.getElementById('estadoTrigger').classList.add('error');ok=false;}
+  if(!document.getElementById('ck-cp').value.trim()){setErr('ck-cp','err-cp');ok=false;}
+  if(!ok){showToast('Completa los campos de envío.',true);}
+  return ok;
+}
+
+/* SHIPPING */
+function selectShipping(el){document.querySelectorAll('.shipping-option').forEach(function(o){o.classList.remove('selected');});el.classList.add('selected');shippingCost=parseInt(el.dataset.cost)||0;updateTotals();}
+
+/* PAYMENT */
+function selectPayment(el){
+  document.querySelectorAll('.payment-option').forEach(function(o){o.classList.remove('selected');});
+  el.classList.add('selected');
+  document.getElementById('cardPanel').classList.remove('show');
+  document.getElementById('paypalPanel').classList.remove('show');
+  document.getElementById('transferPanel').classList.remove('show');
+  var method=el.dataset.method;
+  if(method==='card')document.getElementById('cardPanel').classList.add('show');
+  else if(method==='paypal')document.getElementById('paypalPanel').classList.add('show');
+  else if(method==='transfer')document.getElementById('transferPanel').classList.add('show');
+}
+
+/* CARD FORMATTING */
+document.getElementById('cardnum').addEventListener('input',function(){var v=this.value.replace(/\D/g,'').substring(0,16);this.value=v.replace(/(.{4})/g,'$1 ').trim();});
+document.getElementById('expiry').addEventListener('input',function(){var v=this.value.replace(/\D/g,'').substring(0,4);if(v.length>=3)v=v.substring(0,2)+' / '+v.substring(2);this.value=v;});
+document.getElementById('cvv').addEventListener('input',function(){this.value=this.value.replace(/\D/g,'').substring(0,4);});
+/* ══════════════════════════════════════
+   SKYDROPX — FRONTEND HOOK (PT-01)
+   ─────────────────────────────────────
+   Cuando haya backend, reemplaza fetchCarriers()
+   con una llamada real a /api/carriers?cp={cp}
+   El resto de la UI no cambia.
+══════════════════════════════════════ */
+var cpLookupTimer = null;
+
+document.getElementById('ck-cp').addEventListener('input', function(){
+  this.value = this.value.replace(/\D/g,'').substring(0,5);
+  var cp = this.value;
+  var hint = document.getElementById('cpHint');
+  clearTimeout(cpLookupTimer);
+  if(cp.length < 5){
+    hint.className = 'cp-hint';
+    hint.textContent = cp.length > 0
+      ? 'Faltan ' + (5 - cp.length) + ' dígito' + (5 - cp.length === 1 ? '' : 's') + '…'
+      : 'Ingresa tu CP para ver las paqueterías disponibles.';
+    resetCarriersUI();
+    return;
+  }
+  hint.className = 'cp-hint searching';
+  hint.textContent = 'Buscando paqueterías para ' + cp + '…';
+  cpLookupTimer = setTimeout(function(){ loadCarriers(cp); }, 400);
+});
+
+function resetCarriersUI(){
+  document.getElementById('carriersLoading').classList.remove('active');
+  document.getElementById('carriersError').classList.remove('active');
+  document.getElementById('shippingCostNote').classList.remove('active');
+  document.getElementById('shippingOptions').innerHTML =
+    '<div class="shipping-option selected" data-shipping="standard" data-cost="0" onclick="selectShipping(this)">' +
+      '<div class="ship-radio"><div class="ship-dot"></div></div>' +
+      '<div class="shipping-details"><div class="shipping-name">Envío nacional</div><div class="shipping-desc">Ingresa tu CP para ver paqueterías disponibles</div></div>' +
+      '<div class="shipping-price" style="color:rgba(15,15,15,.35);font-size:11px;">Por confirmar</div>' +
+    '</div>';
+  shippingCost = 0;
+  updateTotals();
+}
+
+function loadCarriers(cp){
+  document.getElementById('carriersLoading').classList.add('active');
+  document.getElementById('shippingOptions').innerHTML = '';
+  document.getElementById('carriersError').classList.remove('active');
+  document.getElementById('shippingCostNote').classList.remove('active');
+
+  /* ─────────────────────────────────────────────────────────
+     PUNTO DE INTEGRACIÓN — cuando el backend esté listo,
+     descomenta el bloque fetch y elimina el bloque mock.
+
+     fetch('/api/carriers?cp=' + cp)
+       .then(function(r){ return r.json(); })
+       .then(function(data){ renderCarriers(data.carriers, cp); })
+       .catch(function(){ showCarriersError(); });
+  ───────────────────────────────────────────────────────── */
+
+  /* MOCK — simula respuesta del servidor (eliminar con backend real) */
+  setTimeout(function(){
+    var isGDL = ['44100','44200','44300','44500','44600','44700','44800','44900',
+                 '45000','45010','45019','45030','45040','45050','45060','45066',
+                 '45070','45116','45130','45140','45150','45160','45170','45180',
+                 '45190','45200','45220','45230','45400','45500','45600','45609',
+                 '45640','45650','45652','45653','45654','45655','45659'].indexOf(cp) !== -1;
+    var mockCarriers = [
+      { id:'estafeta-terrestre', name:'Estafeta',  service:'Servicio terrestre',  eta:'3–5 días hábiles' },
+      { id:'estafeta-express',   name:'Estafeta',  service:'Servicio express',     eta:'1–2 días hábiles' },
+      { id:'fedex-economy',      name:'FedEx',     service:'FedEx Economy',        eta:'4–6 días hábiles' },
+      { id:'fedex-express',      name:'FedEx',     service:'FedEx Express Saver',  eta:'1–2 días hábiles' },
+      { id:'redpack-terrestre',  name:'Redpack',   service:'Redpack Terrestre',    eta:'3–5 días hábiles' },
+      { id:'redpack-express',    name:'Redpack',   service:'Redpack Express',      eta:'1–2 días hábiles' },
+      { id:'dhl-express',        name:'DHL',       service:'DHL Express',          eta:'1–3 días hábiles' }
+    ];
+    renderCarriers(mockCarriers, cp, isGDL);
+  }, 900);
+}
+
+function renderCarriers(carriers, cp, showGDL){
+  document.getElementById('carriersLoading').classList.remove('active');
+  document.getElementById('cpHint').className = 'cp-hint';
+  document.getElementById('cpHint').textContent = 'Paqueterías disponibles para CP ' + cp + '.';
+  var container = document.getElementById('shippingOptions');
+  container.innerHTML = '';
+  if(!carriers || carriers.length === 0){ showCarriersError(); return; }
+  carriers.forEach(function(c, i){
+    var div = document.createElement('div');
+    div.className = 'shipping-option' + (i === 0 ? ' selected' : '');
+    div.dataset.shipping = c.id;
+    div.dataset.cost = 0;
+    div.setAttribute('onclick','selectShipping(this)');
+    div.innerHTML =
+      '<div class="ship-radio"><div class="ship-dot"></div></div>' +
+      '<div class="shipping-details">' +
+        '<div class="shipping-name">' + c.name + ' — ' + c.service + '</div>' +
+        '<div class="shipping-desc">' + c.eta + '</div>' +
+      '</div>' +
+      '<div class="shipping-price" style="color:rgba(15,15,15,.35);font-size:11px;">Por confirmar</div>';
+    container.appendChild(div);
+  });
+  if(showGDL){
+    var gdlDiv = document.createElement('div');
+    gdlDiv.className = 'shipping-option';
+    gdlDiv.dataset.shipping = 'gdl';
+    gdlDiv.dataset.cost = 0;
+    gdlDiv.setAttribute('onclick','selectShipping(this)');
+    gdlDiv.innerHTML =
+      '<div class="ship-radio"><div class="ship-dot"></div></div>' +
+      '<div class="shipping-details">' +
+        '<div class="shipping-name">Entrega en GDL — Casa Blanca</div>' +
+        '<div class="shipping-desc">Retiro en sucursal · Disponible a partir del día hábil siguiente</div>' +
+      '</div>' +
+      '<div class="shipping-price free-tag">Sin costo</div>';
+    container.appendChild(gdlDiv);
+  }
+  document.getElementById('shippingCostNote').classList.add('active');
+  shippingCost = 0;
+  updateTotals();
+}
+
+function showCarriersError(){
+  document.getElementById('carriersLoading').classList.remove('active');
+  document.getElementById('carriersError').classList.add('active');
+  document.getElementById('cpHint').className = 'cp-hint';
+  document.getElementById('cpHint').textContent = '';
+}
+
+/* PROMO */
+function applyPromo(){var code=document.getElementById('promoInput').value.trim().toUpperCase();if(!code){showToast('Ingresa un código promocional.',true);return;}if(code==='HERA10'){discountAmount=Math.round(getSub()*0.10);updateTotals();showToast('¡Código aplicado! 10% de descuento.');}else if(code==='HERA20'){discountAmount=Math.round(getSub()*0.20);updateTotals();showToast('¡Código aplicado! 20% de descuento.');}else{showToast('Código no válido.',true);}}
+
+/* TOAST */
+function showToast(msg,isErr){var old=document.querySelector('.toast');if(old)old.remove();var t=document.createElement('div');t.className='toast'+(isErr?' err':'');t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show');});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove();},300);},3000);}
+
+/* SUBMIT */
+var pTimer=null;
+function submitCheckout(){
+  if(currentStep<3){showToast('Completa todos los pasos primero.',true);return;}
+  var btn=document.getElementById('payBtn'),txt=document.getElementById('payBtnText');
+  btn.disabled=true;var d=0;
+  pTimer=setInterval(function(){d=(d+1)%4;txt.textContent='PROCESANDO'+'.'.repeat(d);},380);
+  updateStepIndicator(4);
+  setTimeout(function(){
+    clearInterval(pTimer);btn.disabled=false;
+    txt.textContent='Pagar ahora — '+document.getElementById('valTotal').textContent;
+    /* Generar número de orden */
+    var orderNum='HERA-'+(Date.now().toString(36)+Math.random().toString(36).slice(2,6)).toUpperCase().slice(0,8);
+    /* Leer datos del formulario */
+    var selectedMethod=document.querySelector('.payment-option.selected');
+    var orderData={
+      orderNum:   orderNum,
+      fecha:      new Date().toLocaleDateString('es-MX',{day:'numeric',month:'long',year:'numeric'}),
+      nombre:     document.getElementById('ck-nombre').value.trim()+' '+document.getElementById('ck-apellidos').value.trim(),
+      email:      document.getElementById('ck-email').value.trim(),
+      telefono:   document.getElementById('ck-telefono').value.trim(),
+      metodo:     selectedMethod?selectedMethod.dataset.method:'card',
+      total:      document.getElementById('valTotal').textContent,
+      descuento:  document.getElementById('valDiscount').textContent,
+      envio:      document.getElementById('valShipping').textContent,
+      items:      JSON.parse(localStorage.getItem('hera_cart')||'[]'),
+      direccion:{
+        calle:  document.getElementById('ck-calle').value.trim(),
+        ciudad: document.getElementById('ck-ciudad').value.trim(),
+        estado: document.getElementById('ck-estado').value,
+        cp:     document.getElementById('ck-cp').value.trim()
+      }
+    };
+    /* Guardar orden y limpiar carrito */
+    localStorage.setItem('hera_last_order',JSON.stringify(orderData));
+    localStorage.removeItem('hera_cart');
+    /* Redirigir a confirmación */
+    window.location.href='confirmacion.html';
+  },2200);
+}
+
+loadCart();
+</script>
+</body>
+</html>

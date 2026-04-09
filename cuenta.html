@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mi Cuenta — HERA Perfumes & Joyería</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --red:   #E1222B;
+    --cream: #F9F9F9;
+    --black: #0F0F0F;
+    --lgray: #E6E6E6;
+    --dgray: #2E2E2E;
+    --sans:  'Instrument Sans', sans-serif;
+    --serif: 'Cormorant Garamond', serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { font-family: var(--sans); background: var(--cream); color: var(--black); overflow-x: clip; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--red); }
+
+  /* SITE-WRAP — max-width centrado (Design System v4)
+     overflow-x: clip para no crear scroll container interno */
+  .site-wrap {
+    max-width: 1440px;
+    margin: 0 auto;
+    overflow-x: clip;
+    position: relative;
+  }
+
+  /* ANNOUNCE */
+  .announce { background: var(--red); overflow: hidden; padding: 14px 0; display: flex; width: 100%; }
+  .announce-track { display: flex; animation: marquee 36s linear infinite; white-space: nowrap; }
+  .announce-track span { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: #fff; padding: 0 40px; }
+  .announce-track span.dot { color: rgba(255,255,255,.45); padding: 0; }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(249,249,249,.92); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid rgba(249,249,249,.35); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; width: 100%; }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; height: 64px; }
+  .nav-links li { display: flex; align-items: center; height: 100%; }
+  .nav-links a { text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); transition: color .2s; display: flex; align-items: center; height: 100%; }
+  .nav-links a:hover { color: var(--red); }
+  .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; text-decoration: none; z-index: 101; }
+  #logo-placeholder { height: 36px; min-width: 130px; border: 1.5px dashed rgba(15,15,15,.18); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(15,15,15,.3); padding: 0 16px; background: var(--cream); }
+  .nav-icons { display: flex; gap: 22px; align-items: center; }
+  .nav-icons button, .nav-icons a { background: none; border: none; cursor: pointer; color: var(--black); text-decoration: none; transition: color .2s; }
+  .nav-icons button:hover, .nav-icons a:hover { color: var(--red); }
+  .nav-item { position: relative; display: flex; align-items: center; height: 64px; }
+  .nav-item > a { display: flex; align-items: center; gap: 5px; height: 100%; }
+  .nav-item > a > svg { transition: transform .2s; }
+  .nav-item:hover > a > svg { transform: rotate(180deg); }
+  .nav-item::after { content: ''; position: absolute; bottom: -1px; left: -20px; right: -20px; height: 8px; background: transparent; }
+  .nav-dropdown { position: absolute; top: 100%; left: 0; background: var(--cream); border: 1px solid var(--lgray); border-top: none; min-width: 180px; opacity: 0; visibility: hidden; transition: opacity .18s, visibility .18s; z-index: 200; }
+  .nav-item:hover .nav-dropdown { opacity: 1; visibility: visible; }
+  .nav-dropdown-item { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); transition: color .2s, background .2s; cursor: default; gap: 12px; }
+  .nav-dropdown-item:last-child { border-bottom: none; }
+  .nav-dropdown-item:hover { color: var(--red); background: rgba(225,34,43,.03); }
+  .nav-dropdown-item svg { opacity: .35; flex-shrink: 0; }
+  .nav-flyout { position: absolute; top: -1px; left: 100%; background: var(--cream); border: 1px solid var(--lgray); min-width: 180px; opacity: 0; visibility: hidden; transition: opacity .15s, visibility .15s; z-index: 201; }
+  .nav-dropdown-item:hover .nav-flyout { opacity: 1; visibility: visible; }
+  .nav-flyout-label { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.28); padding: 12px 18px 6px; }
+  .nav-flyout a { display: flex; align-items: center; gap: 8px; padding: 11px 18px; font-size: 12px; font-weight: 500; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); transition: color .2s, background .2s; letter-spacing: .06em; }
+  .nav-flyout a:last-child { border-bottom: none; }
+  .nav-flyout a:hover { color: var(--red); background: rgba(225,34,43,.03); }
+  .nav-flyout a::before { content: ''; width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: .4; flex-shrink: 0; }
+  .nav-dropdown-badge { font-size: 9px; font-weight: 700; letter-spacing: .08em; background: var(--lgray); color: rgba(46,46,46,.5); padding: 2px 6px; text-transform: uppercase; }
+  .nav-hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--black); padding: 6px; flex-direction: column; gap: 5px; align-items: center; justify-content: center; z-index: 102; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: currentColor; transition: transform .25s ease, opacity .25s ease; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* MOBILE NAV */
+  .nav-mobile-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.5); z-index: 150; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s, visibility .3s; }
+  .nav-mobile-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .nav-mobile-panel { position: fixed; top: 0; left: 0; bottom: 0; width: min(300px, 85vw); background: var(--cream); z-index: 160; transform: translateX(-100%); transition: transform .35s cubic-bezier(.4,0,.2,1); overflow-y: auto; overflow-x: hidden; pointer-events: none; }
+  .nav-mobile-panel.open { transform: translateX(0); pointer-events: auto; }
+  .nav-mobile-header { padding: 16px 20px; border-bottom: 1px solid var(--lgray); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .nav-mobile-close { background: none; border: none; cursor: pointer; color: var(--dgray); padding: 4px; }
+  .nav-mobile-links { padding: 8px 0; }
+  .nav-mobile-link { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); cursor: pointer; transition: color .2s; }
+  .nav-mobile-link:hover, .nav-mobile-link.active { color: var(--red); }
+  .nav-mobile-link svg { transition: transform .2s; }
+  .nav-mobile-link.active svg { transform: rotate(180deg); }
+  .nav-mobile-sub { max-height: 0; overflow: hidden; transition: max-height .3s ease; background: rgba(15,15,15,.02); }
+  .nav-mobile-sub.open { max-height: 500px; }
+  .nav-mobile-sub-label { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.28); padding: 12px 32px 4px; }
+  .nav-mobile-sub a { display: flex; align-items: center; gap: 8px; padding: 12px 32px; font-size: 12px; font-weight: 500; color: var(--dgray); text-decoration: none; border-bottom: 1px solid rgba(15,15,15,.05); transition: color .2s; letter-spacing: .06em; }
+  .nav-mobile-sub a::before { content: ''; width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: .4; flex-shrink: 0; }
+  .nav-mobile-sub a:hover { color: var(--red); }
+
+  /* SEARCH */
+  .search-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.7); z-index: 1000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .25s, visibility .25s; }
+  .search-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .search-box { position: absolute; top: 0; left: 0; right: 0; background: var(--cream); padding: 20px 24px 24px; box-shadow: 0 8px 40px rgba(15,15,15,.2); transform: translateY(-100%); transition: transform .3s cubic-bezier(.4,0,.2,1); }
+  .search-overlay.open .search-box { transform: translateY(0); }
+  .search-input-row { display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--black); padding-bottom: 12px; margin-bottom: 16px; }
+  .search-input-row svg { color: rgba(15,15,15,.4); flex-shrink: 0; }
+  #search-input { flex: 1; border: none; background: transparent; font-family: var(--sans); font-size: 18px; font-weight: 500; color: var(--black); outline: none; border-radius: 0; }
+  #search-input::placeholder { color: rgba(15,15,15,.35); }
+  #search-close-btn { background: none; border: none; cursor: pointer; color: rgba(15,15,15,.5); padding: 4px; flex-shrink: 0; transition: color .2s; }
+  #search-close-btn:hover { color: var(--red); }
+  #search-results { max-height: 60vh; overflow-y: auto; }
+  .search-hint { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.35); padding: 8px 0; }
+
+  /* CART */
+  .cart-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.45); z-index: 800; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s, visibility .3s; }
+  .cart-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 420px; background: var(--cream); z-index: 900; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; box-shadow: -8px 0 40px rgba(15,15,15,.15); }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-drawer-header { padding: 24px 28px; border-bottom: 1px solid var(--lgray); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .cart-drawer-title { font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--black); }
+  .cart-drawer-close { background: none; border: none; cursor: pointer; color: var(--dgray); padding: 4px; display: flex; align-items: center; transition: color .2s; }
+  .cart-drawer-close:hover { color: var(--red); }
+  .cart-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 60px 28px; }
+  .cart-empty svg { opacity: .2; }
+  .cart-empty p { font-family: var(--serif); font-size: 17px; font-style: italic; font-weight: 300; color: rgba(15,15,15,.4); text-align: center; }
+  .cart-items { flex: 1; overflow-y: auto; padding: 0; }
+  .cart-item { display: flex; gap: 16px; padding: 20px 28px; border-bottom: 1px solid var(--lgray); align-items: center; }
+  .cart-item-img { width: 72px; height: 72px; flex-shrink: 0; background: var(--dgray); display: flex; align-items: center; justify-content: center; }
+  .cart-item-info { flex: 1; min-width: 0; }
+  .cart-item-brand { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.4); margin-bottom: 3px; }
+  .cart-item-name { font-family: var(--serif); font-size: 16px; font-weight: 300; font-style: italic; color: var(--black); margin-bottom: 6px; }
+  .cart-item-price { font-size: 13px; font-weight: 700; color: var(--black); }
+  .cart-item-qty { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+  .qty-btn { width: 26px; height: 26px; border: 1px solid var(--lgray); background: none; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; color: var(--black); transition: border-color .2s, background .2s; border-radius: 0; }
+  .qty-btn:hover { border-color: var(--black); background: var(--black); color: #fff; }
+  .qty-num { font-size: 13px; font-weight: 700; min-width: 18px; text-align: center; }
+  .cart-item-remove { background: var(--red); border: none; cursor: pointer; color: #fff; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .2s; border-radius: 0; }
+  .cart-item-remove:hover { background: #c41c24; }
+  .cart-footer { padding: 24px 28px; border-top: 1px solid var(--lgray); flex-shrink: 0; background: var(--cream); }
+  .cart-subtotal { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .cart-subtotal-label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: rgba(15,15,15,.5); }
+  .cart-subtotal-value { font-size: 18px; font-weight: 700; color: var(--black); }
+  .cart-checkout-btn { width: 100%; background: var(--black); color: #fff; border: none; padding: 18px; font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; transition: background .2s; margin-bottom: 10px; border-radius: 0; }
+  .cart-checkout-btn:hover { background: var(--red); }
+  .cart-continue-btn { width: 100%; background: transparent; color: var(--black); border: 1px solid var(--lgray); padding: 14px; font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: border-color .2s; border-radius: 0; }
+  .cart-continue-btn:hover { border-color: var(--black); }
+
+  /* CURSOR */
+  .cursor { width: 8px; height: 8px; background: var(--red); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform .15s; transform: translate(-50%,-50%); }
+  .cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(225,34,43,.3); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform .08s linear, width .25s, height .25s; transform: translate(-50%,-50%); }
+
+  /* ════════════════════════════════════════
+     AUTH SCENE — track horizontal (sin position absolute)
+     Ambos paneles están en el DOM en flujo normal,
+     el track se desliza con translateX. Así el body
+     mantiene altura real y el scroll funciona.
+  ════════════════════════════════════════ */
+  .auth-main { width: 100%; }
+
+  /* Escenario: overflow:hidden en AMBAS direcciones.
+     overflow-x:hidden solo crea scroll containers implicitos
+     que interfieren con el scroll del body. */
+  .auth-scene {
+    overflow: hidden;
+    width: 100%;
+    max-width: 100vw;
+    position: relative;
+  }
+
+  /* Track: usa % para respetar el ancho del site-wrap */
+  .auth-track {
+    display: flex;
+    width: 200%;
+    transition: transform .55s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  /* Al activar registro: desplaza exactamente 50% del track = 100% del escenario */
+  .auth-scene.show-register .auth-track {
+    transform: translateX(-50%);
+  }
+
+  /* Cada panel = 50% del track = 100% del escenario */
+  .auth-panel {
+    width: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    min-height: calc(100vh - 102px);
+    box-sizing: border-box;
+  }
+
+  /* Login: fondo oscuro */
+  .auth-panel-login {
+    background: #0c0907;
+    position: relative;
+  }
+  .auth-panel-login::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 55% 65% at 50% 45%,
+      rgba(225,34,43,.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* Registro: fondo claro */
+  .auth-panel-register {
+    background: var(--cream);
+  }
+
+  /* Inner — limita ancho del formulario */
+  .auth-panel-inner { width: 100%; max-width: 420px; position: relative; z-index: 2; }
+
+  /* EYEBROW */
+  .auth-eyebrow {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 11px; font-weight: 600; letter-spacing: .25em;
+    text-transform: uppercase; color: var(--red); margin-bottom: 24px;
+  }
+  .auth-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--red); flex-shrink: 0; }
+
+  /* TÍTULOS */
+  .auth-title { line-height: .92; margin-bottom: 16px; }
+  .auth-title .t-sans {
+    font-family: var(--sans); font-size: clamp(36px, 4vw, 52px); font-weight: 700;
+    letter-spacing: -.02em; color: var(--cream); display: block; line-height: .92;
+  }
+  .auth-title .t-serif {
+    font-family: var(--serif); font-size: clamp(36px, 4vw, 52px); font-weight: 300;
+    font-style: italic; color: rgba(249,249,249,.45); display: block; line-height: 1.1;
+  }
+  .auth-panel-register .auth-title .t-sans  { color: var(--black); }
+  .auth-panel-register .auth-title .t-serif { color: rgba(15,15,15,.35); }
+
+  .auth-subtitle {
+    font-family: var(--serif); font-size: 17px; font-weight: 300;
+    color: rgba(249,249,249,.42); line-height: 1.65; max-width: 360px; margin-bottom: 40px;
+  }
+  .auth-panel-register .auth-subtitle { color: rgba(15,15,15,.72); }
+
+  /* FORM */
+  .auth-form { display: flex; flex-direction: column; gap: 20px; width: 100%; }
+  .auth-field { display: flex; flex-direction: column; }
+
+  .auth-label {
+    font-size: 10px; font-weight: 600; letter-spacing: .15em;
+    text-transform: uppercase; color: rgba(249,249,249,.35); margin-bottom: 6px;
+  }
+  .auth-panel-register .auth-label { color: rgba(15,15,15,.45); }
+
+  .auth-input-wrap { position: relative; }
+
+  .auth-input {
+    width: 100%; background: rgba(249,249,249,.07); border: 1px solid rgba(249,249,249,.12);
+    padding: 14px 16px; font-family: var(--sans); font-size: 13px;
+    color: rgba(249,249,249,.7); outline: none; border-radius: 0;
+    transition: border-color .2s; -webkit-appearance: none;
+  }
+  .auth-input::placeholder { color: rgba(249,249,249,.22); }
+  .auth-input:focus   { border-color: var(--red); }
+  .auth-input.error   { border-color: var(--red) !important; }
+  .auth-input.success { border-color: #2a9d5c !important; }
+
+  .auth-panel-register .auth-input { background: #fff; border: 1px solid var(--lgray); color: var(--black); }
+  .auth-panel-register .auth-input::placeholder { color: rgba(15,15,15,.28); }
+  .auth-panel-register .auth-input:focus { border-color: var(--black); }
+
+  /* Password toggle */
+  .pwd-toggle {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer; padding: 4px;
+    color: rgba(249,249,249,.3); transition: color .2s;
+    display: flex; align-items: center; border-radius: 0;
+  }
+  .pwd-toggle:hover { color: rgba(249,249,249,.75); }
+  .auth-panel-register .pwd-toggle       { color: rgba(15,15,15,.3); }
+  .auth-panel-register .pwd-toggle:hover { color: rgba(15,15,15,.7); }
+  .auth-input[type="password"], .auth-input[type="text"] { padding-right: 44px; }
+
+  /* Validation icon */
+  .val-icon { position: absolute; right: 40px; top: 50%; transform: translateY(-50%); font-size: 14px; display: none; pointer-events: none; }
+
+  /* Error */
+  .auth-err { font-size: 11px; color: var(--red); margin-top: 5px; display: none; }
+  .auth-err.show { display: block; }
+
+  /* Forgot */
+  .auth-forgot { font-size: 11px; color: rgba(249,249,249,.32); text-align: right; text-decoration: none; margin-top: -10px; transition: color .2s; display: block; }
+  .auth-forgot:hover { color: var(--red); }
+
+  /* Buttons */
+  .auth-btn-primary {
+    background: var(--red); color: #fff; border: none; padding: 16px;
+    font-family: var(--sans); font-size: 12px; font-weight: 700;
+    letter-spacing: .15em; text-transform: uppercase; cursor: pointer;
+    width: 100%; border-radius: 0; transition: background .2s, transform .15s;
+  }
+  .auth-btn-primary:hover    { background: #c41c24; transform: translateY(-1px); }
+  .auth-btn-primary:disabled { opacity: .7; cursor: not-allowed; transform: none; }
+
+  /* Invitado — discreto, sin borde, texto subtle */
+  .auth-btn-guest {
+    background: transparent; color: rgba(249,249,249,.3); border: none;
+    padding: 10px; font-family: var(--sans); font-size: 11px; font-weight: 500;
+    letter-spacing: .06em; cursor: pointer; width: 100%; border-radius: 0;
+    transition: color .2s; text-align: center;
+  }
+  .auth-btn-guest:hover { color: rgba(249,249,249,.65); }
+  .auth-btn-guest span { border-bottom: 1px solid rgba(249,249,249,.15); padding-bottom: 1px; }
+
+  /* Separator */
+  .auth-sep { display: flex; align-items: center; gap: 12px; }
+  .auth-sep::before, .auth-sep::after { content: ''; flex: 1; height: 1px; background: rgba(249,249,249,.13); }
+  .auth-sep span { font-size: 11px; font-weight: 600; color: rgba(249,249,249,.22); letter-spacing: .1em; }
+  .auth-panel-register .auth-sep::before, .auth-panel-register .auth-sep::after { background: var(--lgray); }
+  .auth-panel-register .auth-sep span { color: rgba(15,15,15,.3); }
+
+  /* Google */
+  .auth-btn-google {
+    background: transparent; border: 1px solid rgba(249,249,249,.14);
+    color: rgba(249,249,249,.55); padding: 14px 16px; font-family: var(--sans);
+    font-size: 11px; font-weight: 600; letter-spacing: .10em; text-transform: uppercase;
+    cursor: pointer; width: 100%; border-radius: 0;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: border-color .2s, color .2s;
+  }
+  .auth-btn-google:hover { border-color: rgba(249,249,249,.32); color: rgba(249,249,249,.8); }
+  .auth-panel-register .auth-btn-google { border: 1px solid var(--lgray); color: rgba(15,15,15,.5); }
+  .auth-panel-register .auth-btn-google:hover { border-color: var(--black); color: var(--black); }
+
+  /* Switch */
+  .auth-switch { font-size: 11px; color: rgba(249,249,249,.28); text-align: center; }
+  .auth-switch a { color: var(--red); font-weight: 600; cursor: pointer; text-decoration: none; }
+  .auth-switch a:hover { text-decoration: underline; }
+  .auth-panel-register .auth-switch { color: rgba(15,15,15,.38); }
+
+  /* Password strength */
+  .pwd-bars { display: flex; gap: 4px; margin-top: 8px; }
+  .pwd-bar { flex: 1; height: 4px; background: rgba(249,249,249,.1); transition: background .25s; }
+  .auth-panel-register .pwd-bar { background: var(--lgray); }
+  .pwd-bar.weak   { background: var(--red); }
+  .pwd-bar.fair   { background: #e18022; }
+  .pwd-bar.good   { background: #2a9d5c; }
+  .pwd-bar.strong { background: #1a6b3c; }
+  .pwd-label { font-size: 10px; color: rgba(249,249,249,.35); margin-top: 4px; }
+  .auth-panel-register .pwd-label { color: rgba(15,15,15,.42); }
+
+  /* Disclaimer */
+  .auth-disclaimer { font-size: 11px; color: rgba(15,15,15,.35); line-height: 1.6; margin-top: -8px; }
+  .auth-disclaimer a { color: rgba(15,15,15,.35); text-decoration: underline; transition: color .2s; }
+  .auth-disclaimer a:hover { color: var(--red); }
+
+  /* DOTS — centrados debajo del track, fondo acorde al panel activo */
+  .auth-dots {
+    display: flex; justify-content: center; gap: 8px;
+    padding: 20px 0 24px;
+    background: #0c0907;
+    transition: background .55s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .auth-scene.show-register .auth-dots { background: var(--cream); }
+  .auth-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(249,249,249,.2); transition: background .3s, width .3s, height .3s; }
+  .auth-dot.active { width: 8px; height: 8px; background: var(--red); }
+  .auth-scene.show-register .auth-dot        { background: rgba(15,15,15,.18); }
+  .auth-scene.show-register .auth-dot.active { background: var(--red); }
+
+  /* MINIMAL FOOTER */
+  .footer-min {
+    background: var(--black); padding: 20px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px; border-top: 1px solid rgba(249,249,249,.06);
+  }
+  .footer-min-copy { font-size: 11px; color: rgba(249,249,249,.2); }
+  .footer-min-links { display: flex; gap: 24px; }
+  .footer-min-links a { font-size: 11px; color: rgba(249,249,249,.25); text-decoration: none; letter-spacing: .06em; transition: color .2s; }
+  .footer-min-links a:hover { color: rgba(249,249,249,.7); }
+
+  /* SUCCESS OVERLAY */
+  .auth-success-overlay {
+    position: fixed; inset: 0; background: rgba(12,9,7,.92); z-index: 2000;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: opacity .35s, visibility .35s;
+  }
+  .auth-success-overlay.show { opacity: 1; visibility: visible; }
+  .auth-success-box { text-align: center; padding: 60px 48px; border: 1px solid rgba(249,249,249,.1); max-width: 380px; display:flex; flex-direction:column; align-items:center; }
+  .auth-success-icon { width: 52px; height: 52px; border: 1px solid rgba(249,249,249,.18); display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; }
+  .auth-success-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--red); margin-bottom: 16px; }
+  .auth-success-msg { font-family: var(--serif); font-size: 30px; font-weight: 300; font-style: italic; color: rgba(249,249,249,.6); line-height: 1.3; }
+
+  /* TABLET */
+  @media (max-width: 1024px) {
+    nav { padding: 0 24px; }
+    .nav-links { gap: 20px; }
+    .auth-panel { padding: 60px 32px; }
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .cursor, .cursor-ring { display: none; }
+    nav { padding: 0 16px; height: 56px; background: rgba(249,249,249,.98); backdrop-filter: none; -webkit-backdrop-filter: none; }
+    .nav-links { display: none !important; }
+    .nav-hamburger { display: flex; }
+    .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); }
+    #logo-placeholder { min-width: 88px; font-size: 10px; padding: 0 10px; height: 30px; }
+    .nav-icons { gap: 14px; }
+    .nav-icons .hide-mobile { display: none !important; }
+    #fav-menu-wrap { display: none !important; }
+    .auth-main  { width: 100%; }
+    .auth-panel { width: 100vw; padding: 48px 24px 60px; min-height: calc(100vh - 94px); align-items: flex-start; }
+    .auth-panel-inner { max-width: 100%; }
+    .auth-title .t-sans, .auth-title .t-serif { font-size: clamp(32px, 8vw, 42px); }
+    .cart-drawer { width: 100%; }
+    .footer-min { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 10px; }
+    .footer-min-links { gap: 16px; flex-wrap: wrap; }
+  }
+
+  /* TOUCH */
+  button, a, .nav-mobile-link, .nav-mobile-overlay, #mobileProductosToggle, #mobileCuentaToggle {
+    cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="nav-mobile-overlay" id="navMobileOverlay"></div>
+
+<div class="nav-mobile-panel" id="navMobilePanel">
+  <div class="nav-mobile-header">
+    <div style="width:32px;"></div>
+    <div style="flex:1;display:flex;justify-content:center;">
+      <div style="height:32px;min-width:110px;border:1.5px dashed rgba(15,15,15,.18);display:flex;align-items:center;justify-content:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(15,15,15,.3);padding:0 14px;background:var(--cream);">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg>
+        Tu logo aquí
+      </div>
+    </div>
+    <button class="nav-mobile-close" id="navMobileClose">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="nav-mobile-links">
+    <a href="index.html" class="nav-mobile-link">Inicio</a>
+    <div class="nav-mobile-link" id="mobileProductosToggle">Productos
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <div class="nav-mobile-sub" id="mobileProductosSub">
+      <div class="nav-mobile-sub-label">Perfumes</div>
+      <a href="catalogo.html?cat=diseñador">Diseñador</a><a href="catalogo.html?cat=nicho">Nicho</a><a href="catalogo.html?cat=arabes">Árabes</a>
+      <a href="catalogo.html?cat=body-mist">Body Mist</a><a href="catalogo.html?cat=testers">Testers</a><a href="catalogo.html?cat=decants">Decants</a><a href="catalogo.html?cat=sets">Sets</a>
+      <div class="nav-mobile-sub-label" style="margin-top:8px;">Joyería</div>
+      <a href="catalogo.html?tab=joyeria&cat=anillos">Anillos</a><a href="catalogo.html?tab=joyeria&cat=brazaletes">Brazaletes</a><a href="catalogo.html?tab=joyeria&cat=aretes">Aretes</a><a href="catalogo.html?tab=joyeria&cat=collares">Collares</a>
+    </div>
+    <a href="nosotros.html" class="nav-mobile-link">Nosotros</a>
+    <div class="nav-mobile-link" id="mobileCuentaToggle" style="border-top:1px solid var(--lgray);">Mi cuenta
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <div class="nav-mobile-sub" id="mobileCuentaSub">
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;color:var(--dgray);text-decoration:none;border-bottom:1px solid rgba(15,15,15,.05);letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>Mis pedidos</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;color:var(--dgray);text-decoration:none;border-bottom:1px solid rgba(15,15,15,.05);letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>Datos personales</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;color:var(--dgray);text-decoration:none;letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Direcciones guardadas</a>
+    </div>
+    <div style="padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--lgray);">
+      <span style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--black);">Mis favoritos</span>
+      <span id="fav-count-mobile" style="font-size:11px;color:rgba(15,15,15,.4);">0 productos</span>
+    </div>
+    <div id="fav-list-mobile" style="max-height:280px;overflow-y:auto;">
+      <div id="fav-empty-mobile" style="padding:28px 24px;text-align:center;">
+        <p style="font-size:13px;color:rgba(15,15,15,.35);font-family:var(--serif);font-style:italic;">Aún no tienes favoritos</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="site-wrap">
+<nav>
+  <button class="nav-hamburger" id="navHamburger" type="button" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li class="nav-item">
+      <a href="#">Productos <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-item" onclick="if(!event.target.closest('a')){location.href='catalogo.html?tab=perfumes';}" style="cursor:pointer;">Perfumes
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          <div class="nav-flyout">
+            <div class="nav-flyout-label">Categorías</div>
+            <a href="catalogo.html?cat=diseñador">Diseñador</a><a href="catalogo.html?cat=nicho">Nicho</a><a href="catalogo.html?cat=arabes">Árabes</a>
+            <a href="catalogo.html?cat=body-mist">Body Mist</a><a href="catalogo.html?cat=testers">Testers</a><a href="catalogo.html?cat=decants">Decants</a><a href="catalogo.html?cat=sets">Sets</a>
+          </div>
+        </div>
+        <div class="nav-dropdown-item" onclick="if(!event.target.closest('a')){location.href='catalogo.html?tab=joyeria';}" style="cursor:pointer;">Joyería
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          <div class="nav-flyout">
+            <div class="nav-flyout-label">Categorías</div>
+            <a href="catalogo.html?tab=joyeria&cat=anillos">Anillos</a><a href="catalogo.html?tab=joyeria&cat=brazaletes">Brazaletes</a><a href="catalogo.html?tab=joyeria&cat=aretes">Aretes</a><a href="catalogo.html?tab=joyeria&cat=collares">Collares</a>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li><a href="nosotros.html">Nosotros</a></li>
+  </ul>
+ <a href="#" class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    <div id="logo-placeholder">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg>
+      Tu logo aquí
+    </div>
+  </a>
+  <div class="nav-icons">
+    <button id="search-btn" title="Buscar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+    <div style="position:relative;" id="account-menu-wrap" class="hide-mobile">
+      <button id="account-toggle" title="Cuenta" style="display:flex;align-items:center;background:none;border:none;cursor:pointer;color:var(--red);transition:color .2s;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
+      </button>
+      <div id="account-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;width:220px;background:var(--cream);border:1px solid var(--lgray);z-index:500;box-shadow:0 8px 32px rgba(15,15,15,.12);">
+        <a href="#" style="display:flex;align-items:center;gap:12px;padding:16px 20px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dgray);text-decoration:none;border-bottom:1px solid var(--lgray);transition:color .2s,background .2s;" onmouseover="this.style.color='var(--red)';this.style.background='rgba(225,34,43,.03)'" onmouseout="this.style.color='var(--dgray)';this.style.background=''"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>Mis pedidos</a>
+        <a href="#" style="display:flex;align-items:center;gap:12px;padding:16px 20px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dgray);text-decoration:none;border-bottom:1px solid var(--lgray);transition:color .2s,background .2s;" onmouseover="this.style.color='var(--red)';this.style.background='rgba(225,34,43,.03)'" onmouseout="this.style.color='var(--dgray)';this.style.background=''"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>Datos personales</a>
+        <a href="#" style="display:flex;align-items:center;gap:12px;padding:16px 20px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dgray);text-decoration:none;transition:color .2s,background .2s;" onmouseover="this.style.color='var(--red)';this.style.background='rgba(225,34,43,.03)'" onmouseout="this.style.color='var(--dgray)';this.style.background=''"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Direcciones guardadas</a>
+      </div>
+    </div>
+    <div style="position:relative;" id="fav-menu-wrap" class="hide-mobile">
+      <button id="fav-toggle" title="Favoritos" style="position:relative;display:flex;align-items:center;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span id="fav-count" style="position:absolute;top:-4px;right:-6px;width:16px;height:16px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center;">0</span>
+      </button>
+      <div id="fav-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;width:320px;background:var(--cream);border:1px solid var(--lgray);z-index:500;box-shadow:0 8px 32px rgba(15,15,15,.12);">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--lgray);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--black);">Mis favoritos</span>
+          <span id="fav-count-label" style="font-size:11px;color:rgba(15,15,15,.4);">0 productos</span>
+        </div>
+        <div id="fav-list" style="max-height:360px;overflow-y:auto;">
+          <div id="fav-empty" style="padding:40px 20px;text-align:center;">
+            <p style="font-size:13px;color:rgba(15,15,15,.35);font-family:var(--serif);font-style:italic;">Aún no tienes favoritos</p>
+          </div>
+        </div>
+        <div id="fav-add-all" style="display:none;padding:12px 20px;border-top:1px solid var(--lgray);">
+          <button onclick="addAllFavsToCart()" style="width:100%;background:var(--black);color:#fff;border:none;padding:12px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s;border-radius:0;display:flex;align-items:center;justify-content:center;gap:8px;" onmouseover="this.style.background='var(--red)'" onmouseout="this.style.background='var(--black)'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>Agregar todo al carrito</button>
+        </div>
+      </div>
+    </div>
+    <button id="cart-btn" title="Carrito" style="position:relative;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span id="cart-count" style="position:absolute;top:-4px;right:-6px;width:16px;height:16px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center;">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-input-row">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="Buscar perfumes, marcas..." autocomplete="off" />
+      <button id="search-close-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div id="search-results"><p class="search-hint">Busca por nombre o marca</p></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="auth-main">
+  <div class="auth-scene" id="authScene">
+
+    <div class="auth-track" id="authTrack">
+
+    <!-- PANEL LOGIN -->
+    <div class="auth-panel auth-panel-login" id="panelLogin">
+      <div class="auth-panel-inner">
+        <div class="auth-eyebrow">Mi cuenta</div>
+        <div class="auth-title">
+          <span class="t-sans">Bienvenido</span>
+          <span class="t-serif">de vuelta.</span>
+        </div>
+        <p class="auth-subtitle">Accede a tu cuenta para ver tus pedidos, favoritos y direcciones guardadas.</p>
+        <form class="auth-form" novalidate onsubmit="return false;">
+          <div class="auth-field">
+            <label class="auth-label" for="login-email">Email</label>
+            <div class="auth-input-wrap">
+              <input class="auth-input" type="email" id="login-email" placeholder="tu@email.com" autocomplete="email" />
+            </div>
+            <span class="auth-err" id="err-login-email">Ingresa un email válido.</span>
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="login-pass">Contraseña</label>
+            <div class="auth-input-wrap">
+              <input class="auth-input" type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" />
+              <button type="button" class="pwd-toggle" onclick="togglePwd('login-pass',this)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <span class="auth-err" id="err-login-pass">Este campo es obligatorio.</span>
+          </div>
+          <a href="#" class="auth-forgot">¿Olvidaste tu contraseña?</a>
+          <button type="button" class="auth-btn-primary" id="btn-login" onclick="submitForm('login')">Iniciar sesión</button>
+          <button type="button" class="auth-btn-guest" onclick="submitForm('guest')"><span>Continuar como invitado →</span></button>
+          <div class="auth-sep"><span>O</span></div>
+          <button type="button" class="auth-btn-google">
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.6 4.418 1.582L19.91 3A11.867 11.867 0 0 0 12 0C7.27 0 3.198 2.698 1.24 6.65l4.026 3.115z"/><path fill="#34A853" d="M16.04 18.013c-1.09.703-2.474 1.078-4.04 1.078a7.077 7.077 0 0 1-6.723-4.777L1.24 17.35C3.198 21.302 7.27 24 12 24c3.27 0 6.345-1.194 8.618-3.22l-4.577-2.767z"/><path fill="#4A90E2" d="M20.618 20.78C22.93 18.634 24.364 15.5 24.364 12c0-.705-.077-1.39-.21-2.045H12v4.09h6.945c-.318 1.636-1.217 2.967-2.527 3.868l4.2 2.867z"/><path fill="#FBBC05" d="M5.277 14.314A7.11 7.11 0 0 1 4.909 12c0-.805.14-1.577.368-2.314L1.24 6.65A11.926 11.926 0 0 0 0 12c0 1.923.46 3.736 1.24 5.35l4.037-3.036z"/></svg>
+            Continuar con Google
+          </button>
+          <p class="auth-switch">¿Primera vez en HERA? <a onclick="switchToRegister()">Crear cuenta →</a></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- PANEL REGISTRO -->
+    <div class="auth-panel auth-panel-register" id="panelRegister">
+      <div class="auth-panel-inner">
+        <div class="auth-eyebrow">Nueva cuenta</div>
+        <div class="auth-title">
+          <span class="t-sans">Únete</span>
+          <span class="t-serif">a HERA.</span>
+        </div>
+        <p class="auth-subtitle">Crea tu cuenta y accede a lanzamientos exclusivos, historial de pedidos y más.</p>
+        <form class="auth-form" novalidate onsubmit="return false;">
+          <div class="auth-field">
+            <label class="auth-label" for="reg-name">Nombre</label>
+            <div class="auth-input-wrap">
+              <input class="auth-input" type="text" id="reg-name" placeholder="Tu nombre completo" autocomplete="name" />
+            </div>
+            <span class="auth-err" id="err-reg-name">Este campo es obligatorio.</span>
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="reg-email">Email</label>
+            <div class="auth-input-wrap">
+              <input class="auth-input" type="email" id="reg-email" placeholder="tu@email.com" autocomplete="email" />
+            </div>
+            <span class="auth-err" id="err-reg-email">Ingresa un email válido.</span>
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="reg-pass">Contraseña</label>
+            <div class="auth-input-wrap">
+              <input class="auth-input" type="password" id="reg-pass" placeholder="Mínimo 8 caracteres" autocomplete="new-password" oninput="checkStrength(this.value)" />
+              <button type="button" class="pwd-toggle" onclick="togglePwd('reg-pass',this)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div class="pwd-bars"><div class="pwd-bar" id="b1"></div><div class="pwd-bar" id="b2"></div><div class="pwd-bar" id="b3"></div><div class="pwd-bar" id="b4"></div></div>
+            <p class="pwd-label" id="pwd-label"></p>
+            <span class="auth-err" id="err-reg-pass">Este campo es obligatorio.</span>
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="reg-pass2">Confirmar contraseña</label>
+            <div class="auth-input-wrap">
+              <input class="auth-input" type="password" id="reg-pass2" placeholder="Repite tu contraseña" autocomplete="new-password" oninput="checkMatch()" />
+              <button type="button" class="pwd-toggle" onclick="togglePwd('reg-pass2',this)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+              <span class="val-icon" id="match-icon"></span>
+            </div>
+            <span class="auth-err" id="err-reg-pass2">Las contraseñas no coinciden.</span>
+          </div>
+          <button type="button" class="auth-btn-primary" id="btn-register" onclick="submitForm('register')">Crear cuenta</button>
+          <div class="auth-sep"><span>O</span></div>
+          <button type="button" class="auth-btn-google">
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.6 4.418 1.582L19.91 3A11.867 11.867 0 0 0 12 0C7.27 0 3.198 2.698 1.24 6.65l4.026 3.115z"/><path fill="#34A853" d="M16.04 18.013c-1.09.703-2.474 1.078-4.04 1.078a7.077 7.077 0 0 1-6.723-4.777L1.24 17.35C3.198 21.302 7.27 24 12 24c3.27 0 6.345-1.194 8.618-3.22l-4.577-2.767z"/><path fill="#4A90E2" d="M20.618 20.78C22.93 18.634 24.364 15.5 24.364 12c0-.705-.077-1.39-.21-2.045H12v4.09h6.945c-.318 1.636-1.217 2.967-2.527 3.868l4.2 2.867z"/><path fill="#FBBC05" d="M5.277 14.314A7.11 7.11 0 0 1 4.909 12c0-.805.14-1.577.368-2.314L1.24 6.65A11.926 11.926 0 0 0 0 12c0 1.923.46 3.736 1.24 5.35l4.037-3.036z"/></svg>
+            Continuar con Google
+          </button>
+          <p class="auth-disclaimer">Al crear una cuenta aceptas nuestros <a href="terminos.html">Términos y condiciones</a> y <a href="aviso-privacidad.html">Política de privacidad</a>.</p>
+          <p class="auth-switch">¿Ya tienes cuenta? <a onclick="switchToLogin()">Iniciar sesión →</a></p>
+        </form>
+      </div>
+    </div><!-- /auth-panel-register -->
+
+    </div><!-- /auth-track -->
+
+    <!-- DOTS — fuera del track, parte del flujo normal -->
+    <div class="auth-dots">
+      <div class="auth-dot active" id="dot-login"></div>
+      <div class="auth-dot" id="dot-reg"></div>
+    </div>
+
+  </div><!-- /auth-scene -->
+</main>
+
+<!-- FOOTER MÍNIMO -->
+<footer class="footer-min">
+  <span class="footer-min-copy">© 2025 HERA Perfumes & Joyería. Todos los derechos reservados.</span>
+  <div class="footer-min-links">
+    <a href="terminos.html">Términos y condiciones</a>
+    <a href="aviso-privacidad.html">Política de privacidad</a>
+    <a href="#">Contacto</a>
+  </div>
+</footer>
+</div><!-- /site-wrap -->
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-header">
+    <span class="cart-drawer-title">Tu carrito <span id="cart-drawer-count" style="color:rgba(15,15,15,.4);font-weight:400;">(0)</span></span>
+    <button class="cart-drawer-close" id="cart-close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="cart-items" id="cart-items-list"></div>
+  <div class="cart-empty" id="cart-empty" style="display:none;">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <p>Tu carrito está vacío.<br>Explora nuestra colección.</p>
+  </div>
+  <div class="cart-footer" id="cart-footer" style="display:none;">
+    <div style="margin-bottom:18px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-size:11px;color:rgba(15,15,15,.5);">Envío gratis a partir de</span><span style="font-size:11px;font-weight:700;color:var(--black);">$1,500 MXN</span></div>
+      <div style="height:3px;background:var(--lgray);border-radius:2px;"><div id="shipping-bar" style="height:100%;background:var(--red);border-radius:2px;transition:width .4s ease;width:0;"></div></div>
+      <p id="shipping-msg" style="font-size:11px;color:rgba(15,15,15,.4);margin-top:6px;"></p>
+    </div>
+    <div class="cart-subtotal"><span class="cart-subtotal-label">Subtotal</span><span class="cart-subtotal-value" id="cart-total">$0 MXN</span></div>
+    <p style="font-size:11px;color:rgba(15,15,15,.35);margin-bottom:20px;">Impuestos e información de envío calculados al finalizar.</p>
+    <button class="cart-checkout-btn" onclick="window.location.href='checkout.html'">Proceder al pago →</button>
+    <button class="cart-continue-btn" onclick="closeCart()">Seguir comprando</button>
+  </div>
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="auth-success-overlay" id="successOverlay">
+  <div class="auth-success-box">
+    <div class="auth-success-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,.55)" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg>
+    </div>
+    <p class="auth-success-eyebrow" id="success-eyebrow">Éxito</p>
+    <p class="auth-success-msg"    id="success-msg">Bienvenido de vuelta.</p>
+    <a id="success-link" href="home.html" style="display:none;margin-top:28px;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(249,249,249,.35);text-decoration:none;border-bottom:1px solid rgba(249,249,249,.15);padding-bottom:2px;transition:color .2s;" onmouseover="this.style.color='rgba(249,249,249,.8)'" onmouseout="this.style.color='rgba(249,249,249,.35)'">Ir a la tienda →</a>
+  </div>
+</div>
+
+<script>
+/* CATALOG */
+var CATALOG = [
+  {id:'jenny-1',brand:'Jenny Rivera',name:'Inolvidable EDP',price:'$1,210 MXN'},
+  {id:'fierce-2',brand:'Abercrombie & Fitch',name:'Fierce EDT',price:'$760 MXN'},
+  {id:'authentic-3',brand:'Abercrombie & Fitch',name:'Authentic EDP',price:'$975 MXN'},
+  {id:'signature-4',brand:'HERA Exclusivo',name:'Signature Blanc',price:'$1,490 MXN'},
+];
+
+/* SEARCH */
+var searchOverlay=document.getElementById('search-overlay');
+var searchInput=document.getElementById('search-input');
+var searchResults=document.getElementById('search-results');
+function openSearch(){ searchOverlay.classList.add('open'); document.body.style.overflow='hidden'; setTimeout(function(){ searchInput.focus(); },280); }
+function closeSearch(){ searchOverlay.classList.remove('open'); document.body.style.overflow=''; searchInput.value=''; searchResults.innerHTML='<p class="search-hint">Busca por nombre o marca</p>'; }
+document.getElementById('search-btn').addEventListener('click',openSearch);
+document.getElementById('search-close-btn').addEventListener('click',closeSearch);
+searchOverlay.addEventListener('click',function(e){ if(e.target===searchOverlay) closeSearch(); });
+var sd; searchInput.addEventListener('input',function(){
+  clearTimeout(sd); sd=setTimeout(function(){
+    var q=searchInput.value.trim().toLowerCase();
+    if(!q){ searchResults.innerHTML='<p class="search-hint">Busca por nombre o marca</p>'; return; }
+    var hits=CATALOG.filter(function(p){ return (p.name+' '+p.brand).toLowerCase().includes(q); });
+    if(!hits.length){ searchResults.innerHTML='<p class="search-hint">Sin resultados</p>'; return; }
+    searchResults.innerHTML=hits.map(function(p){ return '<div style="display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid #E6E6E6;cursor:pointer;"><div style="width:44px;height:44px;background:#2E2E2E;flex-shrink:0;"></div><div><div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(15,15,15,.4);">'+p.brand+'</div><div style="font-family:var(--serif);font-size:15px;font-style:italic;font-weight:300;color:var(--black);">'+p.name+'</div><div style="font-size:12px;font-weight:700;color:var(--black);">'+p.price+'</div></div></div>'; }).join('');
+  },180);
+});
+
+/* MOBILE NAV */
+var hamburger=document.getElementById('navHamburger');
+var mobilePanel=document.getElementById('navMobilePanel');
+var mobOvl=document.getElementById('navMobileOverlay');
+function openNav(){ hamburger.classList.add('open'); mobilePanel.classList.add('open'); mobOvl.classList.add('open'); document.body.style.overflow='hidden'; }
+function closeNav(){ hamburger.classList.remove('open'); mobilePanel.classList.remove('open'); mobOvl.classList.remove('open'); document.body.style.overflow=''; }
+hamburger.addEventListener('click',function(e){ e.stopPropagation(); mobilePanel.classList.contains('open')?closeNav():openNav(); });
+document.getElementById('navMobileClose').addEventListener('click',closeNav);
+mobOvl.addEventListener('click',closeNav);
+document.getElementById('mobileProductosToggle').addEventListener('click',function(e){ e.stopPropagation(); document.getElementById('mobileProductosSub').classList.toggle('open'); this.classList.toggle('active'); });
+document.getElementById('mobileCuentaToggle').addEventListener('click',function(e){ e.stopPropagation(); document.getElementById('mobileCuentaSub').classList.toggle('open'); this.classList.toggle('active'); });
+
+/* ACCOUNT + FAV DROPDOWNS */
+var accToggle=document.getElementById('account-toggle');
+var accDrop=document.getElementById('account-dropdown');
+var favDrop=document.getElementById('fav-dropdown');
+if(accToggle){ accToggle.addEventListener('click',function(e){ e.stopPropagation(); if(favDrop) favDrop.style.display='none'; accDrop.style.display=accDrop.style.display==='block'?'none':'block'; }); accDrop.addEventListener('click',function(e){ e.stopPropagation(); }); }
+var favToggle=document.getElementById('fav-toggle');
+if(favToggle){ favToggle.addEventListener('click',function(e){ e.stopPropagation(); if(accDrop) accDrop.style.display='none'; favDrop.style.display=favDrop.style.display==='block'?'none':'block'; }); favDrop.addEventListener('click',function(e){ e.stopPropagation(); }); }
+document.addEventListener('click',function(){ if(accDrop) accDrop.style.display='none'; if(favDrop) favDrop.style.display='none'; });
+
+/* CART — renderizar desde localStorage */
+var cartBtn=document.getElementById('cart-btn');
+var cartDrawer=document.getElementById('cart-drawer');
+var cartOvl=document.getElementById('cart-overlay');
+var cartItemsList=document.getElementById('cart-items-list');
+var cartEmpty=document.getElementById('cart-empty');
+var cartFooter=document.getElementById('cart-footer');
+var cartTotalEl=document.getElementById('cart-total');
+var cartDrawerCountEl=document.getElementById('cart-drawer-count');
+var shippingBarEl=document.getElementById('shipping-bar');
+var shippingMsgEl=document.getElementById('shipping-msg');
+var FREE_SHIP=1500;
+
+function openCart(){ cartDrawer.classList.add('open'); cartOvl.classList.add('open'); document.body.style.overflow='hidden'; }
+function closeCart(){ cartDrawer.classList.remove('open'); cartOvl.classList.remove('open'); document.body.style.overflow=''; }
+cartBtn.addEventListener('click',openCart);
+document.getElementById('cart-close').addEventListener('click',closeCart);
+cartOvl.addEventListener('click',closeCart);
+
+function parseMXN(s){return parseInt(String(s).replace(/[^0-9]/g,''))||0;}
+
+function loadCartDrawer(){
+  var items=[];
+  try{var raw=localStorage.getItem('hera_cart');if(raw)items=JSON.parse(raw);}catch(e){items=[];}
+  cartItemsList.innerHTML='';
+  if(items&&items.length){
+    items.forEach(function(it){
+      var el=document.createElement('div');el.className='cart-item';el.dataset.cartId=it.id;
+      el.innerHTML='<div class="cart-item-img"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><div class="cart-item-info"><div class="cart-item-brand">'+it.brand+'</div><div class="cart-item-name">'+it.name+'</div><div class="cart-item-price">'+it.price+'</div><div class="cart-item-qty"><button class="qty-btn qty-minus">−</button><span class="qty-num">'+it.qty+'</span><button class="qty-btn qty-plus">+</button></div></div><button class="cart-item-remove" title="Eliminar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>';
+      cartItemsList.appendChild(el);
+      bindCartItemCuenta(el);
+    });
+  }
+  updateCartDrawerTotals();
+}
+
+function bindCartItemCuenta(item){
+  item.querySelector('.qty-minus').addEventListener('click',function(){
+    var q=item.querySelector('.qty-num'),v=parseInt(q.textContent);
+    if(v>1){q.textContent=v-1;saveAndUpdate();}
+  });
+  item.querySelector('.qty-plus').addEventListener('click',function(){
+    var q=item.querySelector('.qty-num');q.textContent=parseInt(q.textContent)+1;saveAndUpdate();
+  });
+  item.querySelector('.cart-item-remove').addEventListener('click',function(){item.remove();saveAndUpdate();});
+}
+
+function saveAndUpdate(){
+  var items=[];
+  cartItemsList.querySelectorAll('.cart-item').forEach(function(el){
+    items.push({id:el.dataset.cartId,brand:el.querySelector('.cart-item-brand').textContent,name:el.querySelector('.cart-item-name').textContent,price:el.querySelector('.cart-item-price').textContent,qty:parseInt(el.querySelector('.qty-num').textContent)});
+  });
+  localStorage.setItem('hera_cart',JSON.stringify(items));
+  updateCartDrawerTotals();
+}
+
+function updateCartDrawerTotals(){
+  var items=cartItemsList.querySelectorAll('.cart-item');
+  var total=0;
+  items.forEach(function(item){total+=parseMXN(item.querySelector('.cart-item-price').textContent)*parseInt(item.querySelector('.qty-num').textContent);});
+  var count=Array.from(items).reduce(function(s,i){return s+parseInt(i.querySelector('.qty-num').textContent);},0);
+  cartTotalEl.textContent='$'+total.toLocaleString('es-MX')+' MXN';
+  cartCountBadge.textContent=count;cartCountBadge.style.display=count>0?'flex':'none';
+  cartDrawerCountEl.textContent='('+count+')';
+  var pct=Math.min((total/FREE_SHIP)*100,100);
+  shippingBarEl.style.width=pct+'%';
+  if(total>=FREE_SHIP){shippingMsgEl.innerHTML='🎉 <span style="color:var(--black);font-weight:600;">¡Tienes envío gratis!</span>';shippingBarEl.style.background='#2e7d32';}
+  else if(total>0){shippingMsgEl.innerHTML='Te faltan <span style="color:var(--red);font-weight:600;">$'+(FREE_SHIP-total).toLocaleString('es-MX')+' MXN</span> para envío gratis';shippingBarEl.style.background='var(--red)';}
+  else{shippingMsgEl.innerHTML='';}
+  cartEmpty.style.display=count===0?'flex':'none';
+  cartFooter.style.display=count===0?'none':'block';
+}
+
+/* ══════════════════════════════════════
+   CARRITO — badge + agregar desde favoritos
+══════════════════════════════════════ */
+var cartCountBadge=document.getElementById('cart-count');
+
+loadCartDrawer();
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeSearch(); closeCart(); } });
+
+/* Agregar al carrito desde esta página (via favoritos) */
+function addToCartFromFav(id,brand,name,price){
+  var items=[];
+  try{var raw=localStorage.getItem('hera_cart');if(raw)items=JSON.parse(raw);}catch(e){items=[];}
+  var existing=items.find(function(c){return c.id===id;});
+  if(existing){existing.qty++;}
+  else{items.push({id:id,brand:brand,name:name,price:price,qty:1});}
+  localStorage.setItem('hera_cart',JSON.stringify(items));
+  loadCartDrawer();
+  cartCountBadge.style.transform='scale(1.5)';setTimeout(function(){cartCountBadge.style.transform='scale(1)';},200);
+}
+
+function addAllFavsToCart(){
+  if(!favoritesData.length)return;
+  favoritesData.forEach(function(f){addToCartFromFav(f.id,f.brand,f.name,f.price);});
+}
+
+/* ══════════════════════════════════════
+   FAVORITOS — Cargar desde localStorage
+══════════════════════════════════════ */
+var favCountBadge=document.getElementById('fav-count');
+var favCountLabel=document.getElementById('fav-count-label');
+var favList=document.getElementById('fav-list');
+var favEmptyEl=document.getElementById('fav-empty');
+var favCountMobile=document.getElementById('fav-count-mobile');
+var favListMobile=document.getElementById('fav-list-mobile');
+var favEmptyMobile=document.getElementById('fav-empty-mobile');
+var favoritesData=[];
+
+try{var sf=localStorage.getItem('hera_favs');if(sf)favoritesData=JSON.parse(sf);}catch(e){favoritesData=[];}
+
+function renderFavsCuenta(){
+  var label=favoritesData.length+(favoritesData.length===1?' producto':' productos');
+  if(favCountLabel)favCountLabel.textContent=label;
+  if(favCountMobile)favCountMobile.textContent=label;
+  if(favoritesData.length>0){
+    if(favCountBadge){favCountBadge.style.display='flex';favCountBadge.textContent=favoritesData.length;}
+    if(favEmptyEl)favEmptyEl.style.display='none';
+    if(favEmptyMobile)favEmptyMobile.style.display='none';
+  }else{
+    if(favCountBadge)favCountBadge.style.display='none';
+    if(favEmptyEl)favEmptyEl.style.display='block';
+    if(favEmptyMobile)favEmptyMobile.style.display='block';
+  }
+  if(favList){
+    Array.from(favList.children).forEach(function(c){if(c.id!=='fav-empty'&&c.id!=='fav-add-all')c.remove();});
+    favoritesData.forEach(function(item){favList.insertBefore(buildFavRowCuenta(item,false),favEmptyEl);});
+  }
+  if(favListMobile){
+    Array.from(favListMobile.children).forEach(function(c){if(c.id!=='fav-empty-mobile')c.remove();});
+    favoritesData.forEach(function(item){favListMobile.insertBefore(buildFavRowCuenta(item,true),favEmptyMobile);});
+  }
+  var addAllBtn=document.getElementById('fav-add-all');
+  if(addAllBtn)addAllBtn.style.display=favoritesData.length>0?'block':'none';
+}
+
+function buildFavRowCuenta(item,isMobile){
+  var row=document.createElement('div');row.dataset.favId=item.id;
+  row.style.cssText='display:flex;align-items:center;gap:14px;padding:14px '+(isMobile?'24px':'20px')+';border-bottom:1px solid var(--lgray);';
+  row.innerHTML='<div style="width:52px;height:52px;flex-shrink:0;background:var(--lgray);display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.25)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><div style="flex:1;min-width:0;"><div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(15,15,15,.4);margin-bottom:3px;">'+item.brand+'</div><div style="font-family:var(--serif);font-size:15px;font-weight:300;font-style:italic;color:var(--black);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+item.name+'</div><div style="font-size:12px;font-weight:700;color:var(--black);margin-top:2px;">'+item.price+'</div></div><div style="display:flex;gap:6px;flex-shrink:0;"><button data-add-cart="'+item.id+'" style="background:var(--black);border:none;cursor:pointer;color:#fff;width:26px;height:26px;display:flex;align-items:center;justify-content:center;transition:background .2s;" title="Agregar al carrito"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button><button data-remove="'+item.id+'" style="background:var(--red);border:none;cursor:pointer;color:#fff;width:26px;height:26px;display:flex;align-items:center;justify-content:center;" title="Quitar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>';
+  row.querySelector('[data-add-cart]').addEventListener('click',function(e){
+    e.stopPropagation();
+    addToCartFromFav(item.id,item.brand,item.name,item.price);
+    this.style.background='#2e7d32';this.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>';
+    var btn=this;setTimeout(function(){btn.style.background='var(--black)';btn.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>';},1200);
+  });
+  row.querySelector('[data-remove]').addEventListener('click',function(e){
+    e.stopPropagation();
+    var id=e.currentTarget.dataset.remove;
+    favoritesData=favoritesData.filter(function(f){return f.id!==id;});
+    localStorage.setItem('hera_favs',JSON.stringify(favoritesData));
+    renderFavsCuenta();
+  });
+  return row;
+}
+
+renderFavsCuenta();
+
+/* CURSOR */
+var cursor=document.getElementById('cursor');
+var ring=document.getElementById('cursorRing');
+if(cursor && window.innerWidth>768){
+  var mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){ mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'; });
+  (function tick(){ rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(tick); })();
+  document.querySelectorAll('a,button').forEach(function(el){
+    el.addEventListener('mouseenter',function(){ cursor.style.transform='translate(-50%,-50%) scale(2)';ring.style.width='60px';ring.style.height='60px'; });
+    el.addEventListener('mouseleave',function(){ cursor.style.transform='translate(-50%,-50%) scale(1)';ring.style.width='36px';ring.style.height='36px'; });
+  });
+}
+
+/* PANEL SWITCHING */
+var scene=document.getElementById('authScene');
+var dotL=document.getElementById('dot-login');
+var dotR=document.getElementById('dot-reg');
+function switchToRegister(){ scene.classList.add('show-register'); dotL.classList.remove('active'); dotR.classList.add('active'); document.getElementById('panelRegister').scrollTop=0; }
+function switchToLogin(){ scene.classList.remove('show-register'); dotL.classList.add('active'); dotR.classList.remove('active'); document.getElementById('panelLogin').scrollTop=0; }
+
+/* TOGGLE PASSWORD */
+function togglePwd(id,btn){
+  var inp=document.getElementById(id); var show=inp.type==='password'; inp.type=show?'text':'password';
+  btn.innerHTML=show
+    ?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
+    :'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+}
+
+/* STRENGTH */
+function checkStrength(pw){
+  var bars=['b1','b2','b3','b4'].map(function(id){ return document.getElementById(id); });
+  var label=document.getElementById('pwd-label');
+  var lvl=['weak','fair','good','strong']; var nm=['Débil','Regular','Fuerte','Muy fuerte'];
+  bars.forEach(function(b){ b.className='pwd-bar'; });
+  if(!pw){ label.textContent=''; return; }
+  var s=0;
+  if(pw.length>=8) s++; if(/[A-Z]/.test(pw)) s++; if(/[0-9]/.test(pw)) s++; if(/[^a-zA-Z0-9]/.test(pw)) s++;
+  for(var i=0;i<s;i++) bars[i].classList.add(lvl[s-1]);
+  label.textContent='Fortaleza: '+nm[s-1];
+}
+
+/* MATCH */
+function checkMatch(){
+  var p1=document.getElementById('reg-pass').value;
+  var p2=document.getElementById('reg-pass2');
+  var ico=document.getElementById('match-icon');
+  var err=document.getElementById('err-reg-pass2');
+  if(!p2.value){ p2.className='auth-input'; ico.style.display='none'; err.classList.remove('show'); return true; }
+  if(p1===p2.value){ p2.className='auth-input success'; ico.innerHTML='<span style="color:#2a9d5c;">✓</span>'; ico.style.display='block'; err.classList.remove('show'); return true; }
+  p2.className='auth-input error'; ico.innerHTML='<span style="color:#E1222B;">✗</span>'; ico.style.display='block'; err.classList.add('show'); return false;
+}
+
+/* VALIDATION */
+function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+function setErr(iid,eid,msg){ document.getElementById(iid).classList.add('error'); var e=document.getElementById(eid); e.textContent=msg; e.classList.add('show'); }
+function clrErr(iid,eid){ document.getElementById(iid).classList.remove('error'); document.getElementById(eid).classList.remove('show'); }
+var fm={'login-email':'err-login-email','login-pass':'err-login-pass','reg-name':'err-reg-name','reg-email':'err-reg-email','reg-pass':'err-reg-pass','reg-pass2':'err-reg-pass2'};
+Object.keys(fm).forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener('input',function(){ clrErr(id,fm[id]); }); });
+function validate(type){
+  var ok=true;
+  if(type==='login'){
+    clrErr('login-email','err-login-email'); clrErr('login-pass','err-login-pass');
+    if(!isEmail(document.getElementById('login-email').value.trim())) { setErr('login-email','err-login-email','Ingresa un email válido.'); ok=false; }
+    if(!document.getElementById('login-pass').value) { setErr('login-pass','err-login-pass','Este campo es obligatorio.'); ok=false; }
+  }
+  if(type==='register'){
+    clrErr('reg-name','err-reg-name'); clrErr('reg-email','err-reg-email'); clrErr('reg-pass','err-reg-pass');
+    if(!document.getElementById('reg-name').value.trim()) { setErr('reg-name','err-reg-name','Este campo es obligatorio.'); ok=false; }
+    if(!isEmail(document.getElementById('reg-email').value.trim())) { setErr('reg-email','err-reg-email','Ingresa un email válido.'); ok=false; }
+    if(!document.getElementById('reg-pass').value) { setErr('reg-pass','err-reg-pass','Este campo es obligatorio.'); ok=false; }
+    if(!checkMatch()) ok=false;
+  }
+  return ok;
+}
+
+/* SUBMIT */
+var pTimer=null;
+function submitForm(type){
+  if(type!=='guest' && !validate(type)) return;
+  var btnId=type==='login'?'btn-login':(type==='register'?'btn-register':null);
+  var btn=btnId?document.getElementById(btnId):null;
+  var d=0;
+  if(btn){ btn.disabled=true; pTimer=setInterval(function(){ d=(d+1)%4; btn.textContent='PROCESANDO'+'.'.repeat(d); },380); }
+  setTimeout(function(){
+    if(btn){ clearInterval(pTimer); btn.disabled=false; btn.textContent=type==='login'?'INICIAR SESIÓN':'CREAR CUENTA'; }
+
+    // Guardar estado de sesión (excepto invitado)
+    if(type==='login' || type==='register'){
+      localStorage.setItem('hera_logged_in','1');
+    }
+
+    var ov=document.getElementById('successOverlay');
+    var ey=document.getElementById('success-eyebrow');
+    var mg=document.getElementById('success-msg');
+    var lnk=document.getElementById('success-link');
+
+    if(type==='login'){ ey.textContent='Sesión iniciada'; mg.textContent='Bienvenido de vuelta.'; }
+    else if(type==='register'){ ey.textContent='Cuenta creada'; mg.textContent='Bienvenido a HERA.'; }
+    else { ey.textContent='Modo invitado'; mg.textContent='Explorando como invitado.'; }
+
+    if(lnk) lnk.style.display = 'block';
+    ov.classList.add('show');
+    ov.addEventListener('click',function(){ ov.classList.remove('show'); },{once:true});
+    setTimeout(function(){
+      ov.classList.remove('show');
+      if(type!=='guest') setTimeout(function(){ window.location.href='index.html'; },350);
+    },2800);
+  }, type==='guest'?400:2000);
+}
+</script>
+</body>
+</html>

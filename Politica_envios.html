@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Política de Envíos — HERA Perfumes & Joyería</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --red:   #E1222B;
+    --cream: #F9F9F9;
+    --black: #0F0F0F;
+    --lgray: #E6E6E6;
+    --dgray: #2E2E2E;
+    --sans:  'Instrument Sans', sans-serif;
+    --serif: 'Cormorant Garamond', serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { font-family: var(--sans); background: var(--cream); color: var(--black); overflow-x: clip; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--red); }
+  .site-wrap { max-width: 1440px; margin: 0 auto; overflow-x: clip; position: relative; }
+
+  /* ── ANNOUNCE ── */
+  .announce { background: var(--red); overflow: hidden; padding: 14px 0; display: flex; width: 100%; }
+  .announce-track { display: flex; animation: marquee 36s linear infinite; white-space: nowrap; }
+  .announce-track span { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: #fff; padding: 0 40px; }
+  .announce-track span.dot { color: rgba(255,255,255,.45); padding: 0; }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* ── NAV ── */
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(249,249,249,.92); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid rgba(249,249,249,.35); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; width: 100%; box-sizing: border-box; }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; height: 64px; }
+  .nav-links li { display: flex; align-items: center; height: 100%; }
+  .nav-links a { text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); transition: color .2s; display: flex; align-items: center; height: 100%; }
+  .nav-links a:hover, .nav-links a.active { color: var(--red); }
+  .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; text-decoration: none; z-index: 101; }
+  #logo-placeholder { height: 36px; min-width: 130px; border: 1.5px dashed rgba(15,15,15,.18); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(15,15,15,.3); padding: 0 16px; background: var(--cream); }
+  .nav-icons { display: flex; gap: 22px; align-items: center; }
+  .nav-icons button, .nav-icons a { background: none; border: none; cursor: pointer; color: var(--black); text-decoration: none; transition: color .2s; font-size: 18px; }
+  .nav-icons button:hover, .nav-icons a:hover { color: var(--red); }
+  .nav-item { position: relative; display: flex; align-items: center; height: 64px; }
+  .nav-item > a { display: flex; align-items: center; gap: 5px; height: 100%; }
+  .nav-item > a > svg { transition: transform .2s; }
+  .nav-item:hover > a > svg { transform: rotate(180deg); }
+  .nav-item::after { content: ''; position: absolute; bottom: -1px; left: -20px; right: -20px; height: 8px; background: transparent; }
+  .nav-dropdown { position: absolute; top: 100%; left: 0; background: var(--cream); border: 1px solid var(--lgray); border-top: none; min-width: 180px; opacity: 0; visibility: hidden; transition: opacity .18s, visibility .18s; z-index: 200; }
+  .nav-item:hover .nav-dropdown { opacity: 1; visibility: visible; }
+  .nav-dropdown-item { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); transition: color .2s, background .2s; cursor: default; gap: 12px; }
+  .nav-dropdown-item:last-child { border-bottom: none; }
+  .nav-dropdown-item:hover { color: var(--red); background: rgba(225,34,43,.03); }
+  .nav-dropdown-item svg { opacity: .35; flex-shrink: 0; }
+  .nav-flyout { position: absolute; top: -1px; left: 100%; background: var(--cream); border: 1px solid var(--lgray); min-width: 180px; opacity: 0; visibility: hidden; transition: opacity .15s, visibility .15s; z-index: 201; }
+  .nav-dropdown-item:hover .nav-flyout { opacity: 1; visibility: visible; }
+  .nav-flyout-label { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.28); padding: 12px 18px 6px; }
+  .nav-flyout a { display: flex; align-items: center; gap: 8px; padding: 11px 18px; font-size: 12px; font-weight: 500; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); transition: color .2s, background .2s; letter-spacing: .06em; }
+  .nav-flyout a:last-child { border-bottom: none; }
+  .nav-flyout a:hover { color: var(--red); background: rgba(225,34,43,.03); }
+  .nav-flyout a::before { content: ''; width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: .4; flex-shrink: 0; }
+  .nav-hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--black); padding: 6px; flex-direction: column; gap: 5px; align-items: center; justify-content: center; z-index: 102; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: currentColor; transition: transform .25s ease, opacity .25s ease; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-mobile-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.5); z-index: 150; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s, visibility .3s; }
+  .nav-mobile-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .nav-mobile-panel { position: fixed; top: 0; left: 0; bottom: 0; width: min(300px, 85vw); background: var(--cream); z-index: 160; transform: translateX(-100%); transition: transform .35s cubic-bezier(.4,0,.2,1); overflow-y: auto; overflow-x: hidden; pointer-events: none; }
+  .nav-mobile-panel.open { transform: translateX(0); pointer-events: auto; }
+  .nav-mobile-header { padding: 16px 20px; border-bottom: 1px solid var(--lgray); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .nav-mobile-close { background: none; border: none; cursor: pointer; color: var(--dgray); padding: 4px; }
+  .nav-mobile-links { padding: 8px 0; }
+  .nav-mobile-link { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); cursor: pointer; transition: color .2s; }
+  .nav-mobile-link:hover, .nav-mobile-link.active { color: var(--red); }
+  .nav-mobile-link svg { transition: transform .2s; }
+  .nav-mobile-link.active svg { transform: rotate(180deg); }
+  .nav-mobile-sub { max-height: 0; overflow: hidden; transition: max-height .3s ease; background: rgba(15,15,15,.02); }
+  .nav-mobile-sub.open { max-height: 500px; }
+  .nav-mobile-sub-label { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.28); padding: 12px 32px 4px; }
+  .nav-mobile-sub a { display: flex; align-items: center; gap: 8px; padding: 12px 32px; font-size: 12px; font-weight: 500; color: var(--dgray); text-decoration: none; border-bottom: 1px solid rgba(15,15,15,.05); transition: color .2s; letter-spacing: .06em; }
+  .nav-mobile-sub a:before { content: ''; width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: .4; flex-shrink: 0; }
+  .nav-mobile-sub a:hover { color: var(--red); }
+
+  /* ── SEARCH ── */
+  .search-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.7); z-index: 1000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .25s, visibility .25s; }
+  .search-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .search-box { position: absolute; top: 0; left: 0; right: 0; background: var(--cream); padding: 20px 24px 24px; box-shadow: 0 8px 40px rgba(15,15,15,.2); transform: translateY(-100%); transition: transform .3s cubic-bezier(.4,0,.2,1); }
+  .search-overlay.open .search-box { transform: translateY(0); }
+  .search-input-row { display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--black); padding-bottom: 12px; margin-bottom: 16px; }
+  .search-input-row svg { color: rgba(15,15,15,.4); flex-shrink: 0; }
+  #search-input { flex: 1; border: none; background: transparent; font-family: var(--sans); font-size: 18px; font-weight: 500; color: var(--black); outline: none; }
+  #search-input::placeholder { color: rgba(15,15,15,.35); }
+  #search-close-btn { background: none; border: none; cursor: pointer; color: rgba(15,15,15,.5); padding: 4px; flex-shrink: 0; transition: color .2s; }
+  #search-close-btn:hover { color: var(--red); }
+  #search-results { max-height: 60vh; overflow-y: auto; }
+  .search-hint { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.35); padding: 8px 0; }
+  .search-result-item { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--lgray); cursor: pointer; }
+  .search-result-item:last-child { border-bottom: none; }
+  .search-result-item:hover .search-result-name { color: var(--red); }
+  .search-result-thumb { width: 48px; height: 48px; background: var(--dgray); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .search-result-brand { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.4); margin-bottom: 2px; }
+  .search-result-name { font-family: var(--serif); font-size: 16px; font-weight: 300; font-style: italic; color: var(--black); transition: color .2s; }
+  .search-result-price { font-size: 12px; font-weight: 700; color: var(--black); margin-top: 2px; }
+  .search-result-badge { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: var(--red); color: #fff; padding: 2px 6px; margin-top: 3px; display: inline-block; }
+  .search-empty { text-align: center; padding: 32px 0; }
+  .search-empty svg { opacity: .2; margin: 0 auto 12px; display: block; }
+  .search-empty p { font-family: var(--serif); font-size: 16px; font-style: italic; color: rgba(15,15,15,.55); }
+
+  /* ── CART ── */
+  .cart-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.45); z-index: 800; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s, visibility .3s; }
+  .cart-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 420px; background: var(--cream); z-index: 900; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; box-shadow: -8px 0 40px rgba(15,15,15,.15); }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-drawer-header { padding: 24px 28px; border-bottom: 1px solid var(--lgray); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .cart-drawer-title { font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--black); }
+  .cart-drawer-close { background: none; border: none; cursor: pointer; color: var(--dgray); padding: 4px; display: flex; align-items: center; transition: color .2s; }
+  .cart-drawer-close:hover { color: var(--red); }
+  .cart-items { flex: 1; overflow-y: auto; }
+  .cart-item { display: flex; gap: 16px; padding: 20px 28px; border-bottom: 1px solid var(--lgray); align-items: center; }
+  .cart-item-img { width: 72px; height: 72px; flex-shrink: 0; background: var(--dgray); display: flex; align-items: center; justify-content: center; }
+  .cart-item-info { flex: 1; min-width: 0; }
+  .cart-item-brand { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.4); margin-bottom: 3px; }
+  .cart-item-name { font-family: var(--serif); font-size: 16px; font-weight: 300; font-style: italic; color: var(--black); margin-bottom: 6px; }
+  .cart-item-price { font-size: 13px; font-weight: 700; color: var(--black); }
+  .cart-item-qty { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+  .qty-btn { width: 26px; height: 26px; border: 1px solid var(--lgray); background: none; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; color: var(--black); transition: border-color .2s, background .2s; }
+  .qty-btn:hover { border-color: var(--black); background: var(--black); color: #fff; }
+  .qty-num { font-size: 13px; font-weight: 600; min-width: 20px; text-align: center; }
+  .cart-item-remove { background: var(--red); border: none; cursor: pointer; color: #fff; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .cart-item-remove:hover { background: #c41c24; }
+  .cart-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 60px 28px; }
+  .cart-empty svg { opacity: .2; }
+  .cart-empty p { font-family: var(--serif); font-size: 17px; font-style: italic; color: rgba(15,15,15,.55); text-align: center; }
+  .cart-footer { padding: 24px 28px; border-top: 1px solid var(--lgray); flex-shrink: 0; background: var(--cream); }
+  .cart-subtotal { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .cart-subtotal-label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: rgba(15,15,15,.5); }
+  .cart-subtotal-value { font-size: 18px; font-weight: 700; color: var(--black); }
+  .cart-checkout-btn { width: 100%; background: var(--black); color: #fff; border: none; padding: 18px; font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; transition: background .2s; margin-bottom: 10px; }
+  .cart-checkout-btn:hover { background: var(--red); }
+  .cart-continue-btn { width: 100%; background: transparent; color: var(--black); border: 1px solid var(--lgray); padding: 14px; font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: border-color .2s; }
+  .cart-continue-btn:hover { border-color: var(--black); }
+
+  /* ── REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: .08s; }
+  .reveal-delay-2 { transition-delay: .16s; }
+  .reveal-delay-3 { transition-delay: .24s; }
+
+  /* ── CURSOR ── */
+  .cursor { width: 8px; height: 8px; background: var(--red); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform .15s; transform: translate(-50%,-50%); }
+  .cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(225,34,43,.3); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform .08s linear, width .25s, height .25s; transform: translate(-50%,-50%); }
+
+  /* ── NEWSLETTER ── */
+  .newsletter { background: var(--red); padding: 60px 80px; display: flex; align-items: center; justify-content: space-between; gap: 60px; }
+  .nl-left { flex: 1; }
+  .nl-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.58); margin-bottom: 12px; }
+  .nl-title { font-family: var(--sans); font-size: 40px; font-weight: 700; color: #fff; letter-spacing: -.02em; line-height: 1.1; }
+  .nl-title em { font-family: var(--serif); font-style: italic; font-weight: 300; }
+  .nl-right { flex: 1; max-width: 460px; }
+  .nl-form { display: flex; }
+  .nl-input { flex: 1; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.22); border-right: none; padding: 16px 20px; font-family: var(--sans); font-size: 13px; color: #fff; outline: none; }
+  .nl-input::placeholder { color: rgba(255,255,255,.48); }
+  .nl-btn { background: var(--black); color: #fff; border: none; padding: 16px 28px; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
+  .nl-btn:hover { background: var(--dgray); }
+  .nl-disclaimer { font-size: 11px; color: rgba(255,255,255,.48); margin-top: 12px; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--black); padding: 60px 80px 36px; color: var(--cream); }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+  #footer-logo-placeholder { height: 40px; min-width: 140px; border: 1.5px dashed rgba(249,249,249,.15); display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(249,249,249,.22); padding: 0 18px; margin-bottom: 20px; }
+  .footer-tagline { font-family: var(--serif); font-size: 15px; font-style: italic; color: rgba(249,249,249,.32); margin-bottom: 28px; line-height: 1.6; }
+  .footer-socials { display: flex; gap: 14px; }
+  .footer-social-btn { width: 38px; height: 38px; border: 1px solid rgba(249,249,249,.1); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color .2s, background .2s; text-decoration: none; color: rgba(249,249,249,.42); }
+  .footer-social-btn:hover { border-color: var(--red); background: var(--red); color: #fff; }
+  .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--cream); margin-bottom: 24px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-links a { font-size: 13px; color: rgba(249,249,249,.32); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--red); }
+  .footer-bottom { border-top: 1px solid rgba(249,249,249,.06); padding-top: 32px; display: flex; align-items: center; justify-content: space-between; }
+  .footer-copy { font-size: 12px; color: rgba(249,249,249,.2); }
+  .footer-payment { display: flex; gap: 10px; }
+  .payment-badge { background: rgba(249,249,249,.05); border: 1px solid rgba(249,249,249,.08); padding: 6px 12px; font-size: 11px; font-weight: 700; color: rgba(249,249,249,.38); letter-spacing: .08em; }
+
+  /* ── BOTONES GLOBALES ── */
+  .btn-primary { background: var(--red); color: #fff; border: none; padding: 16px 36px; font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: background .2s; }
+  .btn-primary:hover { background: #c41c24; }
+
+  /* ── EYEBROWS ── */
+  .eyebrow { display: flex; align-items: center; gap: 14px; font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--red); margin-bottom: 20px; }
+  .eyebrow::before, .eyebrow::after { content: ''; display: block; height: 1px; background: var(--red); }
+  .eyebrow::before { width: 28px; }
+  .eyebrow::after  { width: 14px; }
+  .eyebrow-light { display: flex; align-items: center; gap: 14px; font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: rgba(225,34,43,.7); margin-bottom: 20px; }
+  .eyebrow-light::before, .eyebrow-light::after { content: ''; display: block; height: 1px; background: rgba(225,34,43,.5); }
+  .eyebrow-light::before { width: 28px; }
+  .eyebrow-light::after  { width: 14px; }
+
+  /* ── HEADINGS ── */
+  .heading-dark { font-family: var(--sans); font-size: clamp(34px, 4.5vw, 56px); font-weight: 700; letter-spacing: -.02em; line-height: .96; color: var(--cream); margin-bottom: 20px; }
+  .heading-dark em { font-family: var(--serif); font-style: italic; font-weight: 300; color: rgba(249,249,249,.38); }
+  .heading-light { font-family: var(--sans); font-size: clamp(30px, 4vw, 50px); font-weight: 700; letter-spacing: -.02em; line-height: 1.02; color: var(--black); margin-bottom: 20px; }
+  .heading-light em { font-family: var(--serif); font-style: italic; font-weight: 300; color: var(--dgray); }
+  .body-serif-dark { font-family: var(--serif); font-size: 18px; font-weight: 400; color: rgba(249,249,249,.45); line-height: 1.75; }
+  .body-serif-light { font-family: var(--serif); font-size: 18px; font-weight: 400; color: rgba(15,15,15,.65); line-height: 1.75; }
+
+  /* ════════════════════════════════════════
+     SECCIÓN 1 — HERO  |  negro
+  ════════════════════════════════════════ */
+  .page-hero { background: var(--black); padding: 100px 80px 80px; }
+  .page-hero-inner { max-width: 720px; }
+  .hero-h1 { font-family: var(--sans); font-size: clamp(48px, 6vw, 80px); font-weight: 700; letter-spacing: -.03em; line-height: .92; color: var(--cream); margin-bottom: 28px; }
+  .hero-h1 em { font-family: var(--serif); font-weight: 300; font-style: italic; color: rgba(249,249,249,.38); }
+  .hero-sub { font-family: var(--serif); font-size: clamp(17px, 1.8vw, 20px); font-weight: 400; font-style: italic; color: rgba(249,249,249,.42); line-height: 1.7; max-width: 540px; margin-bottom: 44px; }
+  .hero-meta { display: flex; align-items: stretch; gap: 0; margin-top: 44px; border: 1px solid rgba(249,249,249,.07); }
+  .hero-meta-item { flex: 1; padding: 24px 28px; border-right: 1px solid rgba(249,249,249,.07); display: flex; flex-direction: column; gap: 6px; }
+  .hero-meta-item:last-child { border-right: none; }
+  .hero-meta-label { font-size: 9px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(249,249,249,.28); }
+  .hero-meta-value { font-size: 14px; font-weight: 700; color: rgba(249,249,249,.75); letter-spacing: -.01em; }
+  .hero-meta-note { font-size: 11px; color: rgba(249,249,249,.28); margin-top: 2px; font-style: italic; font-family: var(--serif); }
+
+  /* ════════════════════════════════════════
+     SECCIÓN 2 — CICLO DE PEDIDOS  |  cream
+  ════════════════════════════════════════ */
+  .cycle-section { background: var(--cream); padding: 80px; border-bottom: 1px solid var(--lgray); }
+  .cycle-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 52px; align-items: start; }
+  .cycle-text p { font-family: var(--serif); font-size: 18px; color: rgba(15,15,15,.65); line-height: 1.75; margin-bottom: 24px; }
+  .cycle-alert { margin-top: 32px; padding: 24px 28px; background: var(--black); border-left: 3px solid var(--red); display: flex; gap: 18px; align-items: flex-start; }
+  .cycle-alert-icon { color: var(--red); flex-shrink: 0; margin-top: 2px; }
+  .cycle-alert-title { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--cream); margin-bottom: 6px; }
+  .cycle-alert-body { font-family: var(--serif); font-size: 15px; font-style: italic; color: rgba(249,249,249,.55); line-height: 1.6; }
+  .cycle-steps { display: flex; flex-direction: column; }
+  .cycle-step { display: grid; grid-template-columns: 52px 1fr; gap: 0; border-bottom: 1px solid var(--lgray); }
+  .cycle-step:first-child { border-top: 1px solid var(--lgray); }
+  .cycle-step-day { padding: 22px 0 22px 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 4px; border-right: 1px solid var(--lgray); }
+  .cycle-step-day-name { font-size: 8px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.3); }
+  .cycle-step-day-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lgray); margin-top: 4px; }
+  .cycle-step-day-dot.active { background: var(--red); }
+  .cycle-step-body { padding: 22px 0 22px 24px; }
+  .cycle-step-title { font-size: 13px; font-weight: 700; color: var(--black); letter-spacing: -.01em; margin-bottom: 4px; }
+  .cycle-step-desc { font-family: var(--serif); font-size: 15px; color: rgba(15,15,15,.55); line-height: 1.55; }
+  .cycle-step-tag { display: inline-block; margin-top: 8px; font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 3px 8px; background: rgba(225,34,43,.09); color: var(--red); }
+
+  /* ════════════════════════════════════════
+     SECCIÓN 3 — ENTREGAS  |  negro
+  ════════════════════════════════════════ */
+  .delivery-section { background: var(--black); padding: 80px; }
+  .delivery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 52px; }
+
+  /* Estado por defecto: rojo */
+  .delivery-card {
+    background: var(--red);
+    border: 1px solid rgba(0,0,0,.12);
+    padding: 40px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: background .3s ease, border-color .3s ease;
+  }
+  .delivery-card:hover {
+    background: var(--dgray);
+    border-color: rgba(249,249,249,.06);
+  }
+
+  /* Zona eyebrow */
+  .delivery-card-zone { font-size: 9px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.55); margin-bottom: 2px; }
+  .delivery-card:hover .delivery-card-zone { color: rgba(249,249,249,.3); }
+
+  /* Título */
+  .delivery-card-title { font-family: var(--sans); font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -.02em; line-height: 1.15; }
+  .delivery-card:hover .delivery-card-title { color: var(--cream); }
+
+  /* Precio / etiqueta */
+  .delivery-card-price { font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+  .delivery-card-price.free { color: rgba(255,255,255,.9); }
+  .delivery-card-price.paid { color: rgba(255,255,255,.65); }
+  .delivery-card:hover .delivery-card-price.free { color: #66bb6a; }
+  .delivery-card:hover .delivery-card-price.paid { color: rgba(249,249,249,.45); }
+
+  /* Divisor */
+  .delivery-divider { height: 1px; background: rgba(255,255,255,.18); }
+  .delivery-card:hover .delivery-divider { background: rgba(249,249,249,.08); }
+
+  /* Features */
+  .delivery-features { display: flex; flex-direction: column; gap: 13px; }
+  .delivery-feature { display: flex; gap: 12px; align-items: flex-start; }
+  .delivery-feature-icon { color: rgba(255,255,255,.55); flex-shrink: 0; margin-top: 1px; transition: color .3s; }
+  .delivery-card:hover .delivery-feature-icon { color: rgba(249,249,249,.28); }
+  .delivery-feature-text { font-size: 13px; color: rgba(255,255,255,.82); line-height: 1.5; }
+  .delivery-feature-text strong { color: #fff; font-weight: 700; }
+  .delivery-card:hover .delivery-feature-text { color: rgba(249,249,249,.55); }
+  .delivery-card:hover .delivery-feature-text strong { color: rgba(249,249,249,.88); }
+
+  /* Branches badges */
+  .delivery-branches { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .delivery-branch { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 9px; border: 1px solid rgba(255,255,255,.25); color: rgba(255,255,255,.7); transition: border-color .3s, color .3s; }
+  .delivery-card:hover .delivery-branch { border-color: rgba(249,249,249,.1); color: rgba(249,249,249,.35); }
+
+  /* Nota inferior */
+  .delivery-note { margin-top: auto; padding: 14px 18px; border: 1px solid rgba(255,255,255,.18); font-family: var(--serif); font-size: 13px; font-style: italic; color: rgba(255,255,255,.75); line-height: 1.6; transition: border-color .3s, color .3s; }
+  .delivery-card:hover .delivery-note { border-color: rgba(249,249,249,.07); color: rgba(249,249,249,.38); }
+
+  /* ════════════════════════════════════════
+     SECCIÓN 4 — DISPONIBILIDAD  |  cream
+  ════════════════════════════════════════ */
+  .avail-section { background: var(--cream); padding: 80px; border-top: 1px solid var(--lgray); border-bottom: 1px solid var(--lgray); }
+  .avail-intro { max-width: 620px; margin-bottom: 52px; }
+  .avail-intro p { font-family: var(--serif); font-size: 18px; color: rgba(15,15,15,.6); line-height: 1.75; }
+  .avail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .avail-card { border: 1px solid var(--lgray); padding: 40px 36px; display: flex; flex-direction: column; gap: 16px; position: relative; transition: border-color .2s; }
+  .avail-card:hover { border-color: var(--black); }
+  .avail-level { font-size: 9px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(15,15,15,.28); }
+  .avail-indicator { display: flex; align-items: center; gap: 10px; }
+  .avail-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .avail-dot.green  { background: #4caf50; box-shadow: 0 0 0 3px rgba(76,175,80,.15); }
+  .avail-dot.yellow { background: #f9a825; box-shadow: 0 0 0 3px rgba(249,168,37,.15); }
+  .avail-dot.gray   { background: var(--dgray); box-shadow: 0 0 0 3px rgba(46,46,46,.1); }
+  .avail-name { font-family: var(--sans); font-size: 20px; font-weight: 700; color: var(--black); letter-spacing: -.01em; }
+  .avail-desc { font-family: var(--serif); font-size: 16px; color: rgba(15,15,15,.6); line-height: 1.65; }
+  .avail-clarify { margin-top: 4px; padding: 14px 16px; background: var(--lgray); font-size: 12px; color: rgba(15,15,15,.55); line-height: 1.55; }
+  .avail-clarify strong { color: var(--black); font-weight: 700; }
+  .avail-flow { display: flex; flex-direction: column; gap: 6px; margin-top: auto; }
+  .avail-flow-step { font-size: 11px; font-weight: 600; letter-spacing: .06em; color: rgba(15,15,15,.4); display: flex; align-items: center; gap: 8px; }
+  .avail-flow-step::before { content: ''; width: 14px; height: 1px; background: var(--red); flex-shrink: 0; }
+
+  /* ════════════════════════════════════════
+     SECCIÓN 5 — FAQ  |  negro
+  ════════════════════════════════════════ */
+  .faq-section { background: var(--black); padding: 80px; }
+  .faq-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; margin-top: 52px; align-items: start; }
+  .faq-intro p { font-family: var(--serif); font-size: 18px; font-style: italic; color: rgba(249,249,249,.42); line-height: 1.7; margin-bottom: 32px; }
+  .faq-contact-note { padding: 24px; border: 1px solid rgba(249,249,249,.07); display: flex; flex-direction: column; gap: 8px; }
+  .faq-contact-note-label { font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(249,249,249,.25); }
+  .faq-contact-note a { font-size: 13px; font-weight: 600; color: rgba(249,249,249,.55); text-decoration: none; letter-spacing: .06em; transition: color .2s; display: flex; align-items: center; gap: 8px; }
+  .faq-contact-note a:hover { color: var(--red); }
+  .faq-list { display: flex; flex-direction: column; }
+  .faq-item { border-bottom: 1px solid rgba(249,249,249,.06); }
+  .faq-item:first-child { border-top: 1px solid rgba(249,249,249,.06); }
+  .faq-question { width: 100%; background: none; border: none; text-align: left; padding: 24px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer; transition: color .2s; color: rgba(249,249,249,.75); }
+  .faq-question:hover, .faq-question.open { color: var(--cream); }
+  .faq-question-text { font-family: var(--sans); font-size: 15px; font-weight: 600; line-height: 1.4; letter-spacing: -.005em; text-align: left; }
+  .faq-chevron { flex-shrink: 0; transition: transform .3s ease; color: rgba(249,249,249,.3); }
+  .faq-question.open .faq-chevron { transform: rotate(180deg); color: var(--red); }
+  .faq-answer { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+  .faq-answer.open { max-height: 400px; }
+  .faq-answer-inner { padding: 0 0 28px; font-family: var(--serif); font-size: 16px; color: rgba(249,249,249,.45); line-height: 1.72; }
+  .faq-answer-inner strong { color: rgba(249,249,249,.72); font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .04em; }
+
+  /* ════════════════════════════════════════
+     SECCIÓN 6 — CTA  |  cream
+  ════════════════════════════════════════ */
+  .cta-section { background: var(--cream); padding: 80px; border-top: 1px solid var(--lgray); }
+  .cta-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; margin-top: 52px; }
+  .cta-card { border: 1px solid var(--lgray); padding: 40px 36px; display: flex; flex-direction: column; gap: 16px; transition: border-color .2s, background .2s; text-decoration: none; color: inherit; }
+  .cta-card:hover { border-color: var(--black); background: var(--black); }
+  .cta-card:hover .cta-card-title, .cta-card:hover .cta-card-desc { color: var(--cream); }
+  .cta-card:hover .cta-card-icon { color: var(--red); }
+  .cta-card:hover .cta-card-link { color: var(--red); }
+  .cta-card-icon { color: rgba(15,15,15,.25); transition: color .2s; }
+  .cta-card-title { font-family: var(--sans); font-size: 17px; font-weight: 700; color: var(--black); letter-spacing: -.01em; transition: color .2s; }
+  .cta-card-desc { font-family: var(--serif); font-size: 16px; color: rgba(15,15,15,.55); line-height: 1.6; transition: color .2s; }
+  .cta-card-link { margin-top: auto; font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(15,15,15,.35); display: flex; align-items: center; gap: 8px; transition: color .2s; }
+
+  /* ── TOUCH ── */
+  button, a, .faq-question, .avail-card, .cta-card, .delivery-card { cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    nav { padding: 0 24px; }
+    .nav-links { gap: 20px; }
+    .nav-icons { gap: 16px; }
+    #logo-placeholder { min-width: 110px; font-size: 10px; padding: 0 12px; }
+    .page-hero { padding: 72px 48px 60px; }
+    .cycle-section, .delivery-section, .avail-section, .faq-section, .cta-section { padding: 60px 48px; }
+    .newsletter { padding: 48px; gap: 40px; }
+    footer { padding: 48px 48px 32px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+    .cycle-layout { gap: 48px; }
+    .delivery-grid { grid-template-columns: 1fr; }
+    .avail-grid { grid-template-columns: 1fr 1fr; }
+    .faq-layout { gap: 48px; }
+    .cta-grid { grid-template-columns: 1fr 1fr; }
+    .nl-title { font-size: 32px; }
+  }
+  @media (max-width: 768px) {
+    .cursor, .cursor-ring { display: none; }
+    nav { padding: 0 16px; height: 56px; background: rgba(249,249,249,.98); backdrop-filter: none; }
+    .nav-links { display: none !important; }
+    .nav-hamburger { display: flex; }
+    .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); }
+    #logo-placeholder { min-width: 88px; font-size: 10px; padding: 0 10px; height: 30px; }
+    .nav-icons { gap: 14px; }
+    .nav-icons .hide-mobile { display: none !important; }
+    #fav-menu-wrap { display: none !important; }
+    .page-hero { padding: 52px 20px 44px; }
+    .hero-meta { flex-direction: column; }
+    .hero-meta-item { border-right: none; border-bottom: 1px solid rgba(249,249,249,.07); }
+    .hero-meta-item:last-child { border-bottom: none; }
+    .cycle-section, .delivery-section, .avail-section, .faq-section, .cta-section { padding: 44px 20px; }
+    .cycle-layout { grid-template-columns: 1fr; gap: 32px; }
+    .delivery-grid { grid-template-columns: 1fr; }
+    .avail-grid { grid-template-columns: 1fr; }
+    .faq-layout { grid-template-columns: 1fr; gap: 32px; }
+    .faq-intro { order: -1; }
+    .cta-grid { grid-template-columns: 1fr; }
+    .newsletter { flex-direction: column; padding: 40px 20px; gap: 24px; }
+    .nl-right { max-width: 100%; }
+    .nl-title { font-size: 28px; }
+    footer { padding: 40px 20px 24px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 36px; }
+    .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
+    .footer-payment { flex-wrap: wrap; justify-content: center; }
+    .cart-drawer { width: 100%; }
+    .avail-card { padding: 28px 24px; }
+    .delivery-card { padding: 32px 28px; }
+  }
+  @media (max-width: 480px) {
+    .footer-top { grid-template-columns: 1fr; gap: 24px; }
+    .announce-track span { font-size: 11px; padding: 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="nav-mobile-overlay" id="navMobileOverlay"></div>
+<div class="nav-mobile-panel" id="navMobilePanel">
+  <div class="nav-mobile-header">
+    <div style="width:32px;"></div>
+    <div style="flex:1;display:flex;justify-content:center;">
+      <div style="height:32px;min-width:110px;border:1.5px dashed rgba(15,15,15,.18);display:flex;align-items:center;justify-content:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(15,15,15,.3);padding:0 14px;">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg>
+        Tu logo aquí
+      </div>
+    </div>
+    <button class="nav-mobile-close" id="navMobileClose"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="nav-mobile-links">
+    <a href="index.html" class="nav-mobile-link">Inicio</a>
+    <div class="nav-mobile-link" id="mobileProductosToggle">Productos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+    <div class="nav-mobile-sub" id="mobileProductosSub">
+      <div class="nav-mobile-sub-label">Perfumes</div>
+      <a href="catalogo.html?cat=diseñador">Diseñador</a><a href="catalogo.html?cat=nicho">Nicho</a><a href="catalogo.html?cat=arabes">Árabes</a><a href="catalogo.html?cat=sets">Sets</a>
+      <div class="nav-mobile-sub-label" style="margin-top:8px;">Joyería</div>
+      <a href="catalogo.html?tab=joyeria&cat=anillos">Anillos</a><a href="catalogo.html?tab=joyeria&cat=collares">Collares</a>
+    </div>
+    <a href="nosotros.html" class="nav-mobile-link">Nosotros</a>
+    <a href="contacto.html" class="nav-mobile-link">Contacto</a>
+    <a href="cuenta.html" class="nav-mobile-link" id="mobileCuentaLoginLink" style="border-top:1px solid var(--lgray);display:none;">Iniciar sesión <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+    <div class="nav-mobile-link" id="mobileCuentaToggle" style="border-top:1px solid var(--lgray);display:none;">Mi cuenta <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+    <div class="nav-mobile-sub" id="mobileCuentaSub">
+      <a href="#" id="btn-logout-mobile" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;font-weight:500;color:var(--dgray);text-decoration:none;letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Cerrar sesión</a>
+    </div>
+    <div style="padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--lgray);"><span style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--black);">Mis favoritos</span><span id="fav-count-mobile" style="font-size:11px;color:rgba(15,15,15,.4);">0 productos</span></div>
+    <div id="fav-list-mobile" style="max-height:280px;overflow-y:auto;"><div id="fav-empty-mobile" style="padding:28px 24px;text-align:center;"><p style="font-size:13px;color:rgba(15,15,15,.35);font-family:var(--serif);font-style:italic;">Aún no tienes favoritos</p></div></div>
+  </div>
+</div>
+
+<div class="site-wrap">
+
+<div class="announce">
+  <div class="announce-track">
+    <span>Envíos a Jalisco y Guanajuato</span><span class="dot">✦</span>
+    <span>Perfumes 100% Originales</span><span class="dot">✦</span>
+    <span>Entrega en GDL sin costo</span><span class="dot">✦</span>
+    <span>Sellados de Fábrica</span><span class="dot">✦</span>
+    <span>Garantía de Autenticidad</span><span class="dot">✦</span>
+    <span>Envíos a Jalisco y Guanajuato</span><span class="dot">✦</span>
+    <span>Perfumes 100% Originales</span><span class="dot">✦</span>
+    <span>Entrega en GDL sin costo</span><span class="dot">✦</span>
+    <span>Sellados de Fábrica</span><span class="dot">✦</span>
+    <span>Garantía de Autenticidad</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<nav>
+  <button class="nav-hamburger" id="navHamburger" type="button" aria-label="Menú"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li class="nav-item">
+      <a href="#">Productos <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-item" onclick="location.href='catalogo.html?tab=perfumes'" style="cursor:pointer;">Perfumes <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          <div class="nav-flyout"><div class="nav-flyout-label">Categorías</div><a href="catalogo.html?cat=diseñador">Diseñador</a><a href="catalogo.html?cat=nicho">Nicho</a><a href="catalogo.html?cat=arabes">Árabes</a><a href="catalogo.html?cat=sets">Sets</a></div>
+        </div>
+        <div class="nav-dropdown-item" onclick="location.href='catalogo.html?tab=joyeria'" style="cursor:pointer;">Joyería <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          <div class="nav-flyout"><div class="nav-flyout-label">Categorías</div><a href="catalogo.html?tab=joyeria&cat=anillos">Anillos</a><a href="catalogo.html?tab=joyeria&cat=collares">Collares</a></div>
+        </div>
+      </div>
+    </li>
+    <li><a href="nosotros.html">Nosotros</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+  </ul>
+  <a href="index.html" class="nav-logo"><div id="logo-placeholder"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg> Tu logo aquí</div></a>
+  <div class="nav-icons">
+    <button id="search-btn" title="Buscar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+    <div style="position:relative;" id="account-menu-wrap" class="hide-mobile">
+      <a href="cuenta.html" id="account-login-btn" title="Iniciar sesión" style="display:none;align-items:center;background:none;border:none;cursor:pointer;color:var(--black);transition:color .2s;text-decoration:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg></a>
+      <button title="Mi cuenta" id="account-toggle" style="display:none;align-items:center;background:none;border:none;cursor:pointer;color:var(--black);transition:color .2s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg></button>
+      <div id="account-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;width:220px;background:var(--cream);border:1px solid var(--lgray);z-index:500;box-shadow:0 8px 32px rgba(15,15,15,.12);">
+        <a href="#" id="btn-logout" style="display:flex;align-items:center;gap:12px;padding:16px 20px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dgray);text-decoration:none;transition:color .2s,background .2s;" onmouseover="this.style.color='var(--red)';this.style.background='rgba(225,34,43,.03)'" onmouseout="this.style.color='var(--dgray)';this.style.background='transparent'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Cerrar sesión</a>
+      </div>
+    </div>
+    <div style="position:relative;" id="fav-menu-wrap" class="hide-mobile">
+      <button title="Favoritos" id="fav-toggle" style="position:relative;display:flex;align-items:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span id="fav-count" style="position:absolute;top:-4px;right:-6px;width:16px;height:16px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center;">0</span></button>
+      <div id="fav-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;width:320px;background:var(--cream);border:1px solid var(--lgray);z-index:500;box-shadow:0 8px 32px rgba(15,15,15,.12);">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--lgray);display:flex;align-items:center;justify-content:space-between;"><span style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--black);">Mis favoritos</span><span id="fav-count-label" style="font-size:11px;color:rgba(15,15,15,.4);">0 productos</span></div>
+        <div id="fav-list" style="max-height:360px;overflow-y:auto;"><div id="fav-empty" style="padding:40px 20px;text-align:center;"><p style="font-size:13px;color:rgba(15,15,15,.35);font-family:var(--serif);font-style:italic;">Aún no tienes favoritos</p></div></div>
+        <div id="fav-add-all" style="display:none;padding:12px 20px;border-top:1px solid var(--lgray);"><button onclick="addAllFavsToCart()" style="width:100%;background:var(--black);color:#fff;border:none;padding:12px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border-radius:0;" onmouseover="this.style.background='var(--red)'" onmouseout="this.style.background='var(--black)'">Agregar todo al carrito</button></div>
+      </div>
+    </div>
+    <button id="cart-btn" title="Carrito" style="position:relative;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span id="cart-count" style="position:absolute;top:-4px;right:-6px;width:16px;height:16px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center;">0</span></button>
+  </div>
+</nav>
+
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-input-row"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" id="search-input" placeholder="Buscar perfumes, marcas..." autocomplete="off" /><button id="search-close-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+    <div id="search-results"><p class="search-hint">Busca por nombre o marca</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S1 — HERO  |  negro
+═══════════════════════════════════════════ -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="eyebrow-light reveal">Cómo manejamos tus pedidos</div>
+    <h1 class="hero-h1 reveal">
+      Política de <em>envíos.</em>
+    </h1>
+    <p class="hero-sub reveal reveal-delay-1">
+      Trabajamos con un ciclo semanal de pedidos. Antes de ordenar, te explicamos exactamente cómo funciona para que no haya sorpresas.
+    </p>
+    <div class="hero-meta reveal reveal-delay-2">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Entregas locales</span>
+        <span class="hero-meta-value">ZMG sin costo</span>
+        <span class="hero-meta-note">Punto de encuentro o Casa Blanca Paquetería</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Corte semanal</span>
+        <span class="hero-meta-value">Miércoles 12:00 p.m.</span>
+        <span class="hero-meta-note">Pedidos posteriores, siguiente semana</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Envíos foráneos</span>
+        <span class="hero-meta-value">Vía Skydropx</span>
+        <span class="hero-meta-note">Costo calculado al confirmar el pedido</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S2 — CICLO DE PEDIDOS  |  cream
+═══════════════════════════════════════════ -->
+<div class="cycle-section">
+  <div class="eyebrow reveal">Cómo funciona</div>
+  <h2 class="heading-light reveal">El ciclo <em>semanal.</em></h2>
+  <div class="cycle-layout">
+    <div class="cycle-text reveal">
+      <p>Operamos con un modelo de pedidos por semana. Esto nos permite verificar existencias con el proveedor antes de confirmar cada orden y garantizarte que lo que pediste sí está disponible.</p>
+      <p>No confirmamos pedidos en automático. Cada orden pasa por una revisión antes de procesarse.</p>
+      <div class="cycle-alert">
+        <div class="cycle-alert-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div>
+          <div class="cycle-alert-title">Fecha de corte</div>
+          <div class="cycle-alert-body">Los pedidos recibidos después del miércoles a las 12:00 p.m. se procesan en el siguiente ciclo semanal.</div>
+        </div>
+      </div>
+    </div>
+    <div class="cycle-steps reveal reveal-delay-1">
+      <div class="cycle-step">
+        <div class="cycle-step-day">
+          <span class="cycle-step-day-name">Lun–Mié</span>
+          <div class="cycle-step-day-dot active"></div>
+        </div>
+        <div class="cycle-step-body">
+          <div class="cycle-step-title">Recibes tu pedido</div>
+          <div class="cycle-step-desc">Realizas tu orden en el sitio. Revisamos existencias y te confirmamos por WhatsApp antes del cierre del miércoles.</div>
+          <span class="cycle-step-tag">Corte: miércoles 12:00 p.m.</span>
+        </div>
+      </div>
+      <div class="cycle-step">
+        <div class="cycle-step-day">
+          <span class="cycle-step-day-name">Viernes</span>
+          <div class="cycle-step-day-dot active"></div>
+        </div>
+        <div class="cycle-step-body">
+          <div class="cycle-step-title">Surtido del proveedor</div>
+          <div class="cycle-step-desc">El proveedor nos surte y envía los productos confirmados. Preparamos cada paquete con revisión de autenticidad incluida.</div>
+        </div>
+      </div>
+      <div class="cycle-step">
+        <div class="cycle-step-day">
+          <span class="cycle-step-day-name">Sábado</span>
+          <div class="cycle-step-day-dot active"></div>
+        </div>
+        <div class="cycle-step-body">
+          <div class="cycle-step-title">Recibimos y despachamos</div>
+          <div class="cycle-step-desc">Recibimos el surtido, empacamos y coordinamos las entregas del mismo día para Guadalajara. Los envíos foráneos salen el lunes vía Skydropx.</div>
+          <span class="cycle-step-tag">Entregas GDL ese mismo día</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S3 — CÓMO TE LLEGA  |  negro
+═══════════════════════════════════════════ -->
+<div class="delivery-section">
+  <div class="eyebrow-light reveal">Opciones de entrega</div>
+  <h2 class="heading-dark reveal">Tres formas de <em>llegar a ti.</em></h2>
+  <div class="delivery-grid">
+
+    <!-- ZMG — Punto de encuentro -->
+    <div class="delivery-card reveal">
+      <div class="delivery-card-zone">ZMG — Zona Metropolitana de Guadalajara</div>
+      <div class="delivery-card-title">Punto de encuentro</div>
+      <div class="delivery-card-price free">Sin costo de envío</div>
+      <div class="delivery-divider"></div>
+      <div class="delivery-features">
+        <div class="delivery-feature">
+          <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <div class="delivery-feature-text">Coordinamos el punto por <strong>WhatsApp</strong> al confirmar. Puntos habituales en estaciones del Tren Ligero según tu municipio.</div>
+        </div>
+        <div class="delivery-feature">
+          <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div class="delivery-feature-text">Cobertura en toda la ZMG: <strong>Guadalajara, Zapopan, Tlaquepaque, Tlajomulco, Tonalá</strong> y municipios conurbados.</div>
+        </div>
+        <div class="delivery-feature">
+          <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <div class="delivery-feature-text">Entrega el <strong>sábado</strong>, el mismo día que recibimos del proveedor.</div>
+        </div>
+      </div>
+      <div class="delivery-note">Pago vía Mercado Pago previo a la entrega. En casos puntuales, entrega a domicilio — se define al coordinar.</div>
+    </div>
+
+    <!-- ZMG — Casa Blanca -->
+    <div class="delivery-card reveal reveal-delay-1">
+      <div class="delivery-card-zone">ZMG — Zona Metropolitana de Guadalajara</div>
+      <div class="delivery-card-title">Casa Blanca Paquetería</div>
+      <div class="delivery-card-price free">Sin costo de envío</div>
+      <div class="delivery-divider"></div>
+      <div class="delivery-features">
+        <div class="delivery-feature">
+          <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div class="delivery-feature-text">Paquetería local con <strong>9 sucursales en la ZMG</strong>. El cliente recoge en la más cercana cuando le convenga, sin necesidad de coincidir con nosotros.</div>
+        </div>
+        <div class="delivery-feature">
+          <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+          <div class="delivery-feature-text">Te enviamos un <strong>folio digital</strong> para recoger. Disponible al día hábil siguiente de haberlo depositado, después de las 2:00 p.m.</div>
+        </div>
+        <div class="delivery-feature">
+          <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <div class="delivery-feature-text">Horario de recogida: <strong>lunes a viernes de 11 a.m. a 8 p.m.</strong>, sábados de 10 a.m. a 5 p.m.</div>
+        </div>
+      </div>
+      <div class="delivery-branches">
+        <span class="delivery-branch">Centro</span>
+        <span class="delivery-branch">Per. Norte</span>
+        <span class="delivery-branch">Sur</span>
+        <span class="delivery-branch">Oblatos</span>
+        <span class="delivery-branch">Tetlán</span>
+        <span class="delivery-branch">Tonalá</span>
+        <span class="delivery-branch">Aviación</span>
+        <span class="delivery-branch">Tlaquepaque</span>
+        <span class="delivery-branch">Tlajomulco</span>
+      </div>
+      <div class="delivery-note">El paquete puede permanecer en sucursal hasta 8 semanas. Pago vía Mercado Pago previo al depósito en Casa Blanca.</div>
+    </div>
+
+    <!-- Foráneo — Skydropx -->
+    <div class="delivery-card reveal reveal-delay-2">
+      <div class="delivery-card-zone">Jalisco interior y Guanajuato</div>
+      <div class="delivery-card-title">Envío por Skydropx</div>
+      <div class="delivery-card-price paid">Costo según destino y peso</div>
+      <div class="delivery-divider"></div>
+      <div class="delivery-features">
+        <div class="delivery-feature">
+          <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <div class="delivery-feature-text">Enviamos vía <strong>Skydropx</strong>. Paquetería y costo se calculan según tu código postal al confirmar el pedido.</div>
+        </div>
+        <div class="delivery-feature">
+          <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <div class="delivery-feature-text">El paquete sale el <strong>lunes</strong> siguiente al sábado de recepción. El tiempo de tránsito depende del destino.</div>
+        </div>
+        <div class="delivery-feature">
+          <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div class="delivery-feature-text">Cobertura regular: <strong>Jalisco interior</strong> (fuera de ZMG) y <strong>Guanajuato</strong>. Para otros estados consúltanos antes de ordenar.</div>
+        </div>
+        <div class="delivery-feature">
+          <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          <div class="delivery-feature-text">Te compartimos el <strong>número de guía por WhatsApp</strong> en cuanto el paquete sea recolectado el lunes.</div>
+        </div>
+      </div>
+      <div class="delivery-note">El costo de envío se comunica al confirmar el pedido. No se procesa ningún pago hasta que lo apruebes.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S4 — DISPONIBILIDAD  |  cream
+═══════════════════════════════════════════ -->
+<div class="avail-section">
+  <div class="eyebrow reveal">Antes de ordenar</div>
+  <h2 class="heading-light reveal">Disponibilidad <em>de productos.</em></h2>
+  <div class="avail-intro reveal reveal-delay-1">
+    <p>No todos los productos funcionan igual. Dependiendo del artículo, el proceso de confirmación cambia. Revisamos existencias con el proveedor antes de comprometerte con cualquier pedido.</p>
+  </div>
+  <div class="avail-grid">
+
+    <!-- Nivel 1 -->
+    <div class="avail-card reveal">
+      <div class="avail-level">Tipo de producto</div>
+      <div class="avail-indicator">
+        <div class="avail-dot green"></div>
+        <div class="avail-name">En existencia</div>
+      </div>
+      <div class="avail-desc">Productos que suelen estar disponibles de forma consistente. La confirmación de tu pedido es prácticamente inmediata.</div>
+      <div class="avail-clarify"><strong>Lo que pasa:</strong> Recibes confirmación antes del cierre del miércoles. Si ese viernes el proveedor no tiene existencia, te avisamos de inmediato y acordamos juntos qué hacer.</div>
+      <div class="avail-flow">
+        <div class="avail-flow-step">Ordenas en el sitio</div>
+        <div class="avail-flow-step">Confirmamos antes del miércoles</div>
+        <div class="avail-flow-step">Sale el siguiente sábado</div>
+      </div>
+    </div>
+
+    <!-- Nivel 2 -->
+    <div class="avail-card reveal reveal-delay-1">
+      <div class="avail-level">Tipo de producto</div>
+      <div class="avail-indicator">
+        <div class="avail-dot yellow"></div>
+        <div class="avail-name">Disponibilidad limitada</div>
+      </div>
+      <div class="avail-desc">Productos que suelen haber pero no siempre. Tu pedido entra como pendiente hasta que verificamos con el proveedor.</div>
+      <div class="avail-clarify"><strong>Lo que pasa:</strong> Te contactamos en menos de 24 horas para confirmar si hay existencia. El pago se procesa <em>después</em> de la confirmación, no antes. Si no hay stock, tu pedido no genera ningún cargo.</div>
+      <div class="avail-flow">
+        <div class="avail-flow-step">Solicitas el producto</div>
+        <div class="avail-flow-step">Verificamos en menos de 24 h</div>
+        <div class="avail-flow-step">Confirmas y pagas</div>
+        <div class="avail-flow-step">Sale el siguiente sábado</div>
+      </div>
+    </div>
+
+    <!-- Nivel 3 -->
+    <div class="avail-card reveal reveal-delay-2">
+      <div class="avail-level">Tipo de producto</div>
+      <div class="avail-indicator">
+        <div class="avail-dot gray"></div>
+        <div class="avail-name">Pieza exclusiva</div>
+      </div>
+      <div class="avail-desc">Productos de alta rotación, ediciones limitadas o artículos que requieren revisión expresa antes de comprometerse.</div>
+      <div class="avail-clarify"><strong>Lo que pasa:</strong> El proceso inicia con una solicitud, no con un pago. Verificamos existencias, te damos precio final y tiempo estimado. Solo entonces procedes si te conviene.</div>
+      <div class="avail-flow">
+        <div class="avail-flow-step">Nos contactas por WhatsApp</div>
+        <div class="avail-flow-step">Verificamos con el proveedor</div>
+        <div class="avail-flow-step">Te damos precio y tiempo</div>
+        <div class="avail-flow-step">Confirmas y pagas</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S5 — FAQ  |  negro
+═══════════════════════════════════════════ -->
+<div class="faq-section">
+  <div class="eyebrow-light reveal">Preguntas frecuentes</div>
+  <h2 class="heading-dark reveal">Lo que más <em>nos preguntan.</em></h2>
+  <div class="faq-layout">
+    <div class="faq-intro reveal">
+      <p>Si algo no quedó claro o tienes una situación particular, escríbenos. Respondemos por WhatsApp en horario hábil.</p>
+      <div class="faq-contact-note">
+        <div class="faq-contact-note-label">Contacto directo</div>
+        <a href="contacto.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Formulario de contacto</a>
+        <a href="https://wa.me/5213310050843?text=Hola%2C%20tengo%20una%20duda%20sobre%20un%20env%C3%ADo" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> WhatsApp · 33 1005 0843</a>
+      </div>
+    </div>
+    <div class="faq-list reveal reveal-delay-1">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span class="faq-question-text">Ordené el jueves. ¿Cuándo llega mi pedido?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Al ordenar después del miércoles al mediodía, tu pedido entra al ciclo de la <strong>siguiente semana</strong>. Lo confirmamos el próximo miércoles, surtimos el viernes y te lo entregamos o enviamos el sábado siguiente. Si estás en Guadalajara, eso son entre 8 y 9 días. Si es foráneo, agrega el tiempo de tránsito de Skydropx.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span class="faq-question-text">¿Cómo funciona el punto de encuentro en GDL?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Al confirmar tu pedido te escribimos por WhatsApp para coordinar el punto. Normalmente proponemos una <strong>estación del Tren Ligero</strong> según tu zona. Si ninguna te queda cerca o prefieres otra opción, lo hablamos. La entrega es el sábado.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span class="faq-question-text">¿Cuánto cuesta el envío a Guanajuato?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">El costo lo calcula <strong>Skydropx</strong> en función de tu código postal y el peso del paquete. Te lo comunicamos al confirmar el pedido, antes de procesar cualquier pago. No hay costos ocultos ni tarifas fijas: pagas exactamente lo que la paquetería cobra.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span class="faq-question-text">¿Qué pasa si el producto que pedí no tiene existencia?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Te avisamos antes de que se procese el pago. Para productos de <strong>Disponibilidad limitada</strong> y <strong>Pieza exclusiva</strong>, el cargo nunca ocurre hasta que confirmamos existencia. Para productos <strong>En existencia</strong>, si excepcionalmente no hay stock ese viernes, te contactamos de inmediato: puedes esperar al siguiente ciclo o cancelar sin ningún costo.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span class="faq-question-text">¿Aceptan pedidos fuera de Jalisco y Guanajuato?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Por el momento nuestra cobertura regular es <strong>Jalisco y Guanajuato</strong>. Si te encuentras en otro estado, escríbenos antes de ordenar. Evaluamos el envío caso por caso y te decimos si es posible, cuánto costaría y cuánto tardaría. No garantizamos tiempos ni costos estándar para otras zonas.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span class="faq-question-text">¿Cómo pago?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Aceptamos dos métodos de pago. Primero, <strong>tarjeta de crédito o débito</strong> vía Mercado Pago — directamente en el sitio para productos En existencia, o mediante un link de pago que te enviamos por WhatsApp para Disponibilidad limitada y Pieza exclusiva. Segundo, <strong>transferencia SPEI</strong> — sin comisión, se acredita en minutos. Al confirmar tu pedido te compartimos la CLABE interbancaria por WhatsApp. Ambos métodos son válidos para cualquier tipo de pedido.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span class="faq-question-text">¿El producto llega sellado y original?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Sí. Todos los productos son <strong>100% originales y sellados de fábrica</strong>. Revisamos cada pieza antes de empacar. Si al recibir tu pedido notas signos de apertura o daño, contáctanos con fotografías antes de abrirlo.</div></div>
+      </div>
+      <!-- Enlace a FAQs general -->
+      <div style="padding:28px 0 4px;">
+        <a href="faq.html" style="display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(249,249,249,.35);text-decoration:none;border-bottom:1px solid rgba(249,249,249,.12);padding-bottom:3px;transition:color .2s,border-color .2s;" onmouseover="this.style.color='var(--red)';this.style.borderColor='var(--red)'" onmouseout="this.style.color='rgba(249,249,249,.35)';this.style.borderColor='rgba(249,249,249,.12)'">
+          ¿Tu duda es sobre otro tema? Ver todas las preguntas frecuentes
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S6 — CTA  |  cream
+═══════════════════════════════════════════ -->
+<div class="cta-section">
+  <div class="eyebrow reveal">¿Listo?</div>
+  <h2 class="heading-light reveal">Siguiente <em>paso.</em></h2>
+  <div class="cta-grid">
+    <a href="catalogo.html" class="cta-card reveal">
+      <div class="cta-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>
+      <div class="cta-card-title">Ver catálogo</div>
+      <div class="cta-card-desc">Explora perfumes y joyería originales. Cada producto indica su tipo de disponibilidad.</div>
+      <div class="cta-card-link">Ir al catálogo <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+    </a>
+    <a href="contacto.html" class="cta-card reveal reveal-delay-1">
+      <div class="cta-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+      <div class="cta-card-title">¿Tienes dudas?</div>
+      <div class="cta-card-desc">Escríbenos antes de ordenar. Te respondemos por WhatsApp en horario hábil.</div>
+      <div class="cta-card-link">Contactar <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+    </a>
+    <a href="cuenta.html" class="cta-card reveal reveal-delay-2">
+      <div class="cta-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg></div>
+      <div class="cta-card-title">Mis pedidos</div>
+      <div class="cta-card-desc">Accede a tu cuenta para ver el estado de tus órdenes y tu historial de compras.</div>
+      <div class="cta-card-link">Ver mi cuenta <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+    </a>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <div class="nl-left reveal"><p class="nl-eyebrow">Club HERA</p><h2 class="nl-title">Sé el primero en<br><em>olerlo todo.</em></h2></div>
+  <div class="nl-right reveal reveal-delay-1"><div class="nl-form"><input type="email" class="nl-input" placeholder="tu@email.com" /><button class="nl-btn">Suscribir</button></div><p class="nl-disclaimer">Sin spam. Solo lanzamientos, descuentos y novedades exclusivas.</p></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div id="footer-logo-placeholder"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg> Tu logo aquí</div>
+      <p class="footer-tagline">Perfumes & Joyería.<br>Para quienes no necesitan<br>permiso para destacar.</p>
+      <div class="footer-socials">
+        <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+        <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+      </div>
+    </div>
+    <div><p class="footer-col-title">Tienda</p><ul class="footer-links"><li><a href="catalogo.html?tab=perfumes">Perfumes</a></li><li><a href="catalogo.html?tab=joyeria">Joyería</a></li><li><a href="catalogo.html?tab=perfumes">Novedades</a></li><li><a href="catalogo.html?tab=perfumes">Bestsellers</a></li></ul></div>
+    <div><p class="footer-col-title">Ayuda</p><ul class="footer-links"><li><a href="#">Rastrear pedido</a></li><li><a href="devoluciones.html">Devoluciones</a></li><li><a href="Politica_envios.html" style="color:var(--cream);">Política de envíos</a></li><li><a href="faq.html">Preguntas frecuentes</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+    <div><p class="footer-col-title">Marca</p><ul class="footer-links"><li><a href="nosotros.html">Nosotros</a></li><li><a href="aviso-privacidad.html">Privacidad</a></li><li><a href="terminos.html">Términos y condiciones</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 HERA Perfumes & Joyería. Todos los derechos reservados.</p>
+    <div class="footer-payment"><span class="payment-badge">VISA</span><span class="payment-badge">MC</span><span class="payment-badge">Mercado Pago</span><span class="payment-badge">SPEI</span></div>
+  </div>
+</footer>
+</div><!-- /site-wrap -->
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-header"><span class="cart-drawer-title">Tu carrito <span id="cart-drawer-count" style="color:rgba(15,15,15,.4);font-weight:400;">(0)</span></span><button class="cart-drawer-close" id="cart-close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+  <div class="cart-items" id="cart-items-list"></div>
+  <div class="cart-empty" id="cart-empty" style="display:none;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><p>Tu carrito está vacío.<br>Explora nuestra colección.</p><button class="btn-primary" onclick="closeCart()" style="font-size:11px;padding:14px 28px;">Explorar perfumes</button></div>
+  <div class="cart-footer" id="cart-footer">
+    <div style="margin-bottom:18px;"><div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-size:11px;color:rgba(15,15,15,.5);">Subtotal</span></div></div>
+    <div class="cart-subtotal"><span class="cart-subtotal-label">Total</span><span class="cart-subtotal-value" id="cart-total">$0 MXN</span></div>
+    <p style="font-size:11px;color:rgba(15,15,15,.35);margin-bottom:20px;">Costo de envío se calcula al confirmar el pedido.</p>
+    <button class="cart-checkout-btn" onclick="goToCheckout()">Proceder al pago →</button>
+    <button class="cart-continue-btn" onclick="closeCart()">Seguir comprando</button>
+  </div>
+</div>
+
+<script>
+var CATALOG=[{id:'sauvage-1',brand:'Dior',name:'Sauvage EDP',price:'$2,450 MXN',badge:'Bestseller',tags:['fresco','amaderado']},{id:'fierce-2',brand:'Abercrombie & Fitch',name:'Fierce Cologne',price:'$1,180 MXN',tags:['fresco','marino']},{id:'jenny-1',brand:'Jenny Rivera',name:'Inolvidable EDP',price:'$1,210 MXN',badge:'Nuevo',tags:['floral','femenino']},{id:'noir-5',brand:'HERA Exclusivo',name:'Noir Absolu',price:'$1,480 MXN',badge:'-20%',tags:['oriental','amaderado']}];
+
+/* SEARCH */
+var searchOverlay=document.getElementById('search-overlay'),searchInput=document.getElementById('search-input'),searchResults=document.getElementById('search-results'),searchCloseBtn=document.getElementById('search-close-btn'),searchBtn=document.getElementById('search-btn');
+function openSearch(){searchOverlay.classList.add('open');document.body.style.overflow='hidden';setTimeout(function(){searchInput.focus();},300);}
+function closeSearch(){searchOverlay.classList.remove('open');document.body.style.overflow='';searchInput.value='';renderSearchResults('');}
+searchBtn.addEventListener('click',openSearch);searchCloseBtn.addEventListener('click',closeSearch);
+searchOverlay.addEventListener('click',function(e){if(e.target===searchOverlay)closeSearch();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSearch();});
+function highlight(text,query){if(!query)return text;var re=new RegExp('('+query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');return text.replace(re,'<mark style="background:rgba(225,34,43,.15);color:var(--red);">$1</mark>');}
+function renderSearchResults(query){var q=query.trim().toLowerCase();if(!q){searchResults.innerHTML='<p class="search-hint">Busca por nombre o marca</p>';return;}var hits=CATALOG.filter(function(p){return p.name.toLowerCase().includes(q)||p.brand.toLowerCase().includes(q)||(p.tags&&p.tags.some(function(t){return t.includes(q);}));});if(!hits.length){searchResults.innerHTML='<div class="search-empty"><p>Sin resultados para "'+query+'"</p></div>';return;}var html='<p class="search-hint">'+hits.length+' resultado'+(hits.length!==1?'s':'')+'</p>';hits.forEach(function(p){html+='<div class="search-result-item" onclick="closeSearch()"><div class="search-result-thumb"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><div style="flex:1;min-width:0;"><div class="search-result-brand">'+highlight(p.brand,query)+'</div><div class="search-result-name">'+highlight(p.name,query)+'</div><div class="search-result-price">'+p.price+'</div></div></div>';});searchResults.innerHTML=html;}
+var sd;searchInput.addEventListener('input',function(){clearTimeout(sd);sd=setTimeout(function(){renderSearchResults(searchInput.value);},180);});
+
+/* HAMBURGER */
+var hamburger=document.getElementById('navHamburger'),mobilePanel=document.getElementById('navMobilePanel'),mobileOverlay=document.getElementById('navMobileOverlay'),mobileClose=document.getElementById('navMobileClose');
+function openMobileNav(){hamburger.classList.add('open');mobilePanel.classList.add('open');mobileOverlay.classList.add('open');document.body.style.overflow='hidden';}
+function closeMobileNav(){hamburger.classList.remove('open');mobilePanel.classList.remove('open');mobileOverlay.classList.remove('open');document.body.style.overflow='';}
+hamburger.addEventListener('click',function(e){e.stopPropagation();mobilePanel.classList.contains('open')?closeMobileNav():openMobileNav();});
+mobileClose.addEventListener('click',closeMobileNav);mobileOverlay.addEventListener('click',closeMobileNav);
+var pt=document.getElementById('mobileProductosToggle'),ps=document.getElementById('mobileProductosSub');
+pt.addEventListener('click',function(e){e.stopPropagation();ps.classList.toggle('open');pt.classList.toggle('active');});
+var ct=document.getElementById('mobileCuentaToggle'),cs=document.getElementById('mobileCuentaSub'),cll=document.getElementById('mobileCuentaLoginLink');
+if(ct){ct.addEventListener('click',function(e){e.stopPropagation();cs.classList.toggle('open');ct.classList.toggle('active');});}
+
+/* SESIÓN */
+var accountToggle=document.getElementById('account-toggle'),accountLoginBtn=document.getElementById('account-login-btn'),accountDropdown=document.getElementById('account-dropdown'),favDropdown=document.getElementById('fav-dropdown'),btnLogout=document.getElementById('btn-logout'),btnLogoutMobile=document.getElementById('btn-logout-mobile');
+function isLoggedIn(){return localStorage.getItem('hera_logged_in')==='1';}
+function renderAccountNav(){if(isLoggedIn()){accountLoginBtn.style.display='none';accountToggle.style.display='flex';if(cll)cll.style.display='none';if(ct)ct.style.display='flex';}else{accountLoginBtn.style.display='flex';accountToggle.style.display='none';accountDropdown.style.display='none';if(cll)cll.style.display='flex';if(ct)ct.style.display='none';}}
+function logout(){localStorage.removeItem('hera_logged_in');accountDropdown.style.display='none';renderAccountNav();}
+renderAccountNav();
+if(accountToggle){accountToggle.addEventListener('click',function(e){e.stopPropagation();if(favDropdown)favDropdown.style.display='none';accountDropdown.style.display=accountDropdown.style.display==='block'?'none':'block';});accountDropdown.addEventListener('click',function(e){e.stopPropagation();});}
+if(btnLogout)btnLogout.addEventListener('click',function(e){e.preventDefault();logout();});
+if(btnLogoutMobile)btnLogoutMobile.addEventListener('click',function(e){e.preventDefault();logout();closeMobileNav();});
+document.addEventListener('click',function(){if(accountDropdown)accountDropdown.style.display='none';if(favDropdown)favDropdown.style.display='none';});
+
+/* CARRITO */
+var cartBtn=document.getElementById('cart-btn'),cartDrawer=document.getElementById('cart-drawer'),cartOverlay=document.getElementById('cart-overlay'),cartClose=document.getElementById('cart-close'),cartEmpty=document.getElementById('cart-empty'),cartFooter=document.getElementById('cart-footer'),cartItemsList=document.getElementById('cart-items-list'),cartTotal=document.getElementById('cart-total'),cartDrawerCount=document.getElementById('cart-drawer-count'),cartBadge=document.getElementById('cart-count');
+function openCart(){cartDrawer.classList.add('open');cartOverlay.classList.add('open');document.body.style.overflow='hidden';}
+function closeCart(){cartDrawer.classList.remove('open');cartOverlay.classList.remove('open');document.body.style.overflow='';}
+cartBtn.addEventListener('click',openCart);cartClose.addEventListener('click',closeCart);cartOverlay.addEventListener('click',closeCart);
+function parseMXN(str){return parseInt(String(str).replace(/[^0-9]/g,''))||0;}
+function saveCart(){var items=[];cartItemsList.querySelectorAll('.cart-item').forEach(function(el){items.push({id:el.dataset.cartId,brand:el.querySelector('.cart-item-brand').textContent,name:el.querySelector('.cart-item-name').textContent,price:el.querySelector('.cart-item-price').textContent,qty:parseInt(el.querySelector('.qty-num').textContent)});});localStorage.setItem('hera_cart',JSON.stringify(items));}
+function loadCart(){var items=[];try{var r=localStorage.getItem('hera_cart');if(r)items=JSON.parse(r);}catch(e){items=[];}cartItemsList.innerHTML='';if(items&&items.length){items.forEach(function(it){var el=document.createElement('div');el.className='cart-item';el.dataset.cartId=it.id;el.innerHTML='<div class="cart-item-img"></div><div class="cart-item-info"><div class="cart-item-brand">'+it.brand+'</div><div class="cart-item-name">'+it.name+'</div><div class="cart-item-price">'+it.price+'</div><div class="cart-item-qty"><button class="qty-btn qty-minus">−</button><span class="qty-num">'+it.qty+'</span><button class="qty-btn qty-plus">+</button></div></div><button class="cart-item-remove" title="Eliminar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>';cartItemsList.appendChild(el);bindCartItem(el);});}updateCartTotals();}
+function updateCartTotals(){var items=cartItemsList.querySelectorAll('.cart-item'),total=0;items.forEach(function(item){total+=parseMXN(item.querySelector('.cart-item-price').textContent)*parseInt(item.querySelector('.qty-num').textContent);});var count=Array.from(items).reduce(function(s,i){return s+parseInt(i.querySelector('.qty-num').textContent);},0);cartTotal.textContent='$'+total.toLocaleString('es-MX')+' MXN';cartBadge.textContent=count;cartBadge.style.display=count>0?'flex':'none';cartDrawerCount.textContent='('+count+')';cartEmpty.style.display=count===0?'flex':'none';cartFooter.style.display=count===0?'none':'block';}
+function bindCartItem(item){item.querySelector('.qty-minus').addEventListener('click',function(){var qEl=item.querySelector('.qty-num'),q=parseInt(qEl.textContent);if(q>1){qEl.textContent=q-1;updateCartTotals();saveCart();}});item.querySelector('.qty-plus').addEventListener('click',function(){var qEl=item.querySelector('.qty-num');qEl.textContent=parseInt(qEl.textContent)+1;updateCartTotals();saveCart();});item.querySelector('.cart-item-remove').addEventListener('click',function(){item.remove();updateCartTotals();saveCart();});}
+loadCart();
+function addToCartFromFav(id,brand,name,price){var cartId='cart-'+name.replace(/\s/g,'-').toLowerCase(),existing=cartItemsList.querySelector('[data-cart-id="'+cartId+'"]');if(existing){var qEl=existing.querySelector('.qty-num');qEl.textContent=parseInt(qEl.textContent)+1;}else{var item=document.createElement('div');item.className='cart-item';item.dataset.cartId=cartId;item.innerHTML='<div class="cart-item-img"></div><div class="cart-item-info"><div class="cart-item-brand">'+brand+'</div><div class="cart-item-name">'+name+'</div><div class="cart-item-price">'+price+'</div><div class="cart-item-qty"><button class="qty-btn qty-minus">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus">+</button></div></div><button class="cart-item-remove"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>';cartItemsList.insertBefore(item,cartItemsList.firstChild);bindCartItem(item);}updateCartTotals();saveCart();cartBadge.style.transform='scale(1.5)';setTimeout(function(){cartBadge.style.transform='scale(1)';},200);openCart();}
+function addAllFavsToCart(){if(!favorites.length)return;favorites.forEach(function(f){addToCartFromFav(f.id,f.brand,f.name,f.price);});}
+function goToCheckout(){saveCart();window.location.href='checkout.html';}
+
+/* FAVORITOS */
+var favToggle=document.getElementById('fav-toggle'),favCountBadge=document.getElementById('fav-count'),favCountLabel=document.getElementById('fav-count-label'),favList=document.getElementById('fav-list'),favEmptyEl=document.getElementById('fav-empty'),favCountMobile=document.getElementById('fav-count-mobile'),favListMobile=document.getElementById('fav-list-mobile'),favEmptyMobile=document.getElementById('fav-empty-mobile'),favorites=[];
+try{var sf=localStorage.getItem('hera_favs');if(sf)favorites=JSON.parse(sf);}catch(e){favorites=[];}
+if(favToggle){favToggle.addEventListener('click',function(e){e.stopPropagation();if(accountDropdown)accountDropdown.style.display='none';favDropdown.style.display=favDropdown.style.display==='block'?'none':'block';});favDropdown.addEventListener('click',function(e){e.stopPropagation();});}
+function renderFavList(){var label=favorites.length+(favorites.length===1?' producto':' productos');if(favCountLabel)favCountLabel.textContent=label;if(favCountMobile)favCountMobile.textContent=label;if(favorites.length>0){if(favCountBadge){favCountBadge.style.display='flex';favCountBadge.textContent=favorites.length;}if(favEmptyEl)favEmptyEl.style.display='none';if(favEmptyMobile)favEmptyMobile.style.display='none';}else{if(favCountBadge)favCountBadge.style.display='none';if(favEmptyEl)favEmptyEl.style.display='block';if(favEmptyMobile)favEmptyMobile.style.display='block';}localStorage.setItem('hera_favs',JSON.stringify(favorites));var ab=document.getElementById('fav-add-all');if(ab)ab.style.display=favorites.length>0?'block':'none';}
+renderFavList();
+
+/* CURSOR */
+var cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+if(cursor&&window.innerWidth>768){var mx=0,my=0,rx=0,ry=0;document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();document.querySelectorAll('a,button,.avail-card,.cta-card,.faq-question').forEach(function(el){el.addEventListener('mouseenter',function(){cursor.style.transform='translate(-50%,-50%) scale(2)';ring.style.width='60px';ring.style.height='60px';});el.addEventListener('mouseleave',function(){cursor.style.transform='translate(-50%,-50%) scale(1)';ring.style.width='36px';ring.style.height='36px';});});}
+
+/* SCROLL REVEAL */
+(function(){var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');}else{e.target.classList.remove('visible');}});},{threshold:0.1});document.querySelectorAll('.reveal').forEach(function(el){var rect=el.getBoundingClientRect();if(rect.top<window.innerHeight&&rect.bottom>0)el.classList.add('visible');obs.observe(el);});})();
+
+/* FAQ */
+document.querySelectorAll('.faq-question').forEach(function(btn){btn.addEventListener('click',function(){var answer=btn.nextElementSibling,isOpen=btn.classList.contains('open');document.querySelectorAll('.faq-question').forEach(function(b){b.classList.remove('open');b.setAttribute('aria-expanded','false');b.nextElementSibling.classList.remove('open');});if(!isOpen){btn.classList.add('open');btn.setAttribute('aria-expanded','true');answer.classList.add('open');}});});
+</script>
+</body>
+</html>

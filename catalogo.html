@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HERA — Perfumes & Joyería · Catálogo</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --red:   #E1222B;
+    --cream: #F9F9F9;
+    --black: #0F0F0F;
+    --lgray: #E6E6E6;
+    --dgray: #2E2E2E;
+    --sans:  'Instrument Sans', sans-serif;
+    --serif: 'Cormorant Garamond', serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { font-family: var(--sans); background: var(--cream); color: var(--black); overflow-x: clip; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--red); }
+
+  .site-wrap { max-width: 1440px; margin: 0 auto; overflow-x: clip; position: relative; }
+
+  /* ══ ANNOUNCE ══ */
+  .announce { background: var(--red); overflow: hidden; padding: 12px 0; display: flex; width: 100%; }
+  .announce-track { display: flex; animation: marquee 36s linear infinite; white-space: nowrap; }
+  .announce-track span { font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: #fff; padding: 0 36px; }
+  .announce-track span.dot { color: rgba(255,255,255,.45); padding: 0; }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* ══ NAV ══ */
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(249,249,249,.92); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid rgba(249,249,249,.35); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; width: 100%; box-sizing: border-box; }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; height: 64px; }
+  .nav-links li { display: flex; align-items: center; height: 100%; }
+  .nav-links a { text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); transition: color .2s; display: flex; align-items: center; height: 100%; }
+  .nav-links a:hover, .nav-links a.active { color: var(--red); }
+  .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; text-decoration: none; z-index: 101; }
+  #logo-placeholder { height: 36px; min-width: 130px; border: 1.5px dashed rgba(15,15,15,.18); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(15,15,15,.3); padding: 0 16px; background: var(--cream); }
+  .nav-icons { display: flex; gap: 22px; align-items: center; }
+  .nav-icons button, .nav-icons a { background: none; border: none; cursor: pointer; color: var(--black); text-decoration: none; transition: color .2s; font-size: 18px; }
+  .nav-icons button:hover, .nav-icons a:hover { color: var(--red); }
+
+  /* NAV DROPDOWN */
+  .nav-item { position: relative; display: flex; align-items: center; height: 64px; }
+  .nav-item > a { display: flex; align-items: center; gap: 5px; height: 100%; }
+  .nav-item > a > svg { transition: transform .2s; }
+  .nav-item:hover > a > svg { transform: rotate(180deg); }
+  .nav-item::after { content: ''; position: absolute; bottom: -1px; left: -20px; right: -20px; height: 8px; background: transparent; }
+  .nav-dropdown { position: absolute; top: 100%; left: 0; background: var(--cream); border: 1px solid var(--lgray); border-top: none; min-width: 180px; opacity: 0; visibility: hidden; transition: opacity .18s, visibility .18s; z-index: 200; }
+  .nav-item:hover .nav-dropdown { opacity: 1; visibility: visible; }
+  .nav-dropdown-item { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); transition: color .2s, background .2s; cursor: default; gap: 12px; }
+  .nav-dropdown-item:last-child { border-bottom: none; }
+  .nav-dropdown-item:hover { color: var(--red); background: rgba(225,34,43,.03); }
+  .nav-dropdown-item svg { opacity: .35; flex-shrink: 0; }
+  .nav-flyout { position: absolute; top: -1px; left: 100%; background: var(--cream); border: 1px solid var(--lgray); min-width: 180px; opacity: 0; visibility: hidden; transition: opacity .15s, visibility .15s; z-index: 201; }
+  .nav-dropdown-item:hover .nav-flyout { opacity: 1; visibility: visible; }
+  .nav-flyout-label { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.28); padding: 12px 18px 6px; }
+  .nav-flyout a { display: flex; align-items: center; gap: 8px; padding: 11px 18px; font-size: 12px; font-weight: 500; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); transition: color .2s, background .2s; letter-spacing: .06em; }
+  .nav-flyout a:last-child { border-bottom: none; }
+  .nav-flyout a:hover { color: var(--red); background: rgba(225,34,43,.03); }
+  .nav-flyout a::before { content: ''; width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: .4; flex-shrink: 0; }
+  .nav-dropdown-badge { font-size: 9px; font-weight: 700; letter-spacing: .08em; background: var(--lgray); color: rgba(46,46,46,.5); padding: 2px 6px; text-transform: uppercase; }
+
+  /* HAMBURGER */
+  .nav-hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--black); padding: 6px; flex-direction: column; gap: 5px; align-items: center; justify-content: center; z-index: 102; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: currentColor; transition: transform .25s ease, opacity .25s ease; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* MOBILE NAV PANEL */
+  .nav-mobile-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.5); z-index: 150; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s, visibility .3s; }
+  .nav-mobile-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .nav-mobile-panel { position: fixed; top: 0; left: 0; bottom: 0; width: min(300px, 85vw); background: var(--cream); z-index: 160; transform: translateX(-100%); transition: transform .35s cubic-bezier(.4,0,.2,1); overflow-y: auto; overflow-x: hidden; pointer-events: none; }
+  .nav-mobile-panel.open { transform: translateX(0); pointer-events: auto; }
+  .nav-mobile-header { padding: 16px 20px; border-bottom: 1px solid var(--lgray); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .nav-mobile-close { background: none; border: none; cursor: pointer; color: var(--dgray); padding: 4px; }
+  .nav-mobile-links { padding: 8px 0; }
+  .nav-mobile-link { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); cursor: pointer; transition: color .2s; }
+  .nav-mobile-link:hover, .nav-mobile-link.active { color: var(--red); }
+  .nav-mobile-link svg { transition: transform .2s; }
+  .nav-mobile-link.active svg { transform: rotate(180deg); }
+  .nav-mobile-sub { max-height: 0; overflow: hidden; transition: max-height .3s ease; background: rgba(15,15,15,.02); }
+  .nav-mobile-sub.open { max-height: 500px; }
+  .nav-mobile-sub-label { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.28); padding: 12px 32px 4px; }
+  .nav-mobile-sub a { display: flex; align-items: center; gap: 8px; padding: 12px 32px; font-size: 12px; font-weight: 500; color: var(--dgray); text-decoration: none; border-bottom: 1px solid rgba(15,15,15,.05); transition: color .2s; letter-spacing: .06em; }
+  .nav-mobile-sub a::before { content: ''; width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: .4; flex-shrink: 0; }
+  .nav-mobile-sub a:hover { color: var(--red); }
+
+  /* CART DRAWER */
+  .cart-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.45); z-index: 800; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s, visibility .3s; }
+  .cart-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 420px; background: var(--cream); z-index: 900; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; box-shadow: -8px 0 40px rgba(15,15,15,.15); }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-drawer-header { padding: 24px 28px; border-bottom: 1px solid var(--lgray); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .cart-drawer-title { font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--black); }
+  .cart-drawer-close { background: none; border: none; cursor: pointer; color: var(--dgray); padding: 4px; display: flex; align-items: center; transition: color .2s; }
+  .cart-drawer-close:hover { color: var(--red); }
+  .cart-items { flex: 1; overflow-y: auto; }
+  .cart-item { display: flex; gap: 16px; padding: 20px 28px; border-bottom: 1px solid var(--lgray); align-items: center; }
+  .cart-item-img { width: 72px; height: 72px; flex-shrink: 0; background: var(--dgray); display: flex; align-items: center; justify-content: center; }
+  .cart-item-info { flex: 1; min-width: 0; }
+  .cart-item-brand { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.4); margin-bottom: 3px; }
+  .cart-item-name { font-family: var(--serif); font-size: 16px; font-weight: 300; font-style: italic; color: var(--black); margin-bottom: 6px; }
+  .cart-item-price { font-size: 13px; font-weight: 700; color: var(--black); }
+  .cart-item-qty { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+  .qty-btn { width: 26px; height: 26px; border: 1px solid var(--lgray); background: none; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; color: var(--black); transition: border-color .2s, background .2s; }
+  .qty-btn:hover { border-color: var(--black); background: var(--black); color: #fff; }
+  .qty-num { font-size: 13px; font-weight: 600; min-width: 20px; text-align: center; }
+  .cart-item-remove { background: var(--red); border: none; cursor: pointer; color: #fff; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .2s; }
+  .cart-item-remove:hover { background: #c41c24; }
+  .cart-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 60px 28px; }
+  .cart-empty svg { opacity: .2; }
+  .cart-empty p { font-family: var(--serif); font-size: 17px; font-style: italic; font-weight: 400; color: rgba(15,15,15,.55); text-align: center; }
+  .cart-footer { padding: 24px 28px; border-top: 1px solid var(--lgray); flex-shrink: 0; background: var(--cream); }
+  .cart-subtotal { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .cart-subtotal-label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: rgba(15,15,15,.5); }
+  .cart-subtotal-value { font-size: 18px; font-weight: 700; color: var(--black); }
+  .cart-checkout-btn { width: 100%; background: var(--black); color: #fff; border: none; padding: 18px; font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; transition: background .2s; margin-bottom: 10px; }
+  .cart-checkout-btn:hover { background: var(--red); }
+  .cart-continue-btn { width: 100%; background: transparent; color: var(--black); border: 1px solid var(--lgray); padding: 14px; font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: border-color .2s; }
+
+  /* SEARCH OVERLAY */
+  .search-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.7); z-index: 1000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .25s, visibility .25s; }
+  .search-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .search-box { position: absolute; top: 0; left: 0; right: 0; background: var(--cream); padding: 20px 24px 24px; box-shadow: 0 8px 40px rgba(15,15,15,.2); transform: translateY(-100%); transition: transform .3s cubic-bezier(.4,0,.2,1); }
+  .search-overlay.open .search-box { transform: translateY(0); }
+  .search-input-row { display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--black); padding-bottom: 12px; margin-bottom: 16px; }
+  .search-input-row svg { color: rgba(15,15,15,.4); flex-shrink: 0; }
+  #search-input { flex: 1; border: none; background: transparent; font-family: var(--sans); font-size: 18px; font-weight: 500; color: var(--black); outline: none; }
+  #search-input::placeholder { color: rgba(15,15,15,.35); }
+  #search-close-btn { background: none; border: none; cursor: pointer; color: rgba(15,15,15,.5); padding: 4px; flex-shrink: 0; transition: color .2s; }
+  #search-close-btn:hover { color: var(--red); }
+  #search-results { max-height: 60vh; overflow-y: auto; }
+  .search-hint { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.35); padding: 8px 0; }
+  .search-result-item { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--lgray); cursor: pointer; }
+  .search-result-item:last-child { border-bottom: none; }
+  .search-result-item:hover .search-result-name { color: var(--red); }
+  .search-result-thumb { width: 48px; height: 48px; background: var(--dgray); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .search-result-brand { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.4); margin-bottom: 2px; }
+  .search-result-name { font-family: var(--serif); font-size: 16px; font-weight: 300; font-style: italic; color: var(--black); transition: color .2s; }
+  .search-result-price { font-size: 12px; font-weight: 700; color: var(--black); margin-top: 2px; }
+  .search-empty { text-align: center; padding: 32px 0; }
+  .search-empty svg { opacity: .2; margin: 0 auto 12px; display: block; }
+  .search-empty p { font-family: var(--serif); font-size: 16px; font-style: italic; font-weight: 400; color: rgba(15,15,15,.55); }
+
+  /* CURSOR */
+  .cursor { position: fixed; width: 6px; height: 6px; background: var(--red); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform .15s; }
+  .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1.5px solid rgba(225,34,43,.55); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .3s, height .3s; }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: .1s; }
+  .reveal-d2 { transition-delay: .2s; }
+  .reveal-d3 { transition-delay: .3s; }
+
+  /* BUTTONS */
+  .btn-primary { background: var(--red); color: #fff; border: none; padding: 16px 36px; font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: background .2s; }
+  .btn-primary:hover { background: #c41c24; }
+
+  /* FAV BUTTON */
+  .fav-btn { background: none; border: none; cursor: pointer; padding: 6px; display: flex; align-items: center; justify-content: center; transition: color .2s, transform .15s; }
+  .fav-btn:hover { transform: scale(1.2); }
+  .fav-btn.active svg { fill: var(--red); stroke: var(--red); }
+  .ed-item .fav-btn { color: rgba(15,15,15,.3); margin-left: auto; }
+  .ed-item .fav-btn:hover { color: var(--red); }
+  .ed-item .fav-btn.active { color: var(--red); }
+  .ed-item:hover .fav-btn { color: rgba(249,249,249,.45); }
+  .ed-item:hover .fav-btn:hover { color: var(--red); }
+  .ed-item:hover .fav-btn.active { color: var(--red); }
+
+  /* FAVORITES DROPDOWN */
+  #fav-menu-wrap { position: relative; }
+
+  /* ══════════════════════════════════════
+     PRODUCT CARD — catálogo
+     Idéntica a novedades del index.html
+     + selector de volumen + ver producto
+  ══════════════════════════════════════ */
+  .ed-item { background: var(--cream); padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; cursor: default; transition: background .3s, box-shadow .3s; position: relative; overflow: hidden; border: 1px solid rgba(15,15,15,.08); box-shadow: 0 1px 4px rgba(15,15,15,.06); }
+  .ed-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--red); opacity: 0; transition: opacity .3s; z-index: 1; }
+  .ed-item:hover { background: var(--black); border-color: var(--black); box-shadow: inset 0 0 90px rgba(249,249,249,.06); }
+  .ed-item:hover::before { opacity: 1; }
+
+  .ed-img-zone { position: relative; }
+  .ed-img-placeholder { width: 100%; aspect-ratio: 3/4; background: var(--lgray); border: 1.5px dashed rgba(15,15,15,.14); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; transition: background .3s, border-color .3s; }
+  .ed-item:hover .ed-img-placeholder { background: rgba(249,249,249,.06); border-color: rgba(249,249,249,.15); }
+  .ed-img-placeholder svg { opacity: .25; color: var(--dgray); transition: color .3s, opacity .3s; }
+  .ed-item:hover .ed-img-placeholder svg { color: rgba(249,249,249,.4); opacity: 1; }
+  .ed-img-placeholder span { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(15,15,15,.3); text-align: center; transition: color .3s; }
+  .ed-item:hover .ed-img-placeholder span { color: rgba(249,249,249,.25); }
+
+  .ed-cart-overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 18px; opacity: 0; transition: opacity .3s; pointer-events: none; }
+  .ed-item:hover .ed-cart-overlay { opacity: 1; pointer-events: auto; }
+  .ed-cart-btn { background: var(--red); color: #fff; border: none; padding: 10px 20px; font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; transition: background .2s; }
+  .ed-cart-btn:hover { background: #c41c24; }
+
+  .ed-brand { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: rgba(15,15,15,.4); transition: color .3s; }
+  .ed-item:hover .ed-brand { color: rgba(249,249,249,.3); }
+  .ed-name { font-family: var(--serif); font-size: 20px; font-weight: 300; font-style: italic; color: var(--black); line-height: 1.15; transition: color .3s; }
+  .ed-item:hover .ed-name { color: var(--cream); }
+  .ed-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 12px; border-top: 1px solid rgba(15,15,15,.1); transition: border-color .3s; }
+  .ed-item:hover .ed-footer { border-top-color: rgba(249,249,249,.08); }
+  .ed-price { font-size: 13px; font-weight: 700; color: var(--black); transition: color .3s; }
+  .ed-item:hover .ed-price { color: var(--cream); }
+  .ed-cta { font-size: 9px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(15,15,15,.35); display: flex; align-items: center; gap: 5px; text-decoration: none; transition: color .2s; cursor: pointer; }
+  .ed-item:hover .ed-cta { color: var(--red); }
+
+  /* Selector de volumen */
+  .ed-vol-label { font-size: 7px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(15,15,15,.25); margin-bottom: 0; transition: color .3s; }
+  .ed-item:hover .ed-vol-label { color: rgba(249,249,249,.2); }
+  .ed-vols { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+  .ed-vol-btn { border: 1px solid rgba(15,15,15,.15); background: transparent; font-family: var(--sans); font-size: 9px; font-weight: 600; letter-spacing: .05em; padding: 4px 9px; cursor: pointer; color: rgba(15,15,15,.5); transition: border-color .2s, background .2s, color .2s; }
+  .ed-vol-btn.sel { border-color: var(--black); background: var(--black); color: var(--cream); }
+  .ed-item:hover .ed-vol-btn { border-color: rgba(249,249,249,.18); color: rgba(249,249,249,.4); background: transparent; }
+  .ed-item:hover .ed-vol-btn.sel { border-color: var(--cream); background: var(--cream); color: var(--black); }
+  .ed-vol-more { font-size: 9px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(15,15,15,.3); text-decoration: none; padding: 4px 6px; transition: color .2s; cursor: pointer; white-space: nowrap; }
+  .ed-item:hover .ed-vol-more { color: rgba(249,249,249,.35); }
+  .ed-vol-more:hover { color: var(--red) !important; }
+
+  /* ══════════════════════════════════════
+     CATALOG HEADER — editorial oscuro
+  ══════════════════════════════════════ */
+  .catalog-header { background: var(--black); padding: 52px 80px 0; border-bottom: none; }
+  .catalog-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .25em; text-transform: uppercase; color: var(--red); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+  .catalog-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--red); }
+  .catalog-title { font-family: var(--sans); font-size: clamp(36px, 5vw, 64px); font-weight: 700; letter-spacing: -.02em; line-height: .95; color: var(--cream); }
+  .catalog-title em { font-family: var(--serif); font-style: italic; font-weight: 300; color: rgba(249,249,249,.42); display: block; }
+
+  /* CATEGORY TABS */
+  .catalog-tabs { display: flex; align-items: flex-end; justify-content: center; gap: 0; margin-top: 36px; border-top: 1px solid rgba(249,249,249,.07); padding-top: 0; }
+  .catalog-tab-btn { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(249,249,249,.32); background: transparent; border: none; border-bottom: 2px solid transparent; padding: 16px 28px 14px; cursor: pointer; transition: color .2s, border-color .2s; position: relative; bottom: -1px; }
+  .catalog-tab-btn:hover { color: rgba(249,249,249,.65); }
+  .catalog-tab-btn.active { color: var(--cream); border-bottom-color: var(--red); }
+
+  /* ══════════════════════════════════════
+     CATALOG LAYOUT
+  ══════════════════════════════════════ */
+  .catalog-layout { display: grid; grid-template-columns: 240px 1fr; min-height: 70vh; }
+
+  /* ══ SIDEBAR ══ */
+  .catalog-sidebar { padding: 28px 24px 40px; border-right: 1px solid var(--lgray); position: sticky; top: 64px; height: calc(100vh - 64px); overflow-y: auto; background: var(--cream); }
+  .sidebar-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 2px solid var(--black); }
+  .sidebar-title { font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--black); }
+  .sidebar-clear-all { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(15,15,15,.28); border: none; background: none; cursor: pointer; padding: 0; transition: color .2s; }
+  .sidebar-clear-all:hover { color: var(--red); }
+  .filter-section { margin-bottom: 22px; padding-bottom: 22px; border-bottom: 1px solid var(--lgray); }
+  .filter-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .filter-section-title { font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.35); margin-bottom: 13px; padding-left: 10px; border-left: 2px solid var(--red); }
+  .filter-option { display: flex; align-items: center; gap: 9px; margin-bottom: 8px; cursor: pointer; }
+  .filter-option input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 14px; height: 14px; border: 1.5px solid rgba(15,15,15,.22); background: transparent; cursor: pointer; flex-shrink: 0; position: relative; transition: background .15s, border-color .15s; }
+  .filter-option input[type="checkbox"]:checked { background: var(--red); border-color: var(--red); }
+  .filter-option input[type="checkbox"]:checked::after { content: ''; position: absolute; left: 3px; top: 0px; width: 5px; height: 9px; border: 2px solid #fff; border-top: none; border-left: none; transform: rotate(45deg); }
+  .filter-option input[type="checkbox"]:hover:not(:checked) { border-color: rgba(15,15,15,.45); }
+  .filter-option label { font-size: 13px; color: var(--dgray); cursor: pointer; transition: color .15s; flex: 1; user-select: none; }
+  .filter-option:hover label { color: var(--black); }
+  .filter-count { font-size: 10px; color: rgba(15,15,15,.28); flex-shrink: 0; }
+  .price-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+  .price-input { width: 100%; border: 1px solid var(--lgray); background: transparent; padding: 7px 10px; font-family: var(--sans); font-size: 12px; color: var(--black); outline: none; transition: border-color .2s; }
+  .price-input:focus { border-color: var(--black); }
+
+  /* ══ CATALOG MAIN ══ */
+  .catalog-main { padding: 24px 32px 60px; background: var(--lgray); }
+  .catalog-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; gap: 16px; flex-wrap: wrap; }
+  .catalog-count { font-size: 12px; color: rgba(15,15,15,.42); letter-spacing: .04em; }
+  .catalog-sort-wrap { display: flex; align-items: center; gap: 10px; }
+  .sort-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.38); }
+  .sort-select { border: 1px solid var(--lgray); background: var(--cream); padding: 8px 32px 8px 12px; font-family: var(--sans); font-size: 12px; color: var(--dgray); cursor: pointer; outline: none; transition: border-color .2s; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%232E2E2E' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; }
+  .sort-select:focus { border-color: var(--black); }
+
+  .active-chips-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; min-height: 0; }
+  .active-chip { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; border: 1px solid var(--black); background: var(--black); color: var(--cream); padding: 5px 10px; cursor: pointer; transition: background .15s, color .15s; }
+  .active-chip:hover { background: var(--red); border-color: var(--red); }
+  .chip-x { font-size: 11px; opacity: .7; }
+  .chips-clear-all { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(15,15,15,.35); border: none; background: none; cursor: pointer; padding: 5px 0; transition: color .2s; margin-left: 4px; }
+  .chips-clear-all:hover { color: var(--red); }
+
+  /* ══ PRODUCT GRID ══ */
+  .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+  /* ══ LOAD MORE ══ */
+  .load-more-wrap { text-align: center; padding: 48px 0 16px; }
+  .load-more-btn { background: transparent; color: var(--black); border: 1px solid var(--lgray); padding: 14px 48px; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; transition: border-color .2s, background .2s, color .2s; }
+  .load-more-btn:hover { border-color: var(--black); background: var(--black); color: var(--cream); }
+
+  /* ══ EMPTY STATE ══ */
+  .catalog-empty { grid-column: 1/-1; padding: 80px 40px; text-align: center; display: none; }
+  .catalog-empty.visible { display: block; }
+  .catalog-empty svg { opacity: .14; margin: 0 auto 20px; display: block; }
+  .catalog-empty-title { font-family: var(--serif); font-size: 26px; font-style: italic; font-weight: 300; color: rgba(15,15,15,.5); margin-bottom: 10px; }
+  .catalog-empty-sub { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.32); margin-bottom: 28px; }
+
+  /* ══ MOBILE FILTER BAR ══ */
+  .filter-mobile-bar { display: none; position: sticky; top: 56px; z-index: 90; background: var(--cream); border-bottom: 1px solid var(--lgray); padding: 10px 20px; gap: 8px; align-items: center; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+  .filter-mobile-bar::-webkit-scrollbar { display: none; }
+  .filter-mobile-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1px solid var(--lgray); background: var(--cream); color: var(--dgray); padding: 7px 14px; cursor: pointer; transition: border-color .2s; flex-shrink: 0; white-space: nowrap; }
+  .filter-mobile-btn:hover { border-color: var(--black); }
+  .filter-mobile-chip { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; border: 1px solid var(--black); background: var(--black); color: var(--cream); padding: 6px 10px; cursor: pointer; flex-shrink: 0; white-space: nowrap; transition: background .15s; }
+  .filter-mobile-chip:hover { background: var(--red); border-color: var(--red); }
+  .sort-mobile-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border: 1px solid var(--lgray); background: var(--cream); color: var(--dgray); padding: 7px 14px; cursor: pointer; flex-shrink: 0; margin-left: auto; white-space: nowrap; }
+  .filter-badge { background: var(--red); color: #fff; border-radius: 50%; width: 14px; height: 14px; font-size: 8px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }
+
+  /* ══ FILTER DRAWER (mobile) ══ */
+  .filter-drawer-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.45); z-index: 800; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s, visibility .3s; }
+  .filter-drawer-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .filter-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(340px, 90vw); background: var(--cream); z-index: 900; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; }
+  .filter-drawer.open { transform: translateX(0); }
+  .filter-drawer-header { padding: 20px 24px; border-bottom: 1px solid var(--lgray); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .filter-drawer-title { font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--black); }
+  .filter-drawer-close { background: none; border: none; cursor: pointer; color: var(--dgray); padding: 4px; display: flex; align-items: center; transition: color .2s; }
+  .filter-drawer-close:hover { color: var(--red); }
+  .filter-drawer-body { flex: 1; overflow-y: auto; padding: 0 24px 24px; }
+  .filter-drawer-section { padding: 20px 0; border-bottom: 1px solid var(--lgray); }
+  .filter-drawer-section:last-child { border-bottom: none; }
+  .filter-drawer-section-title { font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(15,15,15,.38); margin-bottom: 14px; }
+  .filter-drawer-footer { padding: 16px 24px; border-top: 1px solid var(--lgray); flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .filter-apply-btn { background: var(--black); color: var(--cream); border: none; padding: 14px; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; transition: background .2s; }
+  .filter-apply-btn:hover { background: var(--red); }
+  .filter-reset-btn { background: transparent; color: var(--black); border: 1px solid var(--lgray); padding: 14px; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; transition: border-color .2s; }
+  .filter-reset-btn:hover { border-color: var(--black); }
+
+  /* ══ FOOTER ══ */
+  footer { background: var(--black); padding: 60px 80px 36px; color: var(--cream); }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+  #footer-logo-placeholder { height: 32px; min-width: 120px; width: fit-content; border: 1.5px dashed rgba(249,249,249,.12); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(249,249,249,.2); padding: 0 14px; margin-bottom: 20px; }
+  .footer-tagline { font-family: var(--serif); font-size: 15px; font-style: italic; color: rgba(249,249,249,.32); margin-bottom: 28px; line-height: 1.6; }
+  .footer-socials { display: flex; gap: 14px; }
+  .footer-social-btn { width: 38px; height: 38px; border: 1px solid rgba(249,249,249,.1); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color .2s, background .2s; text-decoration: none; color: rgba(249,249,249,.42); }
+  .footer-social-btn:hover { border-color: var(--red); background: var(--red); color: #fff; }
+  .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--cream); margin-bottom: 24px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-links a { font-size: 13px; color: rgba(249,249,249,.32); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--red); }
+  .footer-bottom { border-top: 1px solid rgba(249,249,249,.06); padding-top: 32px; display: flex; align-items: center; justify-content: space-between; }
+  .footer-copy { font-size: 12px; color: rgba(249,249,249,.2); }
+  .footer-payment { display: flex; gap: 10px; }
+  .payment-badge { background: rgba(249,249,249,.05); border: 1px solid rgba(249,249,249,.08); padding: 6px 12px; font-size: 11px; font-weight: 700; color: rgba(249,249,249,.38); letter-spacing: .08em; }
+
+  /* ══════════════════════════════════════
+     BREAKPOINTS
+  ══════════════════════════════════════ */
+  @media (max-width: 1024px) {
+    .cursor, .cursor-ring { display: none; }
+    nav { padding: 0 24px; height: 64px; }
+    .catalog-header { padding: 36px 24px 0; }
+    .catalog-layout { grid-template-columns: 1fr; }
+    .catalog-sidebar { display: none; }
+    .filter-mobile-bar { display: flex; }
+    .catalog-main { padding: 16px 20px 48px; }
+    .product-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    footer { padding: 40px 24px 28px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 40px; }
+    .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
+    .footer-payment { flex-wrap: wrap; justify-content: center; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 16px; height: 56px; backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(249,249,249,.98); }
+    .nav-links { display: none !important; }
+    .nav-hamburger { display: flex; }
+    .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); }
+    #logo-placeholder { min-width: 88px; font-size: 10px; padding: 0 10px; height: 30px; }
+    .nav-icons { gap: 14px; }
+    .nav-icons .hide-mobile { display: none !important; }
+    #fav-menu-wrap { display: none !important; }
+    .catalog-header { padding: 32px 24px 0; }
+    .catalog-title { font-size: clamp(28px,9vw,48px); }
+    .catalog-tabs { gap: 0; }
+    .catalog-tab-btn { font-size: 10px; padding: 14px 18px 12px; }
+    .catalog-tab-btn:first-child { padding-left: 0; }
+    .catalog-main { padding: 12px 12px 40px; }
+    .filter-mobile-bar { top: 56px; padding: 9px 16px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .cart-drawer { width: 100%; }
+    footer { padding: 36px 16px 24px; }
+    .footer-top { grid-template-columns: 1fr; gap: 24px; margin-bottom: 32px; }
+  }
+
+  @media (max-width: 480px) {
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 24px; }
+  }
+
+  button, a,
+  .filter-option, .nav-mobile-link {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- OVERLAY MÓVIL NAV -->
+<div class="nav-mobile-overlay" id="navMobileOverlay"></div>
+
+<!-- PANEL NAV MÓVIL -->
+<div class="nav-mobile-panel" id="navMobilePanel">
+  <div class="nav-mobile-header">
+    <div style="width:32px;"></div>
+    <div style="flex:1;display:flex;justify-content:center;">
+      <div style="height:32px;min-width:110px;border:1.5px dashed rgba(15,15,15,.18);display:flex;align-items:center;justify-content:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(15,15,15,.3);padding:0 14px;background:var(--cream);">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg>
+        Tu logo aquí
+      </div>
+    </div>
+    <button class="nav-mobile-close" id="navMobileClose">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="nav-mobile-links">
+    <a href="index.html" class="nav-mobile-link">Inicio</a>
+    <div class="nav-mobile-link active" id="mobileProductosToggle">
+      Productos
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <div class="nav-mobile-sub open" id="mobileProductosSub">
+      <div class="nav-mobile-sub-label">Perfumes</div>
+      <a href="catalogo.html?cat=diseñador">Diseñador</a>
+      <a href="catalogo.html?cat=nicho">Nicho</a>
+      <a href="catalogo.html?cat=arabes">Árabes</a>
+      <a href="catalogo.html?cat=testers">Testers</a>
+      <a href="catalogo.html?cat=decants">Decants</a>
+      <a href="catalogo.html?cat=sets">Sets</a>
+      <div class="nav-mobile-sub-label" style="margin-top:8px;">Joyería</div>
+      <a href="#">Anillos</a>
+      <a href="#">Brazaletes</a>
+      <a href="#">Aretes</a>
+      <a href="#">Collares</a>
+    </div>
+    <a href="nosotros.html" class="nav-mobile-link">Nosotros</a>
+    <a href="cuenta.html" class="nav-mobile-link" id="mobileCuentaLoginLink" style="border-top:1px solid var(--lgray);">
+      Iniciar sesión
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+    </a>
+    <div class="nav-mobile-link" id="mobileCuentaToggle" style="border-top:1px solid var(--lgray);display:none;">
+      Mi cuenta
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <div class="nav-mobile-sub" id="mobileCuentaSub">
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;font-weight:500;color:var(--dgray);text-decoration:none;border-bottom:1px solid rgba(15,15,15,.05);letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>Mis pedidos</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;font-weight:500;color:var(--dgray);text-decoration:none;border-bottom:1px solid rgba(15,15,15,.05);letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>Datos personales</a>
+      <a href="#" id="btn-logout-mobile" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;font-weight:500;color:var(--dgray);text-decoration:none;letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Cerrar sesión</a>
+    </div>
+    <!-- FAVORITOS PANEL MÓVIL -->
+    <div style="padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--lgray);">
+      <span style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--black);">Mis favoritos</span>
+      <span id="fav-count-mobile" style="font-size:11px;color:rgba(15,15,15,.4);">0 productos</span>
+    </div>
+    <div id="fav-list-mobile" style="max-height:260px;overflow-y:auto;">
+      <div id="fav-empty-mobile" style="padding:24px;text-align:center;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,0.2)" stroke-width="1.5" style="margin:0 auto 8px;display:block;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <p style="font-size:12px;color:rgba(15,15,15,.32);font-family:var(--serif);font-style:italic;">Aún no tienes favoritos</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-header">
+    <span class="cart-drawer-title">Tu carrito <span id="cart-drawer-count" style="color:rgba(15,15,15,.4);font-weight:400;">(0)</span></span>
+    <button class="cart-drawer-close" id="cart-close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="cart-items" id="cart-items-list"></div>
+  <div class="cart-empty" id="cart-empty" style="display:none;">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <p>Tu carrito está vacío.<br>Explora nuestra colección.</p>
+  </div>
+  <div class="cart-footer" id="cart-footer" style="display:none;">
+    <div style="margin-bottom:18px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-size:11px;color:rgba(15,15,15,.5);">Envío gratis a partir de</span><span style="font-size:11px;font-weight:700;color:var(--black);">$1,500 MXN</span></div>
+      <div style="height:3px;background:var(--lgray);border-radius:2px;"><div id="shipping-bar" style="height:100%;background:var(--red);border-radius:2px;transition:width .4s ease;width:0;"></div></div>
+      <p id="shipping-msg" style="font-size:11px;color:rgba(15,15,15,.4);margin-top:6px;"></p>
+    </div>
+    <div class="cart-subtotal"><span class="cart-subtotal-label">Subtotal</span><span class="cart-subtotal-value" id="cart-total">$0 MXN</span></div>
+    <p style="font-size:11px;color:rgba(15,15,15,.35);margin-bottom:20px;">Impuestos e información de envío calculados al finalizar.</p>
+    <button class="cart-checkout-btn" onclick="goToCheckout()">Proceder al pago →</button>
+    <button class="cart-continue-btn" onclick="closeCart()">Seguir comprando</button>
+  </div>
+</div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-input-row">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input id="search-input" type="text" placeholder="Busca por nombre o marca…" autocomplete="off" />
+      <button id="search-close-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div id="search-results"><p class="search-hint">Busca por nombre o marca</p></div>
+  </div>
+</div>
+
+<!-- FILTER DRAWER (mobile) -->
+<div class="filter-drawer-overlay" id="filterDrawerOverlay"></div>
+<div class="filter-drawer" id="filterDrawer">
+  <div class="filter-drawer-header">
+    <span class="filter-drawer-title">Filtros</span>
+    <button class="filter-drawer-close" id="filterDrawerClose">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="filter-drawer-body">
+    <!-- Categoría -->
+    <div class="filter-drawer-section">
+      <div class="filter-drawer-section-title">Categoría</div>
+      <div class="filter-option"><input type="checkbox" id="dm-diseñador" data-group="cat" value="diseñador"><label for="dm-diseñador">Diseñador</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-nicho" data-group="cat" value="nicho"><label for="dm-nicho">Nicho</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-arabes" data-group="cat" value="arabes"><label for="dm-arabes">Árabes</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-testers" data-group="cat" value="testers"><label for="dm-testers">Testers</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-decants" data-group="cat" value="decants"><label for="dm-decants">Decants</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-sets" data-group="cat" value="sets"><label for="dm-sets">Sets</label></div>
+    </div>
+    <!-- Género -->
+    <div class="filter-drawer-section">
+      <div class="filter-drawer-section-title">Género</div>
+      <div class="filter-option"><input type="checkbox" id="dm-masculino" data-group="gen" value="masculino"><label for="dm-masculino">Masculino</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-femenino" data-group="gen" value="femenino"><label for="dm-femenino">Femenino</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-unisex" data-group="gen" value="unisex"><label for="dm-unisex">Unisex</label></div>
+    </div>
+    <!-- Familia olfativa -->
+    <div class="filter-drawer-section">
+      <div class="filter-drawer-section-title">Familia olfativa</div>
+      <div class="filter-option"><input type="checkbox" id="dm-floral" data-group="fam" value="floral"><label for="dm-floral">Floral</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-oriental" data-group="fam" value="oriental"><label for="dm-oriental">Oriental</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-amaderado" data-group="fam" value="amaderado"><label for="dm-amaderado">Amaderado</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-fresco" data-group="fam" value="fresco"><label for="dm-fresco">Fresco</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-gourmand" data-group="fam" value="gourmand"><label for="dm-gourmand">Gourmand</label></div>
+    </div>
+    <!-- Precio -->
+    <div class="filter-drawer-section">
+      <div class="filter-drawer-section-title">Rango de precio</div>
+      <div class="price-inputs">
+        <input class="price-input" type="number" id="dm-precio-min" placeholder="Mín" min="0">
+        <input class="price-input" type="number" id="dm-precio-max" placeholder="Máx" min="0">
+      </div>
+    </div>
+  </div>
+  <div class="filter-drawer-footer">
+    <button class="filter-reset-btn" id="filterDrawerReset">Limpiar</button>
+    <button class="filter-apply-btn" id="filterDrawerApply">Aplicar</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SITE-WRAP
+═══════════════════════════════════════ -->
+<div class="site-wrap">
+
+  <!-- ANNOUNCE -->
+  <div class="announce">
+    <div class="announce-track">
+      <span>Envío a todo México</span><span class="dot">✦</span>
+      <span>100% Auténtico</span><span class="dot">✦</span>
+      <span>Sellados de Fábrica</span><span class="dot">✦</span>
+      <span>Garantía de Autenticidad</span><span class="dot">✦</span>
+      <span>Envío a todo México</span><span class="dot">✦</span>
+      <span>100% Auténtico</span><span class="dot">✦</span>
+      <span>Sellados de Fábrica</span><span class="dot">✦</span>
+      <span>Garantía de Autenticidad</span><span class="dot">✦</span>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <button class="nav-hamburger" id="navHamburger" type="button" aria-label="Menú" style="touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer;">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li class="nav-item">
+        <a href="javascript:void(0)" class="active" style="cursor:default;">Productos
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-item" onclick="if(!event.target.closest('a')){location.href='catalogo.html?tab=perfumes';}" style="cursor:pointer;">
+            Perfumes
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            <div class="nav-flyout">
+              <div class="nav-flyout-label">Categorías</div>
+              <a href="catalogo.html?cat=diseñador">Diseñador</a>
+              <a href="catalogo.html?cat=nicho">Nicho</a>
+              <a href="catalogo.html?cat=arabes">Árabes</a>
+              <a href="catalogo.html?cat=body-mist">Body Mist</a>
+              <a href="catalogo.html?cat=testers">Testers</a>
+              <a href="catalogo.html?cat=decants">Decants</a>
+              <a href="catalogo.html?cat=sets">Sets</a>
+            </div>
+          </div>
+          <div class="nav-dropdown-item" onclick="if(!event.target.closest('a')){location.href='catalogo.html?tab=joyeria';}" style="cursor:pointer;">
+            Joyería
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            <div class="nav-flyout">
+              <div class="nav-flyout-label">Categorías</div>
+              <a href="catalogo.html?tab=joyeria&cat=anillos">Anillos</a>
+              <a href="catalogo.html?tab=joyeria&cat=brazaletes">Brazaletes</a>
+              <a href="catalogo.html?tab=joyeria&cat=aretes">Aretes</a>
+              <a href="catalogo.html?tab=joyeria&cat=collares">Collares</a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+    </ul>
+
+    <a href="index.html" class="nav-logo">
+      <div id="logo-placeholder">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg>
+        Tu logo aquí
+      </div>
+    </a>
+
+    <div class="nav-icons">
+      <button id="search-btn" title="Buscar" style="touch-action:manipulation;-webkit-tap-highlight-color:transparent;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+      <!-- Cuenta — solo desktop -->
+      <div style="position:relative;" id="account-menu-wrap" class="hide-mobile">
+        <a href="cuenta.html" id="account-login-btn" title="Iniciar sesión" style="display:none;align-items:center;background:none;border:none;cursor:pointer;color:var(--black);transition:color .2s;text-decoration:none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
+        </a>
+        <button title="Mi cuenta" id="account-toggle" style="display:none;align-items:center;background:none;border:none;cursor:pointer;color:var(--black);transition:color .2s;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
+        </button>
+        <div id="account-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;width:220px;background:var(--cream);border:1px solid var(--lgray);z-index:500;box-shadow:0 8px 32px rgba(15,15,15,.12);">
+          <a href="#" style="display:flex;align-items:center;gap:12px;padding:16px 20px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dgray);text-decoration:none;border-bottom:1px solid var(--lgray);transition:color .2s,background .2s;" onmouseover="this.style.color='var(--red)';this.style.background='rgba(225,34,43,.03)'" onmouseout="this.style.color='var(--dgray)';this.style.background='transparent'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>Mis pedidos</a>
+          <a href="#" style="display:flex;align-items:center;gap:12px;padding:16px 20px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dgray);text-decoration:none;border-bottom:1px solid var(--lgray);transition:color .2s,background .2s;" onmouseover="this.style.color='var(--red)';this.style.background='rgba(225,34,43,.03)'" onmouseout="this.style.color='var(--dgray)';this.style.background='transparent'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>Datos personales</a>
+          <a href="#" id="btn-logout" style="display:flex;align-items:center;gap:12px;padding:16px 20px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dgray);text-decoration:none;transition:color .2s,background .2s;" onmouseover="this.style.color='var(--red)';this.style.background='rgba(225,34,43,.03)'" onmouseout="this.style.color='var(--dgray)';this.style.background='transparent'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Cerrar sesión</a>
+        </div>
+      </div>
+      <!-- Favoritos — solo desktop -->
+      <div id="fav-menu-wrap" class="hide-mobile" style="position:relative;">
+        <button title="Favoritos" id="fav-toggle" style="position:relative;display:flex;align-items:center;background:none;border:none;cursor:pointer;color:var(--black);transition:color .2s;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span id="fav-count" style="position:absolute;top:-4px;right:-6px;width:16px;height:16px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center;">0</span>
+        </button>
+        <!-- Dropdown — position:absolute anclado al botón -->
+        <div id="fav-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;width:300px;max-height:480px;background:var(--cream);border:1px solid var(--lgray);z-index:500;box-shadow:0 8px 32px rgba(15,15,15,.12);flex-direction:column;">
+          <div style="padding:16px 20px;border-bottom:1px solid var(--lgray);display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--black);">Favoritos</span>
+            <span id="fav-count-label" style="font-size:11px;color:rgba(15,15,15,.38);">0 productos</span>
+          </div>
+          <div id="fav-list" style="flex:1;overflow-y:auto;max-height:340px;">
+            <div id="fav-empty" style="padding:32px 20px;text-align:center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,0.18)" stroke-width="1.5" style="margin:0 auto 10px;display:block;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <p style="font-family:var(--serif);font-size:14px;font-style:italic;color:rgba(15,15,15,.38);">Aún no tienes favoritos</p>
+            </div>
+          </div>
+          <div id="fav-add-all" style="display:none;padding:14px 20px;border-top:1px solid var(--lgray);">
+            <button onclick="addAllFavsToCart()" style="width:100%;background:var(--black);color:#fff;border:none;padding:12px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;">Agregar todo al carrito</button>
+          </div>
+        </div>
+      </div>
+      <!-- Carrito — siempre visible -->
+      <button id="cart-btn" title="Carrito" style="position:relative;display:flex;align-items:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span id="cart-count" style="position:absolute;top:-4px;right:-6px;width:16px;height:16px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center;transition:transform .2s;">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════
+       CATALOG HEADER — editorial
+  ══════════════════════════════════════ -->
+  <div class="catalog-header">
+    <div class="catalog-eyebrow reveal">Catálogo</div>
+    <h1 class="catalog-title reveal reveal-d1">
+      Nuestra
+      <em id="catalog-title-em">perfumes.</em>
+    </h1>
+    <div class="catalog-tabs reveal reveal-d2">
+      <button class="catalog-tab-btn active" data-tab="perfumes" onclick="setTab('perfumes',this)">Perfumes</button>
+      <button class="catalog-tab-btn" data-tab="joyeria" onclick="setTab('joyeria',this)">Joyería</button>
+    </div>
+  </div>
+
+  <!-- MOBILE FILTER BAR (sticky, solo visible en ≤1024px) -->
+  <div class="filter-mobile-bar" id="filterMobileBar">
+    <button class="filter-mobile-btn" id="filterOpenBtn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+      Filtrar
+      <span id="filter-badge" class="filter-badge" style="display:none;">0</span>
+    </button>
+    <div id="mobile-active-chips" style="display:contents;"></div>
+    <button class="sort-mobile-btn" onclick="document.getElementById('sort-select').dispatchEvent(new MouseEvent('click'))">
+      Ordenar
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       CATALOG LAYOUT
+  ══════════════════════════════════════ -->
+  <div class="catalog-layout">
+
+    <!-- SIDEBAR (desktop) -->
+    <aside class="catalog-sidebar" id="catalogSidebar">
+      <div class="sidebar-head">
+        <span class="sidebar-title">Filtros</span>
+        <button class="sidebar-clear-all" id="sidebarClearAll">Limpiar todo</button>
+      </div>
+
+      <!-- Categoría Perfumes -->
+      <div class="filter-section" data-tabs="todos perfumes">
+        <div class="filter-section-title">Categoría</div>
+        <div class="filter-option"><input type="checkbox" id="f-diseñador" data-group="cat" value="diseñador"><label for="f-diseñador">Diseñador</label><span class="filter-count">5</span></div>
+        <div class="filter-option"><input type="checkbox" id="f-nicho" data-group="cat" value="nicho"><label for="f-nicho">Nicho</label><span class="filter-count">4</span></div>
+        <div class="filter-option"><input type="checkbox" id="f-arabes" data-group="cat" value="arabes"><label for="f-arabes">Árabes</label><span class="filter-count">3</span></div>
+        <div class="filter-option"><input type="checkbox" id="f-body-mist" data-group="cat" value="body-mist"><label for="f-body-mist">Body Mist</label><span class="filter-count">0</span></div>
+        <div class="filter-option"><input type="checkbox" id="f-testers" data-group="cat" value="testers"><label for="f-testers">Testers</label><span class="filter-count">2</span></div>
+        <div class="filter-option"><input type="checkbox" id="f-decants" data-group="cat" value="decants"><label for="f-decants">Decants</label><span class="filter-count">1</span></div>
+        <div class="filter-option"><input type="checkbox" id="f-sets" data-group="cat" value="sets"><label for="f-sets">Sets</label><span class="filter-count">2</span></div>
+      </div>
+
+      <!-- Categoría Joyería -->
+      <div class="filter-section" data-tabs="todos joyeria">
+        <div class="filter-section-title">Tipo de joya</div>
+        <div class="filter-option"><input type="checkbox" id="f-anillos" data-group="cat" value="anillos"><label for="f-anillos">Anillos</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-aretes" data-group="cat" value="aretes"><label for="f-aretes">Aretes</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-collares" data-group="cat" value="collares"><label for="f-collares">Collares</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-brazaletes" data-group="cat" value="brazaletes"><label for="f-brazaletes">Brazaletes</label></div>
+      </div>
+
+      <!-- Género — visible siempre -->
+      <div class="filter-section" data-tabs="todos perfumes joyeria">
+        <div class="filter-section-title">Género</div>
+        <div class="filter-option"><input type="checkbox" id="f-masculino" data-group="gen" value="masculino"><label for="f-masculino">Masculino</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-femenino" data-group="gen" value="femenino"><label for="f-femenino">Femenino</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-unisex" data-group="gen" value="unisex"><label for="f-unisex">Unisex</label></div>
+      </div>
+
+      <!-- Familia olfativa — solo perfumes -->
+      <div class="filter-section" data-tabs="todos perfumes">
+        <div class="filter-section-title">Familia olfativa</div>
+        <div class="filter-option"><input type="checkbox" id="f-floral" data-group="fam" value="floral"><label for="f-floral">Floral</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-oriental" data-group="fam" value="oriental"><label for="f-oriental">Oriental</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-amaderado" data-group="fam" value="amaderado"><label for="f-amaderado">Amaderado</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-fresco" data-group="fam" value="fresco"><label for="f-fresco">Fresco</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-gourmand" data-group="fam" value="gourmand"><label for="f-gourmand">Gourmand</label></div>
+      </div>
+
+      <!-- Precio — visible siempre -->
+      <div class="filter-section" data-tabs="todos perfumes joyeria">
+        <div class="filter-section-title">Rango de precio (MXN)</div>
+        <div class="price-inputs">
+          <input class="price-input" type="number" id="f-precio-min" placeholder="Mín" min="0">
+          <input class="price-input" type="number" id="f-precio-max" placeholder="Máx" min="0">
+        </div>
+      </div>
+
+      <!-- Marca perfumes -->
+      <div class="filter-section" data-tabs="todos perfumes">
+        <div class="filter-section-title">Marca</div>
+        <div class="filter-option"><input type="checkbox" id="f-jenny" data-group="marca" value="jenny-rivera"><label for="f-jenny">Jenny Rivera</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-abercrombie" data-group="marca" value="abercrombie"><label for="f-abercrombie">Abercrombie & Fitch</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-hera-excl" data-group="marca" value="hera-exclusivo"><label for="f-hera-excl">HERA Exclusivo</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-hera-arabe" data-group="marca" value="hera-arabe"><label for="f-hera-arabe">HERA Árabe</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-dior" data-group="marca" value="dior"><label for="f-dior">Dior</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-byredo" data-group="marca" value="byredo"><label for="f-byredo">Byredo</label></div>
+      </div>
+
+      <!-- Marca joyería -->
+      <div class="filter-section" data-tabs="todos joyeria">
+        <div class="filter-section-title">Colección</div>
+        <div class="filter-option"><input type="checkbox" id="f-hera-joy" data-group="marca" value="hera-joyeria"><label for="f-hera-joy">HERA Joyería</label></div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="catalog-main">
+
+      <!-- TOP BAR -->
+      <div class="catalog-topbar">
+        <span class="catalog-count" id="catalog-count">Mostrando 12 de 17 productos</span>
+        <div class="catalog-sort-wrap">
+          <span class="sort-label">Ordenar:</span>
+          <select class="sort-select" id="sort-select">
+            <option value="relevancia">Relevancia</option>
+            <option value="precio-asc">Precio: menor a mayor</option>
+            <option value="precio-desc">Precio: mayor a menor</option>
+            <option value="novedades">Novedades primero</option>
+            <option value="bestsellers">Más vendidos</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ACTIVE CHIPS -->
+      <div class="active-chips-row" id="active-chips-row"></div>
+
+      <!-- PRODUCT GRID -->
+      <div class="product-grid" id="product-grid"></div>
+
+      <!-- EMPTY STATE -->
+      <div class="catalog-empty" id="catalog-empty">
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M8 11h6" opacity=".5"/></svg>
+        <div class="catalog-empty-title">Sin resultados</div>
+        <div class="catalog-empty-sub">Ningún producto coincide con los filtros aplicados</div>
+        <button class="btn-primary" onclick="clearAllFilters()">Limpiar filtros</button>
+      </div>
+
+      <!-- LOAD MORE -->
+      <div class="load-more-wrap">
+        <button class="load-more-btn" id="loadMoreBtn" style="display:none;">Cargar más productos</button>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div id="footer-logo-placeholder">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg>
+          Tu logo aquí
+        </div>
+        <p class="footer-tagline">Perfumes &amp; Joyería.<br>Para quienes no necesitan<br>permiso para destacar.</p>
+        <div class="footer-socials">
+          <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+          <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+        </div>
+      </div>
+      <div><p class="footer-col-title">Tienda</p><ul class="footer-links"><li><a href="catalogo.html">Perfumes</a></li><li><a href="#">Joyería</a></li><li><a href="#">Novedades</a></li><li><a href="#">Bestsellers</a></li><li><a href="#">Ofertas</a></li></ul></div>
+      <div><p class="footer-col-title">Ayuda</p><ul class="footer-links"><li><a href="#">Rastrear pedido</a></li><li><a href="devoluciones.html">Devoluciones</a></li><li><a href="Politica_envios.html">Política de envíos</a></li><li><a href="faq.html">Preguntas frecuentes</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+      <div><p class="footer-col-title">Marca</p><ul class="footer-links"><li><a href="nosotros.html">Nosotros</a></li><li><a href="aviso-privacidad.html">Privacidad</a></li><li><a href="terminos.html">Términos y condiciones</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 HERA Perfumes &amp; Joyería. Todos los derechos reservados.</p>
+      <div class="footer-payment"><span class="payment-badge">VISA</span><span class="payment-badge">MC</span><span class="payment-badge">Mercado Pago</span><span class="payment-badge">SPEI</span></div>
+    </div>
+  </footer>
+
+</div><!-- /site-wrap -->
+
+<script>
+/* ══════════════════════════════════════
+   CATÁLOGO DE PRODUCTOS
+   cat: diseñador | nicho | arabes | testers | decants | sets
+   gen: masculino | femenino | unisex
+   fam: floral | oriental | amaderado | fresco | gourmand
+   marca: slug de la marca
+══════════════════════════════════════ */
+var CATALOG = [
+  { id:'jenny-1',      brand:'Jenny Rivera',       name:'Inolvidable EDP',    price:'$1,210 MXN', precio:1210, badge:'Más vendido', cat:'diseñador', gen:'femenino',  fam:'floral',    marca:'jenny-rivera',   nuevo:false, tipo:'perfumes', vols:[{ml:50,precio:1210},{ml:100,precio:1890}] },
+  { id:'fierce-2',     brand:'Abercrombie & Fitch', name:'Fierce EDT',         price:'$760 MXN',   precio:760,  badge:'',           cat:'diseñador', gen:'masculino', fam:'fresco',    marca:'abercrombie',    nuevo:false, tipo:'perfumes', vols:[{ml:50,precio:760},{ml:100,precio:1180},{ml:200,precio:1740}] },
+  { id:'authentic-3',  brand:'Abercrombie & Fitch', name:'Authentic EDP',      price:'$975 MXN',   precio:975,  badge:'Ed. limitada',cat:'diseñador', gen:'unisex',   fam:'amaderado', marca:'abercrombie',    nuevo:false, tipo:'perfumes', vols:[{ml:50,precio:975},{ml:100,precio:1540}] },
+  { id:'signature-4',  brand:'HERA Exclusivo',      name:'Signature Blanc',    price:'$1,490 MXN', precio:1490, badge:'Nuevo',       cat:'nicho',     gen:'unisex',   fam:'floral',    marca:'hera-exclusivo', nuevo:true,  tipo:'perfumes', vols:[{ml:50,precio:1490},{ml:100,precio:2280}] },
+  { id:'noir-5',       brand:'HERA Exclusivo',      name:'Noir Absolu',        price:'$1,480 MXN', precio:1480, badge:'-20%',        cat:'nicho',     gen:'masculino', fam:'oriental',  marca:'hera-exclusivo', nuevo:false, tipo:'perfumes', vols:[{ml:50,precio:1480},{ml:100,precio:2200}] },
+  { id:'oud-6',        brand:'HERA Árabe',          name:'Oud Rose',           price:'$1,320 MXN', precio:1320, badge:'',           cat:'arabes',    gen:'unisex',   fam:'oriental',  marca:'hera-arabe',     nuevo:false, tipo:'perfumes', vols:[{ml:30,precio:1320},{ml:50,precio:1890}] },
+  { id:'sauvage-7',    brand:'Dior',                name:'Sauvage EDP',        price:'$2,450 MXN', precio:2450, badge:'Más vendido', cat:'diseñador', gen:'masculino', fam:'fresco',    marca:'dior',           nuevo:false, tipo:'perfumes', vols:[{ml:60,precio:1850},{ml:100,precio:2450},{ml:200,precio:3100}] },
+  { id:'blanche-8',    brand:'Byredo',              name:'Blanche EDP',        price:'$2,100 MXN', precio:2100, badge:'',           cat:'nicho',     gen:'femenino',  fam:'floral',    marca:'byredo',         nuevo:false, tipo:'perfumes', vols:[{ml:50,precio:2100},{ml:100,precio:3400}] },
+  { id:'lune-9',       brand:'HERA Árabe',          name:"Lune d'Orient",      price:'$1,580 MXN', precio:1580, badge:'',           cat:'arabes',    gen:'unisex',   fam:'oriental',  marca:'hera-arabe',     nuevo:false, tipo:'perfumes', vols:[{ml:30,precio:1580},{ml:50,precio:2200}] },
+  { id:'rose-10',      brand:'HERA Árabe',          name:'Rose Majlis',        price:'$1,290 MXN', precio:1290, badge:'Nuevo',       cat:'arabes',    gen:'femenino',  fam:'floral',    marca:'hera-arabe',     nuevo:true,  tipo:'perfumes', vols:[{ml:30,precio:1290},{ml:50,precio:1820}] },
+  { id:'velvet-11',    brand:'HERA Exclusivo',      name:'Velvet Oud',         price:'$1,680 MXN', precio:1680, badge:'',           cat:'nicho',     gen:'unisex',   fam:'oriental',  marca:'hera-exclusivo', nuevo:false, tipo:'perfumes', vols:[{ml:50,precio:1680},{ml:100,precio:2590}] },
+  { id:'fierce-test',  brand:'Abercrombie & Fitch', name:'Fierce EDT Tester',  price:'$480 MXN',   precio:480,  badge:'',           cat:'testers',   gen:'masculino', fam:'fresco',    marca:'abercrombie',    nuevo:false, tipo:'perfumes', vols:[{ml:100,precio:480}] },
+  { id:'sauvage-test', brand:'Dior',                name:'Sauvage EDP Tester', price:'$1,890 MXN', precio:1890, badge:'',           cat:'testers',   gen:'masculino', fam:'fresco',    marca:'dior',           nuevo:false, tipo:'perfumes', vols:[{ml:100,precio:1890}] },
+  { id:'decant-1',     brand:'Byredo',              name:'Blanche Decant 5ml', price:'$280 MXN',   precio:280,  badge:'',           cat:'decants',   gen:'femenino',  fam:'floral',    marca:'byredo',         nuevo:false, tipo:'perfumes', vols:[{ml:5,precio:280}] },
+  { id:'set-1',        brand:'HERA Exclusivo',      name:'Gift Set Signature', price:'$2,200 MXN', precio:2200, badge:'Nuevo',       cat:'sets',      gen:'unisex',   fam:'floral',    marca:'hera-exclusivo', nuevo:true,  tipo:'perfumes', vols:[{ml:100,precio:2200}] },
+  { id:'amber-12',     brand:'Jenny Rivera',        name:'Amber Eterno EDP',   price:'$1,050 MXN', precio:1050, badge:'',           cat:'diseñador', gen:'femenino',  fam:'oriental',  marca:'jenny-rivera',   nuevo:false, tipo:'perfumes', vols:[{ml:50,precio:1050},{ml:100,precio:1680}] },
+  { id:'silver-13',    brand:'HERA Exclusivo',      name:'Silver Iris EDP',    price:'$1,750 MXN', precio:1750, badge:'',           cat:'nicho',     gen:'unisex',   fam:'floral',    marca:'hera-exclusivo', nuevo:false, tipo:'perfumes', vols:[{ml:50,precio:1750},{ml:100,precio:2690}] },
+  { id:'bm-1',         brand:'Victoria\'s Secret',  name:'Bombshell BM',       price:'$520 MXN',   precio:520,  badge:'Nuevo',       cat:'body-mist', gen:'femenino',  fam:'floral',    marca:'victorias-secret',nuevo:true,  tipo:'perfumes', vols:[{ml:250,precio:520}] },
+  { id:'bm-2',         brand:'Bath & Body Works',   name:'Japanese Cherry BM', price:'$480 MXN',   precio:480,  badge:'',           cat:'body-mist', gen:'femenino',  fam:'floral',    marca:'bbw',            nuevo:false, tipo:'perfumes', vols:[{ml:236,precio:480}] },
+  { id:'anillo-1',     brand:'HERA Joyería',        name:'Anillo Solitario',   price:'$1,290 MXN', precio:1290, badge:'Nuevo',       cat:'anillos',   gen:'femenino',  fam:'',          marca:'hera-joyeria',   nuevo:true,  tipo:'joyeria',  vols:[{ml:'5',precio:1290},{ml:'6',precio:1290},{ml:'7',precio:1290},{ml:'8',precio:1290},{ml:'9',precio:1350}], volLabel:'Talla', masVariantes:true },
+  { id:'aretes-1',     brand:'HERA Joyería',        name:'Aretes Perla',       price:'$680 MXN',   precio:680,  badge:'',           cat:'aretes',    gen:'femenino',  fam:'',          marca:'hera-joyeria',   nuevo:false, tipo:'joyeria',  vols:[{ml:'Plata .925',precio:680},{ml:'Oro 14k',precio:980}], volLabel:'Material', masVariantes:false },
+  { id:'collar-1',     brand:'HERA Joyería',        name:'Collar Dorado',      price:'$890 MXN',   precio:890,  badge:'',           cat:'collares',  gen:'unisex',   fam:'',          marca:'hera-joyeria',   nuevo:false, tipo:'joyeria',  vols:[{ml:'40 cm',precio:890},{ml:'45 cm',precio:890},{ml:'50 cm',precio:920}], volLabel:'Largo', masVariantes:false },
+  { id:'brazalete-1',  brand:'HERA Joyería',        name:'Brazalete Minimal',  price:'$750 MXN',   precio:750,  badge:'Nuevo',       cat:'brazaletes',gen:'unisex',   fam:'',          marca:'hera-joyeria',   nuevo:true,  tipo:'joyeria',  vols:[{ml:'Plata .925',precio:750},{ml:'Oro 18k',precio:1200}], volLabel:'Material', masVariantes:false },
+];
+
+/* ══════════════════════════════════════
+   ESTADO DE FILTROS
+══════════════════════════════════════ */
+var activeFilters = { cat:[], gen:[], fam:[], marca:[], precioMin:0, precioMax:99999 };
+var currentSort        = 'relevancia';
+var visibleCount       = 12;
+var INCREMENT          = 6;
+var filteredCache      = CATALOG.slice();
+var activeCategoryTab  = 'perfumes';
+
+/* ══════════════════════════════════════
+   RENDER DE GRID
+══════════════════════════════════════ */
+var grid       = document.getElementById('product-grid');
+var emptyState = document.getElementById('catalog-empty');
+var countEl    = document.getElementById('catalog-count');
+var loadMoreBtn= document.getElementById('loadMoreBtn');
+
+function buildCard(p) {
+  var isFav = favorites.some(function(f){ return f.id===p.id; });
+  var vols      = p.vols || [];
+  var volLabel  = p.volLabel || 'Presentación';
+  var MAX_SHOW  = 3;
+  var showVols  = vols.slice(0, MAX_SHOW);
+  var extraCount = vols.length > MAX_SHOW ? vols.length - MAX_SHOW : 0;
+
+  var badgeHTML = '';
+  if (p.badge) {
+    var bgColor = (p.badge === '-20%' || p.badge === 'Ed. limitada') ? 'var(--dgray)' : 'var(--red)';
+    badgeHTML = '<span style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:'+bgColor+';color:#fff;padding:3px 8px;">'+p.badge+'</span>';
+  }
+
+  var volsHTML = showVols.map(function(v, i){
+    var displayLabel = (p.tipo === 'perfumes' && /^\d+$/.test(String(v.ml))) ? v.ml+' ml' : v.ml;
+    return '<button class="ed-vol-btn'+(i===0?' sel':'')+'" data-precio="'+v.precio+'" data-ml="'+v.ml+'">'+displayLabel+'</button>';
+  }).join('');
+  if (extraCount > 0) {
+    volsHTML += '<a href="producto.html?id='+p.id+'" class="ed-vol-more" onclick="event.stopPropagation()">+'+extraCount+' más</a>';
+  }
+
+  var volSection = vols.length > 0
+    ? '<div class="ed-vol-label">'+volLabel+'</div><div class="ed-vols">'+volsHTML+'</div>'
+    : '';
+
+  var precioInicial = vols.length > 0 ? '$'+vols[0].precio.toLocaleString('es-MX')+' MXN' : p.price;
+  var imgLabel = p.tipo === 'joyeria' ? 'Imagen de la pieza' : 'Imagen del perfume';
+
+  var html =
+    '<div class="ed-item" data-id="'+p.id+'">' +
+      '<div style="display:flex;align-items:center;justify-content:flex-end;gap:0;">' +
+        badgeHTML +
+        '<button class="fav-btn'+(isFav?' active':'')+'" data-product-id="'+p.id+'" data-brand="'+p.brand+'" data-name="'+p.name+'" data-price="'+p.price+'" title="Añadir a favoritos">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="'+(isFav?'var(--red)':'none')+'" stroke="'+(isFav?'var(--red)':'currentColor')+'" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
+        '</button>' +
+      '</div>' +
+      '<div class="ed-img-zone">' +
+        '<div class="ed-img-placeholder">' +
+          '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>' +
+          '<span>'+imgLabel+'</span>' +
+        '</div>' +
+        '<div class="ed-cart-overlay">' +
+          '<button class="ed-cart-btn">Agregar al carrito</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="ed-brand">'+p.brand+'</div>' +
+      '<div class="ed-name">'+p.name+'</div>' +
+      volSection +
+      '<div class="ed-footer">' +
+        '<div class="ed-price">'+precioInicial+'</div>' +
+        '<a href="producto.html?id='+p.id+'" class="ed-cta" onclick="event.stopPropagation()">Ver producto <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>' +
+      '</div>' +
+    '</div>';
+
+  var wrapper = document.createElement('div');
+  wrapper.innerHTML = html;
+  var card = wrapper.firstChild;
+
+  card.querySelectorAll('.ed-vol-btn').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      card.querySelectorAll('.ed-vol-btn').forEach(function(b){ b.classList.remove('sel'); });
+      btn.classList.add('sel');
+      card.querySelector('.ed-price').textContent = '$'+parseInt(btn.dataset.precio).toLocaleString('es-MX')+' MXN';
+    });
+  });
+
+  var favBtn = card.querySelector('.fav-btn');
+  favBtn.addEventListener('click', function(e){ e.stopPropagation(); toggleFavPcat(favBtn); });
+
+  var cartBtn = card.querySelector('.ed-cart-btn');
+  cartBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var selVol = card.querySelector('.ed-vol-btn.sel');
+    var precio = selVol ? parseInt(selVol.dataset.precio) : p.precio;
+    var ml     = selVol ? selVol.dataset.ml : '';
+    var nombre = ml ? p.name+' '+ml+'ml' : p.name;
+    addToCartFromCatalog({ id:p.id+'-'+ml, brand:p.brand, name:nombre, price:'$'+precio.toLocaleString('es-MX')+' MXN', precio:precio });
+  });
+
+  return card;
+}
+
+function sortCatalog(arr) {
+  var s = currentSort;
+  if (s === 'precio-asc')   return arr.slice().sort(function(a,b){ return a.precio-b.precio; });
+  if (s === 'precio-desc')  return arr.slice().sort(function(a,b){ return b.precio-a.precio; });
+  if (s === 'novedades')    return arr.slice().sort(function(a,b){ return (b.nuevo?1:0)-(a.nuevo?1:0); });
+  if (s === 'bestsellers')  return arr.slice().sort(function(a,b){ return (b.badge==='Más vendido'?1:0)-(a.badge==='Más vendido'?1:0); });
+  return arr;
+}
+
+function applyFilters() {
+  var af = activeFilters;
+  filteredCache = CATALOG.filter(function(p) {
+    if (activeCategoryTab !== 'todos' && p.tipo !== activeCategoryTab) return false;
+    if (af.cat.length   && !af.cat.includes(p.cat))   return false;
+    if (af.gen.length   && !af.gen.includes(p.gen))   return false;
+    if (af.fam.length   && !af.fam.includes(p.fam))   return false;
+    if (af.marca.length && !af.marca.includes(p.marca)) return false;
+    if (af.precioMin > 0 && p.precio < af.precioMin)  return false;
+    if (af.precioMax < 99999 && p.precio > af.precioMax) return false;
+    return true;
+  });
+  filteredCache = sortCatalog(filteredCache);
+  renderGrid();
+  renderActiveChips();
+  syncCheckboxes();
+  updateFilterBadge();
+}
+
+function renderGrid() {
+  grid.innerHTML = '';
+  var slice = filteredCache.slice(0, visibleCount);
+  if (slice.length === 0) {
+    emptyState.classList.add('visible');
+    loadMoreBtn.style.display = 'none';
+    countEl.textContent = 'Sin resultados';
+    return;
+  }
+  emptyState.classList.remove('visible');
+  slice.forEach(function(p){ grid.appendChild(buildCard(p)); });
+  countEl.textContent = 'Mostrando ' + slice.length + ' de ' + filteredCache.length + ' producto' + (filteredCache.length!==1?'s':'');
+  loadMoreBtn.style.display = filteredCache.length > visibleCount ? 'inline-block' : 'none';
+  if (window.innerWidth > 768 && cursor) {
+    grid.querySelectorAll('.ed-item').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ cursor.style.transform='translate(-50%,-50%) scale(2)'; cursorRing.style.width='60px'; cursorRing.style.height='60px'; });
+      el.addEventListener('mouseleave', function(){ cursor.style.transform='translate(-50%,-50%) scale(1)'; cursorRing.style.width='36px'; cursorRing.style.height='36px'; });
+    });
+  }
+}
+
+/* ══════════════════════════════════════
+   FILTER CHIPS (active filters display)
+══════════════════════════════════════ */
+var chipsRow     = document.getElementById('active-chips-row');
+var mobileChips  = document.getElementById('mobile-active-chips');
+
+var LABEL_MAP = {
+  cat:   { diseñador:'Diseñador', nicho:'Nicho', arabes:'Árabes', testers:'Testers', decants:'Decants', sets:'Sets' },
+  gen:   { masculino:'Masculino', femenino:'Femenino', unisex:'Unisex' },
+  fam:   { floral:'Floral', oriental:'Oriental', amaderado:'Amaderado', fresco:'Fresco', gourmand:'Gourmand' },
+  marca: { 'jenny-rivera':'Jenny Rivera', abercrombie:'Abercrombie', 'hera-exclusivo':'HERA Exclusivo', 'hera-arabe':'HERA Árabe', dior:'Dior', byredo:'Byredo' }
+};
+
+function renderActiveChips() {
+  var chips = [];
+  ['cat','gen','fam','marca'].forEach(function(group){
+    activeFilters[group].forEach(function(val){
+      var label = (LABEL_MAP[group] && LABEL_MAP[group][val]) ? LABEL_MAP[group][val] : val;
+      chips.push({ group:group, val:val, label:label });
+    });
+  });
+  if (activeFilters.precioMin > 0 || activeFilters.precioMax < 99999) {
+    var pMin = activeFilters.precioMin > 0 ? '$'+activeFilters.precioMin : '';
+    var pMax = activeFilters.precioMax < 99999 ? '$'+activeFilters.precioMax : '';
+    var pLabel = (pMin && pMax) ? pMin+'–'+pMax : (pMin ? 'desde '+pMin : 'hasta '+pMax);
+    chips.push({ group:'precio', val:'precio', label:pLabel });
+  }
+  // Desktop chips
+  chipsRow.innerHTML = '';
+  if (chips.length > 0) {
+    chips.forEach(function(c){
+      var btn = document.createElement('button');
+      btn.className = 'active-chip';
+      btn.innerHTML = c.label + ' <span class="chip-x">×</span>';
+      btn.addEventListener('click', function(){ removeFilter(c.group, c.val); });
+      chipsRow.appendChild(btn);
+    });
+    var clearBtn = document.createElement('button');
+    clearBtn.className = 'chips-clear-all';
+    clearBtn.textContent = 'Limpiar todo';
+    clearBtn.addEventListener('click', clearAllFilters);
+    chipsRow.appendChild(clearBtn);
+  }
+  // Mobile chips (filter bar)
+  mobileChips.innerHTML = '';
+  chips.slice(0,3).forEach(function(c){
+    var btn = document.createElement('button');
+    btn.className = 'filter-mobile-chip';
+    btn.innerHTML = c.label + ' <span>×</span>';
+    btn.addEventListener('click', function(){ removeFilter(c.group, c.val); });
+    mobileChips.appendChild(btn);
+  });
+}
+
+function removeFilter(group, val) {
+  if (group === 'precio') {
+    activeFilters.precioMin = 0; activeFilters.precioMax = 99999;
+    document.getElementById('f-precio-min').value = '';
+    document.getElementById('f-precio-max').value = '';
+    document.getElementById('dm-precio-min').value = '';
+    document.getElementById('dm-precio-max').value = '';
+  } else {
+    activeFilters[group] = activeFilters[group].filter(function(v){ return v !== val; });
+  }
+  visibleCount = 12;
+  applyFilters();
+}
+
+function clearAllFilters() {
+  activeFilters = { cat:[], gen:[], fam:[], marca:[], precioMin:0, precioMax:99999 };
+  document.querySelectorAll('[data-group]').forEach(function(cb){ cb.checked = false; });
+  document.querySelectorAll('.price-input').forEach(function(i){ i.value=''; });
+  visibleCount = 12;
+  currentSort = 'relevancia';
+  document.getElementById('sort-select').value = 'relevancia';
+  applyFilters();
+}
+function syncCheckboxes() {
+  ['cat','gen','fam','marca'].forEach(function(group){
+    document.querySelectorAll('[data-group="'+group+'"]').forEach(function(cb){
+      cb.checked = activeFilters[group].includes(cb.value);
+    });
+  });
+}
+
+function updateFilterBadge() {
+  var count = activeFilters.cat.length + activeFilters.gen.length + activeFilters.fam.length + activeFilters.marca.length;
+  if (activeFilters.precioMin > 0 || activeFilters.precioMax < 99999) count++;
+  var badge = document.getElementById('filter-badge');
+  badge.textContent = count;
+  badge.style.display = count > 0 ? 'inline-flex' : 'none';
+}
+
+/* ══════════════════════════════════════
+   SIDEBAR FILTER BINDINGS (desktop)
+══════════════════════════════════════ */
+document.querySelectorAll('.catalog-sidebar [data-group]').forEach(function(cb){
+  cb.addEventListener('change', function(){
+    var g = cb.dataset.group;
+    var v = cb.value;
+    if (cb.checked) {
+      if (!activeFilters[g].includes(v)) activeFilters[g].push(v);
+    } else {
+      activeFilters[g] = activeFilters[g].filter(function(x){ return x!==v; });
+    }
+    visibleCount = 12;
+    applyFilters();
+  });
+});
+
+document.getElementById('f-precio-min').addEventListener('change', function(){
+  activeFilters.precioMin = parseInt(this.value)||0;
+  document.getElementById('dm-precio-min').value = this.value;
+  visibleCount = 12; applyFilters();
+});
+document.getElementById('f-precio-max').addEventListener('change', function(){
+  activeFilters.precioMax = parseInt(this.value)||99999;
+  document.getElementById('dm-precio-max').value = this.value;
+  visibleCount = 12; applyFilters();
+});
+
+document.getElementById('sidebarClearAll').addEventListener('click', clearAllFilters);
+
+/* ══════════════════════════════════════
+   SORT
+══════════════════════════════════════ */
+document.getElementById('sort-select').addEventListener('change', function(){
+  currentSort = this.value;
+  applyFilters();
+});
+
+/* ══════════════════════════════════════
+   LOAD MORE
+══════════════════════════════════════ */
+document.getElementById('loadMoreBtn').addEventListener('click', function(){
+  visibleCount += INCREMENT;
+  renderGrid();
+});
+
+/* ══════════════════════════════════════
+   FILTER DRAWER (mobile)
+══════════════════════════════════════ */
+var filterDrawerOverlay = document.getElementById('filterDrawerOverlay');
+var filterDrawer        = document.getElementById('filterDrawer');
+var filterOpenBtn       = document.getElementById('filterOpenBtn');
+var filterDrawerClose   = document.getElementById('filterDrawerClose');
+
+function openFilterDrawer() {
+  filterDrawer.classList.add('open');
+  filterDrawerOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeFilterDrawer() {
+  filterDrawer.classList.remove('open');
+  filterDrawerOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+filterOpenBtn.addEventListener('click', openFilterDrawer);
+filterDrawerClose.addEventListener('click', closeFilterDrawer);
+filterDrawerOverlay.addEventListener('click', closeFilterDrawer);
+
+// Drawer checkboxes → stage changes, apply on button
+var drawerStagedFilters = {};
+function copyFiltersToDrawer() {
+  drawerStagedFilters = JSON.parse(JSON.stringify(activeFilters));
+  document.querySelectorAll('.filter-drawer [data-group]').forEach(function(cb){
+    cb.checked = (drawerStagedFilters[cb.dataset.group]||[]).includes(cb.value);
+  });
+  document.getElementById('dm-precio-min').value = drawerStagedFilters.precioMin > 0 ? drawerStagedFilters.precioMin : '';
+  document.getElementById('dm-precio-max').value = drawerStagedFilters.precioMax < 99999 ? drawerStagedFilters.precioMax : '';
+}
+
+filterOpenBtn.addEventListener('click', copyFiltersToDrawer);
+
+document.getElementById('filterDrawerApply').addEventListener('click', function(){
+  // Read drawer state → activeFilters
+  ['cat','gen','fam'].forEach(function(group){
+    activeFilters[group] = [];
+    document.querySelectorAll('.filter-drawer [data-group="'+group+'"]').forEach(function(cb){
+      if (cb.checked) activeFilters[group].push(cb.value);
+    });
+  });
+  activeFilters.precioMin = parseInt(document.getElementById('dm-precio-min').value)||0;
+  activeFilters.precioMax = parseInt(document.getElementById('dm-precio-max').value)||99999;
+  visibleCount = 12;
+  applyFilters();
+  closeFilterDrawer();
+});
+
+document.getElementById('filterDrawerReset').addEventListener('click', function(){
+  document.querySelectorAll('.filter-drawer [data-group]').forEach(function(cb){ cb.checked=false; });
+  document.getElementById('dm-precio-min').value='';
+  document.getElementById('dm-precio-max').value='';
+  clearAllFilters();
+  closeFilterDrawer();
+});
+
+/* ══════════════════════════════════════
+   URL PARAMS: ?tab=perfumes|joyeria  /  ?cat=diseñador  /  ?tab=joyeria&cat=anillos
+   Lee parámetros al cargar la página y configura tab + filtro correctamente
+══════════════════════════════════════ */
+(function(){
+  var params  = new URLSearchParams(window.location.search);
+  var tabParam = params.get('tab');
+  var catParam = params.get('cat');
+
+  var joyCats = ['anillos','aretes','collares','brazaletes'];
+  var targetTab = 'perfumes';
+
+  if (tabParam === 'joyeria') {
+    targetTab = 'joyeria';
+  } else if (catParam) {
+    var c = decodeURIComponent(catParam).toLowerCase();
+    if (joyCats.indexOf(c) !== -1) targetTab = 'joyeria';
+  }
+
+  activeCategoryTab = targetTab;
+
+  document.querySelectorAll('.catalog-tab-btn').forEach(function(b){
+    b.classList.toggle('active', b.dataset.tab === targetTab);
+  });
+
+  var emEl = document.getElementById('catalog-title-em');
+  if (emEl) emEl.textContent = targetTab === 'joyeria' ? 'joyería.' : 'perfumes.';
+
+  if (catParam) {
+    var clean = decodeURIComponent(catParam).toLowerCase();
+    if (!activeFilters.cat.includes(clean)) activeFilters.cat.push(clean);
+  }
+})();
+
+/* ══════════════════════════════════════
+   CARRITO
+══════════════════════════════════════ */
+var cartBtn       = document.getElementById('cart-btn');
+var cartDrawer    = document.getElementById('cart-drawer');
+var cartOverlay   = document.getElementById('cart-overlay');
+var cartClose     = document.getElementById('cart-close');
+var cartEmpty     = document.getElementById('cart-empty');
+var cartFooter    = document.getElementById('cart-footer');
+var cartItemsList = document.getElementById('cart-items-list');
+var cartTotal     = document.getElementById('cart-total');
+var cartDrawerCount = document.getElementById('cart-drawer-count');
+var shippingBar   = document.getElementById('shipping-bar');
+var shippingMsg   = document.getElementById('shipping-msg');
+var cartBadge     = document.getElementById('cart-count');
+var FREE_SHIPPING = 1500;
+
+function openCart()  { cartDrawer.classList.add('open'); cartOverlay.classList.add('open'); document.body.style.overflow='hidden'; }
+function closeCart() { cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); document.body.style.overflow=''; }
+
+cartBtn.addEventListener('click', openCart);
+cartClose.addEventListener('click', closeCart);
+cartOverlay.addEventListener('click', closeCart);
+
+function parseMXN(str) { return parseInt(String(str).replace(/[^0-9]/g,''))||0; }
+
+function saveCartToStorage() {
+  var items=[];
+  cartItemsList.querySelectorAll('.cart-item').forEach(function(el){
+    items.push({ id:el.dataset.cartId, brand:el.querySelector('.cart-item-brand').textContent, name:el.querySelector('.cart-item-name').textContent, price:el.querySelector('.cart-item-price').textContent, qty:parseInt(el.querySelector('.qty-num').textContent) });
+  });
+  localStorage.setItem('hera_cart',JSON.stringify(items));
+}
+
+function loadCartFromStorage() {
+  var items=[];
+  try { var r=localStorage.getItem('hera_cart'); if(r) items=JSON.parse(r); } catch(e){items=[];}
+  cartItemsList.innerHTML='';
+  if (items&&items.length) items.forEach(function(it){ var el=createCartItemEl(it); cartItemsList.appendChild(el); bindCartItem(el); });
+  updateCartTotals();
+}
+
+function createCartItemEl(it) {
+  var el=document.createElement('div'); el.className='cart-item'; el.dataset.cartId=it.id;
+  el.innerHTML='<div class="cart-item-img"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><div class="cart-item-info"><div class="cart-item-brand">'+it.brand+'</div><div class="cart-item-name">'+it.name+'</div><div class="cart-item-price">'+it.price+'</div><div class="cart-item-qty"><button class="qty-btn qty-minus">−</button><span class="qty-num">'+it.qty+'</span><button class="qty-btn qty-plus">+</button></div></div><button class="cart-item-remove" title="Eliminar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>';
+  return el;
+}
+
+function updateCartTotals() {
+  var items=cartItemsList.querySelectorAll('.cart-item'); var total=0;
+  items.forEach(function(item){ total+=parseMXN(item.querySelector('.cart-item-price').textContent)*parseInt(item.querySelector('.qty-num').textContent); });
+  var count=Array.from(items).reduce(function(s,i){ return s+parseInt(i.querySelector('.qty-num').textContent); },0);
+  cartTotal.textContent='$'+total.toLocaleString('es-MX')+' MXN';
+  cartBadge.textContent=count; cartBadge.style.display=count>0?'flex':'none';
+  cartDrawerCount.textContent='('+count+')';
+  var pct=Math.min((total/FREE_SHIPPING)*100,100); shippingBar.style.width=pct+'%';
+  if (total>=FREE_SHIPPING){ shippingMsg.innerHTML='🎉 <span style="color:var(--black);font-weight:600;">¡Tienes envío gratis!</span>'; shippingBar.style.background='#2e7d32'; }
+  else if (total>0){ shippingMsg.innerHTML='Te faltan <span style="color:var(--red);font-weight:600;">$'+(FREE_SHIPPING-total).toLocaleString('es-MX')+' MXN</span> para envío gratis'; shippingBar.style.background='var(--red)'; }
+  else { shippingMsg.innerHTML=''; }
+  cartEmpty.style.display=count===0?'flex':'none'; cartFooter.style.display=count===0?'none':'block';
+}
+
+function bindCartItem(item) {
+  item.querySelector('.qty-minus').addEventListener('click',function(){ var q=item.querySelector('.qty-num'); if(parseInt(q.textContent)>1){q.textContent=parseInt(q.textContent)-1; updateCartTotals(); saveCartToStorage();} });
+  item.querySelector('.qty-plus').addEventListener('click',function(){ var q=item.querySelector('.qty-num'); q.textContent=parseInt(q.textContent)+1; updateCartTotals(); saveCartToStorage(); });
+  item.querySelector('.cart-item-remove').addEventListener('click',function(){ item.remove(); updateCartTotals(); saveCartToStorage(); });
+}
+
+loadCartFromStorage();
+
+function addToCartFromCatalog(p) {
+  var id='cart-'+p.name.replace(/\s/g,'-').toLowerCase().replace(/[^a-z0-9-]/g,'');
+  var existing=cartItemsList.querySelector('[data-cart-id="'+id+'"]');
+  if (existing){ var q=existing.querySelector('.qty-num'); q.textContent=parseInt(q.textContent)+1; }
+  else { var el=createCartItemEl({id:id,brand:p.brand,name:p.name,price:p.price,qty:1}); cartItemsList.insertBefore(el,cartItemsList.firstChild); bindCartItem(el); }
+  updateCartTotals(); saveCartToStorage();
+  cartBadge.style.transform='scale(1.5)'; setTimeout(function(){ cartBadge.style.transform='scale(1)'; },200);
+  openCart();
+}
+
+function addToCartFromFav(id,brand,name,price) {
+  var cartId='cart-'+name.replace(/\s/g,'-').toLowerCase().replace(/[^a-z0-9-]/g,'');
+  var existing=cartItemsList.querySelector('[data-cart-id="'+cartId+'"]');
+  if (existing){ var q=existing.querySelector('.qty-num'); q.textContent=parseInt(q.textContent)+1; }
+  else { var el=createCartItemEl({id:cartId,brand:brand,name:name,price:price,qty:1}); cartItemsList.insertBefore(el,cartItemsList.firstChild); bindCartItem(el); }
+  updateCartTotals(); saveCartToStorage();
+  cartBadge.style.transform='scale(1.5)'; setTimeout(function(){ cartBadge.style.transform='scale(1)'; },200);
+  openCart();
+}
+
+function addAllFavsToCart() { favorites.forEach(function(f){ addToCartFromFav(f.id,f.brand,f.name,f.price); }); }
+
+function goToCheckout() { saveCartToStorage(); window.location.href='checkout.html'; }
+
+/* ══════════════════════════════════════
+   FAVORITOS
+══════════════════════════════════════ */
+var favToggle      = document.getElementById('fav-toggle');
+var favCountBadge  = document.getElementById('fav-count');
+var favCountLabel  = document.getElementById('fav-count-label');
+var favList        = document.getElementById('fav-list');
+var favEmptyEl     = document.getElementById('fav-empty');
+var favDropdown    = document.getElementById('fav-dropdown');
+var favCountMobile = document.getElementById('fav-count-mobile');
+var favListMobile  = document.getElementById('fav-list-mobile');
+var favEmptyMobile = document.getElementById('fav-empty-mobile');
+var favorites      = [];
+try { var sf=localStorage.getItem('hera_favs'); if(sf) favorites=JSON.parse(sf); } catch(e){ favorites=[]; }
+
+if (favToggle) {
+  favToggle.addEventListener('click',function(e){ e.stopPropagation(); favDropdown.style.display=favDropdown.style.display==='flex'?'none':'flex'; });
+  favDropdown.addEventListener('click',function(e){ e.stopPropagation(); });
+}
+
+function renderFavList() {
+  var label=favorites.length+(favorites.length===1?' producto':' productos');
+  if (favCountLabel) favCountLabel.textContent=label;
+  if (favCountMobile) favCountMobile.textContent=label;
+  if (favorites.length>0){ if(favCountBadge){favCountBadge.style.display='flex';favCountBadge.textContent=favorites.length;} if(favEmptyEl)favEmptyEl.style.display='none'; if(favEmptyMobile)favEmptyMobile.style.display='none'; }
+  else { if(favCountBadge)favCountBadge.style.display='none'; if(favEmptyEl)favEmptyEl.style.display='block'; if(favEmptyMobile)favEmptyMobile.style.display='block'; }
+  if (favList){ Array.from(favList.children).forEach(function(c){if(c.id!=='fav-empty')c.remove();}); favorites.forEach(function(item){favList.insertBefore(buildFavRow(item,false),favEmptyEl);}); }
+  if (favListMobile){ Array.from(favListMobile.children).forEach(function(c){if(c.id!=='fav-empty-mobile')c.remove();}); favorites.forEach(function(item){favListMobile.insertBefore(buildFavRow(item,true),favEmptyMobile);}); }
+  localStorage.setItem('hera_favs',JSON.stringify(favorites));
+  var addAllBtn=document.getElementById('fav-add-all'); if(addAllBtn)addAllBtn.style.display=favorites.length>0?'block':'none';
+}
+
+function buildFavRow(item,isMobile) {
+  var row=document.createElement('div'); row.dataset.favId=item.id;
+  row.style.cssText='display:flex;align-items:center;gap:14px;padding:14px '+(isMobile?'24px':'20px')+';border-bottom:1px solid var(--lgray);';
+  row.innerHTML='<div style="width:52px;height:52px;flex-shrink:0;background:var(--lgray);display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.25)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><div style="flex:1;min-width:0;"><div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(15,15,15,.4);margin-bottom:3px;">'+item.brand+'</div><div style="font-family:var(--serif);font-size:15px;font-weight:300;font-style:italic;color:var(--black);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+item.name+'</div><div style="font-size:12px;font-weight:700;color:var(--black);margin-top:2px;">'+item.price+'</div></div><div style="display:flex;gap:6px;flex-shrink:0;"><button data-add-cart="'+item.id+'" style="background:var(--black);border:none;cursor:pointer;color:#fff;width:26px;height:26px;display:flex;align-items:center;justify-content:center;" title="Agregar al carrito"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button><button data-remove="'+item.id+'" style="background:var(--red);border:none;cursor:pointer;color:#fff;width:26px;height:26px;display:flex;align-items:center;justify-content:center;" title="Quitar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>';
+  row.querySelector('[data-add-cart]').addEventListener('click',function(e){ e.stopPropagation(); addToCartFromFav(item.id,item.brand,item.name,item.price); });
+  row.querySelector('[data-remove]').addEventListener('click',function(e){ e.stopPropagation(); favorites=favorites.filter(function(f){return f.id!==e.currentTarget.dataset.remove;}); document.querySelectorAll('.fav-btn[data-product-id="'+item.id+'"]').forEach(function(b){b.classList.remove('active');b.querySelector('svg').setAttribute('fill','none');b.querySelector('svg').setAttribute('stroke','currentColor');}); renderFavList(); renderGrid(); });
+  return row;
+}
+
+function toggleFavPcat(btn) {
+  var id=btn.dataset.productId, brand=btn.dataset.brand, name=btn.dataset.name, price=btn.dataset.price;
+  if (btn.classList.contains('active')){ btn.classList.remove('active'); btn.querySelector('svg').setAttribute('fill','none'); btn.querySelector('svg').setAttribute('stroke','currentColor'); favorites=favorites.filter(function(f){return f.id!==id;}); }
+  else { btn.classList.add('active'); btn.querySelector('svg').setAttribute('fill','var(--red)'); btn.querySelector('svg').setAttribute('stroke','var(--red)'); if(!favorites.find(function(f){return f.id===id;})) favorites.push({id:id,brand:brand,name:name,price:price}); if(favCountBadge){favCountBadge.style.transform='scale(1.5)';setTimeout(function(){favCountBadge.style.transform='scale(1)';},200);} }
+  document.querySelectorAll('.fav-btn[data-product-id="'+id+'"]').forEach(function(b){ var active=favorites.some(function(f){return f.id===id;}); b.classList.toggle('active',active); b.querySelector('svg').setAttribute('fill',active?'var(--red)':'none'); b.querySelector('svg').setAttribute('stroke',active?'var(--red)':'currentColor'); });
+  renderFavList();
+}
+
+function toggleFav(btn) {
+  var id=btn.dataset.productId, brand=btn.dataset.brand, name=btn.dataset.name, price=btn.dataset.price;
+  if (btn.classList.contains('active')){ btn.classList.remove('active'); btn.querySelector('svg').setAttribute('fill','none'); btn.querySelector('svg').setAttribute('stroke','currentColor'); favorites=favorites.filter(function(f){return f.id!==id;}); }
+  else { btn.classList.add('active'); btn.querySelector('svg').setAttribute('fill','var(--red)'); btn.querySelector('svg').setAttribute('stroke','var(--red)'); if(!favorites.find(function(f){return f.id===id;})) favorites.push({id:id,brand:brand,name:name,price:price}); if(favCountBadge){favCountBadge.style.transform='scale(1.5)';setTimeout(function(){favCountBadge.style.transform='scale(1)';},200);} }
+  document.querySelectorAll('.fav-btn[data-product-id="'+id+'"]').forEach(function(b){ var active=favorites.some(function(f){return f.id===id;}); b.classList.toggle('active',active); b.querySelector('svg').setAttribute('fill',active?'var(--red)':'none'); b.querySelector('svg').setAttribute('stroke',active?'var(--red)':'currentColor'); });
+  renderFavList();
+}
+
+favorites.forEach(function(f){ document.querySelectorAll('.fav-btn[data-product-id="'+f.id+'"]').forEach(function(b){ b.classList.add('active'); b.querySelector('svg').setAttribute('fill','var(--red)'); b.querySelector('svg').setAttribute('stroke','var(--red)'); }); });
+renderFavList();
+
+/* ══════════════════════════════════════
+   NAV HAMBURGUESA MÓVIL
+══════════════════════════════════════ */
+var hamburger=document.getElementById('navHamburger');
+var mobilePanel=document.getElementById('navMobilePanel');
+var mobileOverlay=document.getElementById('navMobileOverlay');
+var mobileClose=document.getElementById('navMobileClose');
+function openMobileNav(){hamburger.classList.add('open');mobilePanel.classList.add('open');mobileOverlay.classList.add('open');document.body.style.overflow='hidden';}
+function closeMobileNav(){hamburger.classList.remove('open');mobilePanel.classList.remove('open');mobileOverlay.classList.remove('open');document.body.style.overflow='';}
+hamburger.addEventListener('click',function(e){e.stopPropagation();mobilePanel.classList.contains('open')?closeMobileNav():openMobileNav();});
+mobileClose.addEventListener('click',closeMobileNav);
+mobileOverlay.addEventListener('click',closeMobileNav);
+var productosToggle=document.getElementById('mobileProductosToggle');
+var productosSub=document.getElementById('mobileProductosSub');
+productosToggle.addEventListener('click',function(e){e.stopPropagation();productosSub.classList.toggle('open');productosToggle.classList.toggle('active');});
+var cuentaToggle=document.getElementById('mobileCuentaToggle');
+var cuentaSub=document.getElementById('mobileCuentaSub');
+if(cuentaToggle){cuentaToggle.addEventListener('click',function(e){e.stopPropagation();cuentaSub.classList.toggle('open');cuentaToggle.classList.toggle('active');});}
+
+/* MI CUENTA */
+var accountToggle=document.getElementById('account-toggle');
+var accountLoginBtn=document.getElementById('account-login-btn');
+var accountDropdown=document.getElementById('account-dropdown');
+var btnLogout=document.getElementById('btn-logout');
+var btnLogoutMobile=document.getElementById('btn-logout-mobile');
+var mobileCuentaLoginLink=document.getElementById('mobileCuentaLoginLink');
+function isLoggedIn(){return localStorage.getItem('hera_logged_in')==='1';}
+function renderAccountNav(){
+  if(isLoggedIn()){accountLoginBtn.style.display='none';accountToggle.style.display='flex';mobileCuentaLoginLink.style.display='none';if(cuentaToggle)cuentaToggle.style.display='flex';}
+  else{accountLoginBtn.style.display='flex';accountToggle.style.display='none';accountDropdown.style.display='none';mobileCuentaLoginLink.style.display='flex';if(cuentaToggle)cuentaToggle.style.display='none';}
+}
+function logout(){localStorage.removeItem('hera_logged_in');accountDropdown.style.display='none';renderAccountNav();}
+renderAccountNav();
+if(accountToggle){accountToggle.addEventListener('click',function(e){e.stopPropagation();if(favDropdown)favDropdown.style.display='none';accountDropdown.style.display=accountDropdown.style.display==='block'?'none':'block';});accountDropdown.addEventListener('click',function(e){e.stopPropagation();});}
+if(btnLogout)btnLogout.addEventListener('click',function(e){e.preventDefault();logout();});
+if(btnLogoutMobile)btnLogoutMobile.addEventListener('click',function(e){e.preventDefault();logout();closeMobileNav();});
+document.addEventListener('click',function(){if(accountDropdown)accountDropdown.style.display='none';if(favDropdown)favDropdown.style.display='none';});
+
+/* ══════════════════════════════════════
+   SEARCH
+══════════════════════════════════════ */
+var searchOverlay=document.getElementById('search-overlay');
+var searchInput=document.getElementById('search-input');
+var searchResults=document.getElementById('search-results');
+function openSearch(){searchOverlay.classList.add('open');document.body.style.overflow='hidden';setTimeout(function(){searchInput.focus();},280);}
+function closeSearch(){searchOverlay.classList.remove('open');document.body.style.overflow='';searchInput.value='';searchResults.innerHTML='<p class="search-hint">Busca por nombre o marca</p>';}
+document.getElementById('search-btn').addEventListener('click',openSearch);
+document.getElementById('search-close-btn').addEventListener('click',closeSearch);
+searchOverlay.addEventListener('click',function(e){if(e.target===searchOverlay)closeSearch();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeSearch();closeFilterDrawer();}});
+function highlight(text,query){if(!query)return text;var re=new RegExp('('+query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');return text.replace(re,'<mark style="background:rgba(225,34,43,.15);color:var(--red);font-style:normal;">$1</mark>');}
+function renderSearchResults(q){
+  if(!q){searchResults.innerHTML='<p class="search-hint">Busca por nombre o marca</p>';return;}
+  var hits=CATALOG.filter(function(p){return (p.name+' '+p.brand).toLowerCase().includes(q.toLowerCase());});
+  if(!hits.length){searchResults.innerHTML='<div class="search-empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><p>Sin resultados para "<strong>'+q+'</strong>"</p></div>';return;}
+  var html='<p class="search-hint">'+hits.length+' resultado'+(hits.length!==1?'s':'')+'</p>';
+  hits.forEach(function(p){html+='<div class="search-result-item"><div class="search-result-thumb"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><div style="flex:1;min-width:0;"><div class="search-result-brand">'+highlight(p.brand,q)+'</div><div class="search-result-name">'+highlight(p.name,q)+'</div><div class="search-result-price">'+p.price+'</div>'+(p.badge?'<div class="search-result-badge">'+p.badge+'</div>':'')+'</div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.25)" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>';});
+  searchResults.innerHTML=html;
+}
+var sd; searchInput.addEventListener('input',function(){clearTimeout(sd);sd=setTimeout(function(){renderSearchResults(searchInput.value.trim());},180);});
+
+/* ══════════════════════════════════════
+   CURSOR (solo desktop)
+══════════════════════════════════════ */
+var cursor=document.getElementById('cursor');
+var cursorRing=document.getElementById('cursorRing');
+if(cursor&&window.innerWidth>768){
+  var mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+  (function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cursorRing.style.left=rx+'px';cursorRing.style.top=ry+'px';requestAnimationFrame(loop);})();
+  document.querySelectorAll('a,button,.filter-option').forEach(function(el){
+    el.addEventListener('mouseenter',function(){cursor.style.transform='translate(-50%,-50%) scale(2)';cursorRing.style.width='60px';cursorRing.style.height='60px';});
+    el.addEventListener('mouseleave',function(){cursor.style.transform='translate(-50%,-50%) scale(1)';cursorRing.style.width='36px';cursorRing.style.height='36px';});
+  });
+}
+
+/* ══════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════ */
+(function(){
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){e.isIntersecting?e.target.classList.add('visible'):e.target.classList.remove('visible');});},{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+})();
+
+/* ══════════════════════════════════════
+   CATEGORY TABS + SIDEBAR DINÁMICO
+══════════════════════════════════════ */
+function updateSidebarForTab(tab) {
+  document.querySelectorAll('.catalog-sidebar .filter-section[data-tabs]').forEach(function(el){
+    var tabs = el.dataset.tabs.split(' ');
+    el.style.display = tabs.indexOf(tab) !== -1 ? '' : 'none';
+  });
+}
+
+function setTab(tab, btn) {
+  activeCategoryTab = tab;
+  document.querySelectorAll('.catalog-tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  var emEl = document.getElementById('catalog-title-em');
+  if (emEl) emEl.textContent = tab === 'joyeria' ? 'joyería.' : 'perfumes.';
+  visibleCount = 12;
+  updateSidebarForTab(tab);
+  clearAllFilters();
+}
+
+/* ══════════════════════════════════════
+   INIT — render grid on load
+══════════════════════════════════════ */
+updateSidebarForTab(activeCategoryTab);
+applyFilters();
+</script>
+</body>
+</html>

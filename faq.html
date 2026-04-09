@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Preguntas Frecuentes — HERA Perfumes & Joyería</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --red:   #E1222B;
+    --cream: #F9F9F9;
+    --black: #0F0F0F;
+    --lgray: #E6E6E6;
+    --dgray: #2E2E2E;
+    --sans:  'Instrument Sans', sans-serif;
+    --serif: 'Cormorant Garamond', serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { font-family: var(--sans); background: var(--cream); color: var(--black); overflow-x: clip; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--red); }
+  .site-wrap { max-width: 1440px; margin: 0 auto; overflow-x: clip; position: relative; }
+
+  /* ── ANNOUNCE ── */
+  .announce { background: var(--red); overflow: hidden; padding: 14px 0; display: flex; width: 100%; }
+  .announce-track { display: flex; animation: marquee 36s linear infinite; white-space: nowrap; }
+  .announce-track span { font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: #fff; padding: 0 40px; }
+  .announce-track span.dot { color: rgba(255,255,255,.45); padding: 0; }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* ── NAV ── */
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(249,249,249,.92); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid rgba(249,249,249,.35); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; width: 100%; box-sizing: border-box; }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; height: 64px; }
+  .nav-links li { display: flex; align-items: center; height: 100%; }
+  .nav-links a { text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); transition: color .2s; display: flex; align-items: center; height: 100%; }
+  .nav-links a:hover, .nav-links a.active { color: var(--red); }
+  .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; text-decoration: none; z-index: 101; }
+  #logo-placeholder { height: 36px; min-width: 130px; border: 1.5px dashed rgba(15,15,15,.18); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(15,15,15,.3); padding: 0 16px; background: var(--cream); }
+  .nav-icons { display: flex; gap: 22px; align-items: center; }
+  .nav-icons button, .nav-icons a { background: none; border: none; cursor: pointer; color: var(--black); text-decoration: none; transition: color .2s; font-size: 18px; }
+  .nav-icons button:hover, .nav-icons a:hover { color: var(--red); }
+  .nav-item { position: relative; display: flex; align-items: center; height: 64px; }
+  .nav-item > a { display: flex; align-items: center; gap: 5px; height: 100%; }
+  .nav-item > a > svg { transition: transform .2s; }
+  .nav-item:hover > a > svg { transform: rotate(180deg); }
+  .nav-item::after { content: ''; position: absolute; bottom: -1px; left: -20px; right: -20px; height: 8px; background: transparent; }
+  .nav-dropdown { position: absolute; top: 100%; left: 0; background: var(--cream); border: 1px solid var(--lgray); border-top: none; min-width: 180px; opacity: 0; visibility: hidden; transition: opacity .18s, visibility .18s; z-index: 200; }
+  .nav-item:hover .nav-dropdown { opacity: 1; visibility: visible; }
+  .nav-dropdown-item { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); transition: color .2s, background .2s; cursor: default; gap: 12px; }
+  .nav-dropdown-item:last-child { border-bottom: none; }
+  .nav-dropdown-item:hover { color: var(--red); background: rgba(225,34,43,.03); }
+  .nav-dropdown-item svg { opacity: .35; flex-shrink: 0; }
+  .nav-flyout { position: absolute; top: -1px; left: 100%; background: var(--cream); border: 1px solid var(--lgray); min-width: 180px; opacity: 0; visibility: hidden; transition: opacity .15s, visibility .15s; z-index: 201; }
+  .nav-dropdown-item:hover .nav-flyout { opacity: 1; visibility: visible; }
+  .nav-flyout-label { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.28); padding: 12px 18px 6px; }
+  .nav-flyout a { display: flex; align-items: center; gap: 8px; padding: 11px 18px; font-size: 12px; font-weight: 500; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); transition: color .2s, background .2s; letter-spacing: .06em; }
+  .nav-flyout a:last-child { border-bottom: none; }
+  .nav-flyout a:hover { color: var(--red); background: rgba(225,34,43,.03); }
+  .nav-flyout a::before { content: ''; width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: .4; flex-shrink: 0; }
+  .nav-hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--black); padding: 6px; flex-direction: column; gap: 5px; align-items: center; justify-content: center; z-index: 102; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: currentColor; transition: transform .25s ease, opacity .25s ease; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-mobile-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.5); z-index: 150; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s, visibility .3s; }
+  .nav-mobile-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .nav-mobile-panel { position: fixed; top: 0; left: 0; bottom: 0; width: min(300px, 85vw); background: var(--cream); z-index: 160; transform: translateX(-100%); transition: transform .35s cubic-bezier(.4,0,.2,1); overflow-y: auto; overflow-x: hidden; pointer-events: none; }
+  .nav-mobile-panel.open { transform: translateX(0); pointer-events: auto; }
+  .nav-mobile-header { padding: 16px 20px; border-bottom: 1px solid var(--lgray); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .nav-mobile-close { background: none; border: none; cursor: pointer; color: var(--dgray); padding: 4px; }
+  .nav-mobile-links { padding: 8px 0; }
+  .nav-mobile-link { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); cursor: pointer; transition: color .2s; }
+  .nav-mobile-link:hover, .nav-mobile-link.active { color: var(--red); }
+  .nav-mobile-link svg { transition: transform .2s; }
+  .nav-mobile-link.active svg { transform: rotate(180deg); }
+  .nav-mobile-sub { max-height: 0; overflow: hidden; transition: max-height .3s ease; background: rgba(15,15,15,.02); }
+  .nav-mobile-sub.open { max-height: 500px; }
+  .nav-mobile-sub-label { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.28); padding: 12px 32px 4px; }
+  .nav-mobile-sub a { display: flex; align-items: center; gap: 8px; padding: 12px 32px; font-size: 12px; font-weight: 500; color: var(--dgray); text-decoration: none; border-bottom: 1px solid rgba(15,15,15,.05); transition: color .2s; letter-spacing: .06em; }
+  .nav-mobile-sub a:before { content: ''; width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: .4; flex-shrink: 0; }
+  .nav-mobile-sub a:hover { color: var(--red); }
+
+  /* ── SEARCH ── */
+  .search-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.7); z-index: 1000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .25s, visibility .25s; }
+  .search-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .search-box { position: absolute; top: 0; left: 0; right: 0; background: var(--cream); padding: 20px 24px 24px; box-shadow: 0 8px 40px rgba(15,15,15,.2); transform: translateY(-100%); transition: transform .3s cubic-bezier(.4,0,.2,1); }
+  .search-overlay.open .search-box { transform: translateY(0); }
+  .search-input-row { display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--black); padding-bottom: 12px; margin-bottom: 16px; }
+  .search-input-row svg { color: rgba(15,15,15,.4); flex-shrink: 0; }
+  #search-input { flex: 1; border: none; background: transparent; font-family: var(--sans); font-size: 18px; font-weight: 500; color: var(--black); outline: none; }
+  #search-input::placeholder { color: rgba(15,15,15,.35); }
+  #search-close-btn { background: none; border: none; cursor: pointer; color: rgba(15,15,15,.5); padding: 4px; flex-shrink: 0; transition: color .2s; }
+  #search-close-btn:hover { color: var(--red); }
+  #search-results { max-height: 60vh; overflow-y: auto; }
+  .search-hint { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.35); padding: 8px 0; }
+  .search-result-item { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--lgray); cursor: pointer; }
+  .search-result-item:last-child { border-bottom: none; }
+  .search-result-item:hover .search-result-name { color: var(--red); }
+  .search-result-thumb { width: 48px; height: 48px; background: var(--dgray); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .search-result-brand { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.4); margin-bottom: 2px; }
+  .search-result-name { font-family: var(--serif); font-size: 16px; font-weight: 300; font-style: italic; color: var(--black); transition: color .2s; }
+  .search-result-price { font-size: 12px; font-weight: 700; color: var(--black); margin-top: 2px; }
+  .search-empty { text-align: center; padding: 32px 0; }
+  .search-empty p { font-family: var(--serif); font-size: 16px; font-style: italic; color: rgba(15,15,15,.55); }
+
+  /* ── CART ── */
+  .cart-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.45); z-index: 800; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s, visibility .3s; }
+  .cart-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 420px; background: var(--cream); z-index: 900; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; box-shadow: -8px 0 40px rgba(15,15,15,.15); }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-drawer-header { padding: 24px 28px; border-bottom: 1px solid var(--lgray); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .cart-drawer-title { font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--black); }
+  .cart-drawer-close { background: none; border: none; cursor: pointer; color: var(--dgray); padding: 4px; display: flex; align-items: center; transition: color .2s; }
+  .cart-drawer-close:hover { color: var(--red); }
+  .cart-items { flex: 1; overflow-y: auto; }
+  .cart-item { display: flex; gap: 16px; padding: 20px 28px; border-bottom: 1px solid var(--lgray); align-items: center; }
+  .cart-item-img { width: 72px; height: 72px; flex-shrink: 0; background: var(--dgray); display: flex; align-items: center; justify-content: center; }
+  .cart-item-info { flex: 1; min-width: 0; }
+  .cart-item-brand { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.4); margin-bottom: 3px; }
+  .cart-item-name { font-family: var(--serif); font-size: 16px; font-weight: 300; font-style: italic; color: var(--black); margin-bottom: 6px; }
+  .cart-item-price { font-size: 13px; font-weight: 700; color: var(--black); }
+  .cart-item-qty { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+  .qty-btn { width: 26px; height: 26px; border: 1px solid var(--lgray); background: none; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; color: var(--black); transition: border-color .2s, background .2s; }
+  .qty-btn:hover { border-color: var(--black); background: var(--black); color: #fff; }
+  .qty-num { font-size: 13px; font-weight: 600; min-width: 20px; text-align: center; }
+  .cart-item-remove { background: var(--red); border: none; cursor: pointer; color: #fff; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .cart-item-remove:hover { background: #c41c24; }
+  .cart-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 60px 28px; }
+  .cart-empty svg { opacity: .2; }
+  .cart-empty p { font-family: var(--serif); font-size: 17px; font-style: italic; color: rgba(15,15,15,.55); text-align: center; }
+  .cart-footer { padding: 24px 28px; border-top: 1px solid var(--lgray); flex-shrink: 0; background: var(--cream); }
+  .cart-subtotal { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .cart-subtotal-label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: rgba(15,15,15,.5); }
+  .cart-subtotal-value { font-size: 18px; font-weight: 700; color: var(--black); }
+  .cart-checkout-btn { width: 100%; background: var(--black); color: #fff; border: none; padding: 18px; font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; transition: background .2s; margin-bottom: 10px; }
+  .cart-checkout-btn:hover { background: var(--red); }
+  .cart-continue-btn { width: 100%; background: transparent; color: var(--black); border: 1px solid var(--lgray); padding: 14px; font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: border-color .2s; }
+  .cart-continue-btn:hover { border-color: var(--black); }
+
+  /* ── REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: .08s; }
+  .reveal-delay-2 { transition-delay: .16s; }
+  .reveal-delay-3 { transition-delay: .24s; }
+
+  /* ── CURSOR ── */
+  .cursor { width: 8px; height: 8px; background: var(--red); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform .15s; transform: translate(-50%,-50%); }
+  .cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(225,34,43,.3); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform .08s linear, width .25s, height .25s; transform: translate(-50%,-50%); }
+
+  /* ── NEWSLETTER ── */
+  .newsletter { background: var(--red); padding: 60px 80px; display: flex; align-items: center; justify-content: space-between; gap: 60px; }
+  .nl-left { flex: 1; }
+  .nl-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.58); margin-bottom: 12px; }
+  .nl-title { font-family: var(--sans); font-size: 40px; font-weight: 700; color: #fff; letter-spacing: -.02em; line-height: 1.1; }
+  .nl-title em { font-family: var(--serif); font-style: italic; font-weight: 300; }
+  .nl-right { flex: 1; max-width: 460px; }
+  .nl-form { display: flex; }
+  .nl-input { flex: 1; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.22); border-right: none; padding: 16px 20px; font-family: var(--sans); font-size: 13px; color: #fff; outline: none; }
+  .nl-input::placeholder { color: rgba(255,255,255,.48); }
+  .nl-btn { background: var(--black); color: #fff; border: none; padding: 16px 28px; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
+  .nl-btn:hover { background: var(--dgray); }
+  .nl-disclaimer { font-size: 11px; color: rgba(255,255,255,.48); margin-top: 12px; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--black); padding: 60px 80px 36px; color: var(--cream); }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+  #footer-logo-placeholder { height: 40px; min-width: 140px; border: 1.5px dashed rgba(249,249,249,.15); display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(249,249,249,.22); padding: 0 18px; margin-bottom: 20px; }
+  .footer-tagline { font-family: var(--serif); font-size: 15px; font-style: italic; color: rgba(249,249,249,.32); margin-bottom: 28px; line-height: 1.6; }
+  .footer-socials { display: flex; gap: 14px; }
+  .footer-social-btn { width: 38px; height: 38px; border: 1px solid rgba(249,249,249,.1); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color .2s, background .2s; text-decoration: none; color: rgba(249,249,249,.42); }
+  .footer-social-btn:hover { border-color: var(--red); background: var(--red); color: #fff; }
+  .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--cream); margin-bottom: 24px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-links a { font-size: 13px; color: rgba(249,249,249,.32); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--red); }
+  .footer-bottom { border-top: 1px solid rgba(249,249,249,.06); padding-top: 32px; display: flex; align-items: center; justify-content: space-between; }
+  .footer-copy { font-size: 12px; color: rgba(249,249,249,.2); }
+  .footer-payment { display: flex; gap: 10px; }
+  .payment-badge { background: rgba(249,249,249,.05); border: 1px solid rgba(249,249,249,.08); padding: 6px 12px; font-size: 11px; font-weight: 700; color: rgba(249,249,249,.38); letter-spacing: .08em; }
+
+  /* ── BOTONES ── */
+  .btn-primary { background: var(--red); color: #fff; border: none; padding: 16px 36px; font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: background .2s; }
+  .btn-primary:hover { background: #c41c24; }
+
+  /* ── EYEBROWS ── */
+  .eyebrow { display: flex; align-items: center; gap: 14px; font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--red); margin-bottom: 20px; }
+  .eyebrow::before, .eyebrow::after { content: ''; display: block; height: 1px; background: var(--red); }
+  .eyebrow::before { width: 28px; }
+  .eyebrow::after  { width: 14px; }
+  .eyebrow-light { display: flex; align-items: center; gap: 14px; font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: rgba(225,34,43,.7); margin-bottom: 20px; }
+  .eyebrow-light::before, .eyebrow-light::after { content: ''; display: block; height: 1px; background: rgba(225,34,43,.5); }
+  .eyebrow-light::before { width: 28px; }
+  .eyebrow-light::after  { width: 14px; }
+
+  /* ── HEADINGS ── */
+  .heading-dark { font-family: var(--sans); font-size: clamp(34px, 4.5vw, 56px); font-weight: 700; letter-spacing: -.02em; line-height: .96; color: var(--cream); margin-bottom: 20px; }
+  .heading-dark em { font-family: var(--serif); font-style: italic; font-weight: 300; color: rgba(249,249,249,.38); }
+  .heading-light { font-family: var(--sans); font-size: clamp(30px, 4vw, 50px); font-weight: 700; letter-spacing: -.02em; line-height: 1.02; color: var(--black); margin-bottom: 20px; }
+  .heading-light em { font-family: var(--serif); font-style: italic; font-weight: 300; color: var(--dgray); }
+
+  /* ════════════════════════════════════════
+     HERO — negro
+  ════════════════════════════════════════ */
+  .page-hero { background: var(--black); padding: 100px 80px 48px; }
+  .page-hero-inner { max-width: 760px; }
+  .hero-h1 { font-family: var(--sans); font-size: clamp(48px, 6vw, 80px); font-weight: 700; letter-spacing: -.03em; line-height: .92; color: var(--cream); margin-bottom: 28px; }
+  .hero-h1 em { font-family: var(--serif); font-weight: 300; font-style: italic; color: rgba(249,249,249,.38); }
+  .hero-sub { font-family: var(--serif); font-size: clamp(17px, 1.8vw, 20px); font-weight: 400; font-style: italic; color: rgba(249,249,249,.42); line-height: 1.7; max-width: 560px; }
+  .hero-meta { display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: stretch; margin-top: 56px; border: 1px solid rgba(249,249,249,.10); width: 100%; }
+  .hero-meta-item { padding: 40px 80px 56px; border-right: 1px solid rgba(249,249,249,.10); display: flex; flex-direction: column; gap: 12px; }
+  .hero-meta-item:last-child { border-right: none; }
+  .hero-meta-label { font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: rgba(249,249,249,.45); }
+  .hero-meta-value { font-size: 32px; font-weight: 700; color: rgba(249,249,249,.92); letter-spacing: -.02em; line-height: 1; }
+  .hero-meta-note { font-size: 16px; color: rgba(249,249,249,.50); font-style: italic; font-family: var(--serif); line-height: 1.5; }
+
+  /* ════════════════════════════════════════
+     CATEGORÍAS FAQ — DARK (negro)
+  ════════════════════════════════════════ */
+  .faq-dark { background: var(--black); padding: 80px; }
+  .faq-light { background: var(--cream); padding: 80px; border-top: 1px solid var(--lgray); border-bottom: 1px solid var(--lgray); }
+  .faq-cat-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; margin-top: 52px; align-items: start; }
+
+  /* Intro column — dark */
+  .faq-intro-dark p { font-family: var(--serif); font-size: 17px; font-style: italic; color: rgba(249,249,249,.42); line-height: 1.7; margin-bottom: 28px; }
+  .faq-contact-dark { padding: 22px; border: 1px solid rgba(249,249,249,.07); display: flex; flex-direction: column; gap: 10px; }
+  .faq-contact-label { font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(249,249,249,.25); margin-bottom: 2px; }
+  .faq-contact-dark a { font-size: 13px; font-weight: 600; color: rgba(249,249,249,.45); text-decoration: none; letter-spacing: .06em; transition: color .2s; display: flex; align-items: center; gap: 8px; }
+  .faq-contact-dark a:hover { color: var(--red); }
+
+  /* Intro column — light */
+  .faq-intro-light p { font-family: var(--serif); font-size: 17px; font-style: italic; color: rgba(15,15,15,.55); line-height: 1.7; margin-bottom: 28px; }
+  .faq-contact-light { padding: 22px; border: 1px solid var(--lgray); display: flex; flex-direction: column; gap: 10px; }
+  .faq-contact-light-label { font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.3); margin-bottom: 2px; }
+  .faq-contact-light a { font-size: 13px; font-weight: 600; color: rgba(15,15,15,.5); text-decoration: none; letter-spacing: .06em; transition: color .2s; display: flex; align-items: center; gap: 8px; }
+  .faq-contact-light a:hover { color: var(--red); }
+
+  /* Accordion — dark */
+  .faq-list-dark { display: flex; flex-direction: column; }
+  .faq-list-dark .faq-item { border-bottom: 1px solid rgba(249,249,249,.06); }
+  .faq-list-dark .faq-item:first-child { border-top: 1px solid rgba(249,249,249,.06); }
+  .faq-list-dark .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 24px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer; transition: color .2s; color: rgba(249,249,249,.65); }
+  .faq-list-dark .faq-q:hover, .faq-list-dark .faq-q.open { color: var(--cream); }
+  .faq-q-text { font-family: var(--sans); font-size: 15px; font-weight: 600; line-height: 1.4; letter-spacing: -.005em; text-align: left; }
+  .faq-chevron { flex-shrink: 0; transition: transform .3s ease; }
+  .faq-list-dark .faq-chevron { color: rgba(249,249,249,.28); }
+  .faq-list-dark .faq-q.open .faq-chevron { transform: rotate(180deg); color: var(--red); }
+  .faq-list-dark .faq-ans { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+  .faq-list-dark .faq-ans.open { max-height: 600px; }
+  .faq-list-dark .faq-ans-inner { padding: 0 0 28px; font-family: var(--serif); font-size: 16px; color: rgba(249,249,249,.42); line-height: 1.75; }
+  .faq-list-dark .faq-ans-inner strong { color: rgba(249,249,249,.72); font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .03em; }
+
+  /* Accordion — light */
+  .faq-list-light { display: flex; flex-direction: column; }
+  .faq-list-light .faq-item { border-bottom: 1px solid var(--lgray); }
+  .faq-list-light .faq-item:first-child { border-top: 1px solid var(--lgray); }
+  .faq-list-light .faq-q { width: 100%; background: none; border: none; text-align: left; padding: 24px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; cursor: pointer; transition: color .2s; color: var(--dgray); }
+  .faq-list-light .faq-q:hover, .faq-list-light .faq-q.open { color: var(--black); }
+  .faq-list-light .faq-chevron { color: rgba(15,15,15,.3); }
+  .faq-list-light .faq-q.open .faq-chevron { transform: rotate(180deg); color: var(--red); }
+  .faq-list-light .faq-ans { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+  .faq-list-light .faq-ans.open { max-height: 600px; }
+  .faq-list-light .faq-ans-inner { padding: 0 0 28px; font-family: var(--serif); font-size: 16px; color: rgba(15,15,15,.6); line-height: 1.75; }
+  .faq-list-light .faq-ans-inner strong { color: var(--black); font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .03em; }
+
+  /* ── FAQ LINK BRIDGE (7.24) ── */
+  .faq-link-bridge { padding: 28px 0 4px; }
+  .faq-link-bridge a { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(15,15,15,.38); text-decoration: none; border-bottom: 1px solid rgba(15,15,15,.12); padding-bottom: 3px; transition: color .2s, border-color .2s; }
+  .faq-link-bridge a:hover { color: var(--red); border-color: var(--red); }
+  .faq-link-bridge-dark { padding: 28px 0 4px; }
+  .faq-link-bridge-dark a { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(249,249,249,.28); text-decoration: none; border-bottom: 1px solid rgba(249,249,249,.1); padding-bottom: 3px; transition: color .2s, border-color .2s; }
+  .faq-link-bridge-dark a:hover { color: var(--red); border-color: var(--red); }
+
+  /* ── BLOQUE EDITORIAL ENVÍOS ── */
+  .envios-editorial { padding: 32px; border: 1px solid var(--lgray); background: rgba(15,15,15,.03); }
+  .envios-editorial-label { font-size: 9px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(15,15,15,.3); margin-bottom: 12px; }
+  .envios-editorial p { font-family: var(--serif); font-size: 16px; font-style: italic; color: rgba(15,15,15,.6); line-height: 1.72; margin-bottom: 20px; }
+  .envios-editorial-cta { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--red); text-decoration: none; border-bottom: 1px solid rgba(225,34,43,.3); padding-bottom: 3px; transition: border-color .2s; }
+  .envios-editorial-cta:hover { border-color: var(--red); }
+
+  /* ── CTA CARDS ── */
+  .cta-section { padding: 64px 80px 80px; background: var(--cream); }
+  .cta-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; margin-top: 44px; }
+  .cta-card { border: 1px solid var(--lgray); padding: 40px 36px; display: flex; flex-direction: column; gap: 16px; transition: border-color .2s, background .2s; text-decoration: none; color: inherit; }
+  .cta-card:hover { border-color: var(--black); background: var(--black); }
+  .cta-card:hover .cta-card-title, .cta-card:hover .cta-card-desc { color: var(--cream); }
+  .cta-card:hover .cta-card-icon { color: var(--red); }
+  .cta-card:hover .cta-card-link { color: var(--red); }
+  .cta-card-icon { color: rgba(15,15,15,.22); transition: color .2s; }
+  .cta-card-title { font-family: var(--sans); font-size: 17px; font-weight: 700; color: var(--black); letter-spacing: -.01em; transition: color .2s; }
+  .cta-card-desc { font-family: var(--serif); font-size: 16px; color: rgba(15,15,15,.52); line-height: 1.62; transition: color .2s; }
+  .cta-card-link { margin-top: auto; font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(15,15,15,.35); display: flex; align-items: center; gap: 8px; transition: color .2s; }
+
+  /* ── TOUCH ── */
+  button, a, .faq-q, .cta-card { cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    nav { padding: 0 24px; }
+    .nav-links { gap: 20px; }
+    .nav-icons { gap: 16px; }
+    #logo-placeholder { min-width: 110px; font-size: 10px; padding: 0 12px; }
+    .page-hero { padding: 72px 48px 0; }
+    .hero-meta-item { padding: 32px 48px; }
+    .faq-dark, .faq-light { padding: 60px 48px; }
+    .cta-section { padding: 48px; }
+    .newsletter { padding: 48px; gap: 40px; }
+    footer { padding: 48px 48px 32px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+    .faq-cat-layout { gap: 48px; }
+    .cta-grid { grid-template-columns: 1fr 1fr; }
+    .nl-title { font-size: 32px; }
+  }
+  @media (max-width: 768px) {
+    .cursor, .cursor-ring { display: none; }
+    nav { padding: 0 16px; height: 56px; background: rgba(249,249,249,.98); backdrop-filter: none; }
+    .nav-links { display: none !important; }
+    .nav-hamburger { display: flex; }
+    .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); }
+    #logo-placeholder { min-width: 88px; font-size: 10px; padding: 0 10px; height: 30px; }
+    .nav-icons { gap: 14px; }
+    .nav-icons .hide-mobile { display: none !important; }
+    #fav-menu-wrap { display: none !important; }
+    .page-hero { padding: 52px 20px 44px; }
+    .hero-meta { grid-template-columns: 1fr; margin-top: 36px; }
+    .hero-meta-item { border-right: none; border-bottom: 1px solid rgba(249,249,249,.10); padding: 28px 20px; }
+    .hero-meta-item:last-child { border-bottom: none; }
+    .hero-meta-value { font-size: 24px; }
+    .hero-meta-note { font-size: 14px; }
+    .faq-dark, .faq-light { padding: 44px 20px; }
+    .cta-section { padding: 44px 20px; }
+    .faq-cat-layout { grid-template-columns: 1fr; gap: 36px; }
+    .cta-grid { grid-template-columns: 1fr; }
+    .newsletter { padding: 44px 20px; flex-direction: column; gap: 32px; }
+    .nl-title { font-size: 28px; }
+    .nl-right { max-width: 100%; }
+    footer { padding: 44px 20px 28px; }
+    .footer-top { grid-template-columns: 1fr; gap: 36px; margin-bottom: 36px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .cart-drawer { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- MOBILE NAV OVERLAY + PANEL -->
+<div class="nav-mobile-overlay" id="navMobileOverlay"></div>
+<div class="nav-mobile-panel" id="navMobilePanel">
+  <div class="nav-mobile-header">
+    <span style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--black);">Menú</span>
+    <button class="nav-mobile-close" id="navMobileClose"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="nav-mobile-links">
+    <a href="index.html" class="nav-mobile-link">Inicio</a>
+    <div class="nav-mobile-link" id="mobileProductosToggle">Productos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+    <div class="nav-mobile-sub" id="mobileProductosSub">
+      <div class="nav-mobile-sub-label">Categorías</div>
+      <a href="catalogo.html?tab=perfumes">Perfumes</a>
+      <a href="catalogo.html?tab=joyeria">Joyería</a>
+    </div>
+    <a href="nosotros.html" class="nav-mobile-link">Nosotros</a>
+    <a href="contacto.html" class="nav-mobile-link">Contacto</a>
+    <a href="cuenta.html" class="nav-mobile-link" id="mobileCuentaLoginLink" style="border-top:1px solid var(--lgray);display:none;">Iniciar sesión <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+    <div class="nav-mobile-link" id="mobileCuentaToggle" style="border-top:1px solid var(--lgray);display:none;">Mi cuenta <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+    <div class="nav-mobile-sub" id="mobileCuentaSub">
+      <a href="#" id="btn-logout-mobile" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;font-weight:500;color:var(--dgray);text-decoration:none;letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Cerrar sesión</a>
+    </div>
+    <div style="padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--lgray);"><span style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--black);">Mis favoritos</span><span id="fav-count-mobile" style="font-size:11px;color:rgba(15,15,15,.4);">0 productos</span></div>
+    <div id="fav-list-mobile" style="max-height:280px;overflow-y:auto;"><div id="fav-empty-mobile" style="padding:28px 24px;text-align:center;"><p style="font-size:13px;color:rgba(15,15,15,.35);font-family:var(--serif);font-style:italic;">Aún no tienes favoritos</p></div></div>
+  </div>
+</div>
+
+<div class="site-wrap">
+
+<!-- ANNOUNCE BAR -->
+<div class="announce">
+  <div class="announce-track">
+    <span>Envíos a todo México</span><span class="dot">✦</span>
+    <span>Perfumes 100% Originales</span><span class="dot">✦</span>
+    <span>Entrega en GDL sin costo</span><span class="dot">✦</span>
+    <span>Sellados de Fábrica</span><span class="dot">✦</span>
+    <span>Garantía de Autenticidad</span><span class="dot">✦</span>
+    <span>Envíos a todo México</span><span class="dot">✦</span>
+    <span>Perfumes 100% Originales</span><span class="dot">✦</span>
+    <span>Entrega en GDL sin costo</span><span class="dot">✦</span>
+    <span>Sellados de Fábrica</span><span class="dot">✦</span>
+    <span>Garantía de Autenticidad</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <button class="nav-hamburger" id="navHamburger" type="button" aria-label="Menú"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li class="nav-item">
+      <a href="#">Productos <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-item" onclick="location.href='catalogo.html?tab=perfumes'" style="cursor:pointer;">Perfumes <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          <div class="nav-flyout"><div class="nav-flyout-label">Categorías</div><a href="catalogo.html?cat=diseñador">Diseñador</a><a href="catalogo.html?cat=nicho">Nicho</a><a href="catalogo.html?cat=arabes">Árabes</a><a href="catalogo.html?cat=sets">Sets</a></div>
+        </div>
+        <div class="nav-dropdown-item" onclick="location.href='catalogo.html?tab=joyeria'" style="cursor:pointer;">Joyería <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          <div class="nav-flyout"><div class="nav-flyout-label">Categorías</div><a href="catalogo.html?tab=joyeria&cat=anillos">Anillos</a><a href="catalogo.html?tab=joyeria&cat=collares">Collares</a></div>
+        </div>
+      </div>
+    </li>
+    <li><a href="nosotros.html">Nosotros</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+  </ul>
+  <a href="index.html" class="nav-logo"><div id="logo-placeholder"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg> Tu logo aquí</div></a>
+  <div class="nav-icons">
+    <button id="search-btn" title="Buscar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+    <div style="position:relative;" id="account-menu-wrap" class="hide-mobile">
+      <a href="cuenta.html" id="account-login-btn" title="Iniciar sesión" style="display:none;align-items:center;background:none;border:none;cursor:pointer;color:var(--black);transition:color .2s;text-decoration:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg></a>
+      <button title="Mi cuenta" id="account-toggle" style="display:none;align-items:center;background:none;border:none;cursor:pointer;color:var(--black);transition:color .2s;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg></button>
+      <div id="account-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;width:220px;background:var(--cream);border:1px solid var(--lgray);z-index:500;box-shadow:0 8px 32px rgba(15,15,15,.12);">
+        <a href="#" id="btn-logout" style="display:flex;align-items:center;gap:12px;padding:16px 20px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dgray);text-decoration:none;transition:color .2s,background .2s;" onmouseover="this.style.color='var(--red)';this.style.background='rgba(225,34,43,.03)'" onmouseout="this.style.color='var(--dgray)';this.style.background='transparent'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Cerrar sesión</a>
+      </div>
+    </div>
+    <div style="position:relative;" id="fav-menu-wrap" class="hide-mobile">
+      <button title="Favoritos" id="fav-toggle" style="position:relative;display:flex;align-items:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span id="fav-count" style="position:absolute;top:-4px;right:-6px;width:16px;height:16px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center;">0</span></button>
+      <div id="fav-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;width:320px;background:var(--cream);border:1px solid var(--lgray);z-index:500;box-shadow:0 8px 32px rgba(15,15,15,.12);">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--lgray);display:flex;align-items:center;justify-content:space-between;"><span style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--black);">Mis favoritos</span><span id="fav-count-label" style="font-size:11px;color:rgba(15,15,15,.4);">0 productos</span></div>
+        <div id="fav-list" style="max-height:360px;overflow-y:auto;"><div id="fav-empty" style="padding:40px 20px;text-align:center;"><p style="font-size:13px;color:rgba(15,15,15,.35);font-family:var(--serif);font-style:italic;">Aún no tienes favoritos</p></div></div>
+        <div id="fav-add-all" style="display:none;padding:12px 20px;border-top:1px solid var(--lgray);"><button onclick="addAllFavsToCart()" style="width:100%;background:var(--black);color:#fff;border:none;padding:12px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;" onmouseover="this.style.background='var(--red)'" onmouseout="this.style.background='var(--black)'">Agregar todo al carrito</button></div>
+      </div>
+    </div>
+    <button id="cart-btn" title="Carrito" style="position:relative;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span id="cart-count" style="position:absolute;top:-4px;right:-6px;width:16px;height:16px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center;">0</span></button>
+  </div>
+</nav>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-input-row"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" id="search-input" placeholder="Buscar perfumes, marcas..." autocomplete="off" /><button id="search-close-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+    <div id="search-results"><p class="search-hint">Busca por nombre o marca</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S1 — HERO  |  negro
+═══════════════════════════════════════════ -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="eyebrow reveal">Dudas generales</div>
+    <h1 class="hero-h1 reveal">Preguntas <em>frecuentes.</em></h1>
+    <p class="hero-sub reveal">Todo lo que necesitas saber sobre cómo funciona HERA: pedidos, pagos, envíos, autenticidad y tu cuenta. Si algo no está aquí, te respondemos directamente por WhatsApp.</p>
+  </div>
+  <div class="hero-meta reveal">
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Categorías</span>
+      <span class="hero-meta-value">5 temas</span>
+      <span class="hero-meta-note">Pedidos, pagos, envíos, autenticidad y cuenta</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Preguntas</span>
+      <span class="hero-meta-value">22 respuestas</span>
+      <span class="hero-meta-note">Actualizadas en Etapa <span style="font-family:var(--sans);font-size:0.9em;">1</span></span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Tiempo de lectura</span>
+      <span class="hero-meta-value">~6 minutos</span>
+      <span class="hero-meta-note">Sin interrupciones</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S2 — PEDIDOS Y DISPONIBILIDAD  |  cream
+═══════════════════════════════════════════ -->
+<div class="faq-light" id="cat-pedidos">
+  <div class="eyebrow-light reveal">01 — Pedidos y disponibilidad</div>
+  <h2 class="heading-light reveal">Cómo funciona el <em>ciclo de compra.</em></h2>
+  <div class="faq-cat-layout">
+    <div class="faq-intro-light reveal">
+      <p>Trabajamos con un ciclo semanal. El corte es cada miércoles a las 12:00 p.m. — lo que nos llega después entra al siguiente ciclo sin excepción.</p>
+      <div class="faq-contact-light">
+        <div class="faq-contact-light-label">¿No encontraste respuesta?</div>
+        <a href="https://wa.me/5213310050843?text=Hola%2C%20tengo%20una%20duda%20sobre%20un%20pedido" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> WhatsApp · 33 1005 0843</a>
+        <a href="contacto.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Formulario de contacto</a>
+      </div>
+    </div>
+    <div class="faq-list-light reveal reveal-delay-1" data-faq-group="pedidos">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Cómo realizo un pedido?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Agrega los productos que quieres a tu carrito y procede al pago directamente en el sitio para artículos <strong>En existencia</strong>. Para productos de <strong>Disponibilidad limitada</strong> o <strong>Pieza exclusiva</strong>, el proceso inicia por WhatsApp: escríbenos, verificamos con el proveedor y te enviamos un link de pago una vez confirmada la disponibilidad. En ambos casos te escribimos para coordinar la entrega antes del sábado.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Qué significa "Disponibilidad limitada"?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Es el segundo nivel de disponibilidad. El producto existe, pero en cantidades reducidas. El indicador aparece en <strong>amarillo</strong> en la ficha del producto. El cargo no ocurre hasta que confirmamos existencia con el proveedor — si no hay stock ese viernes, te avisamos antes de procesar cualquier pago. Siempre puedes esperar al siguiente ciclo o cancelar sin costo.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Qué es una "Pieza exclusiva" y cómo la solicito?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Son productos de alta rotación, ediciones limitadas o artículos que requieren verificación expresa — indicados en <strong>gris</strong>. El proceso no inicia con un pago sino con una solicitud: nos escribes por WhatsApp, verificamos existencia y precio final con el proveedor, y solo entonces te damos luz verde. Si el producto no está disponible, te lo decimos sin rodeos.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Cuándo se procesa mi pedido?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">El ciclo es fijo: <strong>corte el miércoles a las 12:00 p.m.</strong>, surtido el viernes y despacho el sábado. Un pedido hecho el martes por la noche entra ese ciclo. Uno hecho el jueves va para la siguiente semana. No hay excepciones al ciclo porque dependemos de la confirmación semanal con nuestros proveedores.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Puedo cancelar o modificar un pedido ya confirmado?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Mientras el pedido no haya sido surtido (es decir, antes del viernes), escríbenos por WhatsApp y lo vemos. Si ya lo surtimos y empacamos, la cancelación no es posible. Para modificaciones de dirección o punto de entrega, también escríbenos antes del sábado — a partir del despacho no podemos hacer cambios.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S3 — PAGOS  |  negro
+═══════════════════════════════════════════ -->
+<div class="faq-dark" id="cat-pagos">
+  <div class="eyebrow reveal">02 — Pagos</div>
+  <h2 class="heading-dark reveal">Métodos, cargos y <em>seguridad.</em></h2>
+  <div class="faq-cat-layout">
+    <div class="faq-intro-dark reveal">
+      <p>Aceptamos tarjeta y SPEI. El cargo siempre ocurre después de confirmar tu pedido — nunca antes de saber que el producto existe.</p>
+      <div class="faq-contact-dark">
+        <div class="faq-contact-label">Dudas sobre pagos</div>
+        <a href="https://wa.me/5213310050843?text=Hola%2C%20tengo%20una%20duda%20sobre%20mi%20pago" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> WhatsApp · 33 1005 0843</a>
+        <a href="contacto.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Formulario de contacto</a>
+      </div>
+    </div>
+    <div class="faq-list-dark reveal reveal-delay-1" data-faq-group="pagos">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Qué métodos de pago aceptan?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Aceptamos dos métodos. Primero, <strong>tarjeta de crédito o débito</strong> procesada con Mercado Pago — directamente en el sitio para productos En existencia, o mediante un link de pago por WhatsApp para los demás niveles. Segundo, <strong>transferencia SPEI</strong> — te compartimos la CLABE interbancaria al confirmar el pedido. Ambos métodos son válidos para cualquier tipo de producto.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Cuándo se realiza el cargo a mi tarjeta?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Para productos <strong>En existencia</strong>, el cargo ocurre al completar la compra en el sitio. Para <strong>Disponibilidad limitada</strong> y <strong>Pieza exclusiva</strong>, el cargo —ya sea por link de Mercado Pago o por SPEI— ocurre solo después de que confirmamos la existencia con el proveedor. Nunca te pedimos pago sin antes tener certeza del stock.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Es seguro pagar con tarjeta en el sitio?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Sí. El procesamiento de pagos lo gestiona íntegramente <strong>Mercado Pago</strong>, uno de los procesadores más utilizados en Latinoamérica. Nunca almacenamos datos de tu tarjeta en nuestros servidores. La transacción ocurre en el entorno seguro de Mercado Pago con encriptación estándar.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Cómo pago por transferencia SPEI?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Al confirmar tu pedido te enviamos la <strong>CLABE interbancaria de Mercado Pago</strong> por WhatsApp. Realizas la transferencia desde tu banca en línea o app — se acredita en minutos. Una vez que la recibimos, el pedido queda registrado en el ciclo del viernes.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Emiten factura?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">En esta primera etapa <strong>no emitimos facturas</strong>. Nuestra operación fiscal aún no cuenta con la actividad formal activa necesaria para facturar al público general. Es algo que estamos trabajando para etapas futuras. Si necesitas comprobante de compra informal, podemos enviarte un resumen del pedido por WhatsApp.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S4 — ENVÍOS  |  cream
+═══════════════════════════════════════════ -->
+<div class="faq-light" id="cat-envios">
+  <div class="eyebrow-light reveal">03 — Envíos</div>
+  <h2 class="heading-light reveal">Opciones de entrega <em>disponibles.</em></h2>
+  <div class="faq-cat-layout">
+    <div class="faq-intro-light reveal">
+      <div class="envios-editorial">
+        <div class="envios-editorial-label">Resumen de entregas</div>
+        <p>En la ZMG entregamos sin costo — ya sea en un punto de encuentro en el Tren Ligero o a través de Casa Blanca Paquetería con 9 sucursales donde puedes recoger cuando quieras. Para envíos foráneos operamos vía Skydropx; el costo se calcula según tu código postal al confirmar el pedido.</p>
+        <a href="Politica_envios.html" class="envios-editorial-cta">Ver política completa de envíos →</a>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="faq-list-light" data-faq-group="envios">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Hacen envíos internacionales?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-ans"><div class="faq-ans-inner">No por el momento. Nuestra cobertura en Etapa <span style="font-family:var(--sans);font-size:0.9em;">1</span> es <strong>México únicamente</strong>. Para entregas en la ZMG sin costo y envíos foráneos a través de Skydropx. Si estás fuera de la ZMG, escríbenos antes de ordenar — evaluamos la cobertura según tu código postal y te confirmamos disponibilidad, costo y tiempo estimado. Para envíos fuera de México no tenemos operación activa.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Puedo elegir la paquetería?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-ans"><div class="faq-ans-inner">Para envíos foráneos usamos <strong>Skydropx</strong>, que nos conecta con las principales paqueterías según tu código postal. Al confirmar tu pedido te mostramos las opciones disponibles para tu zona — como <strong>Estafeta, FedEx, DHL o Redpack</strong> — para que puedas indicar tu preferencia, por ejemplo si tienes una sucursal cercana. El costo exacto lo calculamos al empacar tu pedido y te lo cobramos por separado antes del despacho. Ten en cuenta que <strong>los servicios express tienen un costo mayor</strong>. Para entregas en la ZMG puedes escoger entre punto de encuentro o Casa Blanca Paquetería.</div></div>
+        </div>
+      </div>
+      <div style="padding:28px 0 4px;">
+        <p style="font-size:12px;letter-spacing:.06em;color:rgba(15,15,15,.35);font-family:var(--sans);line-height:1.65;">Para información completa sobre tiempos, zonas de cobertura y opciones de entrega, consulta nuestra Política de envíos.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S5 — AUTENTICIDAD Y PRODUCTOS  |  negro
+═══════════════════════════════════════════ -->
+<div class="faq-dark" id="cat-autenticidad">
+  <div class="eyebrow reveal">04 — Autenticidad y productos</div>
+  <h2 class="heading-dark reveal">Garantía de lo que <em>te vendemos.</em></h2>
+  <div class="faq-cat-layout">
+    <div class="faq-intro-dark reveal">
+      <p>Todos los productos que vendemos son 100% originales, sellados de fábrica y revisados antes de empacarse. Eso no es marketing — es el único estándar con el que operamos.</p>
+      <div class="faq-contact-dark">
+        <div class="faq-contact-label">Producto con problema</div>
+        <a href="https://wa.me/5213310050843?text=Hola%2C%20tengo%20un%20problema%20con%20mi%20producto" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> WhatsApp · 33 1005 0843</a>
+        <a href="contacto.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Formulario de contacto</a>
+        <a href="devoluciones.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Política de devoluciones completa</a>
+      </div>
+    </div>
+    <div class="faq-list-dark reveal reveal-delay-1" data-faq-group="autenticidad">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Los productos son 100% originales?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Sí, sin excepción. No vendemos imitaciones, versiones "tipo" ni productos alterados. Todos los artículos provienen de canales de distribución verificados. La autenticidad es el único estándar con el que operamos — si alguna vez encontramos que un producto no pasa esa verificación, no lo ponemos a la venta.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Cómo sé que el producto es auténtico?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Todos los productos llegan <strong>sellados de fábrica</strong> — el sello original del fabricante intacto es la señal más directa de autenticidad. Además, los revisamos físicamente antes de empacar. Si al recibir tu producto el sello está roto o notas algo inusual en el empaque, contáctanos con fotografías antes de abrirlo.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Qué hago si el paquete llega con daño visible en el exterior?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Si el paquete llega con daño visible en el exterior —caja golpeada, bolsa rota, empaque comprometido— el paso más importante es <strong>fotografiarlo antes de abrirlo</strong>. Esa imagen del empaque cerrado con el daño visible es la evidencia que necesitamos para gestionar el reclamo con la paquetería. Una vez que tienes las fotografías, escríbenos por WhatsApp y coordinamos la solución. Sin esa documentación previa, el carrier no puede validar que el daño ocurrió en tránsito. <a href="devoluciones.html" style="color:rgba(249,249,249,.7);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(249,249,249,.25);">Ver protocolo completo →</a></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Qué hago si mi perfume viene con defecto de fábrica?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Los defectos de manufactura —fuga, mal sellado, atomizador fallido, producto incompleto— ocurren en la industria independientemente del canal de compra y <strong>no tienen relación con la autenticidad del producto</strong>. En estos casos HERA actúa <strong>aunque el empaque ya esté abierto</strong>: no hace falta que el producto esté sin usar para ser atendido. Repórtalo por WhatsApp con fotografías o video mostrando el defecto y lo evaluamos en horario hábil. La resolución puede ser reposición, gestión con el proveedor o acuerdo directo, según cada caso. <a href="devoluciones.html" style="color:rgba(249,249,249,.7);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(249,249,249,.25);">Ver protocolo completo →</a></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Aceptan devoluciones?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">No aceptamos devoluciones por cambio de opinión ni por reacciones de sensibilidad a la fragancia, ya que los perfumes son artículos de consumo personal que no pueden revenderse una vez abiertos. Sin embargo, hay tres casos en los que sí actuamos: si el <strong>paquete llegó dañado</strong> en tránsito (requiere fotografiar el empaque antes de abrirlo), si el producto llegó con un <strong>defecto de fábrica</strong> como fuga o atomizador fallido, o si el producto recibido es <strong>diferente al que ordenaste</strong>. Este último siempre se resuelve a tu favor sin evaluación intermedia. En todos los casos el canal es WhatsApp con fotografías o video. <a href="devoluciones.html" style="color:rgba(249,249,249,.7);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(249,249,249,.25);">Ver política completa de devoluciones →</a></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Los productos vienen sellados de fábrica?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Sí. La totalidad de nuestro catálogo de perfumes viene <strong>sellada de fábrica</strong> tal como sale del fabricante. Antes de empacarlo lo revisamos visualmente para verificar que el sello esté íntegro. Si un producto no está sellado de fábrica por diseño del fabricante (caso raro en joyería), lo indicamos en la ficha del producto.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     S6 — CUENTA Y ATENCIÓN  |  cream
+═══════════════════════════════════════════ -->
+<div class="faq-light" id="cat-cuenta">
+  <div class="eyebrow-light reveal">05 — Cuenta y atención</div>
+  <h2 class="heading-light reveal">Tu cuenta, tu acceso, <em>tu HERA.</em></h2>
+  <div class="faq-cat-layout">
+    <div class="faq-intro-light reveal">
+      <p>No necesitas una cuenta para comprar. Y si ya la tienes, encontrarás aquí cómo contactarnos y en qué horarios respondemos.</p>
+      <div class="faq-contact-light">
+        <div class="faq-contact-light-label">Contacto directo</div>
+        <a href="https://wa.me/5213310050843?text=Hola%20HERA%2C%20necesito%20ayuda" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> WhatsApp · 33 1005 0843</a>
+        <a href="contacto.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Formulario de contacto</a>
+      </div>
+    </div>
+    <div class="faq-list-light reveal reveal-delay-1" data-faq-group="cuenta">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Necesito crear una cuenta para comprar?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">No. Puedes comprar como <strong>invitado</strong> sin crear ninguna cuenta. Solo necesitas un correo de contacto para recibir los detalles de tu pedido. Si creas una cuenta, puedes guardar favoritos, revisar tu historial y agilizar futuros pedidos — pero nunca es un requisito para comprar.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Cómo contacto a HERA?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">El canal principal es <strong>WhatsApp al +52 1 33 1005 0843</strong>. Es donde coordinamos pedidos, pagos y entregas. Si prefieres dejarnos un mensaje escrito, también puedes usar el <a href="contacto.html" style="color:var(--red);text-decoration:none;font-family:var(--sans);font-size:13px;font-weight:700;">formulario de contacto</a>. Para dudas generales que no son urgentes, el formulario funciona igual de bien.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿En qué horario responden por WhatsApp?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Respondemos en horario hábil: <strong>lunes a viernes de 10:00 a.m. a 7:00 p.m.</strong> y sábados de 10:00 a.m. a 2:00 p.m. Los mensajes que nos llegan fuera de ese horario los respondemos al día hábil siguiente en la mañana. No operamos los domingos ni días festivos nacionales.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Tienen tienda física?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">No en Etapa <span style="font-family:var(--sans);font-size:0.9em;">1</span>. HERA opera actualmente <strong>solo en línea</strong>. Las entregas presenciales en la ZMG se coordinan en puntos de encuentro o a través de Casa Blanca Paquetería — siempre por WhatsApp antes del sábado de despacho. Una tienda física es parte de la visión a largo plazo, pero no está en los planes inmediatos.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span class="faq-q-text">¿Pueden ayudarme a elegir un perfume?</span><svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Sí. Escríbenos por WhatsApp describiendo lo que buscas: si es para ti o de regalo, qué familias olfativas te gustan, cuánto quieres invertir y si ya usas algún perfume de referencia. Con eso podemos orientarte hacia opciones concretas del catálogo sin que tengas que adivinar. Es parte del servicio, sin costo adicional.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA DE CIERRE -->
+<div class="cta-section">
+  <div class="eyebrow-light reveal">¿Listo para explorar?</div>
+  <h2 class="heading-light reveal" style="font-size:clamp(24px,3vw,38px);">Lo que sigue <em>depende de ti.</em></h2>
+  <div class="cta-grid">
+    <a href="catalogo.html" class="cta-card reveal">
+      <div class="cta-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+      <div class="cta-card-title">Ver catálogo</div>
+      <div class="cta-card-desc">Explora perfumes de diseñador, nicho y árabes. También joyería curada.</div>
+      <div class="cta-card-link">Explorar colección <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+    </a>
+    <a href="https://wa.me/5213310050843?text=Hola%20HERA%2C%20quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" class="cta-card reveal reveal-delay-1">
+      <div class="cta-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+      <div class="cta-card-title">Escríbenos por WhatsApp</div>
+      <div class="cta-card-desc">Para pedidos, dudas puntuales y ayuda para elegir tu próximo perfume.</div>
+      <div class="cta-card-link">Abrir WhatsApp <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+    </a>
+    <a href="contacto.html" class="cta-card reveal reveal-delay-2">
+      <div class="cta-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+      <div class="cta-card-title">Formulario de contacto</div>
+      <div class="cta-card-desc">Para mensajes que no son urgentes o si prefieres el correo al chat.</div>
+      <div class="cta-card-link">Ir al formulario <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+    </a>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <div class="nl-left reveal"><p class="nl-eyebrow">Club HERA</p><h2 class="nl-title">Sé el primero en<br><em>olerlo todo.</em></h2></div>
+  <div class="nl-right reveal reveal-delay-1"><div class="nl-form"><input type="email" class="nl-input" placeholder="tu@email.com" /><button class="nl-btn">Suscribir</button></div><p class="nl-disclaimer">Sin spam. Solo lanzamientos, descuentos y novedades exclusivas.</p></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div id="footer-logo-placeholder"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg> Tu logo aquí</div>
+      <p class="footer-tagline">Perfumes & Joyería.<br>Para quienes no necesitan<br>permiso para destacar.</p>
+      <div class="footer-socials">
+        <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+        <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+      </div>
+    </div>
+    <div><p class="footer-col-title">Tienda</p><ul class="footer-links"><li><a href="catalogo.html?tab=perfumes">Perfumes</a></li><li><a href="catalogo.html?tab=joyeria">Joyería</a></li><li><a href="catalogo.html">Novedades</a></li><li><a href="catalogo.html">Bestsellers</a></li></ul></div>
+    <div><p class="footer-col-title">Ayuda</p><ul class="footer-links"><li><a href="#">Rastrear pedido</a></li><li><a href="devoluciones.html">Devoluciones</a></li><li><a href="Politica_envios.html">Política de envíos</a></li><li><a href="faq.html" style="color:var(--cream);">Preguntas frecuentes</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+    <div><p class="footer-col-title">Marca</p><ul class="footer-links"><li><a href="nosotros.html">Nosotros</a></li><li><a href="aviso-privacidad.html">Privacidad</a></li><li><a href="terminos.html">Términos y condiciones</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 HERA Perfumes & Joyería. Todos los derechos reservados.</p>
+    <div class="footer-payment"><span class="payment-badge">VISA</span><span class="payment-badge">MC</span><span class="payment-badge">Mercado Pago</span><span class="payment-badge">SPEI</span></div>
+  </div>
+</footer>
+
+</div><!-- /site-wrap -->
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-header"><span class="cart-drawer-title">Tu carrito <span id="cart-drawer-count" style="color:rgba(15,15,15,.4);font-weight:400;">(0)</span></span><button class="cart-drawer-close" id="cart-close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+  <div class="cart-items" id="cart-items-list"></div>
+  <div class="cart-empty" id="cart-empty" style="display:none;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><p>Tu carrito está vacío.<br>Explora nuestra colección.</p><a href="catalogo.html" class="btn-primary" style="font-size:11px;padding:14px 28px;margin-top:8px;">Explorar perfumes</a></div>
+  <div class="cart-footer" id="cart-footer">
+    <div class="cart-subtotal"><span class="cart-subtotal-label">Total</span><span class="cart-subtotal-value" id="cart-total">$0 MXN</span></div>
+    <p style="font-size:11px;color:rgba(15,15,15,.35);margin-bottom:20px;">Costo de envío se calcula al confirmar el pedido.</p>
+    <button class="cart-checkout-btn" onclick="goToCheckout()">Proceder al pago →</button>
+    <button class="cart-continue-btn" onclick="closeCart()">Seguir comprando</button>
+  </div>
+</div>
+
+<script>
+var CATALOG=[{id:'sauvage-1',brand:'Dior',name:'Sauvage EDP',price:'$2,450 MXN',badge:'Bestseller',tags:['fresco','amaderado']},{id:'fierce-2',brand:'Abercrombie & Fitch',name:'Fierce Cologne',price:'$1,180 MXN',tags:['fresco','marino']},{id:'jenny-1',brand:'Jenny Rivera',name:'Inolvidable EDP',price:'$1,210 MXN',badge:'Nuevo',tags:['floral','femenino']},{id:'noir-5',brand:'HERA Exclusivo',name:'Noir Absolu',price:'$1,480 MXN',badge:'-20%',tags:['oriental','amaderado']}];
+
+/* SEARCH */
+var searchOverlay=document.getElementById('search-overlay'),searchInput=document.getElementById('search-input'),searchResults=document.getElementById('search-results'),searchCloseBtn=document.getElementById('search-close-btn'),searchBtn=document.getElementById('search-btn');
+function openSearch(){searchOverlay.classList.add('open');document.body.style.overflow='hidden';setTimeout(function(){searchInput.focus();},300);}
+function closeSearch(){searchOverlay.classList.remove('open');document.body.style.overflow='';searchInput.value='';renderSearchResults('');}
+searchBtn.addEventListener('click',openSearch);searchCloseBtn.addEventListener('click',closeSearch);
+searchOverlay.addEventListener('click',function(e){if(e.target===searchOverlay)closeSearch();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSearch();});
+function highlight(text,query){if(!query)return text;var re=new RegExp('('+query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');return text.replace(re,'<mark style="background:rgba(225,34,43,.15);color:var(--red);">$1</mark>');}
+function renderSearchResults(query){var q=query.trim().toLowerCase();if(!q){searchResults.innerHTML='<p class="search-hint">Busca por nombre o marca</p>';return;}var hits=CATALOG.filter(function(p){return p.name.toLowerCase().includes(q)||p.brand.toLowerCase().includes(q)||(p.tags&&p.tags.some(function(t){return t.includes(q);}));});if(!hits.length){searchResults.innerHTML='<div class="search-empty"><p>Sin resultados para "'+query+'"</p></div>';return;}var html='<p class="search-hint">'+hits.length+' resultado'+(hits.length!==1?'s':'')+'</p>';hits.forEach(function(p){html+='<div class="search-result-item" onclick="closeSearch()"><div class="search-result-thumb"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div><div style="flex:1;min-width:0;"><div class="search-result-brand">'+highlight(p.brand,query)+'</div><div class="search-result-name">'+highlight(p.name,query)+'</div><div class="search-result-price">'+p.price+'</div></div></div>';});searchResults.innerHTML=html;}
+var sd;searchInput.addEventListener('input',function(){clearTimeout(sd);sd=setTimeout(function(){renderSearchResults(searchInput.value);},180);});
+
+/* HAMBURGER */
+var hamburger=document.getElementById('navHamburger'),mobilePanel=document.getElementById('navMobilePanel'),mobileOverlay=document.getElementById('navMobileOverlay'),mobileClose=document.getElementById('navMobileClose');
+function openMobileNav(){hamburger.classList.add('open');mobilePanel.classList.add('open');mobileOverlay.classList.add('open');document.body.style.overflow='hidden';}
+function closeMobileNav(){hamburger.classList.remove('open');mobilePanel.classList.remove('open');mobileOverlay.classList.remove('open');document.body.style.overflow='';}
+hamburger.addEventListener('click',function(e){e.stopPropagation();mobilePanel.classList.contains('open')?closeMobileNav():openMobileNav();});
+mobileClose.addEventListener('click',closeMobileNav);mobileOverlay.addEventListener('click',closeMobileNav);
+var pt=document.getElementById('mobileProductosToggle'),ps=document.getElementById('mobileProductosSub');
+pt.addEventListener('click',function(e){e.stopPropagation();ps.classList.toggle('open');pt.classList.toggle('active');});
+var ct=document.getElementById('mobileCuentaToggle'),cs=document.getElementById('mobileCuentaSub'),cll=document.getElementById('mobileCuentaLoginLink');
+if(ct){ct.addEventListener('click',function(e){e.stopPropagation();cs.classList.toggle('open');ct.classList.toggle('active');});}
+
+/* SESIÓN */
+var accountToggle=document.getElementById('account-toggle'),accountLoginBtn=document.getElementById('account-login-btn'),accountDropdown=document.getElementById('account-dropdown'),favDropdown=document.getElementById('fav-dropdown'),btnLogout=document.getElementById('btn-logout'),btnLogoutMobile=document.getElementById('btn-logout-mobile');
+function isLoggedIn(){return localStorage.getItem('hera_logged_in')==='1';}
+function renderAccountNav(){if(isLoggedIn()){accountLoginBtn.style.display='none';accountToggle.style.display='flex';if(cll)cll.style.display='none';if(ct)ct.style.display='flex';}else{accountLoginBtn.style.display='flex';accountToggle.style.display='none';accountDropdown.style.display='none';if(cll)cll.style.display='flex';if(ct)ct.style.display='none';}}
+function logout(){localStorage.removeItem('hera_logged_in');accountDropdown.style.display='none';renderAccountNav();}
+renderAccountNav();
+if(accountToggle){accountToggle.addEventListener('click',function(e){e.stopPropagation();if(favDropdown)favDropdown.style.display='none';accountDropdown.style.display=accountDropdown.style.display==='block'?'none':'block';});accountDropdown.addEventListener('click',function(e){e.stopPropagation();});}
+if(btnLogout)btnLogout.addEventListener('click',function(e){e.preventDefault();logout();});
+if(btnLogoutMobile)btnLogoutMobile.addEventListener('click',function(e){e.preventDefault();logout();closeMobileNav();});
+document.addEventListener('click',function(){if(accountDropdown)accountDropdown.style.display='none';if(favDropdown)favDropdown.style.display='none';});
+
+/* CARRITO */
+var cartBtn=document.getElementById('cart-btn'),cartDrawer=document.getElementById('cart-drawer'),cartOverlay=document.getElementById('cart-overlay'),cartClose=document.getElementById('cart-close'),cartEmpty=document.getElementById('cart-empty'),cartFooter=document.getElementById('cart-footer'),cartItemsList=document.getElementById('cart-items-list'),cartTotal=document.getElementById('cart-total'),cartDrawerCount=document.getElementById('cart-drawer-count'),cartBadge=document.getElementById('cart-count');
+function openCart(){cartDrawer.classList.add('open');cartOverlay.classList.add('open');document.body.style.overflow='hidden';}
+function closeCart(){cartDrawer.classList.remove('open');cartOverlay.classList.remove('open');document.body.style.overflow='';}
+cartBtn.addEventListener('click',openCart);cartClose.addEventListener('click',closeCart);cartOverlay.addEventListener('click',closeCart);
+function parseMXN(str){return parseInt(String(str).replace(/[^0-9]/g,''))||0;}
+function saveCart(){var items=[];cartItemsList.querySelectorAll('.cart-item').forEach(function(el){items.push({id:el.dataset.cartId,brand:el.querySelector('.cart-item-brand').textContent,name:el.querySelector('.cart-item-name').textContent,price:el.querySelector('.cart-item-price').textContent,qty:parseInt(el.querySelector('.qty-num').textContent)});});localStorage.setItem('hera_cart',JSON.stringify(items));}
+function loadCart(){var items=[];try{var r=localStorage.getItem('hera_cart');if(r)items=JSON.parse(r);}catch(e){items=[];}cartItemsList.innerHTML='';if(items&&items.length){items.forEach(function(it){var el=document.createElement('div');el.className='cart-item';el.dataset.cartId=it.id;el.innerHTML='<div class="cart-item-img"></div><div class="cart-item-info"><div class="cart-item-brand">'+it.brand+'</div><div class="cart-item-name">'+it.name+'</div><div class="cart-item-price">'+it.price+'</div><div class="cart-item-qty"><button class="qty-btn qty-minus">−</button><span class="qty-num">'+it.qty+'</span><button class="qty-btn qty-plus">+</button></div></div><button class="cart-item-remove" title="Eliminar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>';cartItemsList.appendChild(el);bindCartItem(el);});}updateCartTotals();}
+function updateCartTotals(){var items=cartItemsList.querySelectorAll('.cart-item'),total=0;items.forEach(function(item){total+=parseMXN(item.querySelector('.cart-item-price').textContent)*parseInt(item.querySelector('.qty-num').textContent);});var count=Array.from(items).reduce(function(s,i){return s+parseInt(i.querySelector('.qty-num').textContent);},0);cartTotal.textContent='$'+total.toLocaleString('es-MX')+' MXN';cartBadge.textContent=count;cartBadge.style.display=count>0?'flex':'none';cartDrawerCount.textContent='('+count+')';cartEmpty.style.display=count===0?'flex':'none';cartFooter.style.display=count===0?'none':'block';}
+function bindCartItem(item){item.querySelector('.qty-minus').addEventListener('click',function(){var qEl=item.querySelector('.qty-num'),q=parseInt(qEl.textContent);if(q>1){qEl.textContent=q-1;updateCartTotals();saveCart();}});item.querySelector('.qty-plus').addEventListener('click',function(){var qEl=item.querySelector('.qty-num');qEl.textContent=parseInt(qEl.textContent)+1;updateCartTotals();saveCart();});item.querySelector('.cart-item-remove').addEventListener('click',function(){item.remove();updateCartTotals();saveCart();});}
+loadCart();
+function addToCartFromFav(id,brand,name,price){var cartId='cart-'+name.replace(/\s/g,'-').toLowerCase(),existing=cartItemsList.querySelector('[data-cart-id="'+cartId+'"]');if(existing){var qEl=existing.querySelector('.qty-num');qEl.textContent=parseInt(qEl.textContent)+1;}else{var item=document.createElement('div');item.className='cart-item';item.dataset.cartId=cartId;item.innerHTML='<div class="cart-item-img"></div><div class="cart-item-info"><div class="cart-item-brand">'+brand+'</div><div class="cart-item-name">'+name+'</div><div class="cart-item-price">'+price+'</div><div class="cart-item-qty"><button class="qty-btn qty-minus">−</button><span class="qty-num">1</span><button class="qty-btn qty-plus">+</button></div></div><button class="cart-item-remove"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>';cartItemsList.insertBefore(item,cartItemsList.firstChild);bindCartItem(item);}updateCartTotals();saveCart();openCart();}
+function addAllFavsToCart(){if(!favorites.length)return;favorites.forEach(function(f){addToCartFromFav(f.id,f.brand,f.name,f.price);});}
+function goToCheckout(){saveCart();window.location.href='checkout.html';}
+
+/* FAVORITOS */
+var favToggle=document.getElementById('fav-toggle'),favCountBadge=document.getElementById('fav-count'),favCountLabel=document.getElementById('fav-count-label'),favList=document.getElementById('fav-list'),favEmptyEl=document.getElementById('fav-empty'),favCountMobile=document.getElementById('fav-count-mobile'),favListMobile=document.getElementById('fav-list-mobile'),favEmptyMobile=document.getElementById('fav-empty-mobile'),favorites=[];
+try{var sf=localStorage.getItem('hera_favs');if(sf)favorites=JSON.parse(sf);}catch(e){favorites=[];}
+if(favToggle){favToggle.addEventListener('click',function(e){e.stopPropagation();if(accountDropdown)accountDropdown.style.display='none';favDropdown.style.display=favDropdown.style.display==='block'?'none':'block';});favDropdown.addEventListener('click',function(e){e.stopPropagation();});}
+function renderFavList(){var label=favorites.length+(favorites.length===1?' producto':' productos');if(favCountLabel)favCountLabel.textContent=label;if(favCountMobile)favCountMobile.textContent=label;if(favorites.length>0){if(favCountBadge){favCountBadge.style.display='flex';favCountBadge.textContent=favorites.length;}if(favEmptyEl)favEmptyEl.style.display='none';if(favEmptyMobile)favEmptyMobile.style.display='none';}else{if(favCountBadge)favCountBadge.style.display='none';if(favEmptyEl)favEmptyEl.style.display='block';if(favEmptyMobile)favEmptyMobile.style.display='block';}localStorage.setItem('hera_favs',JSON.stringify(favorites));var ab=document.getElementById('fav-add-all');if(ab)ab.style.display=favorites.length>0?'block':'none';}
+renderFavList();
+
+/* CURSOR */
+var cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+if(cursor&&window.innerWidth>768){var mx=0,my=0,rx=0,ry=0;document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();document.querySelectorAll('a,button,.faq-q,.cta-card').forEach(function(el){el.addEventListener('mouseenter',function(){cursor.style.transform='translate(-50%,-50%) scale(2)';ring.style.width='60px';ring.style.height='60px';});el.addEventListener('mouseleave',function(){cursor.style.transform='translate(-50%,-50%) scale(1)';ring.style.width='36px';ring.style.height='36px';});});}
+
+/* SCROLL REVEAL */
+(function(){var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');}else{e.target.classList.remove('visible');}});},{threshold:0.1});document.querySelectorAll('.reveal').forEach(function(el){var rect=el.getBoundingClientRect();if(rect.top<window.innerHeight&&rect.bottom>0)el.classList.add('visible');obs.observe(el);});})();
+
+/* FAQ ACCORDION — independiente por categoría */
+document.querySelectorAll('[data-faq-group]').forEach(function(group){
+  group.querySelectorAll('.faq-q').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var ans=btn.nextElementSibling,isOpen=btn.classList.contains('open');
+      group.querySelectorAll('.faq-q').forEach(function(b){
+        b.classList.remove('open');
+        b.setAttribute('aria-expanded','false');
+        var a=b.nextElementSibling;
+        if(a)a.classList.remove('open');
+      });
+      if(!isOpen){btn.classList.add('open');btn.setAttribute('aria-expanded','true');if(ans)ans.classList.add('open');}
+    });
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nosotros — HERA Perfumes & Joyería</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --red:   #E1222B;
+    --cream: #F9F9F9;
+    --black: #0F0F0F;
+    --lgray: #E6E6E6;
+    --dgray: #2E2E2E;
+    --sans:  'Instrument Sans', sans-serif;
+    --serif: 'Cormorant Garamond', serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { font-family: var(--sans); background: var(--cream); color: var(--black); overflow-x: clip; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--red); }
+
+  /*
+   * SITE-WRAP — max-width 1440px centrado
+   * overflow-x: clip en lugar de hidden para NO crear
+   * un scroll-container interno (que generaría el doble scrollbar).
+   * clip corta el desbordamiento sin crear contexto de scroll.
+   */
+  .site-wrap {
+    max-width: 1440px;
+    margin: 0 auto;
+    overflow-x: clip;
+    position: relative;
+  }
+
+  /* === NAV === */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(249,249,249,.96);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(15,15,15,.08);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px; width: 100%;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; height: 64px; }
+  .nav-links li { display: flex; align-items: center; height: 100%; }
+  .nav-links a { text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); transition: color .2s; display: flex; align-items: center; height: 100%; }
+  .nav-links a:hover, .nav-links a.active { color: var(--red); }
+  .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; text-decoration: none; z-index: 101; }
+  #logo-placeholder { height: 36px; min-width: 130px; border: 1.5px dashed rgba(15,15,15,.18); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(15,15,15,.3); padding: 0 16px; background: var(--cream); }
+  .nav-icons { display: flex; gap: 22px; align-items: center; }
+  .nav-icons button, .nav-icons a { background: none; border: none; cursor: pointer; color: var(--black); text-decoration: none; transition: color .2s; }
+  .nav-icons button:hover, .nav-icons a:hover { color: var(--red); }
+
+  /* Nav dropdown */
+  .nav-item { position: relative; display: flex; align-items: center; height: 64px; }
+  .nav-item > a { display: flex; align-items: center; gap: 5px; height: 100%; }
+  .nav-item > a > svg { transition: transform .2s; }
+  .nav-item:hover > a > svg { transform: rotate(180deg); }
+  .nav-item::after { content: ''; position: absolute; bottom: -1px; left: -20px; right: -20px; height: 8px; background: transparent; }
+  .nav-dropdown { position: absolute; top: 100%; left: 0; background: var(--cream); border: 1px solid var(--lgray); border-top: none; min-width: 180px; opacity: 0; visibility: hidden; transition: opacity .18s, visibility .18s; z-index: 200; }
+  .nav-item:hover .nav-dropdown { opacity: 1; visibility: visible; }
+  .nav-dropdown-item { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); border-bottom: 1px solid var(--lgray); transition: color .2s, background .2s; cursor: default; gap: 12px; }
+  .nav-dropdown-item:last-child { border-bottom: none; }
+  .nav-dropdown-item:hover { color: var(--red); background: rgba(225,34,43,.03); }
+  .nav-dropdown-item svg { opacity: .35; flex-shrink: 0; }
+  .nav-flyout { position: absolute; top: -1px; left: 100%; background: var(--cream); border: 1px solid var(--lgray); min-width: 180px; opacity: 0; visibility: hidden; transition: opacity .15s, visibility .15s; z-index: 201; }
+  .nav-dropdown-item:hover .nav-flyout { opacity: 1; visibility: visible; }
+  .nav-flyout-label { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.28); padding: 12px 18px 6px; }
+  .nav-flyout a { display: flex; align-items: center; gap: 8px; padding: 11px 18px; font-size: 12px; font-weight: 500; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); transition: color .2s, background .2s; letter-spacing: .06em; }
+  .nav-flyout a:last-child { border-bottom: none; }
+  .nav-flyout a:hover { color: var(--red); background: rgba(225,34,43,.03); }
+  .nav-flyout a::before { content: ''; width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: .4; flex-shrink: 0; }
+  .nav-dropdown-badge { font-size: 9px; font-weight: 700; letter-spacing: .08em; background: var(--lgray); color: rgba(46,46,46,.5); padding: 2px 6px; text-transform: uppercase; }
+
+  /* Hamburger */
+  .nav-hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--black); padding: 6px; flex-direction: column; gap: 5px; align-items: center; justify-content: center; z-index: 102; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: currentColor; transition: transform .25s ease, opacity .25s ease; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile nav panel */
+  .nav-mobile-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.5); z-index: 150; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s, visibility .3s; }
+  .nav-mobile-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .nav-mobile-panel { position: fixed; top: 0; left: 0; bottom: 0; width: min(300px, 85vw); background: var(--cream); z-index: 160; transform: translateX(-100%); transition: transform .35s cubic-bezier(.4,0,.2,1); overflow-y: auto; overflow-x: hidden; pointer-events: none; }
+  .nav-mobile-panel.open { transform: translateX(0); pointer-events: auto; }
+  .nav-mobile-header { padding: 16px 20px; border-bottom: 1px solid var(--lgray); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .nav-mobile-close { background: none; border: none; cursor: pointer; color: var(--dgray); padding: 4px; }
+  .nav-mobile-links { padding: 8px 0; }
+  .nav-mobile-link { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dgray); text-decoration: none; border-bottom: 1px solid var(--lgray); cursor: pointer; transition: color .2s; }
+  .nav-mobile-link:hover, .nav-mobile-link.active { color: var(--red); }
+  .nav-mobile-link svg { transition: transform .2s; }
+  .nav-mobile-link.active svg { transform: rotate(180deg); }
+  .nav-mobile-sub { max-height: 0; overflow: hidden; transition: max-height .3s ease; background: rgba(15,15,15,.02); }
+  .nav-mobile-sub.open { max-height: 500px; }
+  .nav-mobile-sub-label { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.28); padding: 12px 32px 4px; }
+  .nav-mobile-sub a { display: flex; align-items: center; gap: 8px; padding: 12px 32px; font-size: 12px; font-weight: 500; color: var(--dgray); text-decoration: none; border-bottom: 1px solid rgba(15,15,15,.05); transition: color .2s; letter-spacing: .06em; }
+  .nav-mobile-sub a::before { content: ''; width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: .4; flex-shrink: 0; }
+  .nav-mobile-sub a:hover { color: var(--red); }
+
+  /* Cursor */
+  .cursor { width: 8px; height: 8px; background: var(--red); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform .15s; transform: translate(-50%,-50%); }
+  .cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(225,34,43,.3); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform .08s linear, width .25s, height .25s; transform: translate(-50%,-50%); }
+
+  /* Scroll reveal — replays every time element enters viewport */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .65s ease, transform .65s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-d1 { transition-delay: .08s; }
+  .reveal-d2 { transition-delay: .16s; }
+  .reveal-d3 { transition-delay: .24s; }
+
+  /* Search overlay */
+  .search-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.7); z-index: 1000; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .25s, visibility .25s; }
+  .search-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .search-box { position: absolute; top: 0; left: 0; right: 0; background: var(--cream); padding: 20px 24px 24px; box-shadow: 0 8px 40px rgba(15,15,15,.2); transform: translateY(-100%); transition: transform .3s cubic-bezier(.4,0,.2,1); }
+  .search-overlay.open .search-box { transform: translateY(0); }
+  .search-input-row { display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--black); padding-bottom: 12px; margin-bottom: 16px; }
+  #search-input { flex: 1; border: none; background: transparent; font-family: var(--sans); font-size: 18px; font-weight: 500; color: var(--black); outline: none; }
+  #search-input::placeholder { color: rgba(15,15,15,.35); }
+  #search-close-btn { background: none; border: none; cursor: pointer; color: rgba(15,15,15,.5); padding: 4px; transition: color .2s; }
+  #search-close-btn:hover { color: var(--red); }
+  .search-hint { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.35); }
+
+  /* Cart drawer — simplificado */
+  .cart-overlay { position: fixed; inset: 0; background: rgba(15,15,15,.45); z-index: 800; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .3s, visibility .3s; }
+  .cart-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+  .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 420px; background: var(--cream); z-index: 900; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; box-shadow: -8px 0 40px rgba(15,15,15,.15); }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-drawer-header { padding: 24px 28px; border-bottom: 1px solid var(--lgray); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .cart-drawer-title { font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--black); }
+  .cart-drawer-close { background: none; border: none; cursor: pointer; color: var(--dgray); padding: 4px; display: flex; align-items: center; transition: color .2s; }
+  .cart-drawer-close:hover { color: var(--red); }
+  .cart-empty-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 60px 28px; }
+  .cart-empty-state svg { opacity: .2; }
+  .cart-empty-state p { font-family: var(--serif); font-size: 17px; font-style: italic; font-weight: 300; color: rgba(15,15,15,.4); text-align: center; }
+  .cart-items { flex: 1; overflow-y: auto; padding: 0; }
+  .cart-item { display: flex; gap: 16px; padding: 20px 28px; border-bottom: 1px solid var(--lgray); align-items: center; }
+  .cart-item-img { width: 72px; height: 72px; flex-shrink: 0; background: var(--dgray); display: flex; align-items: center; justify-content: center; }
+  .cart-item-info { flex: 1; min-width: 0; }
+  .cart-item-brand { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgba(15,15,15,.4); margin-bottom: 3px; }
+  .cart-item-name { font-family: var(--serif); font-size: 16px; font-weight: 300; font-style: italic; color: var(--black); margin-bottom: 6px; }
+  .cart-item-price { font-size: 13px; font-weight: 700; color: var(--black); }
+  .cart-item-qty { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+  .qty-btn { width: 26px; height: 26px; border: 1px solid var(--lgray); background: none; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; color: var(--black); transition: border-color .2s, background .2s; border-radius: 0; }
+  .qty-btn:hover { border-color: var(--black); background: var(--black); color: #fff; }
+  .qty-num { font-size: 13px; font-weight: 700; min-width: 18px; text-align: center; }
+  .cart-item-remove { background: var(--red); border: none; cursor: pointer; color: #fff; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .2s; border-radius: 0; }
+  .cart-item-remove:hover { background: #c41c24; }
+  .cart-footer { padding: 24px 28px; border-top: 1px solid var(--lgray); flex-shrink: 0; background: var(--cream); }
+  .cart-subtotal { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .cart-subtotal-label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: rgba(15,15,15,.5); }
+  .cart-subtotal-value { font-size: 18px; font-weight: 700; color: var(--black); }
+  .cart-checkout-btn { width: 100%; background: var(--black); color: #fff; border: none; padding: 18px; font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; transition: background .2s; margin-bottom: 10px; border-radius: 0; }
+  .cart-checkout-btn:hover { background: var(--red); }
+  .cart-continue-btn { width: 100%; background: transparent; color: var(--black); border: 1px solid var(--lgray); padding: 14px; font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: border-color .2s; border-radius: 0; }
+  .cart-continue-btn:hover { border-color: var(--black); }
+
+  /* Buttons */
+  .btn-primary { background: var(--red); color: #fff; border: none; padding: 16px 36px; font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: background .2s, transform .15s; }
+  .btn-primary:hover { background: #c41c24; transform: translateY(-1px); }
+  .btn-ghost-light { background: transparent; color: var(--black); border: 1px solid var(--lgray); padding: 16px 36px; font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: border-color .2s; }
+  .btn-ghost-light:hover { border-color: var(--black); }
+
+  /* Footer */
+  footer { background: var(--black); padding: 60px 80px 36px; color: var(--cream); }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+  .footer-tagline { font-family: var(--serif); font-size: 15px; font-style: italic; color: rgba(249,249,249,.32); margin-bottom: 28px; line-height: 1.6; }
+  .footer-socials { display: flex; gap: 14px; }
+  .footer-social-btn { width: 38px; height: 38px; border: 1px solid rgba(249,249,249,.1); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color .2s, background .2s; text-decoration: none; color: rgba(249,249,249,.42); }
+  .footer-social-btn:hover { border-color: var(--red); background: var(--red); color: #fff; }
+  .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--cream); margin-bottom: 24px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-links a { font-size: 13px; color: rgba(249,249,249,.32); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--red); }
+  .footer-bottom { border-top: 1px solid rgba(249,249,249,.06); padding-top: 32px; display: flex; align-items: center; justify-content: space-between; }
+  .footer-copy { font-size: 12px; color: rgba(249,249,249,.2); }
+  .footer-payment { display: flex; gap: 10px; }
+  .payment-badge { background: rgba(249,249,249,.05); border: 1px solid rgba(249,249,249,.08); padding: 6px 12px; font-size: 11px; font-weight: 700; color: rgba(249,249,249,.38); letter-spacing: .08em; }
+  #footer-logo-placeholder { height: 40px; min-width: 140px; border: 1.5px dashed rgba(249,249,249,.15); display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(249,249,249,.22); padding: 0 18px; margin-bottom: 20px; }
+
+  /* ============================================
+     NOSOTROS — SECCIONES
+  ============================================ */
+
+  /* --- SECCIÓN 1: HERO ---
+     Encabezado de página compacto, no landing.
+     ~55% del alto del hero del home.
+  --- */
+  .nos-hero {
+    background: #0c0907;
+    padding: 52px 80px 48px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(249,249,249,.05);
+  }
+  .nos-hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 50% 80% at 82% 50%, rgba(225,34,43,.04) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .nos-hero-eyebrow {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 11px; font-weight: 600; letter-spacing: .25em;
+    text-transform: uppercase; color: var(--red);
+    position: relative; z-index: 2; margin-bottom: 18px;
+  }
+  .nos-hero-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 1px;
+    background: var(--red); flex-shrink: 0;
+  }
+  .nos-hero-title {
+    font-family: var(--sans);
+    font-size: clamp(36px, 4.2vw, 60px);
+    font-weight: 700; line-height: .92;
+    color: var(--cream); letter-spacing: -.02em;
+    position: relative; z-index: 2; margin-bottom: 16px;
+  }
+  .nos-hero-title em {
+    font-family: var(--serif); font-style: italic; font-weight: 300;
+    color: rgba(249,249,249,.42); display: block;
+  }
+  .nos-hero-sub {
+    max-width: 480px;
+    font-family: var(--serif); font-size: 17px; font-weight: 300;
+    color: rgba(249,249,249,.42); line-height: 1.65;
+    position: relative; z-index: 2; margin-bottom: 28px;
+  }
+  .nos-hero-chips {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    position: relative; z-index: 2;
+  }
+  .nos-chip {
+    background: rgba(249,249,249,.06);
+    border: 1px solid rgba(249,249,249,.12);
+    padding: 7px 16px;
+    font-family: var(--sans); font-size: 11px; font-weight: 600;
+    letter-spacing: .10em; text-transform: uppercase;
+    color: rgba(249,249,249,.52);
+  }
+
+  /* --- SECCIÓN 2: HISTORIA
+     Fondo CLARO. Columna izq: gris claro con acento rojo.
+     Columna der: crema, texto legible con font-weight: 400.
+  --- */
+  .nos-historia {
+    display: grid;
+    grid-template-columns: 42% 58%;
+    min-height: 520px;
+    border-top: 1px solid var(--lgray);
+    border-bottom: 1px solid var(--lgray);
+  }
+  /* Columna visual — fondo gris claro como referencia del equipo */
+  .nos-hist-visual {
+    background: #ececec;
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  /* Línea roja vertical de acento */
+  .nos-hist-redline {
+    position: absolute; right: 0; top: 15%; bottom: 15%;
+    width: 2px; background: var(--red); opacity: .6;
+  }
+  /* Placeholder ocupa 65% del ancho de la columna */
+  .nos-hist-img-placeholder {
+    position: relative; z-index: 2;
+    width: 65%; aspect-ratio: 3/4;
+    border: 1.5px dashed rgba(15,15,15,.18);
+    background: rgba(255,255,255,.4);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 10px;
+  }
+  .nos-hist-img-placeholder span {
+    font-size: 10px; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase; color: rgba(15,15,15,.30);
+  }
+  /* Columna de texto */
+  .nos-hist-text {
+    background: var(--cream);
+    padding: 72px 64px 72px 56px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .nos-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--red); margin-bottom: 22px;
+  }
+  .nos-title-dark {
+    font-family: var(--sans);
+    font-size: clamp(24px, 2.6vw, 36px);
+    font-weight: 700; color: var(--black);
+    line-height: 1.05; letter-spacing: -.02em;
+  }
+  .nos-title-dark em {
+    font-family: var(--serif); font-style: italic; font-weight: 300;
+    color: rgba(15,15,15,.40); display: block;
+  }
+  /*
+   * font-weight: 400 en lugar de 300.
+   * Cormorant Garamond 300 tiene trazos demasiado finos
+   * sobre fondo claro. El 400 los engrosa sin perder elegancia.
+   * Color .84 — legible sin ser puro negro.
+   */
+  .nos-hist-body {
+    margin-top: 22px;
+    font-family: var(--serif); font-size: 17px;
+    font-weight: 400; color: rgba(15,15,15,.84);
+    line-height: 1.78;
+  }
+  .nos-hist-body p { margin-bottom: 14px; }
+  .nos-hist-body p:last-child { margin-bottom: 0; }
+  .nos-hist-divider { margin: 28px 0; height: 1px; background: var(--lgray); }
+  .nos-hist-stats { display: flex; gap: 32px; }
+  .nos-hist-stat-num {
+    font-family: var(--sans); font-size: 24px;
+    font-weight: 700; color: var(--black); letter-spacing: -.02em;
+  }
+  .nos-hist-stat-label {
+    font-size: 11px; font-weight: 400; letter-spacing: .12em;
+    text-transform: uppercase; color: rgba(15,15,15,.52); margin-top: 3px;
+  }
+
+  /* --- SECCIÓN 3: VALORES
+     Fondo OSCURO (#0F0F0F).
+     Número = texto blanco sobre cuadro rojo.
+     Separadores visibles sobre oscuro.
+  --- */
+  .nos-valores {
+    background: var(--black);
+    padding: 72px 80px;
+  }
+  .nos-valores-header { margin-bottom: 52px; }
+  .nos-title-light {
+    font-family: var(--sans);
+    font-size: clamp(28px, 3.2vw, 44px);
+    font-weight: 700; color: var(--cream);
+    line-height: 1.05; letter-spacing: -.02em;
+  }
+  .nos-title-light em {
+    font-family: var(--serif); font-style: italic;
+    font-weight: 300; color: rgba(249,249,249,.38);
+  }
+  .nos-valores-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .nos-valor-item {
+    padding: 0 36px;
+    border-right: 1px solid rgba(249,249,249,.10);
+  }
+  .nos-valor-item:first-child { padding-left: 0; }
+  .nos-valor-item:last-child  { border-right: none; padding-right: 0; }
+  /* Badge numérico: cuadro rojo, número blanco */
+  .nos-valor-num {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 10px; font-weight: 700; letter-spacing: .18em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    margin-bottom: 18px;
+  }
+  .nos-valor-title {
+    font-family: var(--sans); font-size: 16px; font-weight: 700;
+    color: var(--cream); margin-bottom: 10px;
+  }
+  .nos-valor-desc {
+    font-family: var(--serif); font-size: 15px; font-weight: 400;
+    color: rgba(249,249,249,.52); line-height: 1.72;
+  }
+
+  /* --- SECCIÓN 4: EQUIPO
+     Flip cards con foto CUADRADA (aspect-ratio: 1/1).
+     flip-card-back es position: absolute para cubrir el frente.
+     flip-card-inner hereda la altura del frente (normal flow).
+  --- */
+  .nos-equipo {
+    background: #ececec;
+    padding: 72px 80px;
+    border-top: 1px solid #ddd;
+  }
+  .nos-equipo-sub {
+    margin-top: 10px; margin-bottom: 32px;
+    font-family: var(--serif); font-size: 16px; font-weight: 400;
+    color: rgba(15,15,15,.50);
+  }
+  .nos-equipo-hint {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 24px;
+    font-size: 11px; color: rgba(15,15,15,.58);
+  }
+  .nos-equipo-hint-dot {
+    width: 6px; height: 6px; background: var(--red);
+    border-radius: 50%; flex-shrink: 0;
+  }
+  .nos-equipo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  /* FLIP CARD — estructura limpia */
+  .flip-card { cursor: pointer; }
+  .flip-card-inner {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .55s cubic-bezier(.4,0,.2,1);
+  }
+  .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+
+  /* FRENTE — flujo normal, define la altura total */
+  .flip-card-front {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background: #1c1c1c;
+    display: flex; flex-direction: column;
+    border: 1px solid rgba(249,249,249,.05);
+  }
+  /* Foto siempre cuadrada — aspect-ratio fuerza proporción */
+  .flip-card-photo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #282828;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px; overflow: hidden; position: relative;
+  }
+  .flip-card-photo svg { opacity: .14; color: var(--cream); }
+  .flip-card-photo-lbl {
+    font-size: 9px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: rgba(249,249,249,.14);
+  }
+  .flip-card-badge {
+    position: absolute; top: 8px; right: 8px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.08);
+    padding: 3px 8px; font-size: 9px; font-weight: 600;
+    letter-spacing: .10em; text-transform: uppercase;
+    color: rgba(249,249,249,.22);
+  }
+  .flip-card-info {
+    padding: 14px 16px; background: var(--black);
+    border-top: 1px solid rgba(249,249,249,.06);
+  }
+  .flip-card-rol {
+    font-size: 9px; font-weight: 600; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--red); margin-bottom: 4px;
+  }
+  .flip-card-name {
+    font-family: var(--serif); font-style: italic;
+    font-weight: 300; font-size: 16px; color: var(--cream);
+  }
+
+  /*
+   * REVERSO — position: absolute sobre el frente.
+   * inset: 0 lo hace del mismo tamaño exacto que el frente.
+   * transform: rotateY(180deg) lo oculta hasta el flip.
+   */
+  .flip-card-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: rotateY(180deg);
+    background: var(--red);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 12px; padding: 20px;
+  }
+  .flip-card-back-rol {
+    font-size: 9px; font-weight: 600; letter-spacing: .18em;
+    text-transform: uppercase; color: rgba(255,255,255,.62);
+  }
+  .flip-card-back-name {
+    font-family: var(--serif); font-style: italic;
+    font-weight: 300; font-size: 18px; color: #fff; text-align: center;
+  }
+  /* Icon links — two columns side by side */
+  .flip-card-links {
+    display: flex; flex-direction: row; gap: 16px; justify-content: center;
+  }
+  .flip-card-link {
+    width: 52px; height: 52px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.25);
+    transition: background .2s, transform .15s;
+    cursor: pointer; text-decoration: none;
+  }
+  .flip-card-link:hover {
+    background: rgba(255,255,255,.30);
+    transform: translateY(-2px);
+  }
+  .flip-card-link-label { display: none; }
+  .flip-card-link-handle { display: none; }
+  .flip-card-back-hint {
+    font-size: 11px; font-weight: 500; color: rgba(255,255,255,.60);
+    margin-top: 6px; letter-spacing: .02em;
+    cursor: pointer;
+    padding: 6px 10px;
+    border: 1px solid rgba(255,255,255,.20);
+    transition: background .2s;
+  }
+  .flip-card-back-hint:hover { background: rgba(255,255,255,.12); }
+
+  /* --- SECCIÓN 5: POR QUÉ ELEGIRNOS --- */
+  .nos-porque {
+    background: var(--cream);
+    padding: 72px 80px;
+    border-top: 1px solid var(--lgray);
+  }
+  .nos-porque-header { margin-bottom: 48px; }
+  .nos-title-dark-lg {
+    font-family: var(--sans);
+    font-size: clamp(26px, 3vw, 42px);
+    font-weight: 700; color: var(--black);
+    line-height: 1.05; letter-spacing: -.02em;
+  }
+  .nos-title-dark-lg em {
+    font-family: var(--serif); font-style: italic;
+    font-weight: 300; color: rgba(15,15,15,.38);
+  }
+  .nos-dif-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .nos-dif-item {
+    padding: 0 44px 0 0;
+    border-right: 1px solid var(--lgray);
+  }
+  .nos-dif-item:first-child { padding-left: 0; }
+  .nos-dif-item:last-child  { border-right: none; padding-right: 0; }
+  .nos-dif-redline { width: 32px; height: 1px; background: var(--red); margin-bottom: 18px; }
+  .nos-dif-title { font-family: var(--sans); font-size: 18px; font-weight: 700; color: var(--black); margin-bottom: 10px; }
+  .nos-dif-desc { font-family: var(--serif); font-size: 16px; font-weight: 400; color: rgba(15,15,15,.70); line-height: 1.72; }
+  .nos-cta-wrap {
+    margin-top: 48px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 16px; flex-wrap: wrap;
+  }
+
+  /* ============================================
+     RESPONSIVE
+  ============================================ */
+  @media (max-width: 1024px) {
+    nav { padding: 0 24px; }
+    #logo-placeholder { min-width: 110px; font-size: 10px; }
+    .nos-hero { padding: 44px 48px 40px; }
+    .nos-hist-text { padding: 52px 40px; }
+    .nos-valores { padding: 56px 48px; }
+    .nos-valores-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 0; }
+    .nos-valor-item { border-right: none; padding: 0; border-bottom: 1px solid rgba(249,249,249,.08); padding-bottom: 32px; }
+    .nos-valor-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .nos-equipo { padding: 56px 48px; }
+    .nos-equipo-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .nos-porque { padding: 56px 48px; }
+    .nos-dif-grid { grid-template-columns: 1fr; gap: 40px; }
+    .nos-dif-item { border-right: none; padding: 0 0 40px 0; border-bottom: 1px solid var(--lgray); }
+    .nos-dif-item:last-child { border-bottom: none; padding-bottom: 0; }
+    footer { padding: 48px 48px 32px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+  }
+
+  @media (max-width: 768px) {
+    .cursor, .cursor-ring { display: none; }
+    nav { padding: 0 16px; height: 56px; background: rgba(249,249,249,.98); }
+    .nav-links { display: none !important; }
+    .nav-hamburger { display: flex; }
+    .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); }
+    #logo-placeholder { min-width: 88px; font-size: 10px; padding: 0 10px; height: 30px; }
+    .nav-icons { gap: 14px; }
+    .hide-mobile { display: none !important; }
+
+    .nos-hero { padding: 40px 24px 36px; }
+    .nos-hero-chips { flex-direction: column; gap: 7px; align-items: flex-start; }
+
+    .nos-historia { grid-template-columns: 1fr; }
+    .nos-hist-visual { min-height: 260px; }
+    .nos-hist-text { padding: 36px 24px; }
+    .nos-hist-stats { flex-wrap: wrap; gap: 24px; }
+
+    .nos-valores { padding: 48px 24px; }
+    .nos-valores-grid { grid-template-columns: 1fr; gap: 0; }
+    .nos-valor-item { border-right: none; padding: 0 0 28px 0; border-bottom: 1px solid rgba(249,249,249,.08); margin-bottom: 28px; }
+    .nos-valor-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .nos-equipo { padding: 48px 24px; }
+    .nos-equipo-grid { grid-template-columns: 1fr; }
+
+    .nos-porque { padding: 48px 24px; }
+    .nos-dif-grid { grid-template-columns: 1fr; gap: 40px; }
+    .nos-dif-item { border-right: none; padding: 0 0 40px 0; border-bottom: 1px solid var(--lgray); }
+    .nos-dif-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .nos-cta-wrap { flex-direction: column; align-items: stretch; }
+    .btn-primary, .btn-ghost-light { text-align: center; }
+
+    footer { padding: 40px 20px 24px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 36px; }
+    .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
+    .footer-payment { flex-wrap: wrap; justify-content: center; }
+    .cart-drawer { width: 100%; }
+  }
+
+  @media (max-width: 480px) {
+    .footer-top { grid-template-columns: 1fr; }
+    .nos-hist-stats { gap: 20px; }
+  }
+
+  button, a, .flip-card, .nos-chip,
+  .nav-mobile-link, .nav-mobile-overlay {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Overlays fuera del site-wrap para no afectar el centrado -->
+<div class="nav-mobile-overlay" id="navMobileOverlay"></div>
+<div class="nav-mobile-panel" id="navMobilePanel">
+  <div class="nav-mobile-header">
+    <div style="width:32px;"></div>
+    <div style="flex:1;display:flex;justify-content:center;">
+      <div style="height:32px;min-width:110px;border:1.5px dashed rgba(15,15,15,.18);display:flex;align-items:center;justify-content:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(15,15,15,.3);padding:0 14px;background:var(--cream);">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg>
+        Tu logo aquí
+      </div>
+    </div>
+    <button class="nav-mobile-close" id="navMobileClose">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="nav-mobile-links">
+    <a href="index.html" class="nav-mobile-link">Inicio</a>
+    <div class="nav-mobile-link" id="mobileProductosToggle">Productos<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+    <div class="nav-mobile-sub" id="mobileProductosSub">
+      <div class="nav-mobile-sub-label">Perfumes</div>
+      <a href="catalogo.html?cat=diseñador">Diseñador</a><a href="catalogo.html?cat=nicho">Nicho</a><a href="catalogo.html?cat=arabes">Árabes</a><a href="catalogo.html?cat=body-mist">Body Mist</a><a href="catalogo.html?cat=testers">Testers</a><a href="catalogo.html?cat=decants">Decants</a><a href="catalogo.html?cat=sets">Sets</a>
+      <div class="nav-mobile-sub-label" style="margin-top:8px;">Joyería</div>
+      <a href="catalogo.html?tab=joyeria&cat=anillos">Anillos</a><a href="catalogo.html?tab=joyeria&cat=brazaletes">Brazaletes</a><a href="catalogo.html?tab=joyeria&cat=aretes">Aretes</a><a href="catalogo.html?tab=joyeria&cat=collares">Collares</a>
+    </div>
+    <a href="nosotros.html" class="nav-mobile-link active">Nosotros</a>
+    <a href="cuenta.html" class="nav-mobile-link" id="mobileCuentaLoginLink" style="border-top:1px solid var(--lgray);display:none;">Iniciar sesión<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+    <div class="nav-mobile-link" id="mobileCuentaToggle" style="border-top:1px solid var(--lgray);display:none;">Mi cuenta<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+    <div class="nav-mobile-sub" id="mobileCuentaSub">
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;font-weight:500;color:var(--dgray);text-decoration:none;border-bottom:1px solid rgba(15,15,15,.05);letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>Mis pedidos</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;font-weight:500;color:var(--dgray);text-decoration:none;border-bottom:1px solid rgba(15,15,15,.05);letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>Datos personales</a>
+      <a href="#" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;font-weight:500;color:var(--dgray);text-decoration:none;border-bottom:1px solid rgba(15,15,15,.05);letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Direcciones guardadas</a>
+      <a href="#" id="btn-logout-mobile" style="display:flex;align-items:center;gap:10px;padding:12px 32px;font-size:12px;font-weight:500;color:var(--dgray);text-decoration:none;letter-spacing:.06em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Cerrar sesión</a>
+    </div>
+  </div>
+</div>
+
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-input-row">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="Buscar perfumes, marcas..." autocomplete="off" />
+      <button id="search-close-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <p class="search-hint">Busca por nombre o marca</p>
+  </div>
+</div>
+
+<div class="cart-overlay" id="cart-overlay"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-header">
+    <span class="cart-drawer-title">Tu carrito <span id="cart-drawer-count" style="color:rgba(15,15,15,.4);font-weight:400;">(0)</span></span>
+    <button class="cart-drawer-close" id="cart-close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="cart-items" id="cart-items-list"></div>
+  <div class="cart-empty-state" id="cart-empty" style="display:none;">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <p>Tu carrito está vacío.<br>Explora nuestra colección.</p>
+    <button class="btn-primary" onclick="closeCart()" style="font-size:11px;padding:14px 28px;">Explorar perfumes</button>
+  </div>
+  <div class="cart-footer" id="cart-footer" style="display:none;">
+    <div style="margin-bottom:18px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-size:11px;color:rgba(15,15,15,.5);">Envío gratis a partir de</span><span style="font-size:11px;font-weight:700;color:var(--black);">$1,500 MXN</span></div>
+      <div style="height:3px;background:var(--lgray);border-radius:2px;"><div id="shipping-bar" style="height:100%;background:var(--red);border-radius:2px;transition:width .4s ease;width:0;"></div></div>
+      <p id="shipping-msg" style="font-size:11px;color:rgba(15,15,15,.4);margin-top:6px;"></p>
+    </div>
+    <div class="cart-subtotal"><span class="cart-subtotal-label">Subtotal</span><span class="cart-subtotal-value" id="cart-total">$0 MXN</span></div>
+    <p style="font-size:11px;color:rgba(15,15,15,.35);margin-bottom:20px;">Impuestos e información de envío calculados al finalizar.</p>
+    <button class="cart-checkout-btn" onclick="window.location.href='checkout.html'">Proceder al pago →</button>
+    <button class="cart-continue-btn" onclick="closeCart()">Seguir comprando</button>
+  </div>
+</div>
+
+<!-- =====================================================
+     SITE-WRAP — centrado a 1440px máximo
+===================================================== -->
+<div class="site-wrap">
+
+  <!-- NAV -->
+  <nav>
+    <button class="nav-hamburger" id="navHamburger" type="button" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li class="nav-item">
+        <a href="#">Productos<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-item" onclick="if(!event.target.closest('a')){location.href='catalogo.html?tab=perfumes';}" style="cursor:pointer;">Perfumes<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            <div class="nav-flyout"><div class="nav-flyout-label">Categorías</div><a href="catalogo.html?cat=diseñador">Diseñador</a><a href="catalogo.html?cat=nicho">Nicho</a><a href="catalogo.html?cat=arabes">Árabes</a><a href="catalogo.html?cat=body-mist">Body Mist</a><a href="catalogo.html?cat=testers">Testers</a><a href="catalogo.html?cat=decants">Decants</a><a href="catalogo.html?cat=sets">Sets</a></div>
+          </div>
+          <div class="nav-dropdown-item" onclick="if(!event.target.closest('a')){location.href='catalogo.html?tab=joyeria';}" style="cursor:pointer;">Joyería<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            <div class="nav-flyout"><div class="nav-flyout-label">Categorías</div><a href="catalogo.html?tab=joyeria&cat=anillos">Anillos</a><a href="catalogo.html?tab=joyeria&cat=brazaletes">Brazaletes</a><a href="catalogo.html?tab=joyeria&cat=aretes">Aretes</a><a href="catalogo.html?tab=joyeria&cat=collares">Collares</a></div>
+          </div>
+        </div>
+      </li>
+      <li><a href="nosotros.html" class="active">Nosotros</a></li>
+    </ul>
+    <a href="index.html" class="nav-logo">
+      <div id="logo-placeholder">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg>
+        Tu logo aquí
+      </div>
+    </a>
+    <div class="nav-icons">
+      <button id="search-btn" title="Buscar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+      <div style="position:relative;" class="hide-mobile" id="account-menu-wrap">
+        <!-- Sin sesión: link directo a cuenta.html -->
+        <a href="cuenta.html" id="account-login-btn" title="Iniciar sesión"
+           style="display:none;align-items:center;background:none;border:none;cursor:pointer;color:var(--black);transition:color .2s;text-decoration:none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
+        </a>
+        <!-- Con sesión: dropdown -->
+        <button title="Mi cuenta" id="account-toggle"
+                style="display:none;align-items:center;background:none;border:none;cursor:pointer;color:var(--black);transition:color .2s;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
+        </button>
+        <div id="account-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;width:220px;background:var(--cream);border:1px solid var(--lgray);z-index:500;box-shadow:0 8px 32px rgba(15,15,15,.12);">
+          <a href="#" style="display:flex;align-items:center;gap:12px;padding:16px 20px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dgray);text-decoration:none;border-bottom:1px solid var(--lgray);transition:color .2s,background .2s;" onmouseover="this.style.color='var(--red)';this.style.background='rgba(225,34,43,.03)'" onmouseout="this.style.color='var(--dgray)';this.style.background='transparent'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>Mis pedidos</a>
+          <a href="#" style="display:flex;align-items:center;gap:12px;padding:16px 20px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dgray);text-decoration:none;border-bottom:1px solid var(--lgray);transition:color .2s,background .2s;" onmouseover="this.style.color='var(--red)';this.style.background='rgba(225,34,43,.03)'" onmouseout="this.style.color='var(--dgray)';this.style.background='transparent'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>Datos personales</a>
+          <a href="#" style="display:flex;align-items:center;gap:12px;padding:16px 20px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dgray);text-decoration:none;border-bottom:1px solid var(--lgray);transition:color .2s,background .2s;" onmouseover="this.style.color='var(--red)';this.style.background='rgba(225,34,43,.03)'" onmouseout="this.style.color='var(--dgray)';this.style.background='transparent'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Direcciones guardadas</a>
+          <a href="#" id="btn-logout" style="display:flex;align-items:center;gap:12px;padding:16px 20px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dgray);text-decoration:none;transition:color .2s,background .2s;" onmouseover="this.style.color='var(--red)';this.style.background='rgba(225,34,43,.03)'" onmouseout="this.style.color='var(--dgray)';this.style.background='transparent'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Cerrar sesión</a>
+        </div>
+      </div>
+      <div style="position:relative;" id="fav-menu-wrap" class="hide-mobile">
+        <button title="Favoritos" id="fav-toggle" style="position:relative;display:flex;align-items:center;background:none;border:none;cursor:pointer;color:var(--black);transition:color .2s;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span id="fav-count" style="position:absolute;top:-4px;right:-6px;width:16px;height:16px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center;">0</span>
+        </button>
+        <div id="fav-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;width:320px;background:var(--cream);border:1px solid var(--lgray);z-index:500;box-shadow:0 8px 32px rgba(15,15,15,.12);">
+          <div style="padding:16px 20px;border-bottom:1px solid var(--lgray);display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--black);">Mis favoritos</span>
+            <span id="fav-count-label" style="font-size:11px;color:rgba(15,15,15,.4);">0 productos</span>
+          </div>
+          <div id="fav-list" style="max-height:360px;overflow-y:auto;">
+            <div id="fav-empty" style="padding:40px 20px;text-align:center;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,0.2)" stroke-width="1.5" style="margin:0 auto 12px;display:block;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <p style="font-size:13px;color:rgba(15,15,15,.35);font-family:var(--serif);font-style:italic;">Aún no tienes favoritos</p>
+            </div>
+          </div>
+          <div id="fav-add-all" style="display:none;padding:12px 20px;border-top:1px solid var(--lgray);">
+            <button onclick="addAllFavsToCart()" style="width:100%;background:var(--black);color:#fff;border:none;padding:12px;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s;border-radius:0;display:flex;align-items:center;justify-content:center;gap:8px;" onmouseover="this.style.background='var(--red)'" onmouseout="this.style.background='var(--black)'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>Agregar todo al carrito</button>
+          </div>
+        </div>
+      </div>
+      <button id="cart-btn" title="Carrito" style="position:relative;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span id="cart-count" style="position:absolute;top:-4px;right:-6px;width:16px;height:16px;background:var(--red);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center;">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===========================
+       SECCIÓN 1 — HERO
+  =========================== -->
+  <div class="nos-hero">
+    <div class="nos-hero-eyebrow reveal">Nuestra historia</div>
+    <h1 class="nos-hero-title reveal reveal-d1">Nació de una<br><em>obsesión.</em></h1>
+    <p class="nos-hero-sub reveal reveal-d2">Que cada persona merece llevar una fragancia que la represente. Sin salir de México.</p>
+    <div class="nos-hero-chips reveal reveal-d3">
+      <span class="nos-chip">Fundada en Guadalajara</span>
+      <span class="nos-chip">9 Co-fundadores</span>
+    </div>
+  </div>
+
+  <!-- ===========================
+       SECCIÓN 2 — HISTORIA (CLARA)
+  =========================== -->
+  <div class="nos-historia">
+    <div class="nos-hist-visual">
+      <div class="nos-hist-redline"></div>
+      <div class="nos-hist-img-placeholder">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,0.25)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+        <span>Imagen editorial</span>
+      </div>
+    </div>
+    <div class="nos-hist-text">
+      <p class="nos-eyebrow reveal">Por qué HERA</p>
+      <h2 class="nos-title-dark reveal reveal-d1">No vendemos perfumes.<em>Vendemos identidad.</em></h2>
+      <div class="nos-hist-body reveal reveal-d2">
+        <p>HERA nació de una pregunta simple: ¿por qué es tan difícil conseguir una fragancia original de diseñador en México sin pagar precios desorbitados o arriesgarse a un fraude? Nueve personas encontraron la misma respuesta y decidieron construir la solución juntos.</p>
+        <p>Desde Guadalajara, construimos una plataforma donde el lujo no requiere un pasaporte. Cada botella llega sellada de fábrica, curada por personas que entienden qué significa usar una fragancia que te representa.</p>
+        <p>No somos una tienda más. Somos una obsesión compartida por nueve co-fundadores que creen que el aroma correcto puede cambiar cómo te percibes a ti mismo.</p>
+      </div>
+      <div class="nos-hist-divider reveal reveal-d2"></div>
+      <div class="nos-hist-stats reveal reveal-d3">
+        <div><div class="nos-hist-stat-num">2024</div><div class="nos-hist-stat-label">Año de fundación</div></div>
+        <div><div class="nos-hist-stat-num">9</div><div class="nos-hist-stat-label">Co-fundadores</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===========================
+       SECCIÓN 3 — VALORES (OSCURA)
+  =========================== -->
+  <div class="nos-valores">
+    <div class="nos-valores-header reveal">
+      <p class="nos-eyebrow" style="color:var(--red);margin-bottom:14px;">Lo que nos mueve</p>
+      <h2 class="nos-title-light">Nuestros <em>valores.</em></h2>
+    </div>
+    <div class="nos-valores-grid">
+      <div class="nos-valor-item reveal">
+        <span class="nos-valor-num">01</span>
+        <div class="nos-valor-title">Autenticidad</div>
+        <p class="nos-valor-desc">Solo vendemos lo que podemos garantizar. Cada fragancia llega sellada de fábrica.</p>
+      </div>
+      <div class="nos-valor-item reveal reveal-d1">
+        <span class="nos-valor-num">02</span>
+        <div class="nos-valor-title">Accesibilidad</div>
+        <p class="nos-valor-desc">El lujo no debería requerir un pasaporte. Traemos el mundo a tu puerta.</p>
+      </div>
+      <div class="nos-valor-item reveal reveal-d2">
+        <span class="nos-valor-num">03</span>
+        <div class="nos-valor-title">Identidad</div>
+        <p class="nos-valor-desc">Un perfume no es solo un aroma. Es quien eres antes de hablar.</p>
+      </div>
+      <div class="nos-valor-item reveal reveal-d3">
+        <span class="nos-valor-num">04</span>
+        <div class="nos-valor-title">Comunidad</div>
+        <p class="nos-valor-desc">Construimos HERA con 9 personas que comparten la misma obsesión.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===========================
+       SECCIÓN 4 — EQUIPO
+  =========================== -->
+  <div class="nos-equipo">
+    <p class="nos-eyebrow reveal">Nuestro equipo</p>
+    <h2 class="nos-title-light reveal reveal-d1" style="color:var(--black);">Las personas detrás <em style="color:rgba(15,15,15,.38);">de HERA.</em></h2>
+    <p class="nos-equipo-sub reveal reveal-d2">9 co-fundadores. Una misma obsesión.</p>
+    <div class="nos-equipo-hint reveal">
+      <div class="nos-equipo-hint-dot"></div>
+      <span>Toca cualquier tarjeta para ver sus redes</span>
+    </div>
+    <div class="nos-equipo-grid">
+
+      <!-- SVG shortcuts para no repetir -->
+      <!-- CARD 1 -->
+      <div class="flip-card"><div class="flip-card-inner">
+        <div class="flip-card-front"><div class="flip-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg><span class="flip-card-photo-lbl">Foto</span><span class="flip-card-badge">Ver redes</span></div><div class="flip-card-info"><div class="flip-card-rol">CO-FOUNDER &amp; CEO</div><div class="flip-card-name">Nombre Apellido</div></div></div>
+        <div class="flip-card-back"><div class="flip-card-back-rol">CO-FOUNDER &amp; CEO</div><div class="flip-card-back-name">Nombre Apellido</div><div class="flip-card-links"><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg><span class="flip-card-link-label">LinkedIn</span><span class="flip-card-link-handle">@nombreapellido</span></div><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg><span class="flip-card-link-label">GitHub</span><span class="flip-card-link-handle">@nombreapellido</span></div></div><span class="flip-card-back-hint">← toca para volver</span></div>
+      </div></div>
+
+      <!-- CARD 2 -->
+      <div class="flip-card"><div class="flip-card-inner">
+        <div class="flip-card-front"><div class="flip-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg><span class="flip-card-photo-lbl">Foto</span><span class="flip-card-badge">Ver redes</span></div><div class="flip-card-info"><div class="flip-card-rol">CO-FOUNDER &amp; CTO</div><div class="flip-card-name">Nombre Apellido</div></div></div>
+        <div class="flip-card-back"><div class="flip-card-back-rol">CO-FOUNDER &amp; CTO</div><div class="flip-card-back-name">Nombre Apellido</div><div class="flip-card-links"><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg><span class="flip-card-link-label">LinkedIn</span><span class="flip-card-link-handle">@nombreapellido</span></div><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg><span class="flip-card-link-label">GitHub</span><span class="flip-card-link-handle">@nombreapellido</span></div></div><span class="flip-card-back-hint">← toca para volver</span></div>
+      </div></div>
+
+      <!-- CARD 3 -->
+      <div class="flip-card"><div class="flip-card-inner">
+        <div class="flip-card-front"><div class="flip-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg><span class="flip-card-photo-lbl">Foto</span><span class="flip-card-badge">Ver redes</span></div><div class="flip-card-info"><div class="flip-card-rol">CO-FOUNDER &amp; CMO</div><div class="flip-card-name">Nombre Apellido</div></div></div>
+        <div class="flip-card-back"><div class="flip-card-back-rol">CO-FOUNDER &amp; CMO</div><div class="flip-card-back-name">Nombre Apellido</div><div class="flip-card-links"><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg><span class="flip-card-link-label">LinkedIn</span><span class="flip-card-link-handle">@nombreapellido</span></div><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg><span class="flip-card-link-label">GitHub</span><span class="flip-card-link-handle">@nombreapellido</span></div></div><span class="flip-card-back-hint">← toca para volver</span></div>
+      </div></div>
+
+      <!-- CARDS 4-9 (CO-FOUNDER) -->
+      <!-- CARD 4 --><div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><div class="flip-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg><span class="flip-card-photo-lbl">Foto</span><span class="flip-card-badge">Ver redes</span></div><div class="flip-card-info"><div class="flip-card-rol">CO-FOUNDER</div><div class="flip-card-name">Nombre Apellido</div></div></div><div class="flip-card-back"><div class="flip-card-back-rol">CO-FOUNDER</div><div class="flip-card-back-name">Nombre Apellido</div><div class="flip-card-links"><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg><span class="flip-card-link-label">LinkedIn</span><span class="flip-card-link-handle">@nombreapellido</span></div><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg><span class="flip-card-link-label">GitHub</span><span class="flip-card-link-handle">@nombreapellido</span></div></div><span class="flip-card-back-hint">← toca para volver</span></div></div></div>
+      <!-- CARD 5 --><div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><div class="flip-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg><span class="flip-card-photo-lbl">Foto</span><span class="flip-card-badge">Ver redes</span></div><div class="flip-card-info"><div class="flip-card-rol">CO-FOUNDER</div><div class="flip-card-name">Nombre Apellido</div></div></div><div class="flip-card-back"><div class="flip-card-back-rol">CO-FOUNDER</div><div class="flip-card-back-name">Nombre Apellido</div><div class="flip-card-links"><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg><span class="flip-card-link-label">LinkedIn</span><span class="flip-card-link-handle">@nombreapellido</span></div><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg><span class="flip-card-link-label">GitHub</span><span class="flip-card-link-handle">@nombreapellido</span></div></div><span class="flip-card-back-hint">← toca para volver</span></div></div></div>
+      <!-- CARD 6 --><div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><div class="flip-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg><span class="flip-card-photo-lbl">Foto</span><span class="flip-card-badge">Ver redes</span></div><div class="flip-card-info"><div class="flip-card-rol">CO-FOUNDER</div><div class="flip-card-name">Nombre Apellido</div></div></div><div class="flip-card-back"><div class="flip-card-back-rol">CO-FOUNDER</div><div class="flip-card-back-name">Nombre Apellido</div><div class="flip-card-links"><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg><span class="flip-card-link-label">LinkedIn</span><span class="flip-card-link-handle">@nombreapellido</span></div><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg><span class="flip-card-link-label">GitHub</span><span class="flip-card-link-handle">@nombreapellido</span></div></div><span class="flip-card-back-hint">← toca para volver</span></div></div></div>
+      <!-- CARD 7 --><div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><div class="flip-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg><span class="flip-card-photo-lbl">Foto</span><span class="flip-card-badge">Ver redes</span></div><div class="flip-card-info"><div class="flip-card-rol">CO-FOUNDER</div><div class="flip-card-name">Nombre Apellido</div></div></div><div class="flip-card-back"><div class="flip-card-back-rol">CO-FOUNDER</div><div class="flip-card-back-name">Nombre Apellido</div><div class="flip-card-links"><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg><span class="flip-card-link-label">LinkedIn</span><span class="flip-card-link-handle">@nombreapellido</span></div><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg><span class="flip-card-link-label">GitHub</span><span class="flip-card-link-handle">@nombreapellido</span></div></div><span class="flip-card-back-hint">← toca para volver</span></div></div></div>
+      <!-- CARD 8 --><div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><div class="flip-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg><span class="flip-card-photo-lbl">Foto</span><span class="flip-card-badge">Ver redes</span></div><div class="flip-card-info"><div class="flip-card-rol">CO-FOUNDER</div><div class="flip-card-name">Nombre Apellido</div></div></div><div class="flip-card-back"><div class="flip-card-back-rol">CO-FOUNDER</div><div class="flip-card-back-name">Nombre Apellido</div><div class="flip-card-links"><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg><span class="flip-card-link-label">LinkedIn</span><span class="flip-card-link-handle">@nombreapellido</span></div><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg><span class="flip-card-link-label">GitHub</span><span class="flip-card-link-handle">@nombreapellido</span></div></div><span class="flip-card-back-hint">← toca para volver</span></div></div></div>
+      <!-- CARD 9 --><div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><div class="flip-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg><span class="flip-card-photo-lbl">Foto</span><span class="flip-card-badge">Ver redes</span></div><div class="flip-card-info"><div class="flip-card-rol">CO-FOUNDER</div><div class="flip-card-name">Nombre Apellido</div></div></div><div class="flip-card-back"><div class="flip-card-back-rol">CO-FOUNDER</div><div class="flip-card-back-name">Nombre Apellido</div><div class="flip-card-links"><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg><span class="flip-card-link-label">LinkedIn</span><span class="flip-card-link-handle">@nombreapellido</span></div><div class="flip-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg><span class="flip-card-link-label">GitHub</span><span class="flip-card-link-handle">@nombreapellido</span></div></div><span class="flip-card-back-hint">← toca para volver</span></div></div></div>
+
+    </div>
+  </div>
+
+  <!-- ===========================
+       SECCIÓN 5 — POR QUÉ ELEGIRNOS
+  =========================== -->
+  <div class="nos-porque">
+    <div class="nos-porque-header">
+      <p class="nos-eyebrow reveal" style="margin-bottom:14px;">Por qué HERA</p>
+      <h2 class="nos-title-dark-lg reveal reveal-d1">Lo que nos hace <em>diferentes.</em></h2>
+    </div>
+    <div class="nos-dif-grid">
+      <div class="nos-dif-item reveal">
+        <div class="nos-dif-redline"></div>
+        <div class="nos-dif-title">Originales garantizados</div>
+        <p class="nos-dif-desc">Cada producto llega sellado de fábrica. Nunca usados, nunca alterados. Te lo garantizamos.</p>
+      </div>
+      <div class="nos-dif-item reveal reveal-d1" style="padding-left:44px;">
+        <div class="nos-dif-redline"></div>
+        <div class="nos-dif-title">Selección curada</div>
+        <p class="nos-dif-desc">No vendemos todo. Seleccionamos cuidadosamente cada marca y cada fragancia que entra a nuestro catálogo.</p>
+      </div>
+      <div class="nos-dif-item reveal reveal-d2" style="padding-left:44px;">
+        <div class="nos-dif-redline"></div>
+        <div class="nos-dif-title">Servicio real</div>
+        <p class="nos-dif-desc">Detrás de HERA hay personas reales respondiendo tus dudas. No bots, no respuestas automáticas.</p>
+      </div>
+    </div>
+    <div class="nos-cta-wrap reveal">
+      <a href="contacto.html" class="btn-primary">¿Tienes dudas? Contáctanos</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div id="footer-logo-placeholder"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg> Tu logo aquí</div>
+        <p class="footer-tagline">Perfumes &amp; Joyería.<br>Para quienes no necesitan<br>permiso para destacar.</p>
+        <div class="footer-socials">
+          <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+          <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a class="footer-social-btn" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+        </div>
+      </div>
+      <div><p class="footer-col-title">Tienda</p><ul class="footer-links"><li><a href="catalogo.html?tab=perfumes">Perfumes</a></li><li><a href="catalogo.html?tab=joyeria">Joyería</a></li><li><a href="catalogo.html?tab=perfumes">Novedades</a></li><li><a href="catalogo.html?tab=perfumes">Bestsellers</a></li><li><a href="catalogo.html?tab=perfumes">Ofertas</a></li></ul></div>
+      <div><p class="footer-col-title">Ayuda</p><ul class="footer-links"><li><a href="#">Rastrear pedido</a></li><li><a href="devoluciones.html">Devoluciones</a></li><li><a href="Politica_envios.html">Política de envíos</a></li><li><a href="faq.html">Preguntas frecuentes</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+      <div><p class="footer-col-title">Marca</p><ul class="footer-links"><li><a href="nosotros.html">Nosotros</a></li><li><a href="aviso-privacidad.html">Privacidad</a></li><li><a href="terminos.html">Términos y condiciones</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2025 HERA Perfumes &amp; Joyería. Todos los derechos reservados.</p>
+      <div class="footer-payment"><span class="payment-badge">VISA</span><span class="payment-badge">MC</span><span class="payment-badge">Mercado Pago</span><span class="payment-badge">SPEI</span></div>
+    </div>
+  </footer>
+
+
+</div><!-- /site-wrap -->
+
+<script>
+/* SCROLL REVEAL — replays on every scroll pass */
+(function(){
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+      } else {
+        /* Remove visible when element exits — allows replay on re-entry */
+        e.target.classList.remove('visible');
+      }
+    });
+  },{ threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+})();
+
+/* NAV MOBILE */
+var hamburger=document.getElementById('navHamburger'),
+    mOverlay=document.getElementById('navMobileOverlay'),
+    mPanel=document.getElementById('navMobilePanel'),
+    mClose=document.getElementById('navMobileClose');
+function openNav(){ hamburger.classList.add('open'); mOverlay.classList.add('open'); mPanel.classList.add('open'); document.body.style.overflow='hidden'; }
+function closeNav(){ hamburger.classList.remove('open'); mOverlay.classList.remove('open'); mPanel.classList.remove('open'); document.body.style.overflow=''; }
+hamburger.addEventListener('click',openNav);
+mClose.addEventListener('click',closeNav);
+mOverlay.addEventListener('click',closeNav);
+document.getElementById('mobileProductosToggle').addEventListener('click',function(e){ e.stopPropagation(); document.getElementById('mobileProductosSub').classList.toggle('open'); this.classList.toggle('active'); });
+
+/* ACCOUNT DROPDOWN — lógica de sesión */
+var aToggle = document.getElementById('account-toggle');
+var aLoginBtn = document.getElementById('account-login-btn');
+var aDrop   = document.getElementById('account-dropdown');
+var btnLogout = document.getElementById('btn-logout');
+var btnLogoutMobile = document.getElementById('btn-logout-mobile');
+var mobCuentaToggle = document.getElementById('mobileCuentaToggle');
+var mobCuentaLoginLink = document.getElementById('mobileCuentaLoginLink');
+var mobCuentaSub = document.getElementById('mobileCuentaSub');
+
+function isLoggedIn(){ return localStorage.getItem('hera_logged_in') === '1'; }
+
+function renderAccountNav(){
+  if(isLoggedIn()){
+    aLoginBtn.style.display   = 'none';
+    aToggle.style.display     = 'flex';
+    mobCuentaLoginLink.style.display = 'none';
+    mobCuentaToggle.style.display    = 'flex';
+  } else {
+    aLoginBtn.style.display   = 'flex';
+    aToggle.style.display     = 'none';
+    if(aDrop) aDrop.style.display = 'none';
+    mobCuentaLoginLink.style.display = 'flex';
+    mobCuentaToggle.style.display    = 'none';
+  }
+}
+
+function logout(){
+  localStorage.removeItem('hera_logged_in');
+  if(aDrop) aDrop.style.display = 'none';
+  renderAccountNav();
+}
+
+renderAccountNav();
+
+if(aToggle){ aToggle.addEventListener('click',function(e){ e.stopPropagation(); aDrop.style.display=aDrop.style.display==='block'?'none':'block'; }); aDrop.addEventListener('click',function(e){ e.stopPropagation(); }); }
+if(btnLogout){ btnLogout.addEventListener('click',function(e){ e.preventDefault(); logout(); }); }
+if(btnLogoutMobile){ btnLogoutMobile.addEventListener('click',function(e){ e.preventDefault(); logout(); closeNav(); }); }
+if(mobCuentaToggle){ mobCuentaToggle.addEventListener('click',function(e){ e.stopPropagation(); mobCuentaSub.classList.toggle('open'); mobCuentaToggle.classList.toggle('active'); }); }
+document.addEventListener('click',function(){ if(aDrop) aDrop.style.display='none'; });
+
+/* SEARCH */
+var sOverlay=document.getElementById('search-overlay'),
+    sInput=document.getElementById('search-input'),
+    sClose=document.getElementById('search-close-btn'),
+    sBtn=document.getElementById('search-btn');
+function openSearch(){ sOverlay.classList.add('open'); document.body.style.overflow='hidden'; setTimeout(function(){ sInput.focus(); },300); }
+function closeSearch(){ sOverlay.classList.remove('open'); document.body.style.overflow=''; sInput.value=''; }
+sBtn.addEventListener('click',openSearch);
+sClose.addEventListener('click',closeSearch);
+sOverlay.addEventListener('click',function(e){ if(e.target===sOverlay) closeSearch(); });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeSearch(); closeNav(); } });
+
+/* CART */
+var cBtn=document.getElementById('cart-btn'),
+    cDrawer=document.getElementById('cart-drawer'),
+    cOverlay=document.getElementById('cart-overlay'),
+    cClose=document.getElementById('cart-close');
+function openCart(){ cDrawer.classList.add('open'); cOverlay.classList.add('open'); document.body.style.overflow='hidden'; }
+function closeCart(){ cDrawer.classList.remove('open'); cOverlay.classList.remove('open'); document.body.style.overflow=''; }
+cBtn.addEventListener('click',openCart);
+cClose.addEventListener('click',closeCart);
+cOverlay.addEventListener('click',closeCart);
+
+var cartItemsList=document.getElementById('cart-items-list');
+var cartEmpty=document.getElementById('cart-empty');
+var cartFooterEl=document.getElementById('cart-footer');
+var cartTotalEl=document.getElementById('cart-total');
+var cartDrawerCountEl=document.getElementById('cart-drawer-count');
+var shippingBarEl=document.getElementById('shipping-bar');
+var shippingMsgEl=document.getElementById('shipping-msg');
+var FREE_SHIP=1500;
+
+function parseMXN(s){return parseInt(String(s).replace(/[^0-9]/g,''))||0;}
+
+function loadCartDrawer(){
+  var items=[];
+  try{var raw=localStorage.getItem('hera_cart');if(raw)items=JSON.parse(raw);}catch(e){items=[];}
+  cartItemsList.innerHTML='';
+  if(items&&items.length){
+    items.forEach(function(it){
+      var el=document.createElement('div');el.className='cart-item';el.dataset.cartId=it.id;
+      el.innerHTML='<div class="cart-item-img"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><div class="cart-item-info"><div class="cart-item-brand">'+it.brand+'</div><div class="cart-item-name">'+it.name+'</div><div class="cart-item-price">'+it.price+'</div><div class="cart-item-qty"><button class="qty-btn qty-minus">−</button><span class="qty-num">'+it.qty+'</span><button class="qty-btn qty-plus">+</button></div></div><button class="cart-item-remove" title="Eliminar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>';
+      cartItemsList.appendChild(el);
+      bindCartItemNos(el);
+    });
+  }
+  updateCartDrawerTotals();
+}
+
+function bindCartItemNos(item){
+  item.querySelector('.qty-minus').addEventListener('click',function(){
+    var q=item.querySelector('.qty-num'),v=parseInt(q.textContent);
+    if(v>1){q.textContent=v-1;saveAndUpdateNos();}
+  });
+  item.querySelector('.qty-plus').addEventListener('click',function(){
+    var q=item.querySelector('.qty-num');q.textContent=parseInt(q.textContent)+1;saveAndUpdateNos();
+  });
+  item.querySelector('.cart-item-remove').addEventListener('click',function(){item.remove();saveAndUpdateNos();});
+}
+
+function saveAndUpdateNos(){
+  var items=[];
+  cartItemsList.querySelectorAll('.cart-item').forEach(function(el){
+    items.push({id:el.dataset.cartId,brand:el.querySelector('.cart-item-brand').textContent,name:el.querySelector('.cart-item-name').textContent,price:el.querySelector('.cart-item-price').textContent,qty:parseInt(el.querySelector('.qty-num').textContent)});
+  });
+  localStorage.setItem('hera_cart',JSON.stringify(items));
+  updateCartDrawerTotals();
+}
+
+function updateCartDrawerTotals(){
+  var items=cartItemsList.querySelectorAll('.cart-item');
+  var total=0;
+  items.forEach(function(item){total+=parseMXN(item.querySelector('.cart-item-price').textContent)*parseInt(item.querySelector('.qty-num').textContent);});
+  var count=Array.from(items).reduce(function(s,i){return s+parseInt(i.querySelector('.qty-num').textContent);},0);
+  cartTotalEl.textContent='$'+total.toLocaleString('es-MX')+' MXN';
+  cartCountBadge.textContent=count;cartCountBadge.style.display=count>0?'flex':'none';
+  cartDrawerCountEl.textContent='('+count+')';
+  var pct=Math.min((total/FREE_SHIP)*100,100);
+  shippingBarEl.style.width=pct+'%';
+  if(total>=FREE_SHIP){shippingMsgEl.innerHTML='🎉 <span style="color:var(--black);font-weight:600;">¡Tienes envío gratis!</span>';shippingBarEl.style.background='#2e7d32';}
+  else if(total>0){shippingMsgEl.innerHTML='Te faltan <span style="color:var(--red);font-weight:600;">$'+(FREE_SHIP-total).toLocaleString('es-MX')+' MXN</span> para envío gratis';shippingBarEl.style.background='var(--red)';}
+  else{shippingMsgEl.innerHTML='';}
+  cartEmpty.style.display=count===0?'flex':'none';
+  cartFooterEl.style.display=count===0?'none':'block';
+}
+
+/* ══════════════════════════════════════
+   CARRITO — badge + agregar desde favoritos
+══════════════════════════════════════ */
+var cartCountBadge=document.getElementById('cart-count');
+
+loadCartDrawer();
+
+function addToCartFromFav(id,brand,name,price){
+  var items=[];
+  try{var raw=localStorage.getItem('hera_cart');if(raw)items=JSON.parse(raw);}catch(e){items=[];}
+  var existing=items.find(function(c){return c.id===id;});
+  if(existing){existing.qty++;}
+  else{items.push({id:id,brand:brand,name:name,price:price,qty:1});}
+  localStorage.setItem('hera_cart',JSON.stringify(items));
+  loadCartDrawer();
+  cartCountBadge.style.transform='scale(1.5)';setTimeout(function(){cartCountBadge.style.transform='scale(1)';},200);
+}
+
+function addAllFavsToCart(){
+  if(!favoritesData.length)return;
+  favoritesData.forEach(function(f){addToCartFromFav(f.id,f.brand,f.name,f.price);});
+}
+
+/* ══════════════════════════════════════
+   FAVORITOS — Cargar desde localStorage
+══════════════════════════════════════ */
+var favToggle=document.getElementById('fav-toggle');
+var favDrop=document.getElementById('fav-dropdown');
+var favCountBadge=document.getElementById('fav-count');
+var favCountLabel=document.getElementById('fav-count-label');
+var favList=document.getElementById('fav-list');
+var favEmptyEl=document.getElementById('fav-empty');
+var favCountMobile=document.getElementById('fav-count-mobile');
+var favListMobile=document.getElementById('fav-list-mobile');
+var favEmptyMobile=document.getElementById('fav-empty-mobile');
+var favoritesData=[];
+
+try{var sf=localStorage.getItem('hera_favs');if(sf)favoritesData=JSON.parse(sf);}catch(e){favoritesData=[];}
+
+if(favToggle){
+  favToggle.addEventListener('click',function(e){e.stopPropagation();if(favDrop)favDrop.style.display=favDrop.style.display==='block'?'none':'block';});
+  if(favDrop)favDrop.addEventListener('click',function(e){e.stopPropagation();});
+}
+document.addEventListener('click',function(){if(favDrop)favDrop.style.display='none';});
+
+function renderFavsNosotros(){
+  var label=favoritesData.length+(favoritesData.length===1?' producto':' productos');
+  if(favCountLabel)favCountLabel.textContent=label;
+  if(favCountMobile)favCountMobile.textContent=label;
+  if(favoritesData.length>0){
+    if(favCountBadge){favCountBadge.style.display='flex';favCountBadge.textContent=favoritesData.length;}
+    if(favEmptyEl)favEmptyEl.style.display='none';
+    if(favEmptyMobile)favEmptyMobile.style.display='none';
+  }else{
+    if(favCountBadge)favCountBadge.style.display='none';
+    if(favEmptyEl)favEmptyEl.style.display='block';
+    if(favEmptyMobile)favEmptyMobile.style.display='block';
+  }
+  if(favList){
+    Array.from(favList.children).forEach(function(c){if(c.id!=='fav-empty'&&c.id!=='fav-add-all')c.remove();});
+    favoritesData.forEach(function(item){favList.insertBefore(buildFavRowNosotros(item,false),favEmptyEl);});
+  }
+  if(favListMobile){
+    Array.from(favListMobile.children).forEach(function(c){if(c.id!=='fav-empty-mobile')c.remove();});
+    favoritesData.forEach(function(item){favListMobile.insertBefore(buildFavRowNosotros(item,true),favEmptyMobile);});
+  }
+  var addAllBtn=document.getElementById('fav-add-all');
+  if(addAllBtn)addAllBtn.style.display=favoritesData.length>0?'block':'none';
+}
+
+function buildFavRowNosotros(item,isMobile){
+  var row=document.createElement('div');row.dataset.favId=item.id;
+  row.style.cssText='display:flex;align-items:center;gap:14px;padding:14px '+(isMobile?'24px':'20px')+';border-bottom:1px solid var(--lgray);';
+  row.innerHTML='<div style="width:52px;height:52px;flex-shrink:0;background:var(--lgray);display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.25)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><div style="flex:1;min-width:0;"><div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(15,15,15,.4);margin-bottom:3px;">'+item.brand+'</div><div style="font-family:var(--serif);font-size:15px;font-weight:300;font-style:italic;color:var(--black);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+item.name+'</div><div style="font-size:12px;font-weight:700;color:var(--black);margin-top:2px;">'+item.price+'</div></div><div style="display:flex;gap:6px;flex-shrink:0;"><button data-add-cart="'+item.id+'" style="background:var(--black);border:none;cursor:pointer;color:#fff;width:26px;height:26px;display:flex;align-items:center;justify-content:center;transition:background .2s;" title="Agregar al carrito"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button><button data-remove="'+item.id+'" style="background:var(--red);border:none;cursor:pointer;color:#fff;width:26px;height:26px;display:flex;align-items:center;justify-content:center;" title="Quitar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>';
+  row.querySelector('[data-add-cart]').addEventListener('click',function(e){
+    e.stopPropagation();
+    addToCartFromFav(item.id,item.brand,item.name,item.price);
+    this.style.background='#2e7d32';this.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>';
+    var btn=this;setTimeout(function(){btn.style.background='var(--black)';btn.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>';},1200);
+  });
+  row.querySelector('[data-remove]').addEventListener('click',function(e){
+    e.stopPropagation();
+    var id=e.currentTarget.dataset.remove;
+    favoritesData=favoritesData.filter(function(f){return f.id!==id;});
+    localStorage.setItem('hera_favs',JSON.stringify(favoritesData));
+    renderFavsNosotros();
+  });
+  return row;
+}
+
+renderFavsNosotros();
+
+/* CURSOR */
+var cursor=document.getElementById('cursor'), ring=document.getElementById('cursorRing');
+if(cursor && window.innerWidth>768){
+  var mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){ mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+  (function loop(){ rx+=(mx-rx)*.1; ry+=(my-ry)*.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+  document.querySelectorAll('a,button,.flip-card,.nos-chip').forEach(function(el){
+    el.addEventListener('mouseenter',function(){ cursor.style.transform='translate(-50%,-50%) scale(2)'; ring.style.width='60px'; ring.style.height='60px'; });
+    el.addEventListener('mouseleave',function(){ cursor.style.transform='translate(-50%,-50%) scale(1)'; ring.style.width='36px'; ring.style.height='36px'; });
+  });
+}
+
+/* FLIP CARDS
+   - Front click → flip to back
+   - Social icon links → navigate, do NOT flip
+   - "← toca para volver" button → flip back
+   - ESC → close active card
+*/
+var flipCards = document.querySelectorAll('.flip-card');
+var activeCard = null;
+
+flipCards.forEach(function(card) {
+  var front = card.querySelector('.flip-card-front');
+  var backHint = card.querySelector('.flip-card-back-hint');
+
+  /* Clicking the FRONT flips to back */
+  front.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (activeCard && activeCard !== card) activeCard.classList.remove('flipped');
+    card.classList.add('flipped');
+    activeCard = card;
+  });
+
+  /* Clicking "← toca para volver" flips back */
+  if (backHint) {
+    backHint.addEventListener('click', function(e) {
+      e.stopPropagation();
+      card.classList.remove('flipped');
+      activeCard = null;
+    });
+  }
+
+  /* Social links: stop propagation so card does NOT flip */
+  card.querySelectorAll('.flip-card-link').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.stopPropagation();
+      /* Navigation happens via href — nothing else needed */
+    });
+  });
+});
+
+/* ESC closes active card */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && activeCard) {
+    activeCard.classList.remove('flipped');
+    activeCard = null;
+  }
+});
+
+</script>
+</body>
+</html>
