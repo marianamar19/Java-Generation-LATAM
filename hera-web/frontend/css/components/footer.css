@@ -1,0 +1,126 @@
+/* ============================================================
+   footer.css — HERA Design System
+   Descripción: Estilos del footer universal de cuatro columnas
+     con logo, tagline, redes sociales, links y métodos de pago.
+   Usado por: todas las páginas excepto cuenta.html.
+   ============================================================ */
+
+/* ── FOOTER — comportamiento por breakpoint
+   Desktop  (>1024px): grid 4 columnas (2fr 1fr 1fr 1fr), footer-bottom en fila
+   Tablet   (≤1024px): grid 2 columnas, gap reducido, padding 40px 24px
+   Móvil    (≤768px):  grid 1 columna, footer-bottom apilado y centrado
+── */
+
+/* ── Contenedor ────────────────────────────────────────────── */
+footer {
+  background: var(--black);
+  padding: 60px 80px 36px;
+  color: var(--cream);
+}
+
+/* ── Grid superior ─────────────────────────────────────────── */
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 60px;
+}
+
+/* ── Logo placeholder ──────────────────────────────────────── */
+#footer-logo-placeholder {
+  height: 32px;
+  min-width: 120px;
+  width: fit-content;
+  border: 1.5px dashed rgba(249,249,249,.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(249,249,249,.2);
+  padding: 0 14px;
+  margin-bottom: 20px;
+}
+
+/* ── Tagline y redes ───────────────────────────────────────── */
+.footer-tagline {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-style: italic;
+  color: rgba(249,249,249,.32);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+.footer-socials { display: flex; gap: 14px; }
+.footer-social-btn {
+  width: 38px; height: 38px;
+  border: 1px solid rgba(249,249,249,.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  text-decoration: none;
+  color: rgba(249,249,249,.42);
+}
+.footer-social-btn:hover { border-color: var(--red); background: var(--red); color: #fff; }
+
+/* ── Columnas de links ─────────────────────────────────────── */
+.footer-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.footer-links a {
+  font-size: 13px;
+  color: rgba(249,249,249,.32);
+  text-decoration: none;
+  transition: color .2s;
+}
+.footer-links a:hover        { color: var(--red); }
+.footer-links a.footer-link-active { color: var(--cream); }
+
+/* ── Franja inferior ───────────────────────────────────────── */
+.footer-bottom {
+  border-top: 1px solid rgba(249,249,249,.06);
+  padding-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-copy    { font-size: 12px; color: rgba(249,249,249,.2); }
+.footer-payment { display: flex; gap: 10px; }
+.payment-badge  {
+  background: rgba(249,249,249,.05);
+  border: 1px solid rgba(249,249,249,.08);
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(249,249,249,.38);
+  letter-spacing: .08em;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  footer        { padding: 40px 24px 28px; }
+  .footer-top   { grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 40px; }
+  .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
+  .footer-payment { flex-wrap: wrap; justify-content: center; }
+}
+
+@media (max-width: 768px) {
+  footer      { padding: 36px 16px 24px; }
+  .footer-top { grid-template-columns: 1fr; gap: 24px; margin-bottom: 32px; }
+}

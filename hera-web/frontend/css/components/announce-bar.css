@@ -1,0 +1,58 @@
+/* ============================================================
+   announce-bar.css — HERA Design System
+   Descripción: Barra de anuncios con marquee infinito.
+     Fondo rojo, texto blanco, animación CSS pura.
+   Usado por: todas las páginas que incluyen la barra
+              (index, catálogo y demás excepto cuenta.html).
+   ============================================================ */
+
+/* ── ANNOUNCE — comportamiento por breakpoint
+   Desktop  (>1024px): texto 12px, padding 0 40px por span
+   Tablet   (≤1024px): sin cambios
+   Móvil    (≤480px):  texto 11px, padding reducido a 0 24px
+── */
+
+/* ── Contenedor ────────────────────────────────────────────── */
+.announce {
+  background: var(--red);
+  overflow: hidden;
+  padding: 14px 0;
+  display: flex;
+  width: 100%;
+}
+
+/* ── Track animado ─────────────────────────────────────────── */
+.announce-track {
+  display: flex;
+  animation: marquee 36s linear infinite;
+  white-space: nowrap;
+}
+
+/* ── Ítems de texto ────────────────────────────────────────── */
+.announce-track span {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 0 40px;
+}
+
+/* Separador decorativo entre ítems */
+.announce-track span.dot {
+  color: rgba(255,255,255,.45);
+  padding: 0;
+}
+
+/* ── Animación del marquee ─────────────────────────────────── */
+/* El track duplica el contenido en el HTML para crear el
+   efecto de loop continuo sin saltos                         */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .announce-track span { font-size: 11px; padding: 0 24px; }
+}
