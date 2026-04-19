@@ -16,8 +16,7 @@ Proyecto de e-commerce de perfumes y joyería desarrollado como parte del bootca
 8. [Páginas disponibles](#páginas-disponibles)
 9. [Datos temporales y preparación para backend](#datos-temporales-y-preparación-para-backend)
 10. [Reglas de desarrollo](#reglas-de-desarrollo)
-11. [Problemas conocidos y soluciones](#problemas-conocidos-y-soluciones)
-12. [Historial de refactorización](#historial-de-refactorización)
+11. [Historial de refactorización](#historial-de-refactorización)
 
 ---
 
@@ -391,34 +390,6 @@ Modificar únicamente el fragmento HTML en `components/[nombre].html` o la lógi
 
 ---
 
-## Problemas conocidos y soluciones
-
-### El navbar no aparece al cargar la página
-
-**Causa:** `position: sticky` se rompe cuando un ancestro del elemento tiene `overflow` con valor distinto de `visible`.
-
-**Solución verificada:** El `#navbar-placeholder` debe estar dentro del `.site-wrap` y este contenedor no debe tener `overflow-x: clip`. La propiedad `overflow-x: clip` debe aplicarse únicamente en `html` y `body`.
-
-### Los componentes no cargan (Cannot GET /components/navbar.html)
-
-**Causa:** El servidor no está apuntando a la raíz correcta, por lo que las rutas de `fetch` no resuelven.
-
-**Solución:** Abrir Live Server desde la carpeta raíz del repositorio (la que contiene a `frontend/`), no desde dentro de `frontend/`. La URL debe incluir `/frontend/` como parte del path.
-
-### Los CSS devuelven MIME type text/html (status 304 devuelve HTML)
-
-**Causa:** El archivo CSS referenciado no existe en la ruta indicada. El servidor devuelve el `index.html` por defecto.
-
-**Solución:** Verificar que el nombre del archivo en el `<link>` coincida exactamente con el archivo en disco. Este error ocurrió con `search-overlay.css`, cuyo contenido fue consolidado dentro de `drawer.css`.
-
-### Los módulos JS no cargan al abrir el archivo con doble clic
-
-**Causa:** El protocolo `file://` bloquea los ES Modules y el `fetch` por política de CORS del navegador.
-
-**Solución:** Siempre usar un servidor HTTP local. Ver la sección "Cómo levantar el servidor local".
-
----
-
 ## Historial de refactorización
 
 Este proyecto comenzó como un conjunto de monolitos HTML (CSS y JS embebidos en cada página) y fue migrado a la arquitectura modular documentada en este README.
@@ -427,7 +398,7 @@ El proceso completo está documentado en `HERA_Normalizacion_y_Refactorizacion_v
 
 | Fase                         | Descripción                                                            |
 |------------------------------|------------------------------------------------------------------------|
+| Creación del Design System   | tokens.css, reset.css, typography.css como base compartida del proyecto |
 | Normalización v1.0 — v1.9    | Sincronización de bloques universales en todos los monolitos HTML      |
 | Refactorización — todas las páginas | Migración de monolitos a arquitectura modular (HTML + CSS + JS separados) |
 | Extracción de componentes    | Creación de navbar.html, cart-drawer.html y footer.html como fragmentos reutilizables |
-| Creación del Design System   | tokens.css, reset.css, typography.css como base compartida del proyecto |
