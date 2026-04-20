@@ -1,0 +1,104 @@
+/* ============================================================
+   footer.css — HERA Design System
+   Descripción: Estilos del footer estándar del sitio: columnas
+                de navegación, redes sociales, badges de pago
+                y pie de copyright.
+   Usado por: Todas las páginas del proyecto
+   ============================================================ */
+
+/* ── Sección: FOOTER — comportamiento por breakpoint
+   Desktop  (>1024px): grid 4 columnas (2fr 1fr 1fr 1fr), footer-bottom en fila
+   Tablet   (≤1024px): grid 2 columnas, gap reducido
+   Móvil    (≤768px):  grid 1 columna, footer-bottom apilado
+────────────────────────────────────────────────────────────── */
+footer {
+  background: var(--black);
+  padding: 60px 80px 36px;
+  color: var(--cream);
+}
+
+/* ── Sección: FOOTER — grid superior ───────────────────────── */
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 60px;
+}
+
+/* ── Sección: FOOTER — columna de marca ────────────────────── */
+#footer-logo-placeholder {
+  height: 40px;
+  min-width: 140px;
+  border: 1.5px dashed rgba(249,249,249,.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(249,249,249,.22);
+  padding: 0 18px;
+  margin-bottom: 20px;
+}
+.footer-tagline {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-style: italic;
+  color: rgba(249,249,249,.32);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+.footer-socials { display: flex; gap: 14px; }
+.footer-social-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(249,249,249,.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  text-decoration: none;
+  color: rgba(249,249,249,.42);
+}
+.footer-social-btn:hover { border-color: var(--red); background: var(--red); color: #fff; }
+
+/* ── Sección: FOOTER — columnas de enlaces ──────────────────── */
+.footer-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-links a {
+  font-size: 13px;
+  color: rgba(249,249,249,.32);
+  text-decoration: none;
+  transition: color .2s;
+}
+.footer-links a:hover { color: var(--red); }
+
+/* ── Sección: FOOTER — pie con copyright y métodos de pago ──── */
+.footer-bottom {
+  border-top: 1px solid rgba(249,249,249,.06);
+  padding-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-copy { font-size: 12px; color: rgba(249,249,249,.2); }
+.footer-payment { display: flex; gap: 10px; }
+.payment-badge {
+  background: rgba(249,249,249,.05);
+  border: 1px solid rgba(249,249,249,.08);
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(249,249,249,.38);
+  letter-spacing: .08em;
+}

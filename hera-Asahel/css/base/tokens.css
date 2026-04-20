@@ -1,0 +1,18 @@
+/* ============================================================
+   tokens.css — HERA Design System
+   Descripción: Variables CSS globales del Design System.
+                Define la paleta de colores, familias tipográficas
+                y cualquier token de diseño reutilizable en todo el proyecto.
+   Usado por: Todos los archivos CSS del proyecto (importado primero)
+   ============================================================ */
+
+/* ── Sección: Tokens de color y tipografía ─────────────────── */
+:root {
+  --red:   #E1222B;
+  --cream: #F9F9F9;
+  --black: #0F0F0F;
+  --lgray: #E6E6E6;
+  --dgray: #2E2E2E;
+  --sans:  'Instrument Sans', sans-serif;
+  --serif: 'Cormorant Garamond', serif;
+}
