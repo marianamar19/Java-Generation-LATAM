@@ -1,18 +1,14 @@
-<!-- ══════════════════════════════════════
-     COMPONENTE: footer.html
-     Fragmento HTML puro del footer estándar.
-     Inyectado en #footer-placeholder por js/components/navbar.js
-     o directamente desde cada página.
-     NO incluye <html>, <head> ni <body>.
-══════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════════
+     footer.html — Fragmento HTML del footer universal HERA
+     Cargado dinámicamente vía fetch desde js/components/footer.js
+     No incluye <html>, <head> ni <body>.
+     Inyectado en: <div id="footer-placeholder"> de cada página
+══════════════════════════════════════════════════════════ -->
 
-<!-- ═══════════════════════════════════════════
-     FOOTER — estándar
-═══════════════════════════════════════════ -->
+<!-- [UNIVERSAL] FOOTER -->
 <footer>
   <div class="footer-top">
     <div>
-      <!-- Logo placeholder — reemplaza con <img src="../assets/images/logo.svg"> cuando tengas el archivo -->
       <div id="footer-logo-placeholder">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg>
         Tu logo aquí
@@ -33,15 +29,18 @@
         </a>
       </div>
     </div>
+
     <div>
       <p class="footer-col-title">Tienda</p>
       <ul class="footer-links">
         <li><a href="catalogo.html?tab=perfumes">Perfumes</a></li>
         <li><a href="catalogo.html?tab=joyeria">Joyería</a></li>
-        <li><a href="catalogo.html">Novedades</a></li>
-        <li><a href="catalogo.html">Bestsellers</a></li>
+        <li><a href="catalogo.html?tab=perfumes">Novedades</a></li>
+        <li><a href="catalogo.html?tab=perfumes">Bestsellers</a></li>
+        <li><a href="catalogo.html?tab=perfumes">Ofertas</a></li>
       </ul>
     </div>
+
     <div>
       <p class="footer-col-title">Ayuda</p>
       <ul class="footer-links">
@@ -52,6 +51,7 @@
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </div>
+
     <div>
       <p class="footer-col-title">Marca</p>
       <ul class="footer-links">
@@ -61,12 +61,12 @@
       </ul>
     </div>
   </div>
+
   <div class="footer-bottom">
-    <p class="footer-copy">© 2026 HERA Perfumes & Joyería. Todos los derechos reservados.</p>
+    <p class="footer-copy">© 2025 HERA Perfumes & Joyería. Todos los derechos reservados.</p>
     <div class="footer-payment">
       <span class="payment-badge">VISA</span>
       <span class="payment-badge">MC</span>
-      <span class="payment-badge">PayPal</span>
       <span class="payment-badge">Mercado Pago</span>
       <span class="payment-badge">SPEI</span>
     </div>

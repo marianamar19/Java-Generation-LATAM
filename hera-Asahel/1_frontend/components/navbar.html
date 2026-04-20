@@ -1,9 +1,10 @@
-<!-- ══════════════════════════════════════
-     COMPONENTE: navbar.html
-     Fragmento HTML puro del navbar estándar.
-     Inyectado en #navbar-placeholder por js/components/navbar.js
-     NO incluye <html>, <head> ni <body>.
-══════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════════
+     navbar.html — Fragmento HTML del navbar estándar HERA
+     Cargado dinámicamente vía fetch desde js/components/navbar.js
+     No incluye <html>, <head> ni <body>.
+     Inyectado en: <div id="navbar-placeholder"> de cada página
+     Excluido de: cuenta.html (usa navbar-cuenta.html)
+══════════════════════════════════════════════════════════ -->
 
 <!-- [UNIVERSAL] OVERLAY MENÚ MÓVIL -->
 <div class="nav-mobile-overlay" id="navMobileOverlay"></div>
@@ -12,7 +13,7 @@
 <div class="nav-mobile-panel" id="navMobilePanel">
   <div class="nav-mobile-header">
     <div class="nav-mobile-spacer"></div>
-    <!-- Logo placeholder centrado — reemplaza con <img src="logo.svg"> cuando tengas el archivo -->
+    <!-- Logo placeholder centrado — reemplazar con <img src="logo.svg"> cuando tengas el archivo -->
     <div class="nav-mobile-logo-wrap">
       <div class="nav-mobile-logo-placeholder">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg>
@@ -45,7 +46,6 @@
       <a href="catalogo.html?tab=joyeria&cat=collares">Collares</a>
     </div>
     <a href="nosotros.html" class="nav-mobile-link">Nosotros</a>
-    <a href="contacto.html" class="nav-mobile-link">Contacto</a>
 
     <!-- MI CUENTA — si no hay sesión va directo a cuenta.html, si hay sesión abre acordeón -->
     <a href="cuenta.html" class="nav-mobile-link" id="mobileCuentaLoginLink">
@@ -57,22 +57,10 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
     </div>
     <div class="nav-mobile-sub" id="mobileCuentaSub">
-      <a href="#" class="nav-mobile-account-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
-        Mis pedidos
-      </a>
-      <a href="#" class="nav-mobile-account-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
-        Datos personales
-      </a>
-      <a href="#" class="nav-mobile-account-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        Direcciones guardadas
-      </a>
-      <a href="#" id="btn-logout-mobile" class="nav-mobile-account-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Cerrar sesión
-      </a>
+      <a href="#" class="nav-mobile-account-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>Mis pedidos</a>
+      <a href="#" class="nav-mobile-account-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>Datos personales</a>
+      <a href="#" class="nav-mobile-account-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Direcciones guardadas</a>
+      <a href="#" id="btn-logout-mobile" class="nav-mobile-account-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Cerrar sesión</a>
     </div>
 
     <!-- [UNIVERSAL] FAVORITOS en panel móvil -->
@@ -89,9 +77,23 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     NAV — Barra de navegación principal
-══════════════════════════════════════ -->
+<!-- [UNIVERSAL] SEARCH OVERLAY -->
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-input-row">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="Buscar perfumes, marcas..." autocomplete="off" autocorrect="off" spellcheck="false" />
+      <button id="search-close-btn" aria-label="Cerrar buscador">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div id="search-results">
+      <p class="search-hint">Busca por nombre o marca</p>
+    </div>
+  </div>
+</div>
+
+<!-- [UNIVERSAL] NAV DESKTOP -->
 <nav>
   <button class="nav-hamburger" id="navHamburger" type="button" aria-label="Abrir menú de navegación">
     <span></span><span></span><span></span>
@@ -112,6 +114,9 @@
             <a href="catalogo.html?cat=diseñador">Diseñador</a>
             <a href="catalogo.html?cat=nicho">Nicho</a>
             <a href="catalogo.html?cat=arabes">Árabes</a>
+            <a href="catalogo.html?cat=body-mist">Body Mist</a>
+            <a href="catalogo.html?cat=testers">Testers</a>
+            <a href="catalogo.html?cat=decants">Decants</a>
             <a href="catalogo.html?cat=sets">Sets</a>
           </div>
         </div>
@@ -121,17 +126,17 @@
           <div class="nav-flyout">
             <div class="nav-flyout-label">Categorías</div>
             <a href="catalogo.html?tab=joyeria&cat=anillos">Anillos</a>
+            <a href="catalogo.html?tab=joyeria&cat=brazaletes">Brazaletes</a>
+            <a href="catalogo.html?tab=joyeria&cat=aretes">Aretes</a>
             <a href="catalogo.html?tab=joyeria&cat=collares">Collares</a>
           </div>
         </div>
       </div>
     </li>
     <li><a href="nosotros.html">Nosotros</a></li>
-    <li><a href="contacto.html">Contacto</a></li>
   </ul>
 
-  <a href="index.html" class="nav-logo">
-    <!-- Logo placeholder — reemplaza con <img src="../assets/images/logo.svg"> cuando tengas el archivo -->
+  <a href="index.html" class="nav-logo" id="nav-logo-link">
     <div id="logo-placeholder">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg>
       Tu logo aquí

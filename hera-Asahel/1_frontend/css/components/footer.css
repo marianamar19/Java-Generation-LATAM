@@ -1,0 +1,125 @@
+/* ============================================================
+   footer.css — HERA Design System
+   Descripción: Estilos del footer universal: grid de columnas,
+                logo placeholder, redes sociales, links, badge
+                de métodos de pago y copyright.
+   Usado por: Todas las páginas del proyecto
+   ============================================================ */
+
+/* ── Sección: FOOTER — Comportamiento por breakpoint ──────────
+      Desktop  (>1024px): grid 4 columnas, padding 60px 80px
+      Tablet   (≤1024px): grid 2×2, padding reducido
+      Móvil    (≤768px):  grid 2×2, footer-bottom apilado
+   ──────────────────────────────────────────────────────────── */
+
+/* ── Subsección: Contenedor principal ───────────────────────── */
+footer {
+  background: var(--black);
+  padding: 60px 80px 36px;
+  color: var(--cream);
+}
+
+/* ── Subsección: Grid superior de columnas ──────────────────── */
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 60px;
+}
+
+/* ── Subsección: Logo placeholder en footer ─────────────────── */
+/* Reemplazar con <img> cuando el asset esté listo */
+#footer-logo-placeholder {
+  height: 40px;
+  min-width: 140px;
+  border: 1.5px dashed rgba(249,249,249,.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(249,249,249,.22);
+  padding: 0 18px;
+  margin-bottom: 20px;
+}
+
+/* ── Subsección: Tagline editorial ──────────────────────────── */
+.footer-tagline {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-style: italic;
+  color: rgba(249,249,249,.32);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+/* ── Subsección: Redes sociales ─────────────────────────────── */
+.footer-socials { display: flex; gap: 14px; }
+.footer-social-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(249,249,249,.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  text-decoration: none;
+  color: rgba(249,249,249,.42);
+}
+.footer-social-btn:hover { border-color: var(--red); background: var(--red); color: #fff; }
+
+/* ── Subsección: Columnas de links ──────────────────────────── */
+.footer-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-links a { font-size: 13px; color: rgba(249,249,249,.32); text-decoration: none; transition: color .2s; }
+.footer-links a:hover { color: var(--red); }
+
+/* ── Subsección: Footer inferior — copyright y métodos de pago ─ */
+.footer-bottom {
+  border-top: 1px solid rgba(249,249,249,.06);
+  padding-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-copy { font-size: 12px; color: rgba(249,249,249,.2); }
+.footer-payment { display: flex; gap: 10px; }
+.payment-badge {
+  background: rgba(249,249,249,.05);
+  border: 1px solid rgba(249,249,249,.08);
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(249,249,249,.38);
+  letter-spacing: .08em;
+}
+
+/* ── Subsección: Responsive — Tablet (≤1024px) ──────────────── */
+@media (max-width: 1024px) {
+  footer { padding: 48px 48px 32px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+}
+
+/* ── Subsección: Responsive — Móvil (≤768px) ────────────────── */
+@media (max-width: 768px) {
+  footer { padding: 40px 20px 24px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 36px; }
+  .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
+  .footer-payment { flex-wrap: wrap; justify-content: center; }
+}
+
+/* ── Subsección: Responsive — Móvil pequeño (≤480px) ────────── */
+@media (max-width: 480px) {
+  .footer-top { grid-template-columns: 1fr; gap: 24px; }
+}

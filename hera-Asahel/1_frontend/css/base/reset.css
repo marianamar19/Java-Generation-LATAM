@@ -1,8 +1,8 @@
 /* ============================================================
    reset.css — HERA Design System
-   Descripción: Reset global de estilos. Normaliza el comportamiento
-                de todos los elementos del navegador y aplica
-                configuraciones base de caja, scroll y scrollbar.
+   Descripción: Reset global de estilos. Normaliza márgenes,
+                box-sizing, scroll y scrollbar personalizado
+                para garantizar consistencia entre navegadores.
    Usado por: Todas las páginas del proyecto
    ============================================================ */
 
@@ -13,13 +13,12 @@
   padding: 0;
 }
 
-/* ── Sección: Scroll base ───────────────────────────────────── */
+/* ── Sección: HTML y body base ─────────────────────────────── */
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
 }
 
-/* ── Sección: Body base ─────────────────────────────────────── */
 body {
   font-family: var(--sans);
   background: var(--cream);
@@ -28,11 +27,12 @@ body {
 }
 
 /* ── Sección: Scrollbar personalizado (WebKit) ──────────────── */
+/* Delgado en rojo sobre negro — refuerza la identidad visual */
 ::-webkit-scrollbar       { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--black); }
 ::-webkit-scrollbar-thumb { background: var(--red); }
 
-/* ── Sección: Contenedor principal del sitio ────────────────── */
+/* ── Sección: Contenedor global del sitio ───────────────────── */
 .site-wrap {
   max-width: 1440px;
   margin: 0 auto;
