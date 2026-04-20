@@ -1,0 +1,57 @@
+/* ============================================================
+   typography.css — HERA Design System
+   Descripción: Fuentes, tamaños base y estilos tipográficos
+   Usado por: Todas las páginas del proyecto
+   ============================================================ */
+
+/* Google Fonts import */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+
+/* Tipografía base */
+body {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Jerarquía de títulos */
+h1, .h1 {
+  font-family: var(--sans);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h2, .h2 {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+}
+
+/* Utilidades de texto */
+.text-sans {
+  font-family: var(--sans);
+}
+
+.text-serif {
+  font-family: var(--serif);
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Links */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-base);
+}
+
+a:hover {
+  color: var(--red);
+}

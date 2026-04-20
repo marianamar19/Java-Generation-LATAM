@@ -1,0 +1,34 @@
+/* ============================================================
+   tokens.css — HERA Design System
+   Descripción: Variables CSS globales del sistema de diseño
+   Usado por: Todas las páginas del proyecto
+   ============================================================ */
+
+:root {
+  /* Colores base */
+  --red:   #E1222B;
+  --cream: #F9F9F9;
+  --black: #0F0F0F;
+  --lgray: #E6E6E6;
+  --dgray: #2E2E2E;
+  
+  /* Tipografía */
+  --sans:  'Instrument Sans', sans-serif;
+  --serif: 'Cormorant Garamond', serif;
+  
+  /* Sombras y efectos */
+  --shadow-sm: 0 2px 8px rgba(15,15,15,.08);
+  --shadow-md: 0 8px 32px rgba(15,15,15,.12);
+  --shadow-lg: 0 16px 48px rgba(15,15,15,.15);
+  
+  /* Transiciones */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Layout */
+  --nav-height-desktop: 64px;
+  --nav-height-mobile: 56px;
+  --site-max-width: 1440px;
+  --free-shipping-threshold: 1500;
+}

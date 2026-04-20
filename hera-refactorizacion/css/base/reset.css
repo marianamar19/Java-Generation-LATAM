@@ -1,0 +1,60 @@
+/* ============================================================
+   reset.css — HERA Design System
+   Descripción: Reset global de estilos y normalización
+   Usado por: Todas las páginas del proyecto
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--black);
+  overflow-x: clip;
+  line-height: 1.5;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--red);
+}
+
+/* Imágenes responsivas */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Botones heredan tipografía */
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+/* Eliminar outline por defecto, mantener para accesibilidad */
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
