@@ -1684,6 +1684,13 @@
     return ok;
   }
 
+  /* ── ADMIN — Credenciales hardcodeadas para demo del panel
+     Reemplazar con validación server-side en Etapa 2.
+     Endpoint esperado: POST /api/auth/admin/login
+  ── */
+  var ADMIN_EMAIL = 'admin-hera@hotmail.com';
+  var ADMIN_PASS  = 'admin';
+
   /* ── SUBMIT — simula autenticación hasta que haya backend ── */
   var pTimer = null;
   function submitForm(type) {
@@ -1697,6 +1704,25 @@
     }
     setTimeout(function(){
       if (btn) { clearInterval(pTimer); btn.disabled = false; btn.textContent = type === 'login' ? 'INICIAR SESIÓN' : 'CREAR CUENTA'; }
+
+      /* ── ADMIN — verificar credenciales de administrador
+         Si coinciden → guardar sesión admin y redirigir al panel.
+         Si no coinciden → flujo normal del cliente sin cambios.
+      ── */
+      if (type === 'login') {
+        var inputEmail = document.getElementById('login-email').value.trim();
+        var inputPass  = document.getElementById('login-pass').value;
+        if (inputEmail === ADMIN_EMAIL && inputPass === ADMIN_PASS) {
+          try {
+            localStorage.setItem('hera_admin_auth', JSON.stringify({
+              loggedIn:  true,
+              loginTime: new Date().toISOString()
+            }));
+          } catch (e) { /* silencioso */ }
+          window.location.href = 'admin/dashboard.html';
+          return;
+        }
+      }
 
       /* ── TEMPORAL — simulación de sesión por ausencia de backend
          Reemplazar localStorage.setItem por llamada al endpoint de autenticación.
