@@ -1,0 +1,62 @@
+/* ============================================================
+   typography.css — HERA Design System
+   Descripción: Importación de fuentes Google Fonts y clases
+                tipográficas utilitarias reutilizables en todo
+                el proyecto (eyebrows, botones, etc.).
+   Usado por: Todas las páginas del proyecto
+   ============================================================ */
+
+/* ── Sección: Google Fonts ──────────────────────────────────── */
+/* Instrument Sans — sans-serif de UI con amplia gama de pesos  */
+/* Cormorant Garamond — serif editorial para títulos y display  */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+
+/* ── Sección: Botones globales ──────────────────────────────── */
+/* Botón primario — rojo HERA con transiciones suaves */
+.btn-primary {
+  background: var(--red);
+  color: #fff;
+  border: none;
+  padding: 16px 36px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background .2s, transform .15s;
+}
+.btn-primary:hover {
+  background: #c41c24;
+  transform: translateY(-1px);
+}
+/* Variante pequeña — misma jerarquía, tamaño compacto */
+.btn-primary--sm {
+  font-size: 11px;
+  padding: 14px 28px;
+}
+
+/* ── Sección: Eyebrow / etiqueta de sección ─────────────────── */
+/* Líneas decorativas a ambos lados, en rojo HERA */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 20px;
+}
+.eyebrow::before,
+.eyebrow::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--red);
+}
+.eyebrow::before { width: 28px; }
+.eyebrow::after  { width: 14px; }
