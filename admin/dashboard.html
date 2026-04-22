@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — HERA Admin</title>
+  <meta name="description" content="Panel de administración HERA Perfumes & Joyería — Vista general del negocio." />
+
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+
+    /* ══════════════════════════════════════
+       TOKENS — Bootstrap override + HERA Admin v2
+       Tema: sidebar negro / contenido cream
+    ══════════════════════════════════════ */
+    :root {
+      /* Bootstrap overrides */
+      --bs-primary:           #E1222B;
+      --bs-primary-rgb:       225, 34, 43;
+      --bs-body-bg:           #F9F9F9;
+      --bs-body-color:        #0F0F0F;
+      --bs-border-color:      #E6E6E6;
+      /* border-radius: Bootstrap defaults aplican en el contenido del Dashboard */
+      --bs-font-sans-serif:   'Instrument Sans', sans-serif;
+
+      /* HERA Admin — tokens alineados con productos.html */
+      --adm-sidebar-bg:    #0A0A0A;
+      --adm-sidebar-w:     240px;
+      --adm-topbar-h:      60px;
+      --adm-content-bg:    #EEF2F7;
+      --adm-card-bg:       #FFFFFF;
+      --adm-border:        #E6E6E6;
+      --adm-red:           #E1222B;
+      --adm-red-hover:     #c41c24;
+      --adm-green:         #4caf50;
+      --adm-yellow:        #f9a825;
+      --adm-blue:          #1a6fc4;
+      --adm-text:          #0F0F0F;
+      --adm-muted:         rgba(15,15,15,.45);
+      --adm-sidebar-text:  rgba(249,249,249,.55);
+      --adm-drawer-w:      520px;
+    }
+
+    /* ══════════════════════════════════════
+       RESET BASE
+    ══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html                   { scroll-behavior: smooth; }
+    body                   { font-family: 'Instrument Sans', sans-serif; background: var(--adm-content-bg); color: var(--adm-text); overflow-x: hidden; }
+
+    ::-webkit-scrollbar       { width: 4px; }
+    ::-webkit-scrollbar-track { background: #0A0A0A; }
+    ::-webkit-scrollbar-thumb { background: var(--adm-red); }
+
+    /* ══════════════════════════════════════
+       LAYOUT
+    ══════════════════════════════════════ */
+    .adm-wrap {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ══════════════════════════════════════
+       SIDEBAR — Negro, identidad HERA
+    ══════════════════════════════════════ */
+    .adm-sidebar {
+      width: var(--adm-sidebar-w);
+      background: var(--adm-sidebar-bg);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 100;
+      overflow-y: auto;
+      border-right: 1px solid rgba(249, 249, 249, .06);
+    }
+
+    .adm-sidebar-logo {
+      padding: 28px 24px 22px;
+      border-bottom: 1px solid rgba(249, 249, 249, .07);
+    }
+    .adm-logo-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      font-style: italic;
+      letter-spacing: .08em;
+      color: #F9F9F9;
+      line-height: 1;
+    }
+    .adm-logo-sub {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--adm-sidebar-text);
+      margin-top: 5px;
+    }
+
+    .adm-nav-section {
+      padding: 18px 0 10px;
+      border-bottom: 1px solid rgba(249, 249, 249, .06);
+    }
+    .adm-nav-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .20em;
+      text-transform: uppercase;
+      color: rgba(249, 249, 249, .25);
+      padding: 0 20px;
+      margin-bottom: 6px;
+    }
+    .adm-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 9px 20px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--adm-sidebar-text);
+      text-decoration: none;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      cursor: default;
+      transition: none;
+      letter-spacing: .02em;
+    }
+    .adm-nav-item:hover {
+      color: #F9F9F9;
+      background: rgba(249, 249, 249, .05);
+    }
+    .adm-nav-item.active {
+      background: var(--adm-red);
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+    .adm-nav-item.active:hover { background: var(--adm-red-hover); }
+    .adm-nav-icon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      opacity: .7;
+    }
+    .adm-nav-item.active .adm-nav-icon { opacity: 1; }
+
+    .adm-sidebar-bottom {
+      margin-top: auto;
+      padding: 12px 0;
+      border-top: 1px solid rgba(249, 249, 249, .06);
+    }
+
+    /* ══════════════════════════════════════
+       MAIN
+    ══════════════════════════════════════ */
+    .adm-main {
+      margin-left: var(--adm-sidebar-w);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: var(--adm-content-bg);
+    }
+
+    /* ══════════════════════════════════════
+       TOPBAR — Blanco, limpio
+    ══════════════════════════════════════ */
+    .adm-topbar {
+      height: var(--adm-topbar-h);
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--adm-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+    .adm-topbar-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      color: var(--adm-text);
+    }
+    .adm-topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .adm-topbar-date {
+      font-size: 12px;
+      color: var(--adm-muted);
+    }
+    .adm-avatar {
+      width: 32px;
+      height: 32px;
+      background: var(--adm-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: .06em;
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════
+       CONTENT
+    ══════════════════════════════════════ */
+    .adm-content {
+      padding: 28px 32px;
+      flex: 1;
+    }
+
+    /* ══════════════════════════════════════
+       KPI CARDS
+    ══════════════════════════════════════ */
+    .adm-kpi-card--alert { border-left: 3px solid var(--adm-red) !important; }
+    .adm-kpi-value { font-size: 32px; font-weight: 700; line-height: 1; }
+    .adm-kpi-value--accent { color: var(--adm-red); }
+
+    /* ══════════════════════════════════════
+       DASHBOARD GRID
+    ══════════════════════════════════════ */
+    .adm-dash-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 20px;
+      align-items: start;
+    }
+    .adm-left-col  { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+    .adm-right-col { display: flex; flex-direction: column; gap: 20px; position: sticky; top: calc(var(--adm-topbar-h) + 20px); }
+
+    /* ══════════════════════════════════════
+       TABLA — pequeños ajustes sobre bs-table
+    ══════════════════════════════════════ */
+    .adm-order-id    { font-weight: 700; font-size: 11px; letter-spacing: .04em; }
+    .adm-order-name  { font-size: 12px; font-weight: 500; }
+    .adm-order-email { font-size: 10px; color: var(--adm-muted); }
+    .adm-order-total { font-weight: 700; }
+    .adm-order-date  { white-space: nowrap; }
+
+    /* ── Badges de estatus — idénticos a .adm-nivel en productos.html ── */
+    .adm-nivel { font-size: 9px !important; font-weight: 700; letter-spacing: .10em; text-transform: uppercase; white-space: nowrap; }
+    .adm-nivel.green  { background: rgba(76,175,80,.10)  !important; color: #2e7d32 !important; border: 1px solid #4caf50; }
+    .adm-nivel.yellow { background: rgba(249,168,37,.10) !important; color: #9a6800 !important; border: 1px solid #f9a825; }
+    .adm-nivel.red    { background: rgba(225,34,43,.06)  !important; color: var(--adm-red) !important; border: 1px solid var(--adm-red); }
+    .adm-nivel.blue   { background: rgba(26,111,196,.08) !important; color: #1a6fc4 !important; border: 1px solid #1a6fc4; }
+
+    /* ══════════════════════════════════════
+       TOP PRODUCTOS — lista derecha
+    ══════════════════════════════════════ */
+    .adm-top-name  { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .adm-top-brand { font-size: 11px; color: var(--adm-muted); }
+    .adm-top-count { font-weight: 700; color: var(--adm-red); }
+
+    /* ══════════════════════════════════════
+       ESTADO VACÍO
+    ══════════════════════════════════════ */
+    .adm-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      gap: 8px;
+    }
+    .adm-empty-icon {
+      width: 32px;
+      height: 32px;
+      opacity: .2;
+      color: var(--adm-text);
+    }
+    .adm-empty-text {
+      font-size: 12px;
+      color: var(--adm-muted);
+      text-align: center;
+    }
+
+    /* ══════════════════════════════════════
+       NAVBAR MÓVIL — Bootstrap navbar colapsable
+       Visible solo en ≤768px, reemplaza al sidebar
+    ══════════════════════════════════════ */
+    .adm-mobile-nav { display: none; }
+
+    @media (max-width: 768px) {
+      :root { --adm-sidebar-w: 0px; }
+
+      .adm-sidebar    { display: none; }
+      .adm-mobile-nav { display: block; position: sticky; top: 0; z-index: 200; }
+      .adm-topbar     { display: none; }
+      .adm-content    { padding: 20px 16px; }
+      .adm-dash-grid  { grid-template-columns: 1fr; }
+      .adm-right-col  { position: static; }
+      .adm-kpi-value  { font-size: 24px; }
+    }
+
+    /* ══════════════════════════════════════
+       BREAKPOINT: TABLET — ≤1024px
+    ══════════════════════════════════════ */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      :root { --adm-sidebar-w: 60px; }
+
+      .adm-logo-sub,
+      .adm-nav-label,
+      .adm-nav-text { display: none; }
+
+      .adm-sidebar-logo { padding: 20px 16px; text-align: center; }
+      .adm-logo-brand   { font-size: 18px; }
+      .adm-nav-item     { justify-content: center; padding: 12px 0; }
+      .adm-nav-icon     { width: 18px; height: 18px; opacity: .6; }
+
+      .adm-dash-grid  { grid-template-columns: 1fr; }
+      .adm-right-col  { position: static; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     NAVBAR MÓVIL — visible solo en ≤768px
+══════════════════════════════════════ -->
+<nav class="adm-mobile-nav navbar navbar-expand-md" style="background:var(--adm-sidebar-bg);">
+  <div class="container-fluid px-3">
+    <span class="navbar-brand mb-0" style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;font-style:italic;letter-spacing:.08em;color:#F9F9F9;">Hera</span>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-expanded="false" aria-label="Abrir menú">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F9F9F9" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="collapse navbar-collapse" id="mobileMenu">
+      <ul class="navbar-nav mt-2 mb-1" style="font-size:13px;">
+        <li class="nav-item"><a class="nav-link active fw-semibold" href="dashboard.html" style="color:#fff;">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="ordenes.html" style="color:rgba(249,249,249,.65);">Órdenes</a></li>
+        <li class="nav-item"><a class="nav-link" href="productos.html" style="color:rgba(249,249,249,.65);">Productos</a></li>
+        <li class="nav-item"><a class="nav-link" href="clientes.html" style="color:rgba(249,249,249,.65);">Clientes</a></li>
+        <li class="nav-item"><a class="nav-link" href="configuracion.html" style="color:rgba(249,249,249,.65);">Configuración</a></li>
+        <li class="nav-item border-top mt-1 pt-1" style="border-color:rgba(249,249,249,.1) !important;">
+          <a class="nav-link" href="../index.html" style="color:rgba(249,249,249,.65);">Ver sitio</a>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link border-0 bg-transparent w-100 text-start" id="btn-logout-mobile" style="color:rgba(249,249,249,.65);">Cerrar sesión</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="adm-wrap">
+
+  <!-- ══════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════ -->
+  <aside class="adm-sidebar">
+
+    <div class="adm-sidebar-logo">
+      <div class="adm-logo-brand">Hera</div>
+      <div class="adm-logo-sub">Panel Admin</div>
+    </div>
+
+    <nav aria-label="Navegación del panel admin">
+
+      <div class="adm-nav-section">
+        <div class="adm-nav-label">Principal</div>
+
+        <a href="dashboard.html" class="adm-nav-item active" aria-label="Dashboard">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span class="adm-nav-text">Dashboard</span>
+        </a>
+
+        <a href="ordenes.html" class="adm-nav-item" aria-label="Órdenes">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+          <span class="adm-nav-text">Órdenes</span>
+        </a>
+
+        <a href="productos.html" class="adm-nav-item" aria-label="Productos">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          <span class="adm-nav-text">Productos</span>
+        </a>
+
+        <a href="clientes.html" class="adm-nav-item" aria-label="Clientes">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <span class="adm-nav-text">Clientes</span>
+        </a>
+      </div>
+
+      <div class="adm-nav-section">
+        <div class="adm-nav-label">Sitio</div>
+
+        <a href="configuracion.html" class="adm-nav-item" aria-label="Configuración">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          <span class="adm-nav-text">Configuración</span>
+        </a>
+      </div>
+
+    </nav>
+
+    <div class="adm-sidebar-bottom">
+      <a href="../index.html" class="adm-nav-item" aria-label="Ver sitio público">
+        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span class="adm-nav-text">Ver sitio</span>
+      </a>
+      <button class="adm-nav-item" id="btn-logout" aria-label="Cerrar sesión del panel admin">
+        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span class="adm-nav-text">Cerrar sesión</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ══════════════════════════════════════
+       MAIN
+  ══════════════════════════════════════ -->
+  <div class="adm-main">
+
+    <!-- TOPBAR -->
+    <header class="adm-topbar">
+      <h1 class="adm-topbar-title">Dashboard</h1>
+      <div class="adm-topbar-right">
+        <span class="adm-topbar-date" id="adm-date"></span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="adm-content">
+
+      <!-- KPI CARDS -->
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-xl-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <p class="text-uppercase text-muted small fw-semibold mb-2" style="font-size:10px;letter-spacing:.12em;">Órdenes hoy</p>
+              <div class="adm-kpi-value" id="kpi-ordenes">0</div>
+              <p class="text-muted small mt-1 mb-0">Total del día</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-xl-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <p class="text-uppercase text-muted small fw-semibold mb-2" style="font-size:10px;letter-spacing:.12em;">Ingresos hoy</p>
+              <div class="adm-kpi-value adm-kpi-value--accent" id="kpi-ingresos">$0 MXN</div>
+              <p class="text-muted small mt-1 mb-0" id="kpi-ingresos-sub">Sin ventas registradas hoy</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-xl-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <p class="text-uppercase text-muted small fw-semibold mb-2" style="font-size:10px;letter-spacing:.12em;">Productos activos</p>
+              <div class="adm-kpi-value" id="kpi-productos">0</div>
+              <p class="text-muted small mt-1 mb-0">En el catálogo</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-xl-3">
+          <div class="card h-100" id="kpi-card-pendientes">
+            <div class="card-body">
+              <p class="text-uppercase text-muted small fw-semibold mb-2" style="font-size:10px;letter-spacing:.12em;">Pendientes</p>
+              <div class="adm-kpi-value" id="kpi-pendientes">0</div>
+              <p class="text-muted small mt-1 mb-0">Por atender</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRID PRINCIPAL -->
+      <div class="adm-dash-grid">
+
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="adm-left-col">
+
+          <!-- Órdenes recientes -->
+          <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+              <span class="fw-semibold" style="font-size:13px;">Órdenes recientes</span>
+              <a href="ordenes.html" class="small text-decoration-none fw-semibold" style="color:var(--adm-red);">Ver todas →</a>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-sm mb-0 align-middle" aria-label="Tabla de órdenes recientes">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">Orden</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Estatus</th>
+                    <th scope="col">Fecha</th>
+                  </tr>
+                </thead>
+                <tbody id="adm-orders-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- COLUMNA DERECHA -->
+        <div class="adm-right-col">
+
+          <div class="card">
+            <div class="card-header fw-semibold" style="font-size:13px;">Estatus de órdenes</div>
+            <div id="adm-status-list" class="list-group list-group-flush"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header fw-semibold" style="font-size:13px;">Más vendidos</div>
+            <div id="adm-top-products" class="list-group list-group-flush"></div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+/* ══════════════════════════════════════
+   GUARD — Verificar sesión admin
+══════════════════════════════════════ */
+(function guardAdmin() {
+  try {
+    var auth = JSON.parse(localStorage.getItem('hera_admin_auth') || 'null');
+    if (!auth || !auth.loggedIn) {
+      window.location.href = '../cuenta.html';
+    }
+  } catch (e) {
+    window.location.href = '../cuenta.html';
+  }
+}());
+
+/* ══════════════════════════════════════
+   DATOS DEMO — TEMPORAL
+   Fuente: hera_orders en localStorage con fallback a datos demo.
+   Reemplazar con: fetch('/api/orders') cuando exista backend.
+══════════════════════════════════════ */
+var DEMO_ORDERS = [
+  { id: 'ORD-20260417-001', fecha: '2026-04-17T10:30', cliente: { nombre: 'Ana García',   email: 'ana@mail.com'    }, items: [{ productId: 'jenny-1',  name: 'Inolvidable EDP',  qty: 1, precio: 1210 }], pago: { total: 1309 }, estatus: 'pendiente'  },
+  { id: 'ORD-20260417-002', fecha: '2026-04-17T09:15', cliente: { nombre: 'Carlos Ruiz',  email: 'carlos@mail.com' }, items: [{ productId: 'sauvage-7', name: 'Sauvage EDP',      qty: 1, precio: 2450 }], pago: { total: 2549 }, estatus: 'confirmado' },
+  { id: 'ORD-20260416-003', fecha: '2026-04-16T18:45', cliente: { nombre: 'María López',  email: 'maria@mail.com'  }, items: [{ productId: 'blanche-8', name: 'Blanche EDP',      qty: 1, precio: 2100 }], pago: { total: 2199 }, estatus: 'enviado'    },
+  { id: 'ORD-20260416-004', fecha: '2026-04-16T14:00', cliente: { nombre: 'Luis Torres',  email: 'luis@mail.com'   }, items: [{ productId: 'noir-5',    name: 'Noir Absolu',      qty: 2, precio: 2960 }], pago: { total: 3059 }, estatus: 'entregado'  },
+  { id: 'ORD-20260415-005', fecha: '2026-04-15T11:20', cliente: { nombre: 'Sofía Méndez', email: 'sofia@mail.com'  }, items: [{ productId: 'oud-6',     name: 'Oud Rose',         qty: 1, precio: 1320 }], pago: { total: 1419 }, estatus: 'cancelado'  },
+  { id: 'ORD-20260415-006', fecha: '2026-04-15T09:00', cliente: { nombre: 'Pedro Vargas', email: 'pedro@mail.com'  }, items: [{ productId: 'anillo-1',  name: 'Anillo Solitario', qty: 1, precio: 1290 }], pago: { total: 1389 }, estatus: 'entregado'  },
+  { id: 'ORD-20260414-007', fecha: '2026-04-14T16:30', cliente: { nombre: 'Valeria Cruz', email: 'val@mail.com'    }, items: [{ productId: 'collar-1',  name: 'Collar Dorado',    qty: 1, precio: 890  }], pago: { total: 989  }, estatus: 'enviado'    }
+];
+
+/* ══════════════════════════════════════
+   CONFIGURACIÓN DE ESTATUS
+══════════════════════════════════════ */
+var STATUS_CONFIG = {
+  pendiente:  { label: 'Pendiente',  color: '#f9a825' },
+  confirmado: { label: 'Confirmado', color: '#1a6fc4' },
+  enviado:    { label: 'Enviado',    color: '#4caf50' },
+  entregado:  { label: 'Entregado',  color: '#4caf50' },
+  cancelado:  { label: 'Cancelado',  color: '#E1222B' }
+};
+
+/* ══════════════════════════════════════
+   INICIALIZACIÓN
+══════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function () {
+  renderDate();
+  var orders = loadOrders();
+  renderKPIs(orders);
+  renderOrdersTable(orders);
+  renderStatusList(orders);
+  renderTopProducts(orders);
+  initLogout();
+});
+
+/* ── Fecha en topbar — sin capitalización automática del browser ── */
+function renderDate() {
+  var el = document.getElementById('adm-date');
+  if (!el) return;
+  var now    = new Date();
+  var dias   = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  var meses  = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var str    = dias[now.getDay()] + ', ' + now.getDate() + ' de ' + meses[now.getMonth()] + ' de ' + now.getFullYear();
+  /* Capitalizar solo la primera letra */
+  el.textContent = str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/* ── Cargar órdenes ── */
+function loadOrders() {
+  try {
+    var stored = localStorage.getItem('hera_orders');
+    return stored ? JSON.parse(stored) : DEMO_ORDERS;
+  } catch (e) {
+    return DEMO_ORDERS;
+  }
+}
+
+/* ── KPI Cards ── */
+function renderKPIs(orders) {
+  var today = new Date().toISOString().slice(0, 10);
+
+  var ordersHoy = orders.filter(function (o) {
+    return o.fecha && o.fecha.slice(0, 10) === today;
+  });
+  var ingresosHoy = ordersHoy.reduce(function (sum, o) {
+    return sum + (o.pago && o.pago.total ? o.pago.total : 0);
+  }, 0);
+  var pendientes = orders.filter(function (o) {
+    return o.estatus === 'pendiente';
+  }).length;
+
+  /* ── TEMPORAL — contar productos desde localStorage
+     Reemplazar con: fetch('/api/products/count')
+  ── */
+  var productCount = 0;
+  try {
+    var prods = JSON.parse(localStorage.getItem('hera_products') || 'null');
+    productCount = prods ? prods.length : 0;
+  } catch (e) { productCount = 0; }
+
+  var elOrdenes    = document.getElementById('kpi-ordenes');
+  var elIngresos   = document.getElementById('kpi-ingresos');
+  var elIngresosSub = document.getElementById('kpi-ingresos-sub');
+  var elProductos  = document.getElementById('kpi-productos');
+  var elPendientes = document.getElementById('kpi-pendientes');
+  var cardPendientes = document.getElementById('kpi-card-pendientes');
+
+  if (elOrdenes)    elOrdenes.textContent    = ordersHoy.length;
+  if (elIngresos)   elIngresos.textContent   = '$' + ingresosHoy.toLocaleString('es-MX') + ' MXN';
+  if (elIngresosSub) elIngresosSub.textContent = ordersHoy.length > 0
+    ? ordersHoy.length + (ordersHoy.length === 1 ? ' venta hoy' : ' ventas hoy')
+    : 'Sin ventas registradas hoy';
+  if (elProductos)  elProductos.textContent  = productCount;
+  if (elPendientes) elPendientes.textContent = pendientes;
+
+  /* Acento rojo en card de pendientes cuando hay órdenes por atender */
+  if (cardPendientes && pendientes > 0) {
+    cardPendientes.classList.add('adm-kpi-card--alert');
+    elPendientes.classList.add('adm-kpi-value--accent');
+  }
+}
+
+/* ── Tabla de órdenes recientes ── */
+function renderOrdersTable(orders) {
+  var tbody = document.getElementById('adm-orders-tbody');
+  if (!tbody) return;
+
+  var recientes = orders.slice(0, 7);
+
+  if (recientes.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6">' + buildEmptyState('Sin órdenes registradas aún') + '</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = recientes.map(function (o) {
+    var fecha     = o.fecha ? new Date(o.fecha).toLocaleDateString('es-MX', { day: '2-digit', month: 'short' }) : '—';
+    var numProds  = o.items ? o.items.length : 0;
+    var total     = o.pago && o.pago.total ? '$' + o.pago.total.toLocaleString('es-MX') : '—';
+    var nombre    = o.cliente ? o.cliente.nombre : '—';
+    var email     = o.cliente ? o.cliente.email  : '';
+
+    return (
+      '<tr style="font-size:11px;">' +
+        '<td><span class="adm-order-id">'   + o.id    + '</span></td>' +
+        '<td>' +
+          '<div class="adm-order-name">'  + nombre + '</div>' +
+          '<div class="adm-order-email">' + email  + '</div>' +
+        '</td>' +
+        '<td class="text-center">' + numProds + '</td>' +
+        '<td><span class="adm-order-total">' + total      + '</span></td>' +
+        '<td>'  + buildBadge(o.estatus) + '</td>' +
+        '<td><span class="adm-order-date">'  + fecha      + '</span></td>' +
+      '</tr>'
+    );
+  }).join('');
+}
+
+/* ── Badge de estatus — mismo patrón que buildNivel() en productos.html ── */
+function buildBadge(estatus) {
+  var map = {
+    pendiente:  { nivel: 'yellow', label: 'Pendiente'  },
+    confirmado: { nivel: 'blue',   label: 'Confirmado' },
+    enviado:    { nivel: 'green',  label: 'Enviado'    },
+    entregado:  { nivel: 'green',  label: 'Entregado'  },
+    cancelado:  { nivel: 'red',    label: 'Cancelado'  }
+  };
+  var cfg = map[estatus];
+  if (!cfg) return '<span class="badge adm-nivel">' + (estatus || '—') + '</span>';
+  return '<span class="badge adm-nivel ' + cfg.nivel + '">' + cfg.label + '</span>';
+}
+
+/* ── Empty state reutilizable ── */
+function buildEmptyState(texto) {
+  return (
+    '<div class="adm-empty">' +
+      '<svg class="adm-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>' +
+      '<span class="adm-empty-text">' + texto + '</span>' +
+    '</div>'
+  );
+}
+
+/* ── Lista de estatus con conteos — Bootstrap list-group ── */
+function renderStatusList(orders) {
+  var container = document.getElementById('adm-status-list');
+  if (!container) return;
+
+  var conteo = {};
+  orders.forEach(function (o) {
+    conteo[o.estatus] = (conteo[o.estatus] || 0) + 1;
+  });
+
+  var html = Object.keys(STATUS_CONFIG).map(function (key) {
+    var cfg   = STATUS_CONFIG[key];
+    var count = conteo[key] || 0;
+    return (
+      '<div class="list-group-item d-flex align-items-center justify-content-between py-2 px-3">' +
+        '<span class="d-flex align-items-center gap-2 small">' +
+          '<span style="width:8px;height:8px;border-radius:50%;background:' + cfg.color + ';display:inline-block;flex-shrink:0;"></span>' +
+          cfg.label +
+        '</span>' +
+        '<span class="badge text-bg-secondary rounded-pill">' + count + '</span>' +
+      '</div>'
+    );
+  }).join('');
+
+  container.innerHTML = html;
+}
+
+/* ── Top productos más vendidos — Bootstrap list-group ── */
+function renderTopProducts(orders) {
+  var container = document.getElementById('adm-top-products');
+  if (!container) return;
+
+  var conteo = {};
+  orders.forEach(function (o) {
+    if (!o.items) return;
+    o.items.forEach(function (item) {
+      var pid = item.productId;
+      if (!conteo[pid]) {
+        conteo[pid] = { name: item.name, brand: '', count: 0 };
+      }
+      conteo[pid].count += item.qty || 1;
+    });
+  });
+
+  var sorted = Object.values(conteo).sort(function (a, b) {
+    return b.count - a.count;
+  }).slice(0, 5);
+
+  if (sorted.length === 0) {
+    container.innerHTML = buildEmptyState('Sin ventas registradas aún');
+    return;
+  }
+
+  container.innerHTML = sorted.map(function (p) {
+    return (
+      '<div class="list-group-item d-flex align-items-center justify-content-between py-2 px-3 gap-2">' +
+        '<div style="min-width:0;">' +
+          '<div class="adm-top-name">' + p.name + '</div>' +
+          (p.brand ? '<div class="adm-top-brand">' + p.brand + '</div>' : '') +
+        '</div>' +
+        '<span class="badge rounded-pill text-bg-light border adm-top-count">' + p.count + '×</span>' +
+      '</div>'
+    );
+  }).join('');
+}
+
+/* ── Cerrar sesión ── */
+function initLogout() {
+  function doLogout() {
+    try { localStorage.removeItem('hera_admin_auth'); } catch (e) {}
+    window.location.href = '../cuenta.html';
+  }
+  var btn = document.getElementById('btn-logout');
+  if (btn) btn.addEventListener('click', doLogout);
+  var btnMobile = document.getElementById('btn-logout-mobile');
+  if (btnMobile) btnMobile.addEventListener('click', doLogout);
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Productos — HERA Admin</title>
+  <meta name="description" content="Panel de administración HERA — Gestión del catálogo de productos." />
+
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+
+    /* ══════════════════════════════════════
+      TOKENS — Bootstrap override + HERA Admin
+    ══════════════════════════════════════ */
+    :root {
+      --bs-primary:        #E1222B;
+      --bs-primary-rgb:    225, 34, 43;
+      --bs-body-bg:        #F9F9F9;
+      --bs-body-color:     #0F0F0F;
+      --bs-border-color:   #E6E6E6;
+      --bs-font-sans-serif:'Instrument Sans', sans-serif;
+
+      --adm-sidebar-bg:    #0A0A0A;
+      --adm-sidebar-w:     240px;
+      --adm-topbar-h:      60px;
+      --adm-card-bg:       #FFFFFF;
+      --adm-border:        #E6E6E6;
+      --adm-red:           #E1222B;
+      --adm-red-hover:     #c41c24;
+      --adm-green:         #4caf50;
+      --adm-text:          #0F0F0F;
+      --adm-muted:         rgba(15,15,15,.45);
+      --adm-sidebar-text:  rgba(249,249,249,.55);
+      --adm-drawer-w:      520px;
+    }
+
+    /* ══════════════════════════════════════
+      RESET BASE
+    ══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html  { scroll-behavior: smooth; }
+    body  { font-family: 'Instrument Sans', sans-serif; background: #F9F9F9; color: #0F0F0F; overflow-x: hidden; }
+
+    ::-webkit-scrollbar       { width: 4px; }
+    ::-webkit-scrollbar-track { background: #0A0A0A; }
+    ::-webkit-scrollbar-thumb { background: var(--adm-red); }
+
+    /* ══════════════════════════════════════
+      LAYOUT
+    ══════════════════════════════════════ */
+    .adm-wrap { display: flex; min-height: 100vh; }
+
+    /* ══════════════════════════════════════
+      SIDEBAR — conservado custom
+    ══════════════════════════════════════ */
+    .adm-sidebar {
+      width: var(--adm-sidebar-w); background: var(--adm-sidebar-bg);
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0;
+      height: 100vh; z-index: 100; overflow-y: auto;
+      border-right: 1px solid rgba(249,249,249,.06);
+    }
+    .adm-sidebar-logo { padding: 28px 24px 22px; border-bottom: 1px solid rgba(249,249,249,.07); }
+    .adm-logo-brand   { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; font-style: italic; letter-spacing: .08em; color: #F9F9F9; line-height: 1; }
+    .adm-logo-sub     { font-size: 9px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--adm-sidebar-text); margin-top: 5px; }
+
+    .adm-nav-section  { padding: 18px 0 10px; border-bottom: 1px solid rgba(249,249,249,.06); }
+    .adm-nav-label    { font-size: 9px; font-weight: 600; letter-spacing: .20em; text-transform: uppercase; color: rgba(249,249,249,.25); padding: 0 20px; margin-bottom: 6px; }
+    .adm-nav-item     { display: flex; align-items: center; gap: 11px; padding: 9px 20px; font-size: 12px; font-weight: 500; color: var(--adm-sidebar-text); text-decoration: none; border: none; background: none; width: 100%; text-align: left; cursor: pointer; transition: color .15s, background .15s; letter-spacing: .02em; }
+    .adm-nav-item:hover { color: #F9F9F9; background: rgba(249,249,249,.05); }
+    .adm-nav-item.active { background: var(--adm-red); color: #FFF; font-weight: 600; }
+    .adm-nav-item.active:hover { background: var(--adm-red-hover); }
+    .adm-nav-icon     { width: 14px; height: 14px; flex-shrink: 0; opacity: .7; }
+    .adm-nav-item.active .adm-nav-icon { opacity: 1; }
+    .adm-sidebar-bottom { margin-top: auto; padding: 12px 0; border-top: 1px solid rgba(249,249,249,.06); }
+
+    /* ══════════════════════════════════════
+      MAIN
+    ══════════════════════════════════════ */
+    .adm-main    { margin-left: var(--adm-sidebar-w); flex: 1; display: flex; flex-direction: column; min-width: 0; background: #F9F9F9; }
+
+    /* ══════════════════════════════════════
+      TOPBAR — conservado custom
+    ══════════════════════════════════════ */
+    .adm-topbar  { height: var(--adm-topbar-h); background: #FFF; border-bottom: 1px solid var(--adm-border); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; position: sticky; top: 0; z-index: 90; }
+    .adm-topbar-left  { display: flex; align-items: center; gap: 16px; }
+    .adm-topbar-title { font-size: 15px; font-weight: 700; letter-spacing: .04em; color: var(--adm-text); }
+    .adm-topbar-count { font-size: 11px; color: var(--adm-muted); }
+    .adm-avatar  { width: 32px; height: 32px; background: var(--adm-red); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0; }
+
+    /* ══════════════════════════════════════
+      CONTENT
+    ══════════════════════════════════════ */
+    .adm-content { padding: 28px 32px; flex: 1; }
+
+    /* ══════════════════════════════════════
+       BARRA DE ACCIONES
+    ══════════════════════════════════════ */
+    .adm-actions { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; gap: 12px; flex-wrap: wrap; }
+
+    /* ══════════════════════════════════════
+       TABLA DE PRODUCTOS
+    ══════════════════════════════════════ */
+    .adm-card-table { background: #FFF; border: 1px solid var(--adm-border); }
+
+    .adm-table thead th {
+      font-size: 9px; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--adm-muted);
+      background: #FAFAFA; white-space: nowrap;
+    }
+    .adm-table tbody td { font-size: 12px; color: var(--adm-text); vertical-align: middle; }
+    .table-hover > tbody > tr:hover > * { background-color: rgba(225,34,43,.02) !important; }
+
+    .adm-prod-name  { font-weight: 600; font-size: 12px; }
+    .adm-prod-brand { font-size: 10px; color: var(--adm-muted); margin-top: 1px; }
+    .adm-prod-id    { font-size: 10px; color: var(--adm-muted); font-family: monospace; }
+
+    /* ── Badges disponibilidad ── */
+    .adm-nivel { font-size: 9px !important; font-weight: 700; letter-spacing: .10em; text-transform: uppercase; white-space: nowrap; }
+    .adm-nivel.green  { background: rgba(76,175,80,.10)  !important; color: #2e7d32 !important; border: 1px solid #4caf50; }
+    .adm-nivel.yellow { background: rgba(249,168,37,.10) !important; color: #9a6800 !important; border: 1px solid #f9a825; }
+    .adm-nivel.red    { background: rgba(225,34,43,.06)  !important; color: var(--adm-red) !important; border: 1px solid var(--adm-red); }
+
+    /* ══════════════════════════════════════
+       EMPTY STATE
+    ══════════════════════════════════════ */
+    .adm-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 56px 20px; gap: 10px; }
+    .adm-empty-icon { width: 36px; height: 36px; opacity: .18; }
+    .adm-empty-text { font-size: 13px; color: var(--adm-muted); }
+
+    /* ══════════════════════════════════════
+       DRAWER OVERLAY
+    ══════════════════════════════════════ */
+    .adm-drawer-overlay {
+      position: fixed; inset: 0; background: rgba(15,15,15,.45);
+      z-index: 400; opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity .3s, visibility .3s;
+    }
+    .adm-drawer-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+
+    /* ══════════════════════════════════════
+       DRAWER PANEL
+    ══════════════════════════════════════ */
+    .adm-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: var(--adm-drawer-w); background: #F9F9F9;
+      z-index: 500; transform: translateX(100%);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      display: flex; flex-direction: column;
+      box-shadow: -8px 0 40px rgba(15,15,15,.12);
+    }
+    .adm-drawer.open { transform: translateX(0); }
+
+    .adm-drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px; background: #FFF;
+      border-bottom: 1px solid var(--adm-border); flex-shrink: 0;
+    }
+    .adm-drawer-title { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--adm-text); }
+    .adm-drawer-close {
+      width: 32px; height: 32px; background: none; border: 1px solid var(--adm-border);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: var(--adm-muted); transition: color .15s, border-color .15s;
+    }
+    .adm-drawer-close:hover { color: var(--adm-text); border-color: #ccc; }
+
+    .adm-drawer-body   { flex: 1; overflow-y: auto; padding: 20px 24px; }
+    .adm-drawer-footer {
+      display: flex; gap: 10px; padding: 16px 24px;
+      background: #FFF; border-top: 1px solid var(--adm-border); flex-shrink: 0;
+    }
+
+    /* ── Etiqueta de variante ── */
+    .adm-variant-label-small {
+      font-size: 9px; font-weight: 600; letter-spacing: .10em;
+      text-transform: uppercase; color: var(--adm-muted); white-space: nowrap;
+    }
+
+    /* ══════════════════════════════════════
+       BOOTSTRAP OVERRIDES — paleta HERA
+    ══════════════════════════════════════ */
+
+    /* Tipografía en form controls */
+    .form-control, .form-select, .form-label,
+    .form-check-label, .btn, .card-header {
+      font-family: 'Instrument Sans', sans-serif;
+    }
+    .form-control, .form-select { font-size: 13px; }
+
+    /* Focus ring — rojo HERA, sin azul */
+    .form-control:focus, .form-select:focus {
+      border-color: var(--adm-red);
+      box-shadow: 0 0 0 .25rem rgba(225,34,43,.15);
+    }
+    .form-check-input:focus {
+      border-color: var(--adm-red);
+      box-shadow: 0 0 0 .25rem rgba(225,34,43,.15);
+    }
+
+    /* Form-switch checked — verde HERA */
+    .form-check-input:checked {
+      background-color: var(--adm-green);
+      border-color: var(--adm-green);
+    }
+
+    /* Card header — secciones del formulario */
+    .adm-drawer-body .card-header {
+      font-size: 9px; font-weight: 700;
+      letter-spacing: .20em; text-transform: uppercase;
+      color: var(--adm-muted); background: #FAFAFA;
+      padding: 8px 16px;
+    }
+    .adm-drawer-body .card { border-color: var(--adm-border); }
+
+    /* form-label — estilo HERA */
+    .adm-drawer-body .form-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--adm-text); margin-bottom: 4px;
+    }
+    .adm-drawer-body .form-label .req { color: var(--adm-red); margin-left: 2px; }
+
+    /* Botón primario — rojo HERA */
+    .btn-primary {
+      --bs-btn-bg:                  var(--adm-red);
+      --bs-btn-border-color:        var(--adm-red);
+      --bs-btn-hover-bg:            var(--adm-red-hover);
+      --bs-btn-hover-border-color:  var(--adm-red-hover);
+      --bs-btn-active-bg:           var(--adm-red-hover);
+      --bs-btn-active-border-color: var(--adm-red-hover);
+      --bs-btn-focus-shadow-rgb:    225, 34, 43;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+    }
+
+    /* Toast */
+    #adm-toast {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 12px; background: #0F0F0F;
+    }
+
+    /* ══════════════════════════════════════
+       BREAKPOINT: TABLET — ≤1024px
+    ══════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      :root { --adm-sidebar-w: 60px; --adm-drawer-w: 90vw; }
+      .adm-logo-sub, .adm-nav-label, .adm-nav-text { display: none; }
+      .adm-sidebar-logo { padding: 20px 16px; text-align: center; }
+      .adm-logo-brand   { font-size: 18px; }
+      .adm-nav-item     { justify-content: center; padding: 12px 0; }
+      .adm-nav-icon     { width: 18px; height: 18px; }
+    }
+
+    /* ══════════════════════════════════════
+       BREAKPOINT: MÓVIL — ≤768px
+    ══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      :root { --adm-sidebar-w: 0px; --adm-drawer-w: 100vw; }
+      .adm-sidebar { display: none; }
+      .adm-topbar  { padding: 0 16px; }
+      .adm-content { padding: 16px; }
+      .adm-actions { flex-direction: column; align-items: stretch; }
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="adm-wrap">
+
+  <!-- ══════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════ -->
+  <aside class="adm-sidebar">
+    <div class="adm-sidebar-logo">
+      <div class="adm-logo-brand">Hera</div>
+      <div class="adm-logo-sub">Panel Admin</div>
+    </div>
+    <nav aria-label="Navegación del panel admin">
+      <div class="adm-nav-section">
+        <div class="adm-nav-label">Principal</div>
+        <a href="dashboard.html" class="adm-nav-item" aria-label="Dashboard">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span class="adm-nav-text">Dashboard</span>
+        </a>
+        <a href="ordenes.html" class="adm-nav-item" aria-label="Órdenes">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+          <span class="adm-nav-text">Órdenes</span>
+        </a>
+        <a href="productos.html" class="adm-nav-item active" aria-label="Productos">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          <span class="adm-nav-text">Productos</span>
+        </a>
+        <a href="clientes.html" class="adm-nav-item" aria-label="Clientes">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <span class="adm-nav-text">Clientes</span>
+        </a>
+      </div>
+      <div class="adm-nav-section">
+        <div class="adm-nav-label">Sitio</div>
+        <a href="configuracion.html" class="adm-nav-item" aria-label="Configuración">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          <span class="adm-nav-text">Configuración</span>
+        </a>
+      </div>
+    </nav>
+    <div class="adm-sidebar-bottom">
+      <a href="../index.html" class="adm-nav-item" aria-label="Ver sitio público">
+        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span class="adm-nav-text">Ver sitio</span>
+      </a>
+      <button class="adm-nav-item" id="btn-logout" aria-label="Cerrar sesión del panel admin">
+        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span class="adm-nav-text">Cerrar sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════════════════
+       MAIN
+  ══════════════════════════════════════ -->
+  <div class="adm-main">
+
+    <header class="adm-topbar">
+      <div class="adm-topbar-left">
+        <h1 class="adm-topbar-title">Productos</h1>
+        <span class="adm-topbar-count" id="prod-count"></span>
+      </div>
+      <div class="adm-avatar" aria-label="Usuario administrador">AD</div>
+    </header>
+
+    <main class="adm-content">
+
+      <!-- BARRA DE ACCIONES -->
+      <div class="adm-actions">
+        <div class="d-flex gap-2 flex-wrap align-items-center flex-fill">
+          <div class="input-group input-group-sm" style="max-width:320px;">
+            <input type="text" class="form-control" id="prod-search" placeholder="Buscar por nombre o marca..." aria-label="Buscar productos" />
+            <button class="btn btn-outline-secondary" type="button" aria-label="Ejecutar búsqueda">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
+          </div>
+          <select class="form-select form-select-sm" id="filter-tipo" style="min-width:150px;" aria-label="Filtrar por tipo">
+            <option value="">Todos los tipos</option>
+            <option value="perfumes">Perfumes</option>
+            <option value="joyeria">Joyería</option>
+          </select>
+          <select class="form-select form-select-sm" id="filter-nivel" style="min-width:170px;" aria-label="Filtrar por disponibilidad">
+            <option value="">Toda disponibilidad</option>
+            <option value="green">En existencia</option>
+            <option value="yellow">Disp. limitada</option>
+            <option value="red">Pieza exclusiva</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-sm" id="btn-nuevo" aria-label="Agregar nuevo producto">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nuevo producto
+        </button>
+      </div>
+
+      <!-- TABLA -->
+      <div class="adm-card-table">
+        <table class="table table-hover adm-table mb-0" aria-label="Tabla de productos del catálogo">
+          <thead>
+            <tr>
+              <th scope="col">Producto</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Categoría</th>
+              <th scope="col">Precio base</th>
+              <th scope="col">Variantes</th>
+              <th scope="col">Disponibilidad</th>
+              <th scope="col">Activo</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="prod-tbody"></tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     DRAWER OVERLAY
+══════════════════════════════════════ -->
+<div class="adm-drawer-overlay" id="drawer-overlay" aria-hidden="true"></div>
+
+<!-- ══════════════════════════════════════
+     DRAWER — Formulario Bootstrap
+══════════════════════════════════════ -->
+<aside class="adm-drawer" id="prod-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+
+  <div class="adm-drawer-header">
+    <span class="adm-drawer-title" id="drawer-title">Nuevo producto</span>
+    <button class="adm-drawer-close" id="drawer-close" aria-label="Cerrar formulario">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="adm-drawer-body">
+
+    <!-- ── Identidad ── -->
+    <div class="card mb-3">
+      <div class="card-header">Identidad</div>
+      <div class="card-body">
+        <div class="row g-3">
+
+          <div class="col-12">
+            <label class="form-label" for="f-brand">Marca <span class="req">*</span></label>
+            <input class="form-control" type="text" id="f-brand" placeholder="Ej: Dior" />
+            <div class="form-text" id="f-marca-preview"></div>
+            <div class="invalid-feedback" id="err-brand">Campo obligatorio.</div>
+            <input type="hidden" id="f-marca" />
+          </div>
+
+          <div class="col-12">
+            <label class="form-label" for="f-name">Nombre del producto <span class="req">*</span></label>
+            <input class="form-control" type="text" id="f-name" placeholder="Ej: Sauvage EDP" />
+            <div class="invalid-feedback" id="err-name">Campo obligatorio.</div>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label" for="f-id">ID único <span class="req">*</span></label>
+            <input class="form-control" type="text" id="f-id" placeholder="Ej: sauvage-7" />
+            <div class="invalid-feedback" id="err-id">Campo obligatorio.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Clasificación ── -->
+    <div class="card mb-3">
+      <div class="card-header">Clasificación</div>
+      <div class="card-body">
+        <div class="row g-3">
+
+          <div class="col-6">
+            <label class="form-label" for="f-tipo">Tipo <span class="req">*</span></label>
+            <select class="form-select" id="f-tipo">
+              <option value="">Seleccionar</option>
+              <option value="perfumes">Perfumes</option>
+              <option value="joyeria">Joyería</option>
+            </select>
+            <div class="invalid-feedback" id="err-tipo">Selecciona un tipo.</div>
+          </div>
+
+          <div class="col-6">
+            <label class="form-label" for="f-cat">Categoría <span class="req">*</span></label>
+            <select class="form-select" id="f-cat">
+              <option value="">Seleccionar</option>
+              <optgroup label="Perfumes">
+                <option value="diseñador">Diseñador</option>
+                <option value="nicho">Nicho</option>
+                <option value="arabes">Árabes</option>
+                <option value="testers">Testers</option>
+                <option value="decants">Decants</option>
+                <option value="sets">Sets</option>
+                <option value="body-mist">Body Mist</option>
+              </optgroup>
+              <optgroup label="Joyería">
+                <option value="anillos">Anillos</option>
+                <option value="aretes">Aretes</option>
+                <option value="collares">Collares</option>
+                <option value="brazaletes">Brazaletes</option>
+              </optgroup>
+            </select>
+            <div class="invalid-feedback" id="err-cat">Selecciona una categoría.</div>
+          </div>
+
+          <div class="col-6">
+            <label class="form-label" for="f-gen">Género <span class="req">*</span></label>
+            <select class="form-select" id="f-gen">
+              <option value="">Seleccionar</option>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+              <option value="unisex">Unisex</option>
+            </select>
+            <div class="invalid-feedback" id="err-gen">Selecciona un género.</div>
+          </div>
+
+          <div class="col-6">
+            <label class="form-label" for="f-fam">Familia olfativa</label>
+            <select class="form-select" id="f-fam">
+              <option value="">Sin familia (joyería)</option>
+              <option value="floral">Floral</option>
+              <option value="oriental">Oriental</option>
+              <option value="amaderado">Amaderado</option>
+              <option value="fresco">Fresco</option>
+              <option value="gourmand">Gourmand</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Precio y variantes ── -->
+    <div class="card mb-3">
+      <div class="card-header">Precio y variantes</div>
+      <div class="card-body">
+        <div class="row g-3 mb-3">
+          <div class="col-6">
+            <label class="form-label" for="f-vol-label">Etiqueta de variante</label>
+            <select class="form-select" id="f-vol-label">
+              <option value="Presentación">Presentación (ml)</option>
+              <option value="Talla">Talla</option>
+              <option value="Material">Material</option>
+              <option value="Largo">Largo</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="variants-list" class="d-flex flex-column gap-2 mb-3"></div>
+
+        <button class="btn btn-outline-secondary btn-sm w-100" id="btn-add-variant" type="button"
+                style="border-style:dashed; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;"
+                aria-label="Agregar variante">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Agregar variante
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Merchandising ── -->
+    <div class="card mb-3">
+      <div class="card-header">Merchandising</div>
+      <div class="card-body">
+        <div class="row g-3 mb-3">
+
+          <div class="col-6">
+            <label class="form-label" for="f-nivel">Disponibilidad <span class="req">*</span></label>
+            <select class="form-select" id="f-nivel">
+              <option value="">Seleccionar</option>
+              <option value="green">En existencia</option>
+              <option value="yellow">Disponibilidad limitada</option>
+              <option value="red">Pieza exclusiva</option>
+            </select>
+            <div class="invalid-feedback" id="err-nivel">Selecciona el nivel.</div>
+          </div>
+
+          <div class="col-6">
+            <label class="form-label" for="f-badge">Badge</label>
+            <input class="form-control" type="text" id="f-badge" placeholder="Ej: Más vendido, -20%" />
+          </div>
+
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center py-2 border-top">
+          <label class="form-label mb-0" for="f-nuevo">Marcar como nuevo</label>
+          <div class="form-check form-switch mb-0">
+            <input class="form-check-input" type="checkbox" id="f-nuevo" role="switch" />
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center py-2 border-top mt-1">
+          <label class="form-label mb-0" for="f-activo">Producto activo en el sitio</label>
+          <div class="form-check form-switch mb-0">
+            <input class="form-check-input" type="checkbox" id="f-activo" role="switch" checked />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /drawer-body -->
+
+  <div class="adm-drawer-footer">
+    <button class="btn btn-outline-secondary" id="btn-cancel-drawer" type="button">Cancelar</button>
+    <button class="btn btn-primary flex-fill" id="btn-save-product" type="button">Guardar producto</button>
+  </div>
+
+</aside>
+
+<!-- ══════════════════════════════════════
+     TOAST — Bootstrap
+══════════════════════════════════════ -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index:9999;">
+  <div id="adm-toast" class="toast text-white border-0" role="status" aria-live="polite" aria-atomic="true">
+    <div class="d-flex align-items-center">
+      <div class="toast-body d-flex align-items-center gap-2">
+        <span id="toast-dot" style="width:7px;height:7px;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
+        <span id="toast-msg"></span>
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 ms-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+/* ══════════════════════════════════════
+   GUARD — Verificar sesión admin
+══════════════════════════════════════ */
+(function guardAdmin() {
+  try {
+    var auth = JSON.parse(localStorage.getItem('hera_admin_auth') || 'null');
+    if (!auth || !auth.loggedIn) { window.location.href = '../cuenta.html'; }
+  } catch (e) { window.location.href = '../cuenta.html'; }
+}());
+
+/* ══════════════════════════════════════
+   CATÁLOGO FALLBACK
+══════════════════════════════════════ */
+var CATALOG_FALLBACK = [
+  { id:'jenny-1',      brand:'Jenny Rivera',        name:'Inolvidable EDP',     price:'$1,210 MXN', precio:1210, badge:'Más vendido', cat:'diseñador', gen:'femenino',  fam:'floral',    marca:'jenny-rivera',     nuevo:false, tipo:'perfumes', nivel:'green',  vols:[{ml:50,precio:1210},{ml:100,precio:1890}],             volLabel:'Presentación', masVariantes:false, activo:true },
+  { id:'fierce-2',     brand:'Abercrombie & Fitch',  name:'Fierce EDT',          price:'$760 MXN',   precio:760,  badge:'',           cat:'diseñador', gen:'masculino', fam:'fresco',    marca:'abercrombie',      nuevo:false, tipo:'perfumes', nivel:'green',  vols:[{ml:50,precio:760},{ml:100,precio:1180},{ml:200,precio:1740}], volLabel:'Presentación', masVariantes:false, activo:true },
+  { id:'authentic-3',  brand:'Abercrombie & Fitch',  name:'Authentic EDP',       price:'$975 MXN',   precio:975,  badge:'Ed. limitada',cat:'diseñador', gen:'unisex',   fam:'amaderado', marca:'abercrombie',      nuevo:false, tipo:'perfumes', nivel:'yellow', vols:[{ml:50,precio:975},{ml:100,precio:1540}],              volLabel:'Presentación', masVariantes:false, activo:true },
+  { id:'signature-4',  brand:'HERA Exclusivo',       name:'Signature Blanc',     price:'$1,490 MXN', precio:1490, badge:'Nuevo',       cat:'nicho',     gen:'unisex',   fam:'floral',    marca:'hera-exclusivo',   nuevo:true,  tipo:'perfumes', nivel:'yellow', vols:[{ml:50,precio:1490},{ml:100,precio:2280}],             volLabel:'Presentación', masVariantes:false, activo:true },
+  { id:'noir-5',       brand:'HERA Exclusivo',       name:'Noir Absolu',         price:'$1,480 MXN', precio:1480, badge:'-20%',        cat:'nicho',     gen:'masculino', fam:'oriental',  marca:'hera-exclusivo',   nuevo:false, tipo:'perfumes', nivel:'yellow', vols:[{ml:50,precio:1480},{ml:100,precio:2200}],             volLabel:'Presentación', masVariantes:false, activo:true },
+  { id:'oud-6',        brand:'HERA Árabe',           name:'Oud Rose',            price:'$1,320 MXN', precio:1320, badge:'',           cat:'arabes',    gen:'unisex',   fam:'oriental',  marca:'hera-arabe',       nuevo:false, tipo:'perfumes', nivel:'green',  vols:[{ml:30,precio:1320},{ml:50,precio:1890}],              volLabel:'Presentación', masVariantes:false, activo:true },
+  { id:'sauvage-7',    brand:'Dior',                 name:'Sauvage EDP',         price:'$2,450 MXN', precio:2450, badge:'Más vendido', cat:'diseñador', gen:'masculino', fam:'fresco',    marca:'dior',             nuevo:false, tipo:'perfumes', nivel:'red',    vols:[{ml:60,precio:1850},{ml:100,precio:2450},{ml:200,precio:3100}], volLabel:'Presentación', masVariantes:false, activo:true },
+  { id:'blanche-8',    brand:'Byredo',               name:'Blanche EDP',         price:'$2,100 MXN', precio:2100, badge:'',           cat:'nicho',     gen:'femenino',  fam:'floral',    marca:'byredo',           nuevo:false, tipo:'perfumes', nivel:'red',    vols:[{ml:50,precio:2100},{ml:100,precio:3400}],             volLabel:'Presentación', masVariantes:false, activo:true },
+  { id:'anillo-1',     brand:'HERA Joyería',         name:'Anillo Solitario',    price:'$1,290 MXN', precio:1290, badge:'Nuevo',       cat:'anillos',   gen:'femenino',  fam:'',          marca:'hera-joyeria',     nuevo:true,  tipo:'joyeria',  nivel:'yellow', vols:[{ml:'5',precio:1290},{ml:'6',precio:1290},{ml:'7',precio:1290}], volLabel:'Talla', masVariantes:true, activo:true },
+  { id:'aretes-1',     brand:'HERA Joyería',         name:'Aretes Perla',        price:'$680 MXN',   precio:680,  badge:'',           cat:'aretes',    gen:'femenino',  fam:'',          marca:'hera-joyeria',     nuevo:false, tipo:'joyeria',  nivel:'yellow', vols:[{ml:'Plata .925',precio:680},{ml:'Oro 14k',precio:980}],      volLabel:'Material', masVariantes:false, activo:true },
+  { id:'collar-1',     brand:'HERA Joyería',         name:'Collar Dorado',       price:'$890 MXN',   precio:890,  badge:'',           cat:'collares',  gen:'unisex',   fam:'',          marca:'hera-joyeria',     nuevo:false, tipo:'joyeria',  nivel:'yellow', vols:[{ml:'40 cm',precio:890},{ml:'45 cm',precio:890}],            volLabel:'Largo', masVariantes:false, activo:true },
+  { id:'brazalete-1',  brand:'HERA Joyería',         name:'Brazalete Minimal',   price:'$750 MXN',   precio:750,  badge:'Nuevo',       cat:'brazaletes',gen:'unisex',   fam:'',          marca:'hera-joyeria',     nuevo:true,  tipo:'joyeria',  nivel:'red',    vols:[{ml:'Plata .925',precio:750},{ml:'Oro 18k',precio:1200}],     volLabel:'Material', masVariantes:false, activo:true }
+];
+
+/* ══════════════════════════════════════
+   ESTADO
+══════════════════════════════════════ */
+var appState = { products: [], editingId: null, filtered: [] };
+
+/* ══════════════════════════════════════
+   INICIALIZACIÓN
+══════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function () {
+  loadProducts();
+  renderTable(appState.filtered);
+  initDrawer();
+  initSlugAutoGen();
+  initFilters();
+  initLogout();
+});
+
+function loadProducts() {
+  try {
+    var stored = localStorage.getItem('hera_products');
+    appState.products = stored ? JSON.parse(stored) : CATALOG_FALLBACK;
+  } catch (e) { appState.products = CATALOG_FALLBACK; }
+  appState.filtered = appState.products.slice();
+  updateCount();
+}
+
+function saveProducts() {
+  try { localStorage.setItem('hera_products', JSON.stringify(appState.products)); } catch (e) {}
+}
+
+function updateCount() {
+  var el = document.getElementById('prod-count');
+  if (!el) return;
+  var total   = appState.products.length;
+  var activos = appState.products.filter(function (p) { return p.activo !== false; }).length;
+  el.textContent = total + ' productos · ' + activos + ' activos';
+}
+
+/* ══════════════════════════════════════
+   RENDER TABLA
+══════════════════════════════════════ */
+function renderTable(list) {
+  var tbody = document.getElementById('prod-tbody');
+  if (!tbody) return;
+
+  if (!list || list.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8">' + buildEmpty('Sin productos que coincidan') + '</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = list.map(function (p) {
+    var precio  = p.precio ? '$' + p.precio.toLocaleString('es-MX') + ' MXN' : '—';
+    var numVols = p.vols ? p.vols.length : 0;
+    var checked = p.activo !== false ? 'checked' : '';
+    return (
+      '<tr>' +
+        '<td>' +
+          '<div class="adm-prod-name">'  + (p.name  || '—') + '</div>' +
+          '<div class="adm-prod-brand">' + (p.brand || '—') + '</div>' +
+          '<div class="adm-prod-id">'    + (p.id    || '—') + '</div>' +
+        '</td>' +
+        '<td>' + capitalize(p.tipo || '—') + '</td>' +
+        '<td>' + capitalize(p.cat  || '—') + '</td>' +
+        '<td style="font-weight:600;">' + precio + '</td>' +
+        '<td style="color:var(--adm-muted);font-size:12px;">' + numVols + (numVols === 1 ? ' variante' : ' variantes') + '</td>' +
+        '<td>' + buildNivel(p.nivel) + '</td>' +
+        '<td>' +
+          '<div class="form-check form-switch mb-0">' +
+            '<input class="form-check-input" type="checkbox" ' + checked + ' data-toggle-id="' + p.id + '" role="switch" aria-label="Activar o desactivar producto" />' +
+          '</div>' +
+        '</td>' +
+        '<td>' +
+          '<div class="d-flex gap-1">' +
+            '<button class="btn btn-sm btn-outline-secondary" data-edit-id="' + p.id + '" aria-label="Editar producto">' +
+              '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+            '</button>' +
+            '<button class="btn btn-sm btn-outline-danger" data-delete-id="' + p.id + '" aria-label="Eliminar producto">' +
+              '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>' +
+            '</button>' +
+          '</div>' +
+        '</td>' +
+      '</tr>'
+    );
+  }).join('');
+
+  tbody.querySelectorAll('[data-edit-id]').forEach(function (btn) {
+    btn.addEventListener('click', function () { openDrawer(btn.dataset.editId); });
+  });
+  tbody.querySelectorAll('[data-delete-id]').forEach(function (btn) {
+    btn.addEventListener('click', function () { deleteProduct(btn.dataset.deleteId); });
+  });
+  tbody.querySelectorAll('[data-toggle-id]').forEach(function (chk) {
+    chk.addEventListener('change', function () { toggleActivo(chk.dataset.toggleId, chk.checked); });
+  });
+}
+
+function buildNivel(nivel) {
+  var labels = { green: 'En existencia', yellow: 'Disp. limitada', red: 'Pieza exclusiva' };
+  var n = nivel || 'green';
+  return '<span class="badge adm-nivel ' + n + '">' + (labels[n] || n) + '</span>';
+}
+
+function buildEmpty(texto) {
+  return (
+    '<div class="adm-empty">' +
+      '<svg class="adm-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>' +
+      '<span class="adm-empty-text">' + texto + '</span>' +
+    '</div>'
+  );
+}
+
+function capitalize(str) {
+  if (!str) return '—';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/* ══════════════════════════════════════
+   FILTROS
+══════════════════════════════════════ */
+function initFilters() {
+  var searchInput = document.getElementById('prod-search');
+  var filterTipo  = document.getElementById('filter-tipo');
+  var filterNivel = document.getElementById('filter-nivel');
+
+  function applyFilters() {
+    var q     = searchInput ? searchInput.value.trim().toLowerCase() : '';
+    var tipo  = filterTipo  ? filterTipo.value  : '';
+    var nivel = filterNivel ? filterNivel.value : '';
+    appState.filtered = appState.products.filter(function (p) {
+      var matchQ     = !q     || (p.name  || '').toLowerCase().includes(q) || (p.brand || '').toLowerCase().includes(q);
+      var matchTipo  = !tipo  || p.tipo  === tipo;
+      var matchNivel = !nivel || p.nivel === nivel;
+      return matchQ && matchTipo && matchNivel;
+    });
+    renderTable(appState.filtered);
+  }
+
+  if (searchInput) searchInput.addEventListener('input',  applyFilters);
+  if (filterTipo)  filterTipo.addEventListener('change',  applyFilters);
+  if (filterNivel) filterNivel.addEventListener('change', applyFilters);
+}
+
+/* ══════════════════════════════════════
+   TOGGLE ACTIVO
+══════════════════════════════════════ */
+function toggleActivo(id, activo) {
+  appState.products = appState.products.map(function (p) {
+    return p.id === id ? Object.assign({}, p, { activo: activo }) : p;
+  });
+  saveProducts();
+  updateCount();
+  showToast(activo ? 'Producto activado' : 'Producto desactivado', activo ? '#4caf50' : '#f9a825');
+}
+
+/* ══════════════════════════════════════
+   ELIMINAR
+══════════════════════════════════════ */
+function deleteProduct(id) {
+  if (!confirm('¿Eliminar este producto del catálogo? Esta acción no se puede deshacer.')) return;
+  appState.products = appState.products.filter(function (p) { return p.id !== id; });
+  appState.filtered = appState.filtered.filter(function (p) { return p.id !== id; });
+  saveProducts();
+  renderTable(appState.filtered);
+  updateCount();
+  showToast('Producto eliminado', '#E1222B');
+}
+
+/* ══════════════════════════════════════
+   DRAWER
+══════════════════════════════════════ */
+function initDrawer() {
+  var btnNuevo  = document.getElementById('btn-nuevo');
+  var overlay   = document.getElementById('drawer-overlay');
+  var btnClose  = document.getElementById('drawer-close');
+  var btnCancel = document.getElementById('btn-cancel-drawer');
+  var btnSave   = document.getElementById('btn-save-product');
+  var btnAddVar = document.getElementById('btn-add-variant');
+
+  if (btnNuevo)  btnNuevo.addEventListener('click',  function () { openDrawer(null); });
+  if (overlay)   overlay.addEventListener('click',   closeDrawer);
+  if (btnClose)  btnClose.addEventListener('click',  closeDrawer);
+  if (btnCancel) btnCancel.addEventListener('click', closeDrawer);
+  if (btnSave)   btnSave.addEventListener('click',   saveProduct);
+  if (btnAddVar) btnAddVar.addEventListener('click', function () { addVariantRow(); });
+}
+
+function openDrawer(editId) {
+  appState.editingId = editId || null;
+  var drawer  = document.getElementById('prod-drawer');
+  var overlay = document.getElementById('drawer-overlay');
+  var title   = document.getElementById('drawer-title');
+  var btnSave = document.getElementById('btn-save-product');
+
+  if (editId) {
+    var prod = appState.products.find(function (p) { return p.id === editId; });
+    if (!prod) return;
+    title.textContent   = 'Editar producto';
+    btnSave.textContent = 'Guardar cambios';
+    populateForm(prod);
+  } else {
+    title.textContent   = 'Nuevo producto';
+    btnSave.textContent = 'Guardar producto';
+    resetForm();
+    addVariantRow();
+  }
+
+  if (overlay) overlay.classList.add('open');
+  if (drawer)  drawer.classList.add('open');
+  setTimeout(function () {
+    var first = document.getElementById('f-brand');
+    if (first) first.focus();
+  }, 350);
+}
+
+function closeDrawer() {
+  var drawer  = document.getElementById('prod-drawer');
+  var overlay = document.getElementById('drawer-overlay');
+  if (overlay) overlay.classList.remove('open');
+  if (drawer)  drawer.classList.remove('open');
+  appState.editingId = null;
+}
+
+/* ══════════════════════════════════════
+   VARIANTES
+══════════════════════════════════════ */
+function addVariantRow(ml, precio) {
+  var list = document.getElementById('variants-list');
+  if (!list) return;
+
+  var row = document.createElement('div');
+  row.className = 'd-flex align-items-center gap-2';
+  row.innerHTML =
+    '<span class="adm-variant-label-small">Vol / Talla</span>' +
+    '<input class="form-control form-control-sm variant-ml" type="text" placeholder="Ej: 50, XL, Oro 14k" value="' + (ml || '') + '" aria-label="Valor de variante" />' +
+    '<span class="adm-variant-label-small">Precio</span>' +
+    '<input class="form-control form-control-sm variant-precio" type="number" placeholder="MXN" value="' + (precio || '') + '" min="0" aria-label="Precio de variante" />' +
+    '<button class="btn btn-sm btn-outline-danger flex-shrink-0" type="button" aria-label="Eliminar variante">' +
+      '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+    '</button>';
+
+  row.querySelector('.btn-outline-danger').addEventListener('click', function () {
+    if (list.querySelectorAll('.d-flex').length > 1) {
+      row.remove();
+    } else {
+      showToast('Debe haber al menos una variante', '#f9a825');
+    }
+  });
+
+  list.appendChild(row);
+}
+
+function getVariants() {
+  var rows = document.querySelectorAll('#variants-list .d-flex');
+  var vols = [];
+  rows.forEach(function (row) {
+    var ml     = row.querySelector('.variant-ml')     ? row.querySelector('.variant-ml').value.trim()     : '';
+    var precio = row.querySelector('.variant-precio') ? row.querySelector('.variant-precio').value.trim() : '';
+    if (ml && precio) {
+      vols.push({ ml: isNaN(ml) ? ml : parseFloat(ml), precio: parseFloat(precio) });
+    }
+  });
+  return vols;
+}
+
+/* ══════════════════════════════════════
+   FORM — Poblar / Resetear
+══════════════════════════════════════ */
+function populateForm(p) {
+  setVal('f-brand',     p.brand    || '');
+  setVal('f-marca',     p.marca    || '');
+  setVal('f-name',      p.name     || '');
+  setVal('f-id',        p.id       || '');
+  setVal('f-tipo',      p.tipo     || '');
+  setVal('f-cat',       p.cat      || '');
+  setVal('f-gen',       p.gen      || '');
+  setVal('f-fam',       p.fam      || '');
+  setVal('f-vol-label', p.volLabel || 'Presentación');
+  setVal('f-nivel',     p.nivel    || '');
+  setVal('f-badge',     p.badge    || '');
+
+  var marcaPreview = document.getElementById('f-marca-preview');
+  if (marcaPreview) marcaPreview.textContent = p.marca ? 'slug: ' + p.marca : '';
+
+  var chkNuevo  = document.getElementById('f-nuevo');
+  var chkActivo = document.getElementById('f-activo');
+  if (chkNuevo)  chkNuevo.checked  = !!p.nuevo;
+  if (chkActivo) chkActivo.checked = p.activo !== false;
+
+  var list = document.getElementById('variants-list');
+  if (list) list.innerHTML = '';
+  if (p.vols && p.vols.length > 0) {
+    p.vols.forEach(function (v) { addVariantRow(v.ml, v.precio); });
+  } else {
+    addVariantRow();
+  }
+  clearAllErrors();
+}
+
+function resetForm() {
+  ['f-brand','f-marca','f-name','f-id','f-badge'].forEach(function (id) { setVal(id, ''); });
+  ['f-tipo','f-cat','f-gen','f-fam','f-nivel'].forEach(function (id) { setVal(id, ''); });
+  setVal('f-vol-label', 'Presentación');
+
+  var chkNuevo  = document.getElementById('f-nuevo');
+  var chkActivo = document.getElementById('f-activo');
+  if (chkNuevo)  chkNuevo.checked  = false;
+  if (chkActivo) chkActivo.checked = true;
+
+  var marcaPreview = document.getElementById('f-marca-preview');
+  if (marcaPreview) marcaPreview.textContent = '';
+
+  var list = document.getElementById('variants-list');
+  if (list) list.innerHTML = '';
+
+  clearAllErrors();
+}
+
+function setVal(id, val) {
+  var el = document.getElementById(id);
+  if (el) el.value = val;
+}
+
+/* ══════════════════════════════════════
+   VALIDACIÓN — Bootstrap .is-invalid
+══════════════════════════════════════ */
+var REQUIRED_FIELDS = [
+  { id: 'f-brand', errId: 'err-brand' },
+  { id: 'f-name',  errId: 'err-name'  },
+  { id: 'f-id',    errId: 'err-id'    },
+  { id: 'f-tipo',  errId: 'err-tipo'  },
+  { id: 'f-cat',   errId: 'err-cat'   },
+  { id: 'f-gen',   errId: 'err-gen'   },
+  { id: 'f-nivel', errId: 'err-nivel' }
+];
+
+function validateForm() {
+  var ok = true;
+  REQUIRED_FIELDS.forEach(function (f) {
+    var el = document.getElementById(f.id);
+    if (!el || !el.value.trim()) {
+      if (el) el.classList.add('is-invalid');
+      ok = false;
+    } else {
+      if (el) el.classList.remove('is-invalid');
+    }
+  });
+  return ok;
+}
+
+function clearAllErrors() {
+  REQUIRED_FIELDS.forEach(function (f) {
+    var el = document.getElementById(f.id);
+    if (el) el.classList.remove('is-invalid');
+  });
+}
+
+/* ══════════════════════════════════════
+   GUARDAR
+══════════════════════════════════════ */
+function saveProduct() {
+  if (!validateForm()) {
+    showToast('Completa los campos obligatorios', '#f9a825');
+    return;
+  }
+
+  var vols = getVariants();
+  if (vols.length === 0) {
+    showToast('Agrega al menos una variante con precio', '#f9a825');
+    return;
+  }
+
+  var precioBase = vols[0].precio;
+  var id         = document.getElementById('f-id').value.trim();
+
+  if (!appState.editingId) {
+    var exists = appState.products.find(function (p) { return p.id === id; });
+    if (exists) {
+      var elId  = document.getElementById('f-id');
+      var errId = document.getElementById('err-id');
+      if (elId)  elId.classList.add('is-invalid');
+      if (errId) errId.textContent = 'Este ID ya existe. Usa uno diferente.';
+      showToast('El ID ya existe en el catálogo', '#E1222B');
+      return;
+    }
+  }
+
+  var prod = {
+    id:           id,
+    brand:        document.getElementById('f-brand').value.trim(),
+    marca:        document.getElementById('f-marca').value.trim(),
+    name:         document.getElementById('f-name').value.trim(),
+    tipo:         document.getElementById('f-tipo').value,
+    cat:          document.getElementById('f-cat').value,
+    gen:          document.getElementById('f-gen').value,
+    fam:          document.getElementById('f-fam').value,
+    volLabel:     document.getElementById('f-vol-label').value,
+    nivel:        document.getElementById('f-nivel').value,
+    badge:        document.getElementById('f-badge').value.trim(),
+    nuevo:        document.getElementById('f-nuevo').checked,
+    activo:       document.getElementById('f-activo').checked,
+    vols:         vols,
+    precio:       precioBase,
+    price:        '$' + precioBase.toLocaleString('es-MX') + ' MXN',
+    masVariantes: vols.length > 1,
+    creadoEn:     appState.editingId
+      ? (appState.products.find(function (p) { return p.id === appState.editingId; }) || {}).creadoEn || new Date().toISOString()
+      : new Date().toISOString(),
+    actualizadoEn: new Date().toISOString()
+  };
+
+  if (appState.editingId) {
+    appState.products = appState.products.map(function (p) {
+      return p.id === appState.editingId ? prod : p;
+    });
+    showToast('Producto actualizado correctamente', '#4caf50');
+  } else {
+    appState.products.unshift(prod);
+    showToast('Producto creado correctamente', '#4caf50');
+  }
+
+  saveProducts();
+  appState.filtered = appState.products.slice();
+  renderTable(appState.filtered);
+  updateCount();
+  closeDrawer();
+}
+
+/* ══════════════════════════════════════
+   TOAST — Bootstrap Toast API
+══════════════════════════════════════ */
+function showToast(msg, color) {
+  var toastEl = document.getElementById('adm-toast');
+  var dot     = document.getElementById('toast-dot');
+  var msgEl   = document.getElementById('toast-msg');
+  if (!toastEl) return;
+  if (msgEl) msgEl.textContent = msg;
+  if (dot)   dot.style.background = color || '#4caf50';
+  var bsToast = bootstrap.Toast.getOrCreateInstance(toastEl, { delay: 3000 });
+  bsToast.show();
+}
+
+/* ══════════════════════════════════════
+   SLUG — Auto-generación desde marca
+══════════════════════════════════════ */
+function generateSlug(str) {
+  return str
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+}
+
+function initSlugAutoGen() {
+  var brandInput   = document.getElementById('f-brand');
+  var marcaHidden  = document.getElementById('f-marca');
+  var marcaPreview = document.getElementById('f-marca-preview');
+  if (!brandInput) return;
+  brandInput.addEventListener('input', function () {
+    var slug = generateSlug(brandInput.value);
+    if (marcaHidden)  marcaHidden.value       = slug;
+    if (marcaPreview) marcaPreview.textContent = slug ? 'slug: ' + slug : '';
+  });
+}
+
+/* ══════════════════════════════════════
+   CERRAR SESIÓN
+══════════════════════════════════════ */
+function initLogout() {
+  var btn = document.getElementById('btn-logout');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    try { localStorage.removeItem('hera_admin_auth'); } catch (e) {}
+    window.location.href = '../cuenta.html';
+  });
+}
+
+</script>
+</body>
+</html>
