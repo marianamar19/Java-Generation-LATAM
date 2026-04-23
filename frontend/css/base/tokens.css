@@ -1,0 +1,22 @@
+/* ============================================================
+  tokens.css — HERA Design System
+  Descripción: Variables CSS globales del Design System.
+              Colores, tipografías y cualquier token reutilizable.
+  Usado por: Todos los archivos CSS del proyecto vía cascade.
+            Debe ser el primer CSS importado en cada página.
+  ============================================================ */
+
+/* ── Sección: Paleta de color ───────────────────────────────── */
+:root {
+  --red:   #E1222B;   /* Rojo HERA — acento principal, CTAs, estados activos   */
+  --cream: #F9F9F9;   /* Crema — fondo base del sitio, texto sobre fondos oscuros */
+  --black: #0F0F0F;   /* Negro profundo — texto principal, fondos de producto   */
+  --lgray: #E6E6E6;   /* Gris claro — bordes, fondos sutiles, separadores       */
+  --dgray: #2E2E2E;   /* Gris oscuro — texto secundario, hover en links         */
+}
+
+/* ── Sección: Tipografía ────────────────────────────────────── */
+:root {
+  --sans:  'Instrument Sans', sans-serif;     /* Fuente principal — UI, precios, labels */
+  --serif: 'Cormorant Garamond', serif;       /* Fuente editorial — nombres, citas, títulos elegantes */
+}
