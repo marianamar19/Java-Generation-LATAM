@@ -3,30 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Contáctanos por correo, teléfono o WhatsApp. El equipo de HERA Perfumes & Joyería responde en menos de 24 horas, de lunes a sábado." />
-  <title>Contacto — HERA Perfumes & Joyería</title>
+  <meta name="description" content="Contáctanos por correo, teléfono o WhatsApp. El equipo de HERA Perfumes &amp; Joyería responde en menos de 24 horas, de lunes a sábado." />
+  <title>Contacto — HERA Perfumes &amp; Joyería</title>
 
-  <!-- ── Design System: tokens, reset, tipografía ── -->
+  <!-- ── Base: Design System ── -->
   <link rel="stylesheet" href="../css/base/tokens.css" />
   <link rel="stylesheet" href="../css/base/reset.css" />
   <link rel="stylesheet" href="../css/base/typography.css" />
 
   <!-- ── Componentes universales ── -->
   <link rel="stylesheet" href="../css/components/navbar.css" />
-  <link rel="stylesheet" href="../css/components/footer.css" />
   <link rel="stylesheet" href="../css/components/drawer.css" />
-  <link rel="stylesheet" href="../css/components/modal.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
 
-  <!-- ── Estilos exclusivos de la página de Contacto ── -->
+  <!-- ── Página exclusiva ── -->
   <link rel="stylesheet" href="../css/pages/contacto.css" />
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════════
-     NAVBAR — inyectado dinámicamente vía fetch
-     navbar.js carga components/navbar.html en este div
-══════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════
+     [UNIVERSAL] NAVBAR + SEARCH + MENÚ MÓVIL
+     Inyectado dinámicamente desde components/navbar.html
+══════════════════════════════════════ -->
 <div id="navbar-placeholder"></div>
+
+<!-- ══════════════════════════════════════
+     [UNIVERSAL] CART DRAWER
+     Inyectado dinámicamente desde components/cart-drawer.html
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
 
 <div class="site-wrap">
 
@@ -35,7 +40,7 @@
   ══════════════════════════════════════ -->
   <section class="contact-hero">
 
-    <!-- ── Avatar circular con indicador de estado ── -->
+    <!-- Avatar circular — placeholder hasta que exista imagen real del equipo -->
     <div class="avatar-wrap reveal">
       <div class="avatar-ring">
         <div class="avatar-circle">
@@ -46,6 +51,7 @@
           <span class="avatar-circle-label">Tu foto</span>
         </div>
       </div>
+      <!-- Indicador de disponibilidad — el punto verde pulsa con CSS -->
       <div class="avatar-status">
         <span class="avatar-status-dot"></span>
         En línea
@@ -62,13 +68,17 @@
       Detrás de HERA hay personas reales. Sin bots, sin formularios perdidos.
     </p>
 
+    <!-- Flecha animada que invita a hacer scroll — solo visual -->
     <div class="contact-scroll-hint" aria-hidden="true">
       <div class="contact-scroll-arrow"></div>
     </div>
+
   </section>
 
   <!-- ══════════════════════════════════════
        SECCIÓN 2 — SPLIT (CREAM)
+       Izquierda: info de contacto
+       Derecha: formulario de contacto
   ══════════════════════════════════════ -->
   <section class="contact-split">
 
@@ -85,6 +95,8 @@
 
         <div class="contact-items reveal reveal-delay-3">
 
+          <!-- TEMPORAL — dirección hardcodeada. Reemplazar con dato real del backend.
+               Endpoint esperado: GET /api/config → { email_contacto: string } -->
           <div class="contact-item">
             <div class="contact-item-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -94,8 +106,6 @@
             </div>
             <div class="contact-item-body">
               <div class="contact-item-label">Correo electrónico</div>
-              <!-- TEMPORAL — dirección hardcodeada. Reemplazar con dato real del backend.
-                   Endpoint esperado: GET /api/config → { email_contacto: string } -->
               <a href="mailto:hola@heraperfumes.com" class="contact-item-value contact-item-link">hola@heraperfumes.com</a>
               <div class="contact-item-sub">Respuesta en menos de 24 h</div>
             </div>
@@ -145,7 +155,7 @@
         </div>
       </div>
 
-      <!-- Social links -->
+      <!-- Redes sociales -->
       <div>
         <p class="contact-socials-label reveal">Síguenos</p>
         <div class="contact-socials reveal reveal-delay-1">
@@ -165,7 +175,7 @@
       </div>
     </div>
 
-    <!-- RIGHT: Formulario -->
+    <!-- RIGHT: Formulario de contacto -->
     <div class="contact-form-col">
       <p class="contact-form-eyebrow reveal">Envíanos un mensaje</p>
       <h2 class="contact-form-title reveal reveal-delay-1">
@@ -173,7 +183,7 @@
       </h2>
       <p class="contact-form-desc reveal reveal-delay-2">Cuéntanos lo que necesitas y te respondemos a la brevedad.</p>
 
-      <!-- FORM WRAPPER (se oculta al enviar exitosamente) -->
+      <!-- FORM WRAPPER — se oculta al enviar para mostrar el estado de éxito -->
       <div id="formWrapper" class="reveal reveal-delay-3">
         <form class="form form-border-top" id="contactForm" novalidate>
 
@@ -191,7 +201,7 @@
             </div>
           </div>
 
-          <!-- Fila 2: Teléfono -->
+          <!-- Fila 2: Teléfono (opcional) -->
           <div class="form-row">
             <div class="form-field" id="field-telefono">
               <label for="telefono">Número de teléfono</label>
@@ -200,9 +210,10 @@
             </div>
           </div>
 
-          <!-- Asunto (selector visual de botones) -->
+          <!-- Asunto — selector visual de chips -->
           <div class="form-field" id="field-asunto">
             <label>Asunto</label>
+            <!-- El value de este input hidden lo gestiona _initAsuntoSelector() -->
             <input type="hidden" id="asunto" name="asunto" value="" />
             <div class="asunto-opts" id="asuntoOpts">
               <button type="button" class="asunto-opt" data-val="pedido">Mi pedido</button>
@@ -232,7 +243,7 @@
         </form>
       </div>
 
-      <!-- ESTADO DE ÉXITO — reemplaza el formulario tras el envío -->
+      <!-- ESTADO DE ÉXITO — visible tras el envío simulado -->
       <div class="form-success" id="formSuccess">
         <div class="form-success-icon">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -268,52 +279,19 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════
-       FOOTER — inyectado dinámicamente vía fetch
-       contacto.js carga components/footer.html en este div
-  ══════════════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════
+       [UNIVERSAL] FOOTER
+       Inyectado dinámicamente desde components/footer.html
+  ══════════════════════════════════════ -->
   <div id="footer-placeholder"></div>
 
-</div><!-- /site-wrap -->
+</div><!-- /.site-wrap -->
 
-<!-- ══════════════════════════════════════════════════
-     CART DRAWER — fuera del site-wrap para evitar
-     conflictos de z-index con el contenido
-══════════════════════════════════════════════════ -->
-<div class="cart-overlay" id="cart-overlay"></div>
-<div class="cart-drawer" id="cart-drawer">
-  <div class="cart-drawer-header">
-    <span class="cart-drawer-title">Tu carrito <span id="cart-drawer-count">(0)</span></span>
-    <button class="cart-drawer-close" id="cart-close" aria-label="Cerrar carrito">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-  </div>
-  <div class="cart-items" id="cart-items-list"></div>
-  <div class="cart-empty" id="cart-empty">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-    <p>Tu carrito está vacío.<br>Explora nuestra colección.</p>
-    <button class="btn-primary btn-primary--sm" id="cart-empty-cta">Explorar perfumes</button>
-  </div>
-  <div class="cart-footer" id="cart-footer">
-    <div class="cart-shipping-wrap">
-      <div class="cart-shipping-row">
-        <span class="cart-shipping-label">Envío gratis a partir de</span>
-        <span class="cart-shipping-value">$1,500 MXN</span>
-      </div>
-      <div class="cart-shipping-track"><div id="shipping-bar"></div></div>
-      <p id="shipping-msg"></p>
-    </div>
-    <div class="cart-subtotal">
-      <span class="cart-subtotal-label">Subtotal</span>
-      <span class="cart-subtotal-value" id="cart-total">$0 MXN</span>
-    </div>
-    <p class="cart-disclaimer">Impuestos e información de envío calculados al finalizar.</p>
-    <button class="cart-checkout-btn" id="cart-checkout-btn">Proceder al pago →</button>
-    <button class="cart-continue-btn" id="cart-continue-btn">Seguir comprando</button>
-  </div>
-</div>
-
-<!-- ── Script de la página: type="module" para ES Modules ── -->
+<!-- ══════════════════════════════════════
+     Entry point de la página — type="module"
+     Importa y orquesta todos los componentes.
+══════════════════════════════════════ -->
 <script type="module" src="../js/pages/contacto.js"></script>
+
 </body>
 </html>
