@@ -10,14 +10,6 @@
   Usado por: pages/catalogo.html
   ============================================================ */
 
-/* ── Sección: Scroll reveal ─────────────────────────────────── */
-/* Compartido con otras páginas — necesario aquí porque catalogo
-   no tiene announce-bar.css propio que lo incluya */
-.reveal          { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
-.reveal.visible  { opacity: 1; transform: none; }
-.reveal-delay-1  { transition-delay: .08s; }
-.reveal-delay-2  { transition-delay: .16s; }
-
 /* ── Sección: Catalog header — editorial oscuro ─────────────── */
 /* ── CATALOG-HEADER — comportamiento por breakpoint
    Desktop  (>1024px): fondo negro, padding 52px 80px 0, título clamp hasta 64px
@@ -408,26 +400,6 @@
   color:          rgba(15, 15, 15, .32);
   margin-bottom:  28px;
 }
-
-/* ── Sección: BTN PRIMARY ────────────────────────────────────── */
-/* Único uso en esta página: botón "Limpiar filtros" del empty state */
-.btn-primary {
-  background:      var(--red);
-  color:           #fff;
-  border:          none;
-  padding:         16px 36px;
-  font-family:     var(--sans);
-  font-size:       12px;
-  font-weight:     700;
-  letter-spacing:  .15em;
-  text-transform:  uppercase;
-  cursor:          pointer;
-  text-decoration: none;
-  display:         inline-block;
-  transition:      background .2s;
-}
-
-.btn-primary:hover { background: #c41c24; }
 
 /* ── Sección: Mobile filter bar ─────────────────────────────── */
 /* ── FILTER-MOBILE-BAR — comportamiento por breakpoint
