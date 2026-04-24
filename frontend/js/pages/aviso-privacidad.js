@@ -9,7 +9,6 @@
  * Importado por: pages/aviso-privacidad.html via <script type="module">
  */
 
-import { loadAnnounceBar }        from '../components/announce-bar.js';
 import { loadNavbar, setCatalog } from '../components/navbar.js';
 import { loadFooter }             from '../components/footer.js';
 import { loadCartDrawer }         from '../components/cart-drawer.js';
@@ -35,7 +34,6 @@ document.addEventListener('DOMContentLoaded', async function () {
   setCatalog(CATALOG);
 
   // Orden obligatorio según la arquitectura del proyecto
-  loadAnnounceBar();       // sin await — no tiene dependencias
   await loadNavbar();      // await OBLIGATORIO
   loadFooter();            // sin await
   await loadCartDrawer();  // await OBLIGATORIO
