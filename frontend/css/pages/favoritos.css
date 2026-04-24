@@ -16,10 +16,6 @@
   position: relative;
 }
 
-/* ── Sección: Botón primario (base) ────────────────────────── */
-.btn-primary { background: var(--red); color: #fff; border: none; padding: 16px 36px; font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: background .2s, transform .15s; }
-.btn-primary:hover { background: #c41c24; transform: translateY(-1px); }
-
 /* ── Sección: Touch UX ─────────────────────────────────────── */
 /* Elementos no-nativos necesitan cursor:pointer explícito para touch */
 button, a,

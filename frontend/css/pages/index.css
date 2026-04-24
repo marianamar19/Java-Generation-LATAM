@@ -54,46 +54,6 @@ section.hero { padding: 0; }
 .section-title--light  { color: var(--cream); }
 .section-title--light em { color: rgba(249, 249, 249, .35); }
 
-/* ── Sección: Botones globales ──────────────────────────────── */
-.btn-primary {
-  background:      var(--red);
-  color:           #fff;
-  border:          none;
-  padding:         16px 36px;
-  font-family:     var(--sans);
-  font-size:       12px;
-  font-weight:     700;
-  letter-spacing:  .15em;
-  text-transform:  uppercase;
-  cursor:          pointer;
-  text-decoration: none;
-  display:         inline-block;
-  transition:      background .2s, transform .15s;
-}
-
-.btn-primary:hover { background: #c41c24; transform: translateY(-1px); }
-
-/* Variante de ancho automático (para botones dentro de textos) */
-.btn-primary--fit { width: fit-content; }
-
-.btn-ghost {
-  background:      transparent;
-  color:           var(--cream);
-  border:          1px solid rgba(249, 249, 249, .18);
-  padding:         16px 36px;
-  font-family:     var(--sans);
-  font-size:       12px;
-  font-weight:     600;
-  letter-spacing:  .15em;
-  text-transform:  uppercase;
-  cursor:          pointer;
-  text-decoration: none;
-  display:         inline-block;
-  transition:      border-color .2s, color .2s;
-}
-
-.btn-ghost:hover { border-color: var(--red); color: var(--red); }
-
 /* ── Sección: Links "Ver todos" ──────────────────────────────── */
 .view-all {
   font-size:       12px;
