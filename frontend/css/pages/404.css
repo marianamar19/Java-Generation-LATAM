@@ -1,21 +1,21 @@
 /* ============================================================
-   404.css — HERA Design System
-   Descripción: Estilos exclusivos de la página de error 404.
-                Contiene el hero de pantalla completa sobre fondo
-                negro, el número decorativo superpuesto, los
-                elementos editoriales de contenido y el decorador
-                de pie. El scroll reveal se controla desde Layout.css
-                pero los tokens .reveal ya están en el contexto global.
-   Usado por:   pages/404.html
+  404.css — HERA Design System
+  Descripción: Estilos exclusivos de la página de error 404.
+              Contiene el hero de pantalla completa sobre fondo
+              negro, el número decorativo superpuesto, los
+              elementos editoriales de contenido y el decorador
+              de pie. El scroll reveal se controla desde Layout.css
+              pero los tokens .reveal ya están en el contexto global.
+  Usado por:   pages/404.html
    ============================================================ */
 
 /* ══════════════════════════════════════════════════
-   HERO 404
-   ── HERO 404 — comportamiento por breakpoint
-      Desktop  (>1024px): pantalla completa menos nav, padding 100px 80px
-      Tablet   (≤1024px): padding 72px 48px, número decorativo reducido
-      Móvil    (≤768px):  número decorativo oculto, padding 80px 20px
-   ──
+  HERO 404
+  ── HERO 404 — comportamiento por breakpoint
+    Desktop  (>1024px): pantalla completa menos nav, padding 100px 80px
+    Tablet   (≤1024px): padding 72px 48px, número decorativo reducido
+    Móvil    (≤768px):  número decorativo oculto, padding 80px 20px
+  ──
 ══════════════════════════════════════════════════ */
 
 /* ── Sección: Contenedor principal ─────────────────────────── */
@@ -126,7 +126,7 @@
 }
 
 /* ═══════════════════════════════════════
-   BREAKPOINT: TABLET — ≤1024px
+  BREAKPOINT: TABLET — ≤1024px
 ═══════════════════════════════════════ */
 @media (max-width: 1024px) {
   /* ── HERO 404 — tablet ── */
@@ -142,7 +142,7 @@
 }
 
 /* ═══════════════════════════════════════
-   BREAKPOINT: MÓVIL — ≤768px
+  BREAKPOINT: MÓVIL — ≤768px
 ═══════════════════════════════════════ */
 @media (max-width: 768px) {
   /* ── HERO 404 — móvil ── */

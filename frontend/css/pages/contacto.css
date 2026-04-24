@@ -1,23 +1,23 @@
 /* ============================================================
-   contacto.css — HERA Design System
-   Descripción: Estilos exclusivos de la página Contacto.
-                Cubre tres secciones: (1) hero negro con avatar
-                circular animado y scroll hint, (2) split de dos
-                columnas con info de contacto y formulario, y
-                (3) strip de datos rápidos sobre fondo rojo.
-                Los estilos de navbar, footer, cart drawer, fav
-                rows y scroll reveal viven en sus archivos de
-                componente correspondientes.
-   Usado por:   pages/contacto.html
+  contacto.css — HERA Design System
+  Descripción: Estilos exclusivos de la página Contacto.
+              Cubre tres secciones: (1) hero negro con avatar
+              circular animado y scroll hint, (2) split de dos
+              columnas con info de contacto y formulario, y
+              (3) strip de datos rápidos sobre fondo rojo.
+              Los estilos de navbar, footer, cart drawer, fav
+              rows y scroll reveal viven en sus archivos de
+              componente correspondientes.
+  Usado por:   pages/contacto.html
    ============================================================ */
 
 /* ══════════════════════════════════════════════════
-   SECCIÓN 1 — HERO (NEGRO)
-   ── CONTACT HERO — comportamiento por breakpoint
-      Desktop  (>1024px): centrado, avatar circular, headline grande
-      Tablet   (≤1024px): mismo layout, sin cambios visuales
-      Móvil    (≤768px):  padding reducido, tipografía ajustada
-   ──
+  SECCIÓN 1 — HERO (NEGRO)
+  ── CONTACT HERO — comportamiento por breakpoint
+    Desktop  (>1024px): centrado, avatar circular, headline grande
+    Tablet   (≤1024px): mismo layout, sin cambios visuales
+    Móvil    (≤768px):  padding reducido, tipografía ajustada
+  ──
 ══════════════════════════════════════════════════ */
 
 /* ── Sección: Contenedor del hero ──────────────────────────── */
@@ -243,12 +243,12 @@
 }
 
 /* ══════════════════════════════════════════════════
-   SECCIÓN 2 — SPLIT (CREAM)
-   ── CONTACT SPLIT — comportamiento por breakpoint
-      Desktop  (>1024px): dos columnas iguales, info izq, form der
-      Tablet   (≤1024px): dos columnas, padding reducido
-      Móvil    (≤768px):  columna única, info arriba, formulario abajo
-   ──
+  SECCIÓN 2 — SPLIT (CREAM)
+  ── CONTACT SPLIT — comportamiento por breakpoint
+    Desktop  (>1024px): dos columnas iguales, info izq, form der
+    Tablet   (≤1024px): dos columnas, padding reducido
+    Móvil    (≤768px):  columna única, info arriba, formulario abajo
+  ──
 ══════════════════════════════════════════════════ */
 
 /* ── Sección: Contenedor split ─────────────────────────────── */
@@ -674,12 +674,12 @@
 .form-success-back:hover { color: var(--red); }
 
 /* ══════════════════════════════════════════════════
-   SECCIÓN 3 — DATOS RÁPIDOS (ROJO)
-   ── CONTACT STRIP — comportamiento por breakpoint
-      Desktop  (>1024px): grid 3 columnas, separadores verticales
-      Tablet   (≤1024px): columna única, separadores horizontales, centrado
-      Móvil    (≤768px):  columna única, mismo que tablet, padding reducido
-   ──
+  SECCIÓN 3 — DATOS RÁPIDOS (ROJO)
+  ── CONTACT STRIP — comportamiento por breakpoint
+    Desktop  (>1024px): grid 3 columnas, separadores verticales
+    Tablet   (≤1024px): columna única, separadores horizontales, centrado
+    Móvil    (≤768px):  columna única, mismo que tablet, padding reducido
+  ──
 ══════════════════════════════════════════════════ */
 
 /* ── Sección: Strip rojo de estadísticas ───────────────────── */
@@ -735,7 +735,7 @@
 }
 
 /* ═══════════════════════════════════════
-   BREAKPOINT: TABLET — ≤1024px
+  BREAKPOINT: TABLET — ≤1024px
 ═══════════════════════════════════════ */
 @media (max-width: 1024px) {
   /* ── CONTACT SPLIT — padding reducido en tablet ── */
@@ -755,7 +755,7 @@
 }
 
 /* ═══════════════════════════════════════
-   BREAKPOINT: MÓVIL — ≤768px
+  BREAKPOINT: MÓVIL — ≤768px
 ═══════════════════════════════════════ */
 @media (max-width: 768px) {
   /* ── CONTACT HERO ── */
@@ -840,7 +840,7 @@
 }
 
 /* ═══════════════════════════════════════
-   BREAKPOINT: MÓVIL PEQUEÑO — ≤480px
+  BREAKPOINT: MÓVIL PEQUEÑO — ≤480px
 ═══════════════════════════════════════ */
 @media (max-width: 480px) {
   .contact-hero       { padding: 60px 16px 56px; }

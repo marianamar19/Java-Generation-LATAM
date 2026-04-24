@@ -1,59 +1,12 @@
 /* ============================================================
-   nosotros.css — HERA Design System
-   Descripción: Estilos exclusivos de la página Nosotros.
-                Incluye hero, sección de historia, valores,
-                flip cards del equipo y sección "Por qué HERA".
-   Usado por:   pages/nosotros.html únicamente
+  nosotros.css — HERA Design System
+  Descripción: Estilos exclusivos de la página Nosotros.
+              Incluye hero, sección de historia, valores,
+              flip cards del equipo y sección "Por qué HERA".
+  Usado por:   pages/nosotros.html únicamente
    ============================================================ */
 
 @import '../base/tokens.css';
-
-/* ── Sección: Site-wrap ─────────────────────────────────── */
-/*
- * max-width 1440px centrado.
- * overflow-x: clip en lugar de hidden para NO crear
- * un scroll-container interno (doble scrollbar).
- */
-.site-wrap {
-  max-width: 1440px;
-  margin: 0 auto;
-  overflow-x: clip;
-  position: relative;
-}
-
-/* ── Sección: Botones globales ──────────────────────────── */
-.btn-primary {
-  background: var(--red); color: #fff; border: none;
-  padding: 16px 36px; font-family: var(--sans); font-size: 12px;
-  font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
-  cursor: pointer; text-decoration: none; display: inline-block;
-  transition: background .2s, transform .15s;
-}
-.btn-primary:hover { background: #c41c24; transform: translateY(-1px); }
-
-.btn-ghost-light {
-  background: transparent; color: var(--black);
-  border: 1px solid var(--lgray); padding: 16px 36px;
-  font-family: var(--sans); font-size: 12px; font-weight: 700;
-  letter-spacing: .15em; text-transform: uppercase; cursor: pointer;
-  text-decoration: none; display: inline-block; transition: border-color .2s;
-}
-.btn-ghost-light:hover { border-color: var(--black); }
-
-/* ── Sección: Scroll reveal ─────────────────────────────── */
-/*
- * Replay cada vez que el elemento entra al viewport
- * (IntersectionObserver en nosotros.js elimina 'visible' al salir).
- */
-.reveal {
-  opacity: 0;
-  transform: translateY(22px);
-  transition: opacity .65s ease, transform .65s ease;
-}
-.reveal.visible { opacity: 1; transform: none; }
-.reveal-d1 { transition-delay: .08s; }
-.reveal-d2 { transition-delay: .16s; }
-.reveal-d3 { transition-delay: .24s; }
 
 /* ── Sección: Eyebrow y títulos compartidos ─────────────── */
 .nos-eyebrow {
@@ -82,9 +35,9 @@
 }
 
 /* ─────────────────────────────────────────────────────────
-   SECCIÓN 1: HERO
-   Encabezado compacto ~55% del alto del hero del home.
-   Fondo muy oscuro con acento rojo radial.
+  SECCIÓN 1: HERO
+  Encabezado compacto ~55% del alto del hero del home.
+  Fondo muy oscuro con acento rojo radial.
 ───────────────────────────────────────────────────────── */
 .nos-hero {
   background: #0c0907;
@@ -141,9 +94,9 @@
 }
 
 /* ─────────────────────────────────────────────────────────
-   SECCIÓN 2: HISTORIA (fondo claro)
-   Columna izq: gris claro con acento rojo.
-   Columna der: crema con texto legible font-weight: 400.
+  SECCIÓN 2: HISTORIA (fondo claro)
+  Columna izq: gris claro con acento rojo.
+  Columna der: crema con texto legible font-weight: 400.
 ───────────────────────────────────────────────────────── */
 .nos-historia {
   display: grid;
@@ -210,8 +163,8 @@
 }
 
 /* ─────────────────────────────────────────────────────────
-   SECCIÓN 3: VALORES (fondo oscuro)
-   Número = texto blanco sobre cuadro rojo.
+  SECCIÓN 3: VALORES (fondo oscuro)
+  Número = texto blanco sobre cuadro rojo.
 ───────────────────────────────────────────────────────── */
 .nos-valores {
   background: var(--black);
@@ -246,10 +199,10 @@
 }
 
 /* ─────────────────────────────────────────────────────────
-   SECCIÓN 4: EQUIPO — Flip Cards
-   Foto cuadrada (aspect-ratio: 1/1).
-   flip-card-back es position: absolute para cubrir el frente.
-   flip-card-inner hereda la altura del frente (normal flow).
+  SECCIÓN 4: EQUIPO — Flip Cards
+  Foto cuadrada (aspect-ratio: 1/1).
+  flip-card-back es position: absolute para cubrir el frente.
+  flip-card-inner hereda la altura del frente (normal flow).
 ───────────────────────────────────────────────────────── */
 .nos-equipo {
   background: #ececec;
@@ -374,7 +327,7 @@
 .flip-card-back-hint:hover { background: rgba(255,255,255,.12); }
 
 /* ─────────────────────────────────────────────────────────
-   SECCIÓN 5: POR QUÉ ELEGIRNOS
+  SECCIÓN 5: POR QUÉ ELEGIRNOS
 ───────────────────────────────────────────────────────── */
 .nos-porque {
   background: var(--cream);
@@ -420,7 +373,7 @@ button, a, .flip-card, .nos-chip,
 }
 
 /* ─────────────────────────────────────────────────────────
-   RESPONSIVE
+  RESPONSIVE
 ───────────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .nos-hero         { padding: 44px 48px 40px; }

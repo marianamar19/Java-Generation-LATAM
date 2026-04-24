@@ -1,9 +1,9 @@
 /* ============================================================
-   cuenta.css — HERA Design System v4
-   Descripción: Estilos exclusivos de la página Mi Cuenta.
-                Incluye el auth scene (login/registro deslizante),
-                footer mínimo, success overlay y sus breakpoints.
-   Usado por:   pages/cuenta.html
+  cuenta.css — HERA Design System v4
+  Descripción: Estilos exclusivos de la página Mi Cuenta.
+              Incluye el auth scene (login/registro deslizante),
+              footer mínimo, success overlay y sus breakpoints.
+  Usado por:   pages/cuenta.html
    ============================================================ */
 
 /* ── Sección: Touch UX ─────────────────────────────────────── */
@@ -17,15 +17,15 @@ button, a,
 
 /* ── Sección: Auth Scene ───────────────────────────────────── */
 /* ── AUTH SCENE — comportamiento por breakpoint
-   Desktop  (>1024px): dos paneles lado a lado dentro del track, padding generoso
-   Tablet   (≤1024px): mismo layout dos columnas, padding lateral reducido
-   Móvil    (≤768px):  cada panel ocupa 100vw, alineado arriba, altura a 100vh - 56px
-   Móvil pequeño (≤480px): padding vertical más compacto, títulos más pequeños
+  Desktop  (>1024px): dos paneles lado a lado dentro del track, padding generoso
+  Tablet   (≤1024px): mismo layout dos columnas, padding lateral reducido
+  Móvil    (≤768px):  cada panel ocupa 100vw, alineado arriba, altura a 100vh - 56px
+  Móvil pequeño (≤480px): padding vertical más compacto, títulos más pequeños
 ── */
 .auth-main { width: 100%; }
 
 /* Escenario: overflow:hidden en AMBAS direcciones.
-   overflow-x:hidden solo crea scroll containers implícitos
+  overflow-x:hidden solo crea scroll containers implícitos
    que interfieren con el scroll del body. */
 .auth-scene {
   overflow: hidden;
@@ -236,9 +236,9 @@ button, a,
 
 /* ── Sección: Footer mínimo ────────────────────────────────── */
 /* ── FOOTER MÍNIMO — comportamiento por breakpoint
-   Desktop  (>1024px): fila única, copyright izquierda, links derecha
-   Tablet   (≤1024px): sin cambio
-   Móvil    (≤768px):  columna apilada, copyright arriba, links abajo
+  Desktop  (>1024px): fila única, copyright izquierda, links derecha
+  Tablet   (≤1024px): sin cambio
+  Móvil    (≤768px):  columna apilada, copyright arriba, links abajo
 ── */
 .footer-min {
   background: var(--black); padding: 20px 40px;
@@ -272,14 +272,14 @@ button, a,
 .auth-success-link:hover { color: rgba(249,249,249,.8); }
 
 /* ═══════════════════════════════════════
-   BREAKPOINT: TABLET — ≤1024px
+  BREAKPOINT: TABLET — ≤1024px
 ═══════════════════════════════════════ */
 @media (max-width: 1024px) {
   .auth-panel { padding: 60px 32px; }
 }
 
 /* ═══════════════════════════════════════
-   BREAKPOINT: MÓVIL — ≤768px
+  BREAKPOINT: MÓVIL — ≤768px
 ═══════════════════════════════════════ */
 @media (max-width: 768px) {
   .cart-drawer { width: 100%; }
@@ -291,7 +291,7 @@ button, a,
 }
 
 /* ═══════════════════════════════════════
-   BREAKPOINT: MÓVIL PEQUEÑO — ≤480px
+  BREAKPOINT: MÓVIL PEQUEÑO — ≤480px
 ═══════════════════════════════════════ */
 @media (max-width: 480px) {
   .auth-panel { padding: 36px 20px 48px; }

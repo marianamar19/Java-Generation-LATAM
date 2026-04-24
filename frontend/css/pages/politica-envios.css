@@ -1,8 +1,8 @@
 /* ============================================================
    politica-envios.css — HERA Design System v4
-   Descripción: Estilos exclusivos de la página Política de Envíos.
-                Incluye: page hero, ciclo de pedidos, entregas,
-                disponibilidad, FAQ y CTA.
+Descripción: Estilos exclusivos de la página Política de Envíos.
+               Incluye: page hero, ciclo de pedidos, entregas,
+               disponibilidad, FAQ y CTA.
    Usado por:   pages/politica-envios.html
    ============================================================ */
 
@@ -27,9 +27,9 @@
 
 /* ── Sección: Touch UX ─────────────────────────────────────── */
 .faq-question, .avail-card, .cta-card, .delivery-card {
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+cursor: pointer;
+-webkit-tap-highlight-color: transparent;
+touch-action: manipulation;
 }
 
 /* ════════════════════════════════════════
@@ -188,30 +188,30 @@
    BREAKPOINT: TABLET — ≤1024px
 ═══════════════════════════════════════ */
 @media (max-width: 1024px) {
-  .page-hero { padding: 72px 48px 60px; }
-  .cycle-section, .delivery-section, .avail-section, .faq-section, .cta-section { padding: 60px 48px; }
-  .cycle-layout   { gap: 48px; }
-  .delivery-grid  { grid-template-columns: 1fr; }
-  .avail-grid     { grid-template-columns: 1fr 1fr; }
-  .faq-layout     { gap: 48px; }
-  .cta-grid       { grid-template-columns: 1fr 1fr; }
+.page-hero { padding: 72px 48px 60px; }
+.cycle-section, .delivery-section, .avail-section, .faq-section, .cta-section { padding: 60px 48px; }
+.cycle-layout   { gap: 48px; }
+.delivery-grid  { grid-template-columns: 1fr; }
+.avail-grid     { grid-template-columns: 1fr 1fr; }
+.faq-layout     { gap: 48px; }
+.cta-grid       { grid-template-columns: 1fr 1fr; }
 }
 
 /* ═══════════════════════════════════════
    BREAKPOINT: MÓVIL — ≤768px
 ═══════════════════════════════════════ */
 @media (max-width: 768px) {
-  .page-hero    { padding: 52px 20px 44px; }
-  .hero-meta    { flex-direction: column; }
-  .hero-meta-item { border-right: none; border-bottom: 1px solid rgba(249,249,249,.07); }
-  .hero-meta-item:last-child { border-bottom: none; }
-  .cycle-section, .delivery-section, .avail-section, .faq-section, .cta-section { padding: 44px 20px; }
-  .cycle-layout   { grid-template-columns: 1fr; gap: 32px; }
-  .delivery-grid  { grid-template-columns: 1fr; }
-  .delivery-card  { padding: 32px 28px; }
-  .avail-grid     { grid-template-columns: 1fr; }
-  .avail-card     { padding: 28px 24px; }
-  .faq-layout     { grid-template-columns: 1fr; gap: 32px; }
-  .faq-intro      { order: -1; }
-  .cta-grid       { grid-template-columns: 1fr; }
+.page-hero    { padding: 52px 20px 44px; }
+.hero-meta    { flex-direction: column; }
+.hero-meta-item { border-right: none; border-bottom: 1px solid rgba(249,249,249,.07); }
+.hero-meta-item:last-child { border-bottom: none; }
+.cycle-section, .delivery-section, .avail-section, .faq-section, .cta-section { padding: 44px 20px; }
+.cycle-layout   { grid-template-columns: 1fr; gap: 32px; }
+.delivery-grid  { grid-template-columns: 1fr; }
+.delivery-card  { padding: 32px 28px; }
+.avail-grid     { grid-template-columns: 1fr; }
+.avail-card     { padding: 28px 24px; }
+.faq-layout     { grid-template-columns: 1fr; gap: 32px; }
+.faq-intro      { order: -1; }
+.cta-grid       { grid-template-columns: 1fr; }
 }

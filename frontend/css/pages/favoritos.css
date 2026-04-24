@@ -1,9 +1,9 @@
 /* ============================================================
    favoritos.css — HERA Design System v14
-   Descripción: Estilos exclusivos de la página Mis Favoritos.
-                Incluye page header, tabs, layout sidebar+grid,
-                fav-cards, filtros, estados vacíos, newsletter,
-                filter drawer móvil y todos sus breakpoints.
+Descripción: Estilos exclusivos de la página Mis Favoritos.
+               Incluye page header, tabs, layout sidebar+grid,
+               fav-cards, filtros, estados vacíos, newsletter,
+               filter drawer móvil y todos sus breakpoints.
    Usado por:   pages/favoritos.html
    ============================================================ */
 
@@ -13,9 +13,9 @@ button, a,
 .nav-mobile-link, .nav-mobile-overlay,
 .filter-overlay, .search-result-item,
 #mobileProductosToggle, #mobileCuentaToggle {
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+cursor: pointer;
+-webkit-tap-highlight-color: transparent;
+touch-action: manipulation;
 }
 
 /* ── Sección: Page Header ──────────────────────────────────── */
@@ -189,40 +189,40 @@ button, a,
    BREAKPOINT: TABLET — ≤1024px
 ═══════════════════════════════════════ */
 @media (max-width: 1024px) {
-  /* Newsletter */
-  .newsletter { padding: 48px; gap: 40px; }
-  .nl-title { font-size: 32px; }
-  /* Fav body */
-  .fav-body { grid-template-columns: 200px 1fr; }
-  .fav-main { padding: 24px 28px 48px; }
-  .fav-grid { grid-template-columns: repeat(2, 1fr); }
+/* Newsletter */
+.newsletter { padding: 48px; gap: 40px; }
+.nl-title { font-size: 32px; }
+/* Fav body */
+.fav-body { grid-template-columns: 200px 1fr; }
+.fav-main { padding: 24px 28px 48px; }
+.fav-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ═══════════════════════════════════════
    BREAKPOINT: MÓVIL — ≤768px
 ═══════════════════════════════════════ */
 @media (max-width: 768px) {
-  /* Newsletter */
-  .newsletter { flex-direction: column; padding: 40px 20px; gap: 24px; }
-  .nl-right { max-width: 100%; }
-  .nl-title { font-size: 32px; }
-  /* Fav header */
-  .fav-header { padding: 36px 24px 0; }
-  .fav-title { font-size: clamp(28px, 7vw, 40px); }
-  .fav-tabs { margin-top: 24px; justify-content: center; }
-  .fav-tab-btn { padding: 14px 20px 12px; font-size: 10px; }
-  /* Fav body */
-  .fav-body { grid-template-columns: 1fr; }
-  .fav-sidebar { display: none; }
-  .btn-filter-mobile { display: flex; }
-  .fav-main { padding: 20px 16px 40px; }
-  .fav-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+/* Newsletter */
+.newsletter { flex-direction: column; padding: 40px 20px; gap: 24px; }
+.nl-right { max-width: 100%; }
+.nl-title { font-size: 32px; }
+/* Fav header */
+.fav-header { padding: 36px 24px 0; }
+.fav-title { font-size: clamp(28px, 7vw, 40px); }
+.fav-tabs { margin-top: 24px; justify-content: center; }
+.fav-tab-btn { padding: 14px 20px 12px; font-size: 10px; }
+/* Fav body */
+.fav-body { grid-template-columns: 1fr; }
+.fav-sidebar { display: none; }
+.btn-filter-mobile { display: flex; }
+.fav-main { padding: 20px 16px 40px; }
+.fav-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
 }
 
 /* ═══════════════════════════════════════
-   BREAKPOINT: MÓVIL PEQUEÑO — ≤480px
+BREAKPOINT: MÓVIL PEQUEÑO — ≤480px
 ═══════════════════════════════════════ */
 @media (max-width: 480px) {
-  .fav-grid { grid-template-columns: 1fr; }
-  .announce-track span { font-size: 11px; padding: 0 24px; }
+.fav-grid { grid-template-columns: 1fr; }
+.announce-track span { font-size: 11px; padding: 0 24px; }
 }

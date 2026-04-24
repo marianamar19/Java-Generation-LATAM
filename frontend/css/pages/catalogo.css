@@ -12,9 +12,9 @@
 
 /* ── Sección: Catalog header — editorial oscuro ─────────────── */
 /* ── CATALOG-HEADER — comportamiento por breakpoint
-   Desktop  (>1024px): fondo negro, padding 52px 80px 0, título clamp hasta 64px
-   Tablet   (≤1024px): padding reducido a 36px 24px 0
-   Móvil    (≤768px):  padding 32px 24px 0, título clamp hasta 48px
+  Desktop  (>1024px): fondo negro, padding 52px 80px 0, título clamp hasta 64px
+  Tablet   (≤1024px): padding reducido a 36px 24px 0
+  Móvil    (≤768px):  padding 32px 24px 0, título clamp hasta 48px
 ── */
 .catalog-header {
   background: var(--black);
@@ -242,9 +242,9 @@
 
 /* ── Sección: Catalog main ───────────────────────────────────── */
 /* ── CATALOG-MAIN — comportamiento por breakpoint
-   Desktop  (>1024px): padding 24px 32px 60px, fondo lgray
-   Tablet   (≤1024px): padding 16px 20px 48px
-   Móvil    (≤768px):  padding 12px 12px 40px
+  Desktop  (>1024px): padding 24px 32px 60px, fondo lgray
+  Tablet   (≤1024px): padding 16px 20px 48px
+  Móvil    (≤768px):  padding 12px 12px 40px
 ── */
 .catalog-main {
   padding:    24px 32px 60px;
@@ -403,9 +403,9 @@
 
 /* ── Sección: Mobile filter bar ─────────────────────────────── */
 /* ── FILTER-MOBILE-BAR — comportamiento por breakpoint
-   Desktop  (>1024px): oculta (display:none)
-   Tablet   (≤1024px): visible, sticky a top:64px
-   Móvil    (≤768px):  sticky a top:56px, padding reducido
+  Desktop  (>1024px): oculta (display:none)
+  Tablet   (≤1024px): visible, sticky a top:64px
+  Móvil    (≤768px):  sticky a top:56px, padding reducido
 ── */
 .filter-mobile-bar {
   display:                   none;
@@ -497,9 +497,9 @@
 
 /* ── Sección: Filter drawer (mobile) ────────────────────────── */
 /* ── FILTER-DRAWER — comportamiento por breakpoint
-   Desktop  (>1024px): nunca se abre (sidebar siempre visible)
-   Tablet   (≤1024px): panel derecho de 340px con overlay
-   Móvil    (≤768px):  panel derecho hasta 90vw
+  Desktop  (>1024px): nunca se abre (sidebar siempre visible)
+  Tablet   (≤1024px): panel derecho de 340px con overlay
+  Móvil    (≤768px):  panel derecho hasta 90vw
 ── */
 .filter-drawer-overlay {
   position:       fixed;
@@ -642,7 +642,7 @@ button, a,
 }
 
 /* ══════════════════════════════════════
-   BREAKPOINTS
+  BREAKPOINTS
 ══════════════════════════════════════ */
 
 /* ── Tablet ≤1024px ─────────────────────────────────────────── */

@@ -5,17 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nosotros — HERA Perfumes &amp; Joyería</title>
 
-  <!-- ── Fuentes ──────────────────────────────────────────── -->
-  <link rel="stylesheet" href="../css/base/typography.css" />
-
   <!-- ── Design System base ──────────────────────────────── -->
   <link rel="stylesheet" href="../css/base/tokens.css" />
   <link rel="stylesheet" href="../css/base/reset.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
+  <link rel="stylesheet" href="../css/base/buttons.css" />
 
   <!-- ── Componentes universales ─────────────────────────── -->
-  <link rel="stylesheet" href="../css/components/cursor.css" />
   <link rel="stylesheet" href="../css/components/navbar.css" />
-  <link rel="stylesheet" href="../css/components/modal.css" />
   <link rel="stylesheet" href="../css/components/drawer.css" />
   <link rel="stylesheet" href="../css/components/footer.css" />
 
@@ -23,13 +21,6 @@
   <link rel="stylesheet" href="../css/pages/nosotros.css" />
 </head>
 <body>
-
-<!-- ══════════════════════════════════════
-     CURSOR PERSONALIZADO
-══════════════════════════════════════ -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
 <!-- ══════════════════════════════════════
      NAVBAR — inyectado vía fetch
      navbar.js carga components/navbar.html
@@ -486,6 +477,12 @@
   <div id="footer-placeholder"></div>
 
 </div><!-- /site-wrap -->
+
+<!-- ══════════════════════════════════════
+    CART DRAWER — inyectado vía fetch por cart-drawer.js
+    loadCartDrawer() inyecta el fragmento cart-drawer.html aquí
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
 
 <!-- ══════════════════════════════════════
      SCRIPT DE ENTRADA — ES Module
