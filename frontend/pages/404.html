@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../css/base/reset.css" />
   <link rel="stylesheet" href="../css/base/typography.css" />
   <link rel="stylesheet" href="../css/base/buttons.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
 
   <!-- ── Componentes universales ── -->
   <link rel="stylesheet" href="../css/components/navbar.css" />
@@ -23,24 +24,14 @@
 <body>
 
 <!-- ══════════════════════════════════════
-     [UNIVERSAL] OVERLAY MENÚ MÓVIL
+    [UNIVERSAL] OVERLAY MENÚ MÓVIL
 ══════════════════════════════════════ -->
 <div id="navbar-placeholder"></div>
-
-<!-- ══════════════════════════════════════
-     [UNIVERSAL] SEARCH OVERLAY
-     (Se inyecta como parte de navbar.html)
-══════════════════════════════════════ -->
-
-<!-- ══════════════════════════════════════
-     [UNIVERSAL] CART DRAWER
-══════════════════════════════════════ -->
-<div id="cart-drawer-placeholder"></div>
 
 <div class="site-wrap">
 
   <!-- ═══════════════════════════════════════════
-       HERO 404 — negro · pantalla completa
+      HERO 404 — negro · pantalla completa
   ═══════════════════════════════════════════ -->
   <div class="hero-404">
     <div class="hero-404-inner">
@@ -65,15 +56,20 @@
   </div>
 
   <!-- ══════════════════════════════════════
-       [UNIVERSAL] FOOTER
+      [UNIVERSAL] FOOTER
   ══════════════════════════════════════ -->
   <div id="footer-placeholder"></div>
 
 </div><!-- /site-wrap -->
 
 <!-- ══════════════════════════════════════
-     Entry point de la página — type="module"
-     Importa y orquesta todos los componentes.
+    CART DRAWER — inyectado vía fetch por cart-drawer.js
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
+
+<!-- ══════════════════════════════════════
+    Entry point de la página — type="module"
+    Importa y orquesta todos los componentes.
 ══════════════════════════════════════ -->
 <script type="module" src="../js/pages/404.js"></script>
 

@@ -1,0 +1,39 @@
+/* ============================================================
+layout.css — HERA Design System v4
+Descripción: Estilos globales de layout y animaciones de
+               entrada reutilizables en todo el proyecto.
+               Solo viven aquí las reglas que aplican a
+               todas las páginas sin excepción.
+Usado por:   Todas las páginas del proyecto.
+               Debe cargarse después de tokens.css.
+   ============================================================ */
+
+/* ── Sección: Site wrap ─────────────────────────────────────── */
+/* Contenedor máximo del layout. Centra el contenido y evita
+   scroll horizontal sin crear un scroll container interno
+   que rompería position:sticky del navbar.
+   overflow-x: clip recorta sin crear scroll container —
+   a diferencia de overflow-x: hidden que sí lo crea. */
+.site-wrap {
+  max-width:  1920px;
+  margin:     0 auto;
+  overflow-x: clip;
+  position:   relative;
+}
+
+/* ── Sección: Scroll reveal ─────────────────────────────────── */
+/* Animación de entrada para elementos con clase .reveal.
+   Se activa añadiendo .visible vía IntersectionObserver
+   desde el JS de cada página. */
+.reveal {
+  opacity:    0;
+  transform:  translateY(22px);
+  transition: opacity .65s ease, transform .65s ease;
+}
+
+.reveal.visible { opacity: 1; transform: none; }
+
+/* Delays escalonados para grupos de elementos */
+.reveal-delay-1 { transition-delay: .08s; }
+.reveal-delay-2 { transition-delay: .16s; }
+.reveal-delay-3 { transition-delay: .24s; }

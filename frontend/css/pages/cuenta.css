@@ -6,14 +6,6 @@
    Usado por:   pages/cuenta.html
    ============================================================ */
 
-/* ── Sección: Site-wrap ────────────────────────────────────── */
-.site-wrap {
-  max-width: 1440px;
-  margin: 0 auto;
-  overflow-x: clip;
-  position: relative;
-}
-
 /* ── Sección: Touch UX ─────────────────────────────────────── */
 button, a,
 .nav-mobile-link, .nav-mobile-overlay,

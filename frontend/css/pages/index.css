@@ -8,16 +8,6 @@
   Usado por: pages/index.html
    ============================================================ */
 
-/* ── Sección: Site wrap — centrado máximo del layout ─────────── */
-/* overflow-x: clip evita crear un scroll container interno que
-   rompa la lógica de position:sticky del navbar */
-.site-wrap {
-  max-width:  1440px;
-  margin:     0 auto;
-  overflow-x: clip;
-  position:   relative;
-}
-
 /* ── Sección: Secciones base ────────────────────────────────── */
 section { padding: 72px 80px; }
 
@@ -105,21 +95,6 @@ section.hero { padding: 0; }
 
 .img-placeholder svg  { opacity: .25; }
 .img-placeholder span { font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(249,249,249,.25); text-align: center; padding: 0 16px; }
-
-/* ── Sección: Scroll Reveal — IntersectionObserver ──────────── */
-/* Replays cada vez que el elemento entra al viewport (Design System v4) */
-.reveal {
-  opacity:    0;
-  transform:  translateY(22px);
-  transition: opacity .65s ease, transform .65s ease;
-}
-
-.reveal.visible { opacity: 1; transform: none; }
-
-/* Delays escalonados para grupos de elementos */
-.reveal-delay-1 { transition-delay: .08s; }
-.reveal-delay-2 { transition-delay: .16s; }
-.reveal-delay-3 { transition-delay: .24s; }
 
 /* ── Sección: Rating — estrellas y score ────────────────────── */
 .rating-score { display: flex; align-items: flex-start; gap: 4px; line-height: 1; }

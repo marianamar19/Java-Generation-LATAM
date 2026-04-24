@@ -7,15 +7,6 @@
    Usado por:   pages/favoritos.html
    ============================================================ */
 
-/* ── Sección: Site-wrap ────────────────────────────────────── */
-/* max-width centrado; overflow-x: clip evita crear scroll container interno */
-.site-wrap {
-  max-width: 1440px;
-  margin: 0 auto;
-  overflow-x: clip;
-  position: relative;
-}
-
 /* ── Sección: Touch UX ─────────────────────────────────────── */
 /* Elementos no-nativos necesitan cursor:pointer explícito para touch */
 button, a,

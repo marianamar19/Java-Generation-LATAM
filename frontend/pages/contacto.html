@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../css/base/reset.css" />
   <link rel="stylesheet" href="../css/base/typography.css" />
   <link rel="stylesheet" href="../css/base/buttons.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
 
   <!-- ── Componentes universales ── -->
   <link rel="stylesheet" href="../css/components/navbar.css" />
@@ -23,21 +24,15 @@
 <body>
 
 <!-- ══════════════════════════════════════
-     [UNIVERSAL] NAVBAR + SEARCH + MENÚ MÓVIL
-     Inyectado dinámicamente desde components/navbar.html
+    [UNIVERSAL] NAVBAR + SEARCH + MENÚ MÓVIL
+    Inyectado dinámicamente desde components/navbar.html
 ══════════════════════════════════════ -->
 <div id="navbar-placeholder"></div>
-
-<!-- ══════════════════════════════════════
-     [UNIVERSAL] CART DRAWER
-     Inyectado dinámicamente desde components/cart-drawer.html
-══════════════════════════════════════ -->
-<div id="cart-drawer-placeholder"></div>
 
 <div class="site-wrap">
 
   <!-- ══════════════════════════════════════
-       SECCIÓN 1 — HERO (NEGRO)
+      SECCIÓN 1 — HERO (NEGRO)
   ══════════════════════════════════════ -->
   <section class="contact-hero">
 
@@ -77,9 +72,9 @@
   </section>
 
   <!-- ══════════════════════════════════════
-       SECCIÓN 2 — SPLIT (CREAM)
-       Izquierda: info de contacto
-       Derecha: formulario de contacto
+      SECCIÓN 2 — SPLIT (CREAM)
+      Izquierda: info de contacto
+      Derecha: formulario de contacto
   ══════════════════════════════════════ -->
   <section class="contact-split">
 
@@ -97,7 +92,7 @@
         <div class="contact-items reveal reveal-delay-3">
 
           <!-- TEMPORAL — dirección hardcodeada. Reemplazar con dato real del backend.
-               Endpoint esperado: GET /api/config → { email_contacto: string } -->
+              Endpoint esperado: GET /api/config → { email_contacto: string } -->
           <div class="contact-item">
             <div class="contact-item-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -235,7 +230,7 @@
 
           <!-- Enviar -->
           <!-- TEMPORAL — onsubmit simula envío con setTimeout. Reemplazar con fetch() al endpoint real.
-               Endpoint esperado: POST /api/contacto → { ok: true } -->
+              Endpoint esperado: POST /api/contacto → { ok: true } -->
           <button type="submit" class="btn-submit" id="submitBtn">
             <span id="submitText">Enviar mensaje</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -260,7 +255,7 @@
   </section>
 
   <!-- ══════════════════════════════════════
-       SECCIÓN 3 — DATOS RÁPIDOS (ROJO)
+      SECCIÓN 3 — DATOS RÁPIDOS (ROJO)
   ══════════════════════════════════════ -->
   <section class="contact-strip">
     <div class="contact-strip-item reveal">
@@ -281,16 +276,21 @@
   </section>
 
   <!-- ══════════════════════════════════════
-       [UNIVERSAL] FOOTER
-       Inyectado dinámicamente desde components/footer.html
+      [UNIVERSAL] FOOTER
+      Inyectado dinámicamente desde components/footer.html
   ══════════════════════════════════════ -->
   <div id="footer-placeholder"></div>
 
 </div><!-- /.site-wrap -->
 
 <!-- ══════════════════════════════════════
-     Entry point de la página — type="module"
-     Importa y orquesta todos los componentes.
+    CART DRAWER — inyectado vía fetch por cart-drawer.js
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
+
+<!-- ══════════════════════════════════════
+    Entry point de la página — type="module"
+    Importa y orquesta todos los componentes.
 ══════════════════════════════════════ -->
 <script type="module" src="../js/pages/contacto.js"></script>
 

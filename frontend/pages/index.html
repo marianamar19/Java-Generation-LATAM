@@ -14,7 +14,9 @@
   <link rel="stylesheet" href="../css/base/reset.css" />
   <link rel="stylesheet" href="../css/base/typography.css" />
   <link rel="stylesheet" href="../css/base/buttons.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
 
+  <!-- ── Estilos universales ── -->
   <!-- ── Componentes universales ── -->
   <link rel="stylesheet" href="../css/components/announce-bar.css" />
   <link rel="stylesheet" href="../css/components/navbar.css" />
@@ -26,12 +28,6 @@
   <link rel="stylesheet" href="../css/pages/index.css" />
 </head>
 <body>
-
-<!-- ══════════════════════════════════════
-    CART DRAWER — inyectado vía fetch por cart-drawer.js
-    loadCartDrawer() inyecta el fragmento cart-drawer.html aquí
-══════════════════════════════════════ -->
-<div id="cart-drawer-placeholder"></div>
 
 <!-- ══════════════════════════════════════
     ANNOUNCE BAR PLACEHOLDER
@@ -688,6 +684,12 @@
   <div id="footer-placeholder"></div>
 
 </div><!-- /site-wrap -->
+
+<!-- ══════════════════════════════════════
+    CART DRAWER — inyectado vía fetch por cart-drawer.js
+    loadCartDrawer() inyecta el fragmento cart-drawer.html aquí
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
 
 <!-- ── Script de página — type="module" para ES Modules ── -->
 <script type="module" src="../js/pages/index.js"></script>

@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/base/reset.css" />
   <link rel="stylesheet" href="../css/base/typography.css" />
   <link rel="stylesheet" href="../css/base/buttons.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
 
   <!-- ── CSS Componentes universales ── -->
   <link rel="stylesheet" href="../css/components/announce-bar.css" />
@@ -27,14 +28,14 @@
 <body>
 
 <!-- ══════════════════════════════════════
-     NAVBAR — inyectado vía fetch por navbar.js
-     El placeholder es reemplazado con el contenido
-     de /components/navbar.html al cargar la página.
+    NAVBAR — inyectado vía fetch por navbar.js
+    El placeholder es reemplazado con el contenido
+    de /components/navbar.html al cargar la página.
 ══════════════════════════════════════ -->
 <div id="navbar-placeholder"></div>
 
 <!-- ══════════════════════════════════════
-     SITE-WRAP — contenedor centrado max 1440px
+    SITE-WRAP — contenedor centrado max 1440px
 ══════════════════════════════════════ -->
 <div class="site-wrap">
 
@@ -175,23 +176,23 @@
     </div>
   </div>
 
-</div><!-- /site-wrap -->
-
-<!-- ══════════════════════════════════════
-     FOOTER — inyectado vía fetch por footer.js
+  <!-- ══════════════════════════════════════
+    FOOTER — inyectado vía fetch por footer.js
 ══════════════════════════════════════ -->
 <div id="footer-placeholder"></div>
 
-<!-- ══════════════════════════════════════
-     CART DRAWER — renderizado por cart-drawer.js
-     Se inyecta fuera del site-wrap para no heredar
-     el max-width de 1440px y cubrir toda la pantalla.
+</div><!-- /site-wrap -->
+
+  <!-- ══════════════════════════════════════
+    CART DRAWER — renderizado por cart-drawer.js
+    Se inyecta fuera del site-wrap para no heredar
+    el max-width de 1440px y cubrir toda la pantalla.
 ══════════════════════════════════════ -->
 <div id="cart-drawer-placeholder"></div>
 
 <!-- ══════════════════════════════════════
-     SCRIPT — ES Module, único punto de entrada
-     Todas las dependencias se resuelven vía import
+    SCRIPT — ES Module, único punto de entrada
+    Todas las dependencias se resuelven vía import
 ══════════════════════════════════════ -->
 <script type="module" src="../js/pages/favoritos.js"></script>
 

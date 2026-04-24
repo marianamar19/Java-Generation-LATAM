@@ -4,7 +4,7 @@
                 Contiene el hero de pantalla completa sobre fondo
                 negro, el número decorativo superpuesto, los
                 elementos editoriales de contenido y el decorador
-                de pie. El scroll reveal se controla desde index.css
+                de pie. El scroll reveal se controla desde Layout.css
                 pero los tokens .reveal ya están en el contexto global.
    Usado por:   pages/404.html
    ============================================================ */
