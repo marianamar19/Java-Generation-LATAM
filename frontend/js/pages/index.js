@@ -11,34 +11,15 @@
  */
 
 import { loadAnnounceBar } from '../components/announce-bar.js';
-import { loadNavbar, setCatalog } from '../components/navbar.js';
+import { loadNavbar } from '../components/navbar.js';
 import { loadCartDrawer, addItemToCart } from '../components/cart-drawer.js';
 import { initFavDrawer }          from '../components/fav-drawer.js';
 import { loadFooter } from '../components/footer.js';
 
 /* ══════════════════════════════════════════════════════════════
-  CATÁLOGO DE PRODUCTOS
-  Datos hardcodeados temporalmente. Reemplazar por:
-    fetch('/api/productos').then(r => r.json()).then(data => setCatalog(data))
-  cuando el backend Spring Boot esté disponible.
-  Endpoint esperado: GET /api/productos
-══════════════════════════════════════════════════════════════ */
-const CATALOG = [
-  { id: 'jenny-1',     brand: 'Jenny Rivera',        name: 'Inolvidable EDP',  price: '$1,210 MXN', badge: 'Más vendido',   tags: ['floral', 'femenino']       },
-  { id: 'fierce-2',    brand: 'Abercrombie & Fitch',  name: 'Fierce EDT',       price: '$760 MXN',   tags: ['fresco', 'masculino']        },
-  { id: 'authentic-3', brand: 'Abercrombie & Fitch',  name: 'Authentic EDP',    price: '$975 MXN',   badge: 'Ed. limitada', tags: ['amaderado']                  },
-  { id: 'signature-4', brand: 'HERA Exclusivo',        name: 'Signature Blanc',  price: '$1,490 MXN', badge: 'Nuevo',        tags: ['floral', 'blanco']           },
-  { id: 'noir-5',      brand: 'HERA Exclusivo',        name: 'Noir Absolu',      price: '$1,480 MXN', badge: '-20%',         tags: ['oriental', 'amaderado']      },
-  { id: 'oud-6',       brand: 'Hera Árabe',            name: 'Oud Rose',         price: '$1,320 MXN', tags: ['árabe', 'oud', 'oriental']  },
-];
-
-/* ══════════════════════════════════════════════════════════════
   ARRANQUE — DOMContentLoaded
 ══════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', async function() {
-  // Inyectar catálogo antes de loadNavbar para que el buscador lo tenga disponible
-  setCatalog(CATALOG);
-
 
   // Cargar el announce bar
   loadAnnounceBar();

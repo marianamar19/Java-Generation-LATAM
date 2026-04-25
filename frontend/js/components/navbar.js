@@ -10,19 +10,10 @@
  */
 
 import { isLoggedIn, clearLogin } from '../utils/storage.js';
+import { CATALOG }               from '../utils/catalog.js';
 
-/* Catálogo de productos para el buscador — se inyecta desde cada página */
-let _catalog = [];
-
-/**
- * Inyecta el array de productos que usa el search overlay.
- * Debe llamarse desde el script de la página antes o después de loadNavbar.
- * @param {Array<Object>} catalogData - Array de productos {id, brand, name, price, badge, tags}
- * @returns {void}
- */
-function setCatalog(catalogData) {
-  _catalog = catalogData || [];
-}
+/* Catálogo de productos para el buscador — cargado desde utils/catalog.js */
+let _catalog = CATALOG;
 
 /**
  * Carga el fragmento HTML del navbar desde /components/navbar.html,
@@ -358,4 +349,4 @@ function _initFavDropdown() {
   favDropdown.addEventListener('click', function(e) { e.stopPropagation(); });
 }
 
-export { loadNavbar, setCatalog };
+export { loadNavbar };

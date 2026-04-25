@@ -8,26 +8,15 @@
  * Importado por: pages/politica-envios.html vía <script type="module">
  */
 
-import { loadNavbar, setCatalog }   from '../components/navbar.js';
+import { loadNavbar }   from '../components/navbar.js';
 import { loadFooter }               from '../components/footer.js';
 import { loadCartDrawer }           from '../components/cart-drawer.js';
 import { initFavDrawer }            from '../components/fav-drawer.js';
 
-/* ── TEMPORAL — catálogo hardcodeado por ausencia de backend ── */
-const CATALOG = [
-  { id: 'jenny-1',     brand: 'Jenny Rivera',        name: 'Inolvidable EDP',  price: '$1,210 MXN', badge: 'Más vendido',   tags: ['floral', 'femenino']   },
-  { id: 'fierce-2',    brand: 'Abercrombie & Fitch',  name: 'Fierce EDT',       price: '$760 MXN',   tags: ['fresco', 'masculino']    },
-  { id: 'authentic-3', brand: 'Abercrombie & Fitch',  name: 'Authentic EDP',    price: '$975 MXN',   badge: 'Ed. limitada', tags: ['amaderado']             },
-  { id: 'signature-4', brand: 'HERA Exclusivo',        name: 'Signature Blanc',  price: '$1,490 MXN', badge: 'Nuevo',        tags: ['floral', 'blanco']      },
-  { id: 'noir-5',      brand: 'HERA Exclusivo',        name: 'Noir Absolu',      price: '$1,480 MXN', badge: '-20%',         tags: ['oriental', 'amaderado'] },
-  { id: 'oud-6',       brand: 'Hera Árabe',            name: 'Oud Rose',         price: '$1,320 MXN', tags: ['árabe', 'oud', 'oriental'] },
-];
-
 /* ══════════════════════════════════════
-   ARRANQUE — DOMContentLoaded
+  ARRANQUE — DOMContentLoaded
 ══════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', async function() {
-  setCatalog(CATALOG);
   await loadNavbar();
   loadFooter();
   await loadCartDrawer();
@@ -38,8 +27,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 
 /* ══════════════════════════════════════
-   SCROLL REVEAL — IntersectionObserver
-   Replays cada vez que el elemento entra al viewport.
+  SCROLL REVEAL — IntersectionObserver
+  Replays cada vez que el elemento entra al viewport.
 ══════════════════════════════════════ */
 
 /**
@@ -62,8 +51,8 @@ function _initScrollReveal() {
 }
 
 /* ══════════════════════════════════════
-   FAQ — Acordeón
-   Un solo item abierto a la vez.
+  FAQ — Acordeón
+  Un solo item abierto a la vez.
 ══════════════════════════════════════ */
 
 /**

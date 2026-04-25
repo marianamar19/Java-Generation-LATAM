@@ -6,41 +6,6 @@
   Usado por:   pages/aviso-privacidad.html
    ============================================================ */
 
-/* ── Eyebrows ────────────────────────────────────────────────── */
-.eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: var(--red);
-  margin-bottom: 20px;
-}
-
-.eyebrow::before,
-.eyebrow::after       { content: ''; display: block; height: 1px; background: var(--red); }
-.eyebrow::before      { width: 28px; }
-.eyebrow::after       { width: 14px; }
-
-.eyebrow-light {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: rgba(225,34,43,.7);
-  margin-bottom: 20px;
-}
-
-.eyebrow-light::before,
-.eyebrow-light::after  { content: ''; display: block; height: 1px; background: rgba(225,34,43,.5); }
-.eyebrow-light::before { width: 28px; }
-.eyebrow-light::after  { width: 14px; }
-
 /* ── Headings ────────────────────────────────────────────────── */
 .heading-dark {
   font-family: var(--sans);
@@ -75,13 +40,6 @@
   font-weight: 300;
   color: var(--dgray);
 }
-
-/* ── Scroll reveal ───────────────────────────────────────────── */
-.reveal         { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
-.reveal.visible { opacity: 1; transform: none; }
-.reveal-delay-1 { transition-delay: .08s; }
-.reveal-delay-2 { transition-delay: .16s; }
-.reveal-delay-3 { transition-delay: .24s; }
 
 /* ── Page hero ───────────────────────────────────────────────── */
 .page-hero       { background: var(--black); padding: 100px 80px 48px; }

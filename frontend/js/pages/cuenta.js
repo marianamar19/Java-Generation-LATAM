@@ -10,35 +10,22 @@
  * Importado por: pages/cuenta.html vía <script type="module">
  */
 
-import { loadNavbar, setCatalog } from '../components/navbar.js';
+import { loadNavbar } from '../components/navbar.js';
 import { loadFooterCuenta }       from '../components/footer-cuenta.js';
 import { loadCartDrawer }         from '../components/cart-drawer.js';
 import { initFavDrawer }          from '../components/fav-drawer.js';
 
-/* ── TEMPORAL — catálogo hardcodeado por ausencia de backend
-   Reemplazar por fetch('/api/productos') cuando esté disponible.
-── */
-const CATALOG = [
-  { id: 'jenny-1',     brand: 'Jenny Rivera',        name: 'Inolvidable EDP',  price: '$1,210 MXN', badge: 'Más vendido',   tags: ['floral', 'femenino']  },
-  { id: 'fierce-2',    brand: 'Abercrombie & Fitch',  name: 'Fierce EDT',       price: '$760 MXN',   tags: ['fresco', 'masculino']   },
-  { id: 'authentic-3', brand: 'Abercrombie & Fitch',  name: 'Authentic EDP',    price: '$975 MXN',   badge: 'Ed. limitada', tags: ['amaderado']            },
-  { id: 'signature-4', brand: 'HERA Exclusivo',        name: 'Signature Blanc',  price: '$1,490 MXN', badge: 'Nuevo',        tags: ['floral', 'blanco']     },
-  { id: 'noir-5',      brand: 'HERA Exclusivo',        name: 'Noir Absolu',      price: '$1,480 MXN', badge: '-20%',         tags: ['oriental', 'amaderado']},
-  { id: 'oud-6',       brand: 'Hera Árabe',            name: 'Oud Rose',         price: '$1,320 MXN', tags: ['árabe', 'oud', 'oriental'] },
-];
-
 /* ── ADMIN — Credenciales hardcodeadas para demo del panel
-   Reemplazar con validación server-side en Etapa 2.
-   Endpoint esperado: POST /api/auth/admin/login
+  Reemplazar con validación server-side en Etapa 2.
+  Endpoint esperado: POST /api/auth/admin/login
 ── */
 const ADMIN_EMAIL = 'admin-hera@hotmail.com';
 const ADMIN_PASS  = 'admin';
 
 /* ══════════════════════════════════════
-   ARRANQUE — DOMContentLoaded
+  ARRANQUE — DOMContentLoaded
 ══════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', async function() {
-  setCatalog(CATALOG);
   await loadNavbar();
   loadFooterCuenta();
   await loadCartDrawer();
@@ -51,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 
 /* ══════════════════════════════════════
-   AUTH SCENE — track deslizante
+  AUTH SCENE — track deslizante
 ══════════════════════════════════════ */
 
 /**
@@ -87,7 +74,7 @@ function _initAuthScene() {
 }
 
 /* ══════════════════════════════════════
-   PASSWORD TOGGLE — mostrar/ocultar
+  PASSWORD TOGGLE — mostrar/ocultar
 ══════════════════════════════════════ */
 
 /**
@@ -107,7 +94,7 @@ function _initPasswordToggles() {
 }
 
 /* ══════════════════════════════════════
-   PASSWORD STRENGTH — fortaleza visual
+  PASSWORD STRENGTH — fortaleza visual
 ══════════════════════════════════════ */
 
 /**
@@ -146,7 +133,7 @@ function _updatePasswordStrength(val) {
   var labels = ['', 'Débil', 'Regular', 'Buena', 'Fuerte'];
 
   var bars  = [document.getElementById('b1'), document.getElementById('b2'),
-               document.getElementById('b3'), document.getElementById('b4')];
+              document.getElementById('b3'), document.getElementById('b4')];
   var label = document.getElementById('pwd-label');
 
   bars.forEach(function(b, i) {
@@ -178,7 +165,7 @@ function _checkPasswordMatch() {
 }
 
 /* ══════════════════════════════════════
-   VALIDACIÓN DE FORMULARIOS
+  VALIDACIÓN DE FORMULARIOS
 ══════════════════════════════════════ */
 
 /**
@@ -240,7 +227,7 @@ function _validate(type) {
 }
 
 /* ══════════════════════════════════════
-   SUBMIT — simulación de autenticación
+  SUBMIT — simulación de autenticación
 ══════════════════════════════════════ */
 
 /**
@@ -273,9 +260,9 @@ function _submitForm(type) {
       btn.textContent = type === 'login' ? 'INICIAR SESIÓN' : 'CREAR CUENTA';
     }
 
-    /* ── ADMIN — verificar credenciales de administrador
-       Si coinciden → guardar sesión admin y redirigir al panel.
-       Si no coinciden → flujo normal del cliente sin cambios.
+  /* ── ADMIN — verificar credenciales de administrador
+      Si coinciden → guardar sesión admin y redirigir al panel.
+      Si no coinciden → flujo normal del cliente sin cambios.
     ── */
     if (type === 'login') {
       var inputEmail = document.getElementById('login-email').value.trim();
@@ -293,8 +280,8 @@ function _submitForm(type) {
     }
 
     /* ── TEMPORAL — simulación de sesión por ausencia de backend
-       Reemplazar localStorage.setItem por llamada al endpoint de autenticación.
-       Endpoint esperado: POST /api/auth/login | POST /api/auth/register
+      Reemplazar localStorage.setItem por llamada al endpoint de autenticación.
+      Endpoint esperado: POST /api/auth/login | POST /api/auth/register
     ── */
     if (type === 'login' || type === 'register') {
       localStorage.setItem('hera_logged_in', '1');
@@ -324,7 +311,7 @@ function _submitForm(type) {
 }
 
 /* ══════════════════════════════════════
-   LISTENERS — limpiar errores en tiempo real y submit
+  LISTENERS — limpiar errores en tiempo real y submit
 ══════════════════════════════════════ */
 
 /**

@@ -12,14 +12,14 @@
  */
 
 import { loadAnnounceBar }          from '../components/announce-bar.js';
-import { loadNavbar, setCatalog }   from '../components/navbar.js';
+import { loadNavbar }   from '../components/navbar.js';
 import { loadFooter }               from '../components/footer.js';
 import { loadCartDrawer, addItemToCart } from '../components/cart-drawer.js';
 import { initFavDrawer, getFavorites, renderFavList } from '../components/fav-drawer.js';
 
 /* ══════════════════════════════════════════════════════════════
-   CATÁLOGO DE PRODUCTOS
-   ── TEMPORAL — datos hardcodeados por ausencia de backend
+  CATÁLOGO DE PRODUCTOS
+  ── TEMPORAL — datos hardcodeados por ausencia de backend
       Reemplazar por fetch('/api/productos') cuando esté disponible.
       Endpoint esperado: GET /api/productos
 ══════════════════════════════════════════════════════════════ */
@@ -47,10 +47,9 @@ const CATALOG = [
 ];
 
 /* ══════════════════════════════════════
-   ARRANQUE — DOMContentLoaded
+  ARRANQUE — DOMContentLoaded
 ══════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', async function() {
-  setCatalog(CATALOG);
   loadAnnounceBar();
   await loadNavbar();
   loadFooter();
@@ -72,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 
 /* ══════════════════════════════════════
-   SCROLL REVEAL — IntersectionObserver
+  SCROLL REVEAL — IntersectionObserver
 ══════════════════════════════════════ */
 
 /**
@@ -94,7 +93,7 @@ function _initScrollReveal() {
 }
 
 /* ══════════════════════════════════════
-   ESTADO DE FILTROS
+  ESTADO DE FILTROS
 ══════════════════════════════════════ */
 let activeFilters     = { cat:[], gen:[], fam:[], marca:[], precioMin:0, precioMax:99999 };
 let currentSort       = 'relevancia';
@@ -110,8 +109,8 @@ const countEl     = document.getElementById('catalog-count');
 const loadMoreBtn = document.getElementById('loadMoreBtn');
 
 /* ══════════════════════════════════════
-   URL PARAMS: ?tab=perfumes|joyeria  /  ?cat=diseñador
-   Lee parámetros al cargar y configura tab + filtro
+  URL PARAMS: ?tab=perfumes|joyeria  /  ?cat=diseñador
+  Lee parámetros al cargar y configura tab + filtro
 ══════════════════════════════════════ */
 
 /**
@@ -147,7 +146,7 @@ function _initUrlParams() {
 }
 
 /* ══════════════════════════════════════
-   CATEGORY TABS + SIDEBAR DINÁMICO
+  CATEGORY TABS + SIDEBAR DINÁMICO
 ══════════════════════════════════════ */
 
 /**
@@ -190,7 +189,7 @@ function _initCategoryTabs() {
 }
 
 /* ══════════════════════════════════════
-   RENDER DE GRID
+  RENDER DE GRID
 ══════════════════════════════════════ */
 
 /**
@@ -378,7 +377,7 @@ function _renderGrid() {
 }
 
 /* ══════════════════════════════════════
-   FILTER CHIPS (active filters display)
+  FILTER CHIPS (active filters display)
 ══════════════════════════════════════ */
 const LABEL_MAP = {
   cat:   { diseñador:'Diseñador', nicho:'Nicho', arabes:'Árabes', testers:'Testers', decants:'Decants', sets:'Sets', 'body-mist':'Body Mist', anillos:'Anillos', aretes:'Aretes', collares:'Collares', brazaletes:'Brazaletes' },
@@ -505,7 +504,7 @@ function _updateFilterBadge() {
 }
 
 /* ══════════════════════════════════════
-   SIDEBAR BINDINGS (desktop)
+  SIDEBAR BINDINGS (desktop)
 ══════════════════════════════════════ */
 
 /**
@@ -548,7 +547,7 @@ function _initSidebarBindings() {
 }
 
 /* ══════════════════════════════════════
-   FILTER DRAWER (mobile)
+  FILTER DRAWER (mobile)
 ══════════════════════════════════════ */
 
 /**
@@ -622,7 +621,7 @@ function _initFilterDrawer() {
 }
 
 /* ══════════════════════════════════════
-   SORT
+  SORT
 ══════════════════════════════════════ */
 
 /**
@@ -638,7 +637,7 @@ function _initSortSelect() {
 }
 
 /* ══════════════════════════════════════
-   LOAD MORE
+  LOAD MORE
 ══════════════════════════════════════ */
 
 /**
@@ -653,7 +652,7 @@ function _initLoadMore() {
 }
 
 /* ══════════════════════════════════════
-   EMPTY STATE — limpiar filtros
+  EMPTY STATE — limpiar filtros
 ══════════════════════════════════════ */
 
 /**
@@ -666,7 +665,7 @@ function _initEmptyStateClear() {
 }
 
 /* ══════════════════════════════════════
-   SORT MÓVIL — delega al select nativo
+  SORT MÓVIL — delega al select nativo
 ══════════════════════════════════════ */
 
 /**

@@ -13,27 +13,14 @@
  * Importado por: pages/favoritos.html (type="module")
  */
 
-import { loadNavbar, setCatalog } from '../components/navbar.js';
+import { loadNavbar } from '../components/navbar.js';
 import { loadFooter }             from '../components/footer.js';
 import { loadCartDrawer, addItemToCart } from '../components/cart-drawer.js';
 import { initFavDrawer, getFavorites, setFavorites, registerOnRender } from '../components/fav-drawer.js';
 
-/* ── TEMPORAL — datos hardcodeados por ausencia de backend
-   Reemplazar este array por una llamada fetch() a la API
-   cuando el backend esté disponible.
-   Endpoint esperado: GET /api/productos
-── */
-const CATALOG = [
-  { id:'jenny-1',      brand:'Jenny Rivera',        name:'Inolvidable EDP',  price:'$1,210 MXN', badge:'Más vendido', tags:['floral','femenino'] },
-  { id:'fierce-2',     brand:'Abercrombie & Fitch',  name:'Fierce EDT',        price:'$760 MXN',   tags:['fresco','masculino'] },
-  { id:'authentic-3',  brand:'Abercrombie & Fitch',  name:'Authentic EDP',     price:'$975 MXN',   badge:'Ed. limitada', tags:['amaderado'] },
-  { id:'signature-4',  brand:'HERA Exclusivo',       name:'Signature Blanc',   price:'$1,490 MXN', badge:'Nuevo', tags:['floral','blanco'] },
-  { id:'noir-5',       brand:'HERA Exclusivo',       name:'Noir Absolu',       price:'$1,480 MXN', badge:'-20%', tags:['oriental','amaderado'] },
-  { id:'oud-6',        brand:'Hera Árabe',           name:'Oud Rose',          price:'$1,320 MXN', tags:['árabe','oud','oriental'] },
-];
 
 /* ══════════════════════════════════════
-   ESTADO: tabs y filtros activos
+  ESTADO: tabs y filtros activos
 ══════════════════════════════════════ */
 
 /** Tab activo: 'perfumes' | 'joyeria' */
@@ -57,7 +44,7 @@ const LABEL_MAP = {
 };
 
 /* ══════════════════════════════════════
-   FILTROS
+  FILTROS
 ══════════════════════════════════════ */
 
 /**
@@ -103,7 +90,7 @@ function clearAllFilters() {
 }
 
 /* ══════════════════════════════════════
-   SIDEBAR DE FILTROS — render dinámico
+  SIDEBAR DE FILTROS — render dinámico
 ══════════════════════════════════════ */
 
 /**
@@ -170,7 +157,7 @@ function renderSidebarFilters() {
 }
 
 /* ══════════════════════════════════════
-   GRID DE FAVORITOS
+  GRID DE FAVORITOS
 ══════════════════════════════════════ */
 
 /**
@@ -290,7 +277,7 @@ function renderFavsPage() {
 }
 
 /* ══════════════════════════════════════
-   CHIPS DE FILTROS ACTIVOS
+  CHIPS DE FILTROS ACTIVOS
 ══════════════════════════════════════ */
 
 /**
@@ -321,7 +308,7 @@ function renderActiveChips() {
 }
 
 /* ══════════════════════════════════════
-   TABS
+  TABS
 ══════════════════════════════════════ */
 
 /**
@@ -340,7 +327,7 @@ function setFavTab(tab, btn) {
 }
 
 /* ══════════════════════════════════════
-   AGREGAR FILTRADOS AL CARRITO
+  AGREGAR FILTRADOS AL CARRITO
 ══════════════════════════════════════ */
 
 /**
@@ -353,7 +340,7 @@ function addFilteredToCart() {
 }
 
 /* ══════════════════════════════════════
-   FILTER DRAWER MÓVIL
+  FILTER DRAWER MÓVIL
 ══════════════════════════════════════ */
 
 /**
@@ -375,7 +362,7 @@ function closeFilterDrawer() {
 }
 
 /* ══════════════════════════════════════
-   SCROLL REVEAL
+  SCROLL REVEAL
 ══════════════════════════════════════ */
 
 /**
@@ -393,10 +380,10 @@ function _initScrollReveal() {
 }
 
 /* ══════════════════════════════════════
-   EXTENSIÓN DE renderFavList (del fav-drawer)
-   Intercepta la función canónica para que cualquier cambio
-   desde el dropdown nav o el panel móvil también actualice
-   el grid exclusivo de esta página.
+  EXTENSIÓN DE renderFavList (del fav-drawer)
+  Intercepta la función canónica para que cualquier cambio
+  desde el dropdown nav o el panel móvil también actualice
+  el grid exclusivo de esta página.
 ══════════════════════════════════════ */
 
 /**
@@ -409,7 +396,7 @@ function _extendRenderFavList() {
 }
 
 /* ══════════════════════════════════════
-   INICIALIZACIÓN PRINCIPAL
+  INICIALIZACIÓN PRINCIPAL
 ══════════════════════════════════════ */
 
 document.addEventListener('DOMContentLoaded', async function() {
