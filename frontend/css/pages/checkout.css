@@ -9,7 +9,7 @@
 /* ── Sección: Page header ───────────────────────────────────── */
 .page-header {background: var(--black); padding: 48px 80px 36px; display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 1px solid var(--lgray); }
 
-/* Textos del page-header sobre fondo negro */
+/* Textos del page-header sobre fondo negro */ 
 .page-header .checkout-eyebrow { color: var(--red); }
 .page-header .checkout-eyebrow::before { background: var(--red); }
 .page-header .page-title .t-sans  { color: var(--cream); }
