@@ -11,7 +11,7 @@
  */
 
 import { loadNavbar } from '../components/navbar.js';
-import { loadFooterCuenta }       from '../components/footer-cuenta.js';
+import { loadFooterMinimo }       from '../components/footer-minimo.js';
 import { loadCartDrawer }         from '../components/cart-drawer.js';
 import { initFavDrawer }          from '../components/fav-drawer.js';
 
@@ -27,7 +27,7 @@ const ADMIN_PASS  = 'admin';
 ══════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', async function() {
   await loadNavbar();
-  loadFooterCuenta();
+  await loadFooterMinimo();
   await loadCartDrawer();
   initFavDrawer();
 
