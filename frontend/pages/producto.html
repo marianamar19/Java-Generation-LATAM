@@ -10,13 +10,14 @@
   <link rel="stylesheet" href="../css/base/typography.css" />
   <link rel="stylesheet" href="../css/base/tokens.css" />
   <link rel="stylesheet" href="../css/base/reset.css" />
+  <link rel="stylesheet" href="../css/base/buttons.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
 
   <!-- ── Componentes universales ── -->
   <link rel="stylesheet" href="../css/components/navbar.css" />
   <link rel="stylesheet" href="../css/components/drawer.css" />
   <link rel="stylesheet" href="../css/components/product-card.css" />
-  <link rel="stylesheet" href="../css/components/footer.css" />
-  <link rel="stylesheet" href="../css/components/newsletter.css" />css" />
+  <link rel="stylesheet" href="../css/components/newsletter.css" />
   <link rel="stylesheet" href="../css/components/footer.css" />
 
   <!-- ── Estilos exclusivos de esta página ── -->
@@ -25,24 +26,16 @@
 <body>
 
 <!-- ══════════════════════════════════════
-     PLACEHOLDER: Navbar universal
-     El fragmento components/navbar.html se inyecta aquí
-     por js/components/navbar.js vía fetch.
+    PLACEHOLDER: Navbar universal
+    El fragmento components/navbar.html se inyecta aquí
+    por js/components/navbar.js vía fetch.
 ══════════════════════════════════════ -->
 <div id="navbar-placeholder"></div>
-
-<!-- ══════════════════════════════════════
-     PLACEHOLDER: Cart drawer + Search overlay
-     cart-drawer.js inyecta components/cart-drawer.html aquí.
-     Ese fragmento contiene el panel del carrito Y el
-     search overlay — ambos viven en el mismo fetch.
-══════════════════════════════════════ -->
-<div id="cart-placeholder"></div>
 
 <div class="site-wrap">
 
   <!-- ══════════════════════════════════════
-       SECCIÓN: Product Stage — hero del producto
+      SECCIÓN: Product Stage — hero del producto
   ══════════════════════════════════════ -->
   <section class="product-stage">
     <div class="product-layout">
@@ -120,7 +113,7 @@
   </section>
 
   <!-- ══════════════════════════════════════
-       SECCIÓN: Notas olfativas
+      SECCIÓN: Notas olfativas
   ══════════════════════════════════════ -->
   <section class="product-notes-section">
     <div class="notes-section-header reveal">
@@ -145,7 +138,7 @@
   </section>
 
   <!-- ══════════════════════════════════════
-       SECCIÓN: Ficha técnica y acordes
+      SECCIÓN: Ficha técnica y acordes
   ══════════════════════════════════════ -->
   <section class="product-details">
     <div class="details-eyebrow reveal">Perfil del perfume</div>
@@ -172,7 +165,7 @@
   </section>
 
   <!-- ══════════════════════════════════════
-       SECCIÓN: Performance
+      SECCIÓN: Performance
   ══════════════════════════════════════ -->
   <section class="product-performance">
     <div class="perf-header reveal">
@@ -205,7 +198,7 @@
   </section>
 
   <!-- ══════════════════════════════════════
-       SECCIÓN: Contexto de uso
+      SECCIÓN: Contexto   de uso
   ══════════════════════════════════════ -->
   <section class="product-context">
     <div class="context-eyebrow reveal">Cuándo usarlo</div>
@@ -226,7 +219,7 @@
   </section>
 
   <!-- ══════════════════════════════════════
-       SECCIÓN: Familia del perfume
+      SECCIÓN: Familia del perfume
   ══════════════════════════════════════ -->
   <section class="product-family" id="family-section">
     <div class="family-header reveal">
@@ -237,7 +230,7 @@
   </section>
 
   <!-- ══════════════════════════════════════
-       SECCIÓN: Reseñas
+      SECCIÓN: Reseñas
   ══════════════════════════════════════ -->
   <section class="product-reviews" id="reviews-section">
     <div class="reviews-eyebrow reveal">Lo que dicen</div>
@@ -283,7 +276,7 @@
   </section>
 
   <!-- ══════════════════════════════════════
-       SECCIÓN: Productos similares
+      SECCIÓN: Productos similares
   ══════════════════════════════════════ -->
   <section class="product-similar">
     <div class="similar-eyebrow">Quizás también</div>
@@ -291,87 +284,28 @@
     <div class="similar-grid" id="similar-grid"></div>
   </section>
 
-  <!-- ══════════════════════════════════════
-       SECCIÓN: Newsletter
-  ══════════════════════════════════════ -->
-  <div class="newsletter">
-    <div class="nl-left reveal">
-      <p class="nl-eyebrow">Club HERA</p>
-      <h2 class="nl-title">Sé el primero en<br><em>olerlo todo.</em></h2>
-    </div>
-    <div class="nl-right reveal reveal-delay-1">
-      <div class="nl-form">
-        <input type="email" class="nl-input" placeholder="tu@email.com" />
-        <button class="nl-btn">Suscribir</button>
-      </div>
-      <p class="nl-disclaimer">Sin spam. Solo lanzamientos, descuentos y novedades exclusivas.</p>
-    </div>
-  </div>
+<!-- ══════════════════════════════════════
+      Newsletter — inyectado vía fetch por newsletter.js
+══════════════════════════════════════ -->
+  <div id="newsletter-placeholder"></div>
 
-  <!-- ══════════════════════════════════════
-       SECCIÓN: Footer
-  ══════════════════════════════════════ -->
-  <footer>
-    <div class="footer-top">
-      <div>
-        <div id="footer-logo-placeholder">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5"/></svg>
-          Tu logo aquí
-        </div>
-        <p class="footer-tagline">Perfumes & Joyería.<br>Para quienes no necesitan<br>permiso para destacar.</p>
-        <div class="footer-socials">
-          <a class="footer-social-btn" href="#" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
-          <a class="footer-social-btn" href="#" aria-label="TikTok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
-          <a class="footer-social-btn" href="#" aria-label="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-          <a class="footer-social-btn" href="#" aria-label="WhatsApp"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
-        </div>
-      </div>
-      <div>
-        <p class="footer-col-title">Tienda</p>
-        <ul class="footer-links">
-          <li><a href="/pages/catalogo.html?tab=perfumes">Perfumes</a></li>
-          <li><a href="/pages/catalogo.html?tab=joyeria">Joyería</a></li>
-          <li><a href="/pages/catalogo.html?tab=perfumes">Novedades</a></li>
-          <li><a href="/pages/catalogo.html?tab=perfumes">Bestsellers</a></li>
-          <li><a href="/pages/catalogo.html?tab=perfumes">Ofertas</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="footer-col-title">Ayuda</p>
-        <ul class="footer-links">
-          <li><a href="#">Rastrear pedido</a></li>
-          <li><a href="/pages/devoluciones.html">Devoluciones</a></li>
-          <li><a href="/pages/politica-envios.html">Política de envíos</a></li>
-          <li><a href="/pages/faq.html">Preguntas frecuentes</a></li>
-          <li><a href="/pages/contacto.html">Contacto</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="footer-col-title">Marca</p>
-        <ul class="footer-links">
-          <li><a href="/pages/nosotros.html">Nosotros</a></li>
-          <li><a href="/pages/aviso-privacidad.html">Privacidad</a></li>
-          <li><a href="/pages/terminos.html">Términos y condiciones</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p class="footer-copy">© 2025 HERA Perfumes & Joyería. Todos los derechos reservados.</p>
-      <div class="footer-payment">
-        <span class="payment-badge">VISA</span>
-        <span class="payment-badge">MC</span>
-        <span class="payment-badge">Mercado Pago</span>
-        <span class="payment-badge">SPEI</span>
-      </div>
-    </div>
-  </footer>
+<!-- ══════════════════════════════════════
+      FOOTER PLACEHOLDER
+      loadFooter() inyecta el fragmento footer.html aquí
+══════════════════════════════════════ -->
+  <div id="footer-placeholder"></div>
 
 </div><!-- /site-wrap -->
 
 <!-- ══════════════════════════════════════
-     SCRIPT: Módulo de la página
-     Único <script> de la página. Carga en cascada:
-     navbar.js → cart-drawer.js → fav-drawer.js → producto.js
+    CART DRAWER — inyectado vía fetch por cart-drawer.js
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
+
+<!-- ══════════════════════════════════════
+    SCRIPT: Módulo de la página
+    Único <script> de la página. Carga en cascada:
+    navbar.js → cart-drawer.js → fav-drawer.js → producto.js
 ══════════════════════════════════════ -->
 <script type="module" src="../js/pages/producto.js"></script>
 </body>

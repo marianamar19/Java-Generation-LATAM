@@ -25,24 +25,13 @@ footer {
   margin-bottom:         60px;
 }
 
-/* ── Sección: Logo placeholder ──────────────────────────────── */
-/* Reemplazar con <img src="logo.svg"> cuando esté disponible */
-#footer-logo-placeholder {
-  height:          32px;
-  min-width:       120px;
-  width:           fit-content;
-  border:          1.5px dashed rgba(249, 249, 249, .12);
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-  gap:             8px;
-  font-size:       10px;
-  font-weight:     600;
-  letter-spacing:  .1em;
-  text-transform:  uppercase;
-  color:           rgba(249, 249, 249, .2);
-  padding:         0 14px;
-  margin-bottom:   20px;
+/* ── Sección: Logo del footer ───────────────────────────────── */
+#footer-logo-img {
+  height:        112px;
+  width:         auto;
+  display:       block;
+  object-fit:    contain;
+  margin-bottom: 20px;
 }
 
 /* ── Sección: Tagline y redes sociales ──────────────────────── */

@@ -1,48 +1,17 @@
 /* ============================================================
-   producto.css — HERA Design System
-   Descripción: Estilos exclusivos de la página de producto.
+  producto.css — HERA Design System
+  Descripción: Estilos exclusivos de la página de producto.
                 Cubre el stage principal, notas olfativas,
                 ficha técnica, performance, contexto, familia,
                 reseñas, grid de similares, search overlay,
                 scroll-reveal y botones primarios.
-   Usado por: pages/producto.html
+  Usado por: pages/producto.html
    ============================================================ */
 
-/* ── Sección: Scroll reveal ────────────────────────────────── */
-/* Los elementos con .reveal entran en pantalla de abajo hacia
-   arriba al ser observados por el IntersectionObserver */
-.reveal          { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
-.reveal.visible  { opacity: 1; transform: none; }
-.reveal-delay-1  { transition-delay: .08s; }
-.reveal-delay-2  { transition-delay: .16s; }
-.reveal-delay-3  { transition-delay: .24s; }
-.reveal-d1       { transition-delay: .1s; }
-.reveal-d2       { transition-delay: .2s; }
-.reveal-d3       { transition-delay: .3s; }
-
-/* ── Sección: Botón primario global ────────────────────────── */
-.btn-primary {
-  background: var(--red);
-  color: #fff;
-  border: none;
-  padding: 16px 36px;
-  font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  transition: background .2s;
-}
-.btn-primary:hover      { background: #c41c24; }
-.btn-primary--sm        { font-size: 11px; padding: 14px 28px; }
-
 /* ── Sección: Product Stage — hero del producto ─────────────
-   Desktop  (>1024px): 2 columnas iguales, galería sticky.
-   Tablet   (≤1024px): 1 columna, galería estática max 480px.
-   Móvil    (≤768px):  padding 0, info con padding 20px.
+  Desktop  (>1024px): 2 columnas iguales, galería sticky.
+  Tablet   (≤1024px): 1 columna, galería estática max 480px.
+  Móvil    (≤768px):  padding 0, info con padding 20px.
 ────────────────────────────────────────────────────────────── */
 .product-stage  { padding: 28px 80px 72px; }
 .product-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }

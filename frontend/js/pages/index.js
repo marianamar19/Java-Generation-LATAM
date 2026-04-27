@@ -10,11 +10,12 @@
  * Importado por: pages/index.html vía <script type="module">
  */
 
-import { loadAnnounceBar } from '../components/announce-bar.js';
-import { loadNavbar } from '../components/navbar.js';
+import { loadAnnounceBar }               from '../components/announce-bar.js';
+import { loadNavbar }                    from '../components/navbar.js';
 import { loadCartDrawer, addItemToCart } from '../components/cart-drawer.js';
-import { initFavDrawer }          from '../components/fav-drawer.js';
-import { loadFooter } from '../components/footer.js';
+import { initFavDrawer }                 from '../components/fav-drawer.js';
+import { loadNewsletter }                from '../components/newsletter.js';
+import { loadFooter }                    from '../components/footer.js';
 
 /* ══════════════════════════════════════════════════════════════
   ARRANQUE — DOMContentLoaded
@@ -27,7 +28,8 @@ document.addEventListener('DOMContentLoaded', async function() {
   await loadNavbar();
   // Cargar footer
   loadFooter();
-
+  // Cargar newsletter
+  loadNewsletter();
   // Cargar cart drawer vía fetch e inicializar — await porque fav-drawer
   // depende de que #cart-btn y los elementos del drawer ya estén en el DOM
   await loadCartDrawer();

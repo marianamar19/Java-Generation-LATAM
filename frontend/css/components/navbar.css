@@ -71,22 +71,12 @@ nav {
   z-index:         101;
 }
 
-/* Placeholder temporal hasta tener el archivo de logo */
-#logo-placeholder {
-  height:          36px;
-  min-width:       130px;
-  border:          1.5px dashed rgba(15, 15, 15, .18);
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-  gap:             8px;
-  font-size:       11px;
-  font-weight:     600;
-  letter-spacing:  .1em;
-  text-transform:  uppercase;
-  color:           rgba(15, 15, 15, .3);
-  padding:         0 16px;
-  background:      var(--cream);
+/* Logo desktop — wordmark completo */
+#nav-logo-img {
+  height:      48px;
+  width:       auto;
+  display:     block;
+  object-fit:  contain;
 }
 
 /* ── Sección: Íconos de la derecha ──────────────────────────── */
@@ -403,21 +393,12 @@ nav {
   justify-content: center;
 }
 
-.nav-mobile-logo-placeholder {
-  height:          32px;
-  min-width:       110px;
-  border:          1.5px dashed rgba(15, 15, 15, .18);
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-  gap:             6px;
-  font-size:       10px;
-  font-weight:     600;
-  letter-spacing:  .1em;
-  text-transform:  uppercase;
-  color:           rgba(15, 15, 15, .3);
-  padding:         0 14px;
-  background:      var(--cream);
+/* Logo móvil — isologo (símbolo solo) */
+#nav-mobile-logo-img {
+  height:     28px;
+  width:      auto;
+  display:    block;
+  object-fit: contain;
 }
 
 /* ── Sección: Panel móvil — separador categorías ────────────── */
@@ -816,7 +797,7 @@ button, a,
   nav { padding: 0 24px; }
   .nav-links        { gap: 20px; }
   .nav-links a      { font-size: 11px; letter-spacing: .08em; }
-  #logo-placeholder { min-width: 110px; font-size: 10px; padding: 0 12px; }
+  #nav-logo-img     { height: 40px; }
   .nav-icons        { gap: 16px; }
 }
 
@@ -834,7 +815,7 @@ button, a,
   .nav-hamburger { display: flex; }
 
   .nav-logo { position: absolute; left: 50%; transform: translateX(-50%); }
-  #logo-placeholder { min-width: 88px; font-size: 10px; padding: 0 10px; height: 30px; }
+  #nav-logo-img { height: 36px; }
 
   /* Solo buscar y carrito visibles en móvil */
   .nav-icons            { gap: 14px; }

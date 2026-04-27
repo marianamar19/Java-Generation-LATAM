@@ -86,7 +86,7 @@
 .product-overlay-btn:hover { background: #c41c24; }
 
 /* ── Sección: Product card — info inferior ──────────────────── */
-.product-info    { padding: 16px; background: var(--black); }
+.product-info    { padding: 16px; background: var(--cream); }
 .product-brand   { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: rgba(249,249,249,.28); margin-bottom: 4px; }
 .product-name    { font-family: var(--serif); font-size: 17px; font-weight: 300; font-style: italic; color: var(--cream); margin-bottom: 6px; }
 .product-detail  { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: rgba(249,249,249,.28); margin-bottom: 10px; }

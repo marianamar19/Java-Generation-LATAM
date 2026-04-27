@@ -1,0 +1,61 @@
+/* ── Sección: Newsletter ─────────────────────────────────────── */
+/* Desktop  (>1024px): fila horizontal, texto izq, form der.
+  Tablet   (≤1024px): fila comprimida.
+  Móvil    (≤768px):  columna única. */
+.newsletter {
+  background:      var(--red);
+  padding:         60px 80px;
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             60px;
+}
+
+.nl-left { flex: 1; }
+.nl-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.58); margin-bottom: 12px; }
+
+.nl-title {
+  font-family:    var(--sans);
+  font-size:      40px;
+  font-weight:    700;
+  color:          #fff;
+  letter-spacing: -.02em;
+  line-height:    1.1;
+}
+
+.nl-title em { font-family: var(--serif); font-style: italic; font-weight: 300; }
+
+.nl-right     { flex: 1; max-width: 460px; }
+.nl-form      { display: flex; }
+
+.nl-input {
+  flex:        1;
+  background:  rgba(255, 255, 255, .14);
+  border:      1px solid rgba(255, 255, 255, .22);
+  border-right: none;
+  padding:     16px 20px;
+  font-family: var(--sans);
+  font-size:   13px;
+  color:       #fff;
+  outline:     none;
+}
+
+.nl-input::placeholder { color: rgba(255, 255, 255, .48); }
+
+.nl-btn {
+  background:     var(--black);
+  color:          #fff;
+  border:         none;
+  padding:        16px 28px;
+  font-family:    var(--sans);
+  font-size:      11px;
+  font-weight:    700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  cursor:         pointer;
+  transition:     background .2s;
+  white-space:    nowrap;
+}
+
+.nl-btn:hover        { background: var(--dgray); }
+.nl-disclaimer       { font-size: 11px; color: rgba(255,255,255,.48); margin-top: 12px; }

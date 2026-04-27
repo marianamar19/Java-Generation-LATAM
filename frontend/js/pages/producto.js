@@ -11,18 +11,13 @@
  * Exporta:     (ninguno — es el punto de entrada de la página)
  * Importado por: pages/producto.html via <script type="module">
  */
-
-import { loadNavbar }                                    from '../components/navbar.js';
-import { initCartDrawer, addItemToCart }                 from '../components/cart-drawer.js';
-import { initFavDrawer, toggleFav }                      from '../components/fav-drawer.js';
-import { formatPriceMXN, highlightQuery }                from '../utils/formatter.js';
-import { getFavs, KEYS }                                 from '../utils/storage.js';
-
-/* ── Alias locales para compatibilidad con el resto del archivo ── */
-// Los archivos existentes usan nombres distintos a los generados;
-// estos alias evitan cambiar cada llamada individual en el código.
-const formatMXN     = formatPriceMXN;
-const highlight     = highlightQuery;
+ 
+import { loadNavbar }     from '../components/navbar.js';
+import { loadFooter }     from '../components/footer.js';
+import { loadCartDrawer, addItemToCart } from '../components/cart-drawer.js';
+import { initFavDrawer, renderFavList, getFavorites as getFavsList, setFavorites } from '../components/fav-drawer.js';
+import { formatMXN, normalizePriceMXN } from '../utils/formatter.js';
+import { getFavs }  from '../utils/storage.js';
 
 /* ── Reseñas — storage inline (storage.js no tiene getReviews/saveReviews) ── */
 // Usa la key dinámica hera_reviews_<productId> directamente con KEYS
@@ -35,30 +30,17 @@ function getReviews(productId) {
 function saveReviews(productId, reviews) {
   try { localStorage.setItem('hera_reviews_' + productId, JSON.stringify(reviews)); } catch {}
 }
-
+ 
 /* ── Fecha en español — formatter.js no exporta formatDateES ── */
 function formatDateES(date = new Date()) {
   const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
                  'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
   return meses[date.getMonth()] + ' ' + date.getFullYear();
 }
-
+ 
 /* ── getFavorites — fav-drawer.js no exporta el array interno ── */
 // Lee directamente desde localStorage para verificar estado inicial
 function getFavorites() { return getFavs(); }
-
-/* ══════════════════════════════════════════════════════════════
-   CATALOG — buscador
-   ── TEMPORAL — hardcodeado por ausencia de backend
-      Reemplazar por fetch() GET /api/productos
-   ══════════════════════════════════════════════════════════════ */
-const CATALOG = [
-  { id: 'dior-sauvage-edp',  brand: 'Dior',   name: 'Sauvage EDP',        price: '$2,490 MXN', tags: ['amaderado', 'especiado', 'masculino'] },
-  { id: 'dior-sauvage-edt',  brand: 'Dior',   name: 'Sauvage EDT',        price: '$1,690 MXN', tags: ['fresco', 'masculino'] },
-  { id: 'bleu-chanel',       brand: 'Chanel', name: 'Bleu de Chanel EDP', price: '$2,890 MXN', tags: ['amaderado', 'masculino'] },
-  { id: 'ysl-myslf',         brand: 'YSL',    name: 'Myself EDP',         price: '$1,990 MXN', tags: ['amaderado', 'masculino'] },
-  { id: 'aventus-creed',     brand: 'Creed',  name: 'Aventus EDP',        price: '$4,290 MXN', tags: ['frutal', 'amaderado', 'masculino'] },
-];
 
 /* ══════════════════════════════════════════════════════════════
    PRODUCT DATA
@@ -110,7 +92,7 @@ const PRODUCT = {
     { id: 'aventus-creed', tipo: 'perfumes', cat: 'nicho',     gen: 'masculino', brand: 'Creed', name: 'Aventus EDP',       price: '$4,290 MXN', badge: 'Nicho',  nivel: 'red',    volLabel: 'Presentación', vols: [{ ml: 50, precio: 4290 }, { ml: 75,  precio: 5890 }] },
   ],
 };
-
+ 
 /* ══════════════════════════════════════════════════════════════
    BOOTSTRAP — carga componentes universales y luego la página
    ══════════════════════════════════════════════════════════════ */
@@ -118,14 +100,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Cada fetch en su propio try/catch: si navbar o cart-drawer fallan,
   // el resto de la página sigue inicializándose correctamente
   try { await loadNavbar(); }      catch (e) { console.warn('[navbar]', e); }
-  try { await initCartDrawer(); }  catch (e) { console.warn('[cart]', e); }
-
+  loadFooter();
+  try { await loadCartDrawer(); }  catch (e) { console.warn('[cart]', e); }
+ 
   // initFavDrawer recibe addItemToCart como callback para evitar
   // dependencia circular entre fav-drawer y cart-drawer
-  initFavDrawer(addItemToCart);
-
+  initFavDrawer();
+ 
   // Inicializa todas las secciones exclusivas de la página
-  initSearch();
   initSizeSelector();
   initNivelBadge();
   initMainActions();
@@ -139,107 +121,59 @@ document.addEventListener('DOMContentLoaded', async () => {
   initSimilarGrid();
   initScrollReveal();
 });
-
+ 
 /* ══════════════════════════════════════════════════════════════
-   BUSCADOR (canonical)
+   _toggleFav — helper local
+   fav-drawer.js no exporta toggleFav; esta función replica su
+   lógica usando la API pública exportada (getFavsList / setFavorites
+   / renderFavList) para los botones generados dinámicamente
+   (familia del perfume y grid de similares).
    ══════════════════════════════════════════════════════════════ */
-
+ 
 /**
- * Inicializa el overlay de búsqueda: apertura, cierre,
- * debounce del input y renderizado de resultados.
+ * Alterna el estado de favorito de un btn.fav-btn.
+ * Sincroniza el estado visual de todos los botones con el mismo
+ * data-product-id y actualiza el dropdown del navbar.
+ * @param {HTMLElement} btn - Botón .fav-btn con los data-* del producto.
  */
-function initSearch() {
-  const searchOverlay  = document.getElementById('search-overlay');
-  const searchInput    = document.getElementById('search-input');
-  const searchResults  = document.getElementById('search-results');
-  const searchCloseBtn = document.getElementById('search-close-btn');
-  const searchBtn      = document.getElementById('search-btn');
-
-  function openSearch() {
-    searchOverlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    // El foco se retrasa para que la transición CSS no compita
-    setTimeout(() => searchInput.focus(), 300);
+function _toggleFav(btn) {
+  const id       = btn.dataset.productId;
+  const brand    = btn.dataset.brand    || '';
+  const name     = btn.dataset.name     || '';
+  const price    = btn.dataset.price    || '';
+  const nivel    = btn.dataset.nivel    || 'green';
+  const volLabel = btn.dataset.volLabel || 'Presentación';
+  const tipo     = btn.dataset.tipo     || 'perfumes';
+  const cat      = btn.dataset.cat      || '';
+  const gen      = btn.dataset.gen      || '';
+  const vol      = btn.dataset.vol      || '';
+ 
+  let favs = getFavsList();
+  const isActive = btn.classList.contains('active');
+ 
+  if (isActive) {
+    favs = favs.filter(f => f.id !== id);
+  } else {
+    if (!favs.find(f => f.id === id)) {
+      favs.push({ id, brand, name, price, vol, volLabel, nivel, tipo, cat, gen });
+    }
   }
-  function closeSearch() {
-    searchOverlay.classList.remove('open');
-    document.body.style.overflow = '';
-    searchInput.value = '';
-    renderSearchResults('');
-  }
-
-  searchBtn.addEventListener('click', openSearch);
-  searchCloseBtn.addEventListener('click', closeSearch);
-  searchOverlay.addEventListener('click', e => { if (e.target === searchOverlay) closeSearch(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSearch(); });
-  searchResults.addEventListener('click', e => { if (e.target.closest('.search-result-item')) closeSearch(); });
-
-  let debounce;
-  searchInput.addEventListener('input', () => {
-    clearTimeout(debounce);
-    debounce = setTimeout(() => renderSearchResults(searchInput.value), 180);
+ 
+  // Sincroniza el estado visual de todos los botones con este producto
+  document.querySelectorAll(`.fav-btn[data-product-id="${id}"]`).forEach(b => {
+    b.classList.toggle('active', favs.some(f => f.id === id));
   });
-
-  /**
-   * Resalta la coincidencia de búsqueda dentro de un texto.
-   * @param {string} text  - Texto original.
-   * @param {string} query - Término a resaltar.
-   * @returns {string} HTML con <mark> alrededor de las coincidencias.
-   */
-  function highlight(text, query) {
-    if (!query) return text;
-    const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-    return text.replace(re, '<mark class="search-highlight">$1</mark>');
-  }
-
-  /**
-   * Filtra CATALOG con el query y actualiza #search-results.
-   * @param {string} query - Término ingresado por el usuario.
-   */
-  function renderSearchResults(query) {
-    const q = query.trim().toLowerCase();
-    if (!q) {
-      searchResults.innerHTML = '<p class="search-hint">Busca por nombre o marca</p>';
-      return;
-    }
-    const hits = CATALOG.filter(p =>
-      p.name.toLowerCase().includes(q) ||
-      p.brand.toLowerCase().includes(q) ||
-      (p.tags && p.tags.some(t => t.includes(q)))
-    );
-    if (!hits.length) {
-      searchResults.innerHTML = `
-        <div class="search-empty">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <p>Sin resultados para "<strong>${query}</strong>"</p>
-        </div>`;
-      return;
-    }
-    let html = `<p class="search-hint">${hits.length} resultado${hits.length !== 1 ? 's' : ''}</p>`;
-    hits.forEach(p => {
-      html += `
-        <div class="search-result-item">
-          <div class="search-result-thumb">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-          </div>
-          <div class="search-result-info">
-            <div class="search-result-brand">${highlight(p.brand, query)}</div>
-            <div class="search-result-name">${highlight(p.name, query)}</div>
-            <div class="search-result-price">${p.price}</div>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.25)" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
-        </div>`;
-    });
-    searchResults.innerHTML = html;
-  }
+ 
+  setFavorites(favs);
+  renderFavList();
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    SELECTOR DE TALLAS (exclusive)
    ══════════════════════════════════════════════════════════════ */
-
+ 
 let selectedSizeIdx = PRODUCT.activeSize;
-
+ 
 /**
  * Renderiza los botones de talla y actualiza el precio al
  * seleccionar una presentación distinta.
@@ -261,11 +195,11 @@ function initSizeSelector() {
     cont.appendChild(btn);
   });
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    NIVEL BADGE (exclusive)
    ══════════════════════════════════════════════════════════════ */
-
+ 
 /**
  * Aplica la clase de color y el texto del badge de disponibilidad
  * del producto principal según PRODUCT.nivel.
@@ -279,11 +213,11 @@ function initNivelBadge() {
   badge.className = 'prod-nivel-badge ' + n;
   labelEl.textContent = labels[n] || n;
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    BOTONES PRINCIPALES — Add to cart y Favorito (exclusive)
    ══════════════════════════════════════════════════════════════ */
-
+ 
 /**
  * Registra los event listeners del botón principal de carrito
  * y del botón grande de favoritos del hero del producto.
@@ -297,7 +231,7 @@ function initMainActions() {
       if (rs) rs.scrollIntoView({ behavior: 'smooth' });
     });
   }
-
+ 
   // Botón principal "Añadir al carrito"
   const mainAddCartBtn = document.getElementById('btn-add-cart-main');
   if (mainAddCartBtn) {
@@ -313,7 +247,7 @@ function initMainActions() {
       );
     });
   }
-
+ 
   // Botón grande de favoritos del hero
   const mainFavBtn = document.getElementById('btn-fav-main');
   let mainFavActive = false;
@@ -328,7 +262,6 @@ function initMainActions() {
       mainFavBtn.classList.toggle('active', mainFavActive);
       if (mainFavActive) {
         const selSize = PRODUCT.sizes[selectedSizeIdx];
-        // Reutiliza toggleFav simulando el dataset de un fav-btn
         mainFavBtn.dataset.productId = PRODUCT.id;
         mainFavBtn.dataset.brand     = PRODUCT.brand;
         mainFavBtn.dataset.name      = `${PRODUCT.name} EDP`;
@@ -340,17 +273,17 @@ function initMainActions() {
         mainFavBtn.dataset.gen       = PRODUCT.gen || '';
         mainFavBtn.dataset.vol       = `${selSize.ml} ml`;
       }
-      toggleFav(mainFavBtn);
+      _toggleFav(mainFavBtn);
     });
   }
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    GALERÍA — fit en viewport + carrusel vertical (exclusive)
    Los style.width / style.height son valores calculados
    dinámicamente — deben vivir en JS, no en CSS
    ══════════════════════════════════════════════════════════════ */
-
+ 
 /**
  * Inicializa la galería de producto: carrusel de miniaturas
  * vertical y ajuste de la imagen principal al viewport.
@@ -361,43 +294,43 @@ function initGallery() {
   const galleryImgMain    = document.querySelector('.product-img-main');
   const thumbPrevBtn      = document.getElementById('thumb-prev');
   const thumbNextBtn      = document.getElementById('thumb-next');
-
+ 
   const THUMB_W       = 62;
   const THUMB_GAP     = 8;
   const THUMB_VISIBLE = 3;
   const THUMB_H       = Math.round(THUMB_W * 4 / 3);
   let thumbOffset     = 0;
   const thumbMaxOffset = Math.max(0, galleryThumbs.length - THUMB_VISIBLE);
-
+ 
   galleryThumbs.forEach(thumb => {
     thumb.addEventListener('click', () => {
       galleryThumbs.forEach(t => t.classList.remove('active'));
       thumb.classList.add('active');
     });
   });
-
+ 
   function setThumbContainerHeight() {
     const visible = Math.min(THUMB_VISIBLE, galleryThumbs.length);
     const h = (visible * THUMB_H) + (visible - 1) * THUMB_GAP;
     galleryThumbsCont.style.height = h + 'px';
   }
-
+ 
   function updateThumbCarousel() {
     const step = THUMB_H + THUMB_GAP;
     galleryThumbsCont.style.transform = `translateY(-${thumbOffset * step}px)`;
     thumbPrevBtn.disabled = thumbOffset === 0;
     thumbNextBtn.disabled = thumbOffset >= thumbMaxOffset;
   }
-
+ 
   thumbPrevBtn.addEventListener('click', () => { if (thumbOffset > 0)              { thumbOffset--; updateThumbCarousel(); } });
   thumbNextBtn.addEventListener('click', () => { if (thumbOffset < thumbMaxOffset) { thumbOffset++; updateThumbCarousel(); } });
-
+ 
   // Oculta los botones de navegación si no hay suficientes thumbs
   if (thumbMaxOffset === 0) {
     thumbPrevBtn.style.display = 'none';
     thumbNextBtn.style.display = 'none';
   }
-
+ 
   function fitGallery() {
     // En tablet/móvil el CSS controla el tamaño; no se calcula aquí
     if (window.innerWidth <= 1024) return;
@@ -414,16 +347,16 @@ function initGallery() {
     setThumbContainerHeight();
     updateThumbCarousel();
   }
-
+ 
   window.addEventListener('resize', fitGallery);
   window.addEventListener('load',   fitGallery);
   requestAnimationFrame(fitGallery);
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    NOTAS OLFATIVAS (exclusive)
    ══════════════════════════════════════════════════════════════ */
-
+ 
 /**
  * Puebla las listas de notas de salida, corazón y base con
  * los datos de PRODUCT.
@@ -444,11 +377,11 @@ function initNotes() {
     });
   });
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    ACORDES OLFATIVOS (exclusive)
    ══════════════════════════════════════════════════════════════ */
-
+ 
 /**
  * Renderiza las barras de acorde y las anima cuando el
  * contenedor entra en el viewport con IntersectionObserver.
@@ -466,7 +399,7 @@ function initAccords() {
       </div>`;
     cont.appendChild(row);
   });
-
+ 
   // Anima las barras al entrar en pantalla para reforzar el context scroll
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -479,7 +412,7 @@ function initAccords() {
     });
   }, { threshold: 0.2 });
   obs.observe(cont);
-
+ 
   // También anima las barras de distribución de reseñas al hacerlas visibles
   const distObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -494,13 +427,13 @@ function initAccords() {
   const distEl = document.getElementById('review-dist');
   if (distEl) distObs.observe(distEl);
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    PERFORMANCE DOTS (exclusive)
    ══════════════════════════════════════════════════════════════ */
-
+ 
 const LEVEL_LABELS = ['', 'Escasa', 'Media', 'Moderada', 'Alta', 'Excepcional'];
-
+ 
 /**
  * Dibuja los puntos de performance para longevidad y estela.
  */
@@ -521,20 +454,20 @@ function initPerformanceDots() {
       c.appendChild(d);
     }
   }
-
+ 
   renderDots('longevity-dots', PRODUCT.longevity);
   renderDots('sillage-dots',   PRODUCT.sillage);
-
+ 
   const lonEl = document.getElementById('longevity-level');
   const silEl = document.getElementById('sillage-level');
   if (lonEl) lonEl.textContent = LEVEL_LABELS[PRODUCT.longevity];
   if (silEl) silEl.textContent = LEVEL_LABELS[PRODUCT.sillage];
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    CONTEXT CARDS — cuándo usarlo (exclusive)
    ══════════════════════════════════════════════════════════════ */
-
+ 
 const SEASONS_DATA = [
   { id: 'primavera', label: 'Primavera', icon: '<path d="M12 22V12M12 12C12 6 6 3 6 3s0 4 3 7M12 12c0-6 6-9 6-9s0 4-3 7"/><path d="M5 18c1-2 3-3 7-4"/><path d="M19 18c-1-2-3-3-7-4"/>' },
   { id: 'verano',    label: 'Verano',    icon: '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>' },
@@ -553,7 +486,7 @@ const OCCASIONS_DATA = [
   { id: 'gala',    label: 'Gala / Evento',   icon: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' },
   { id: 'playa',   label: 'Playa',           icon: '<path d="M12 2C7 2 3 7 3 12h18c0-5-4-10-9-10z"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M9 21h6"/>' },
 ];
-
+ 
 /**
  * Puebla las tarjetas de contexto (temporada, hora, ocasión)
  * marcando como .active las que aplican al producto.
@@ -581,11 +514,11 @@ function initContextCards() {
   renderContextCards('time-cards',     TIMES_DATA,     PRODUCT.timeOfDay);
   renderContextCards('occasion-cards', OCCASIONS_DATA, PRODUCT.occasions);
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    FAMILIA DEL PERFUME (exclusive)
    ══════════════════════════════════════════════════════════════ */
-
+ 
 /**
  * Construye el grid de variantes de la familia del perfume.
  * Oculta la sección completa si hay menos de 2 variantes.
@@ -598,14 +531,14 @@ function initFamilyGrid() {
   }
   const grid = document.getElementById('family-scroll');
   if (!grid) return;
-
+ 
   // El número de columnas se calcula dinámicamente para adaptarse
   // a la cantidad real de variantes en la familia
   grid.style.gridTemplateColumns = `repeat(${PRODUCT.family.length}, 1fr)`;
-
+ 
   const familyTitleEl = document.getElementById('family-title-name');
   if (familyTitleEl) familyTitleEl.textContent = PRODUCT.name;
-
+ 
   PRODUCT.family.forEach(v => {
     const card     = document.createElement('div');
     card.className = 'fm-card' + (v.current ? ' current' : '');
@@ -638,20 +571,20 @@ function initFamilyGrid() {
         <div class="fm-nivel ${nNivel}"><span class="fm-nivel-dot"></span>${nLabel}</div>
       </div>`;
     grid.appendChild(card);
-
+ 
     // Vincula el fav-btn después de que el sistema de favoritos está listo
     const favBtn = card.querySelector('.fav-btn');
     if (favBtn) {
       if (getFavorites().some(f => f.id === favId)) favBtn.classList.add('active');
-      favBtn.addEventListener('click', e => { e.stopPropagation(); toggleFav(favBtn); });
+      favBtn.addEventListener('click', e => { e.stopPropagation(); _toggleFav(favBtn); });
     }
   });
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    RESEÑAS (exclusive)
    ══════════════════════════════════════════════════════════════ */
-
+ 
 /**
  * Inicializa el sistema de reseñas: distribución de estrellas,
  * formulario de nueva reseña con validación y lista de reseñas.
@@ -664,7 +597,7 @@ function initReviews() {
   function loadAllReviews() {
     return [...PRODUCT.reviews, ...getReviews(PRODUCT.id)];
   }
-
+ 
   /**
    * Construye el elemento DOM de una tarjeta de reseña.
    * @param {Object} r - Objeto de reseña.
@@ -691,7 +624,7 @@ function initReviews() {
       <p class="review-text">${r.text}</p>`;
     return card;
   }
-
+ 
   function renderList() {
     const lc = document.getElementById('review-list');
     const ce = document.getElementById('rev-list-count');
@@ -701,7 +634,7 @@ function initReviews() {
     all.forEach(r => lc.appendChild(buildReviewCard(r)));
     if (ce) ce.textContent = all.length + ' reseña' + (all.length !== 1 ? 's' : '');
   }
-
+ 
   // Distribución de estrellas
   const distCont = document.getElementById('review-dist');
   if (distCont) {
@@ -720,7 +653,7 @@ function initReviews() {
       distCont.appendChild(row);
     }
   }
-
+ 
   // Selector de estrellas del formulario
   const starInput   = document.getElementById('star-input');
   let selectedStars = 0;
@@ -739,7 +672,7 @@ function initReviews() {
         starSpans.forEach(s => s.classList.toggle('active', parseInt(s.dataset.val) <= selectedStars));
       });
     });
-
+ 
     // Envío de reseña
     const submitBtn  = document.getElementById('rev-submit');
     const successMsg = document.getElementById('rev-success');
@@ -774,14 +707,14 @@ function initReviews() {
       });
     }
   }
-
+ 
   renderList();
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    SIMILAR GRID (exclusive)
    ══════════════════════════════════════════════════════════════ */
-
+ 
 /**
  * Construye el grid de productos similares con sus botones de
  * volumen, carrito y favoritos.
@@ -789,12 +722,12 @@ function initReviews() {
 function initSimilarGrid() {
   const grid = document.getElementById('similar-grid');
   if (!grid || !PRODUCT.similar) return;
-
+ 
   PRODUCT.similar.forEach(p => {
     let badge = '';
     if (p.badge === 'Nuevo' || p.badge === 'Más vendido') badge = `<span class="ed-badge ed-badge-red">${p.badge}</span>`;
     else if (p.badge) badge = `<span class="ed-badge ed-badge-gray">${p.badge}</span>`;
-
+ 
     const vols     = p.vols || [];
     const volLabel = p.volLabel || 'Presentación';
     const volsHTML = vols.map((v, i) => {
@@ -805,7 +738,7 @@ function initSimilarGrid() {
     const precioInicial  = vols.length > 0 ? formatMXN(vols[0].precio) : p.price;
     const nNivel         = p.nivel || 'green';
     const nLabel         = { green: 'En existencia', yellow: 'Disp. limitada', red: 'Pieza exclusiva' }[nNivel] || 'En existencia';
-
+ 
     const item = document.createElement('div');
     item.className = 'ed-item reveal';
     item.innerHTML = `
@@ -838,7 +771,7 @@ function initSimilarGrid() {
         </a>
       </div>
       <div class="ed-nivel ${nNivel}"><span class="ed-nivel-dot"></span>${nLabel}</div>`;
-
+ 
     // Selector de volúmenes actualiza el precio mostrado
     item.querySelectorAll('.ed-vol-btn').forEach(btn => {
       btn.addEventListener('click', e => {
@@ -848,14 +781,14 @@ function initSimilarGrid() {
         item.querySelector('.ed-price').textContent = formatMXN(parseInt(btn.dataset.precio));
       });
     });
-
+ 
     // Fav-btn vinculado al sistema de favoritos
     const favBtn = item.querySelector('.fav-btn');
     if (favBtn) {
       if (getFavorites().some(f => f.id === favBtn.dataset.productId)) favBtn.classList.add('active');
-      favBtn.addEventListener('click', e => { e.stopPropagation(); toggleFav(favBtn); });
+      favBtn.addEventListener('click', e => { e.stopPropagation(); _toggleFav(favBtn); });
     }
-
+ 
     // Botón de carrito rápido desde el overlay de la tarjeta
     const cartBtn = item.querySelector('.ed-cart-btn');
     if (cartBtn) {
@@ -863,10 +796,10 @@ function initSimilarGrid() {
         addItemToCart(p.id, cartBtn.dataset.brand, cartBtn.dataset.name, cartBtn.dataset.price, '', cartBtn.dataset.nivel || 'green');
       });
     }
-
+ 
     grid.appendChild(item);
   });
-
+ 
   // Re-observa los nuevos elementos .reveal del grid
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -876,11 +809,11 @@ function initSimilarGrid() {
   }, { threshold: 0.12 });
   grid.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    SCROLL REVEAL (canonical)
    ══════════════════════════════════════════════════════════════ */
-
+ 
 /**
  * Observa todos los elementos .reveal de la página y les aplica
  * .visible cuando entran en el viewport.
@@ -894,3 +827,4 @@ function initScrollReveal() {
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 }
+ 
