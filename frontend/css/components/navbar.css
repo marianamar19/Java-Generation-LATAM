@@ -507,7 +507,7 @@ nav {
   box-shadow: 0 8px 32px rgba(15, 15, 15, .12);
 }
 
-.account-dropdown-link {
+#account-dropdown .account-dropdown-link {
   display:         flex;
   align-items:     center;
   gap:             12px;
