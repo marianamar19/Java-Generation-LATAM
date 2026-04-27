@@ -17,6 +17,7 @@ import { loadNavbar } from '../components/navbar.js';
 import { loadFooter }             from '../components/footer.js';
 import { loadCartDrawer, addItemToCart } from '../components/cart-drawer.js';
 import { initFavDrawer, getFavorites, setFavorites, registerOnRender } from '../components/fav-drawer.js';
+import { loadNewsletter }                from '../components/newsletter.js';
 
 
 /* ══════════════════════════════════════
@@ -401,18 +402,18 @@ function _extendRenderFavList() {
 
 document.addEventListener('DOMContentLoaded', async function() {
 
-  // 1. Inyectar catálogo antes de cargar el navbar para que el buscador lo tenga
-  setCatalog(CATALOG);
-
-  // 2. AWAIT obligatorio: esperar a que el navbar esté en el DOM antes de
+  // 1. AWAIT obligatorio: esperar a que el navbar esté en el DOM antes de
   //    inicializar cualquier componente que referencie sus elementos
   //    (#cart-btn, #fav-toggle, #search-btn, etc.)
   await loadNavbar();
 
-  // 3. Footer no tiene dependencias — puede cargarse sin await
+  // 2. Footer no tiene dependencias — puede cargarse sin await
   loadFooter();
 
-  // Cargar cart drawer vía fetch e inicializar
+ // 3. Cargar newsletter
+  loadNewsletter();
+
+  // 4. Cargar cart drawer vía fetch e inicializar
   await loadCartDrawer();
   initFavDrawer();
 
