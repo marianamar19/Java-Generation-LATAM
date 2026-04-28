@@ -1,0 +1,57 @@
+/* ============================================================
+   buttons.css — HERA Design System v4
+   Descripción: Estilos globales de botones reutilizables en
+                todo el proyecto. Solo viven aquí los botones
+                que aparecen en más de una página.
+                Los botones exclusivos de un componente o página
+                viven en su propio archivo (ej: auth-btn en cuenta.css).
+   Usado por:   Todas las páginas del proyecto.
+                Debe cargarse después de tokens.css.
+   ============================================================ */
+
+/* ── Sección: Botón primario ────────────────────────────────── */
+/* Usado en: hero (index), cart drawer (todas las páginas),
+             cuenta.html y cualquier página que necesite un CTA principal */
+.btn-primary {
+  background:      var(--red);
+  color:           #fff;
+  border:          none;
+  padding:         16px 36px;
+  font-family:     var(--sans);
+  font-size:       12px;
+  font-weight:     700;
+  letter-spacing:  .15em;
+  text-transform:  uppercase;
+  cursor:          pointer;
+  text-decoration: none;
+  display:         inline-block;
+  transition:      background .2s, transform .15s;
+}
+
+.btn-primary:hover { background: #c41c24; transform: translateY(-1px); }
+
+/* Variante compacta — usada en el estado vacío del cart drawer */
+.btn-primary--sm  { font-size: 11px; padding: 14px 28px; }
+
+/* Variante de ancho automático — para botones dentro de textos */
+.btn-primary--fit { width: fit-content; }
+
+/* ── Sección: Botón fantasma ────────────────────────────────── */
+/* Usado en: hero (index). Si se necesita en más páginas, ya está disponible */
+.btn-ghost {
+  background:      transparent;
+  color:           var(--cream);
+  border:          1px solid rgba(249, 249, 249, .18);
+  padding:         16px 36px;
+  font-family:     var(--sans);
+  font-size:       12px;
+  font-weight:     600;
+  letter-spacing:  .15em;
+  text-transform:  uppercase;
+  cursor:          pointer;
+  text-decoration: none;
+  display:         inline-block;
+  transition:      border-color .2s, color .2s;
+}
+
+.btn-ghost:hover { border-color: var(--red); color: var(--red); }

@@ -1,0 +1,102 @@
+/* ============================================================
+typography.css — HERA Design System
+Descripción: Importación de fuentes externas y declaraciones
+              tipográficas base que no pertenecen a ningún
+              componente específico.
+Usado por: Todas las páginas del proyecto.
+            Debe cargarse después de reset.css.
+============================================================ */
+
+/* ── Sección: Google Fonts ──────────────────────────────────── */
+/*
+  Instrumento Sans: UI principal — weights 400 / 500 / 600 / 700 (normal + italic)
+  Cormorant Garamond: editorial — weights 300 / 400 (normal + italic)
+  display=swap evita el FOIT (flash of invisible text)
+*/
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+
+/* ── Sección: Sistema tipográfico HERA ──────────────────────── */
+/*
+--sans  → Etiquetas, precios, botones, navegación, UI en general.
+            Pesos disponibles: 400 / 500 / 600 / 700
+--serif → Nombres de producto, citas, subtítulos editoriales.
+            Pesos disponibles: 300 (ligero) / 400 (regular)
+            Siempre en cursiva para los títulos de producto.
+
+  Escala tipográfica base:
+  - 9–11px  → Micro-labels, letra-espaciado amplio, uppercase
+  - 12–13px → Body UI, precios, navegación
+  - 15–19px → Body editorial, descripciones
+  - clamp() → Títulos adaptativos según viewport
+*/
+
+/* ── Eyebrows ────────────────────────────────────────────────── */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 20px;
+}
+
+.eyebrow::before,
+.eyebrow::after       { content: ''; display: block; height: 1px; background: var(--red); }
+.eyebrow::before      { width: 28px; }
+.eyebrow::after       { width: 14px; }
+
+.eyebrow-light {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(225,34,43,.7);
+  margin-bottom: 20px;
+}
+
+.eyebrow-light::before,
+.eyebrow-light::after  { content: ''; display: block; height: 1px; background: rgba(225,34,43,.5); }
+.eyebrow-light::before { width: 28px; }
+.eyebrow-light::after  { width: 14px; }
+
+/* ── Headings ────────────────────────────────────────────────── */
+.heading-dark {
+  font-family: var(--sans);
+  font-size: clamp(34px, 4.5vw, 56px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: .96;
+  color: var(--cream);
+  margin-bottom: 20px;
+}
+
+.heading-dark em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(249,249,249,.38);
+}
+
+.heading-light {
+  font-family: var(--sans);
+  font-size: clamp(30px, 4vw, 50px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.02;
+  color: var(--black);
+  margin-bottom: 20px;
+}
+
+.heading-light em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--dgray);
+}
+

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Página no encontrada — HERA Perfumes &amp; Joyería. La URL que buscas no existe o fue movida." />
+  <title>Página no encontrada — HERA Perfumes &amp; Joyería</title>
+
+  <!-- ── Base: Design System ── -->
+  <link rel="stylesheet" href="../css/base/tokens.css" />
+  <link rel="stylesheet" href="../css/base/reset.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/buttons.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
+
+  <!-- ── Componentes universales ── -->
+  <link rel="stylesheet" href="../css/components/navbar.css" />
+  <link rel="stylesheet" href="../css/components/drawer.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+
+  <!-- ── Página exclusiva ── -->
+  <link rel="stylesheet" href="../css/pages/404.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+    [UNIVERSAL] OVERLAY MENÚ MÓVIL
+══════════════════════════════════════ -->
+<div id="navbar-placeholder"></div>
+
+<div class="site-wrap">
+
+  <!-- ═══════════════════════════════════════════
+      HERO 404 — negro · pantalla completa
+  ═══════════════════════════════════════════ -->
+  <div class="hero-404">
+    <div class="hero-404-inner">
+
+      <!-- Número decorativo superpuesto — solo visual, sin semántica -->
+      <div class="num-deco" aria-hidden="true">404</div>
+
+      <div class="hero-content">
+        <div class="eyebrow reveal">Página no encontrada</div>
+        <h1 class="hero-h1-404 reveal reveal-delay-1">Esta página<br><em>no existe.</em></h1>
+        <p class="hero-sub-404 reveal reveal-delay-2">La URL que buscas no existe o fue movida.<br>Pero el resto del sitio sigue aquí.</p>
+        <p class="hero-invite reveal reveal-delay-3">El menú y el pie de página siguen ahí —<br>úsalos para llegar a donde ibas.</p>
+      </div>
+
+      <!-- Decorador de pie — label técnico del error -->
+      <div class="hero-deco-foot" aria-hidden="true">
+        <div class="hero-deco-line"></div>
+        <span class="hero-deco-label">Error 404 — Recurso no encontrado</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+      [UNIVERSAL] FOOTER
+  ══════════════════════════════════════ -->
+  <div id="footer-placeholder"></div>
+
+</div><!-- /site-wrap -->
+
+<!-- ══════════════════════════════════════
+    CART DRAWER — inyectado vía fetch por cart-drawer.js
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
+
+<!-- ══════════════════════════════════════
+    Entry point de la página — type="module"
+    Importa y orquesta todos los componentes.
+══════════════════════════════════════ -->
+<script type="module" src="../js/pages/404.js"></script>
+
+</body>
+</html>

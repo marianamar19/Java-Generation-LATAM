@@ -1,0 +1,418 @@
+/* ============================================================
+  nosotros.css — HERA Design System
+  Descripción: Estilos exclusivos de la página Nosotros.
+              Incluye hero, sección de historia, valores,
+              flip cards del equipo y sección "Por qué HERA".
+  Usado por:   pages/nosotros.html únicamente
+   ============================================================ */
+
+/* ── Sección: Eyebrow y títulos compartidos ─────────────── */
+.nos-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--red); margin-bottom: 22px;
+}
+.nos-title-dark {
+  font-family: var(--sans);
+  font-size: clamp(24px, 2.6vw, 36px);
+  font-weight: 700; color: var(--black);
+  line-height: 1.05; letter-spacing: -.02em;
+}
+.nos-title-dark em {
+  font-family: var(--serif); font-style: italic;
+  font-weight: 300; color: rgba(15,15,15,.40); display: block;
+}
+.nos-title-light {
+  font-family: var(--sans);
+  font-size: clamp(28px, 3.2vw, 44px);
+  font-weight: 700; color: var(--cream);
+  line-height: 1.05; letter-spacing: -.02em;
+}
+.nos-title-light em {
+  font-family: var(--serif); font-style: italic;
+  font-weight: 300; color: rgba(249,249,249,.38);
+}
+
+/* ─────────────────────────────────────────────────────────
+  SECCIÓN 1: HERO
+  Encabezado compacto ~55% del alto del hero del home.
+  Fondo muy oscuro con acento rojo radial.
+───────────────────────────────────────────────────────── */
+.nos-hero {
+  background: #0c0907;
+  padding: 52px 80px 48px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(249,249,249,.05);
+}
+/* Gradiente radial sutil en lado derecho */
+.nos-hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 50% 80% at 82% 50%, rgba(225,34,43,.04) 0%, transparent 65%);
+  pointer-events: none;
+}
+.nos-hero-eyebrow {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 11px; font-weight: 600; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--red);
+  position: relative; z-index: 2; margin-bottom: 18px;
+}
+.nos-hero-eyebrow::before {
+  content: ''; display: block; width: 32px; height: 1px;
+  background: var(--red); flex-shrink: 0;
+}
+.nos-hero-title {
+  font-family: var(--sans);
+  font-size: clamp(36px, 4.2vw, 60px);
+  font-weight: 700; line-height: .92;
+  color: var(--cream); letter-spacing: -.02em;
+  position: relative; z-index: 2; margin-bottom: 16px;
+}
+.nos-hero-title em {
+  font-family: var(--serif); font-style: italic; font-weight: 300;
+  color: rgba(249,249,249,.42); display: block;
+}
+.nos-hero-sub {
+  max-width: 480px;
+  font-family: var(--serif); font-size: 17px; font-weight: 300;
+  color: rgba(249,249,249,.42); line-height: 1.65;
+  position: relative; z-index: 2; margin-bottom: 28px;
+}
+.nos-hero-chips {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  position: relative; z-index: 2;
+}
+.nos-chip {
+  background: rgba(249,249,249,.06);
+  border: 1px solid rgba(249,249,249,.12);
+  padding: 7px 16px;
+  font-family: var(--sans); font-size: 11px; font-weight: 600;
+  letter-spacing: .10em; text-transform: uppercase;
+  color: rgba(249,249,249,.52);
+}
+
+/* ─────────────────────────────────────────────────────────
+  SECCIÓN 2: HISTORIA (fondo claro)
+  Columna izq: gris claro con acento rojo.
+  Columna der: crema con texto legible font-weight: 400.
+───────────────────────────────────────────────────────── */
+.nos-historia {
+  display: grid;
+  grid-template-columns: 42% 58%;
+  min-height: 520px;
+  border-top: 1px solid var(--lgray);
+  border-bottom: 1px solid var(--lgray);
+}
+
+/* Columna visual — fondo gris claro */
+.nos-hist-visual {
+  background: #ececec;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+/* Línea roja vertical de acento */
+.nos-hist-redline {
+  position: absolute; right: 0; top: 15%; bottom: 15%;
+  width: 2px; background: var(--red); opacity: .6;
+}
+/* Placeholder ocupa 65% del ancho de la columna */
+.nos-hist-img-placeholder {
+  position: relative; z-index: 2;
+  width: 65%; aspect-ratio: 3/4;
+  border: 1.5px dashed rgba(15,15,15,.18);
+  background: rgba(255,255,255,.4);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+}
+.nos-hist-img-placeholder span {
+  font-size: 10px; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; color: rgba(15,15,15,.30);
+}
+
+/* Columna de texto */
+.nos-hist-text {
+  background: var(--cream);
+  padding: 72px 64px 72px 56px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+/*
+ * font-weight: 400 en lugar de 300.
+ * Cormorant Garamond 300 tiene trazos demasiado finos
+ * sobre fondo claro. El 400 los engrosa sin perder elegancia.
+ * Color .84 — legible sin ser puro negro.
+ */
+.nos-hist-body {
+  margin-top: 22px;
+  font-family: var(--serif); font-size: 17px;
+  font-weight: 400; color: rgba(15,15,15,.84);
+  line-height: 1.78;
+}
+.nos-hist-body p { margin-bottom: 14px; }
+.nos-hist-body p:last-child { margin-bottom: 0; }
+.nos-hist-divider { margin: 28px 0; height: 1px; background: var(--lgray); }
+.nos-hist-stats { display: flex; gap: 32px; }
+.nos-hist-stat-num {
+  font-family: var(--sans); font-size: 24px;
+  font-weight: 700; color: var(--black); letter-spacing: -.02em;
+}
+.nos-hist-stat-label {
+  font-size: 11px; font-weight: 400; letter-spacing: .12em;
+  text-transform: uppercase; color: rgba(15,15,15,.52); margin-top: 3px;
+}
+
+/* ─────────────────────────────────────────────────────────
+  SECCIÓN 3: VALORES (fondo oscuro)
+  Número = texto blanco sobre cuadro rojo.
+───────────────────────────────────────────────────────── */
+.nos-valores {
+  background: var(--black);
+  padding: 72px 80px;
+}
+.nos-valores-header { margin-bottom: 52px; }
+.nos-valores-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.nos-valor-item {
+  padding: 0 36px;
+  border-right: 1px solid rgba(249,249,249,.10);
+}
+.nos-valor-item:first-child { padding-left: 0; }
+.nos-valor-item:last-child  { border-right: none; padding-right: 0; }
+/* Badge numérico: cuadro rojo, número blanco */
+.nos-valor-num {
+  display: inline-block;
+  background: var(--red); color: #fff;
+  font-family: var(--sans); font-size: 10px; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  padding: 3px 7px; margin-bottom: 18px;
+}
+.nos-valor-title {
+  font-family: var(--sans); font-size: 16px; font-weight: 700;
+  color: var(--cream); margin-bottom: 10px;
+}
+.nos-valor-desc {
+  font-family: var(--serif); font-size: 15px; font-weight: 400;
+  color: rgba(249,249,249,.52); line-height: 1.72;
+}
+
+/* ─────────────────────────────────────────────────────────
+  SECCIÓN 4: EQUIPO — Flip Cards
+  Foto cuadrada (aspect-ratio: 1/1).
+  flip-card-back es position: absolute para cubrir el frente.
+  flip-card-inner hereda la altura del frente (normal flow).
+───────────────────────────────────────────────────────── */
+.nos-equipo {
+  background: #ececec;
+  padding: 72px 80px;
+  border-top: 1px solid #ddd;
+}
+.nos-equipo-sub {
+  margin-top: 10px; margin-bottom: 32px;
+  font-family: var(--serif); font-size: 16px; font-weight: 400;
+  color: rgba(15,15,15,.50);
+}
+.nos-equipo-hint {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 24px; font-size: 11px; color: rgba(15,15,15,.58);
+}
+.nos-equipo-hint-dot {
+  width: 6px; height: 6px; background: var(--red);
+  border-radius: 50%; flex-shrink: 0;
+}
+.nos-equipo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* ── Flip card — estructura limpia ──────────────────────── */
+.flip-card { cursor: pointer; }
+.flip-card-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform .55s cubic-bezier(.4,0,.2,1);
+}
+.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+
+/* FRENTE — flujo normal, define la altura total */
+.flip-card-front {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: #1c1c1c;
+  display: flex; flex-direction: column;
+  border: 1px solid rgba(249,249,249,.05);
+}
+
+/* Foto cuadrada */
+.flip-card-photo {
+  width: 100%; aspect-ratio: 1 / 1;
+  background: #282828;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px;
+  overflow: hidden; position: relative;
+}
+.flip-card-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.flip-card-photo svg { opacity: .14; color: var(--cream); }
+.flip-card-photo-lbl {
+  font-size: 9px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: rgba(249,249,249,.14);
+}
+.flip-card-badge {
+  position: absolute; top: 8px; right: 8px;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
+  padding: 3px 8px; font-size: 9px; font-weight: 600;
+  letter-spacing: .10em; text-transform: uppercase; color: rgba(249,249,249,.22);
+}
+.flip-card-info {
+  padding: 14px 16px; background: var(--black);
+  border-top: 1px solid rgba(249,249,249,.06);
+}
+.flip-card-rol {
+  font-size: 9px; font-weight: 600; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--red); margin-bottom: 4px;
+}
+.flip-card-name {
+  font-family: var(--serif); font-style: italic;
+  font-weight: 300; font-size: 16px; color: var(--cream);
+}
+
+/*
+ * REVERSO — position: absolute sobre el frente.
+ * inset: 0 lo hace del mismo tamaño exacto que el frente.
+ * transform: rotateY(180deg) lo oculta hasta el flip.
+ */
+.flip-card-back {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(180deg);
+  background: var(--red);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px; padding: 20px;
+}
+.flip-card-back-rol {
+  font-size: 9px; font-weight: 600; letter-spacing: .18em;
+  text-transform: uppercase; color: rgba(255,255,255,.62);
+}
+.flip-card-back-name {
+  font-family: var(--serif); font-style: italic;
+  font-weight: 300; font-size: 18px; color: #fff; text-align: center;
+}
+/* Links de redes — dos columnas lado a lado */
+.flip-card-links {
+  display: flex; flex-direction: row; gap: 16px; justify-content: center;
+}
+.flip-card-link {
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+  transition: background .2s, transform .15s; cursor: pointer; text-decoration: none;
+}
+.flip-card-link:hover { background: rgba(255,255,255,.30); transform: translateY(-2px); }
+.flip-card-link-label  { display: none; }
+.flip-card-link-handle { display: none; }
+.flip-card-back-hint {
+  font-size: 11px; font-weight: 500; color: rgba(255,255,255,.60);
+  margin-top: 6px; letter-spacing: .02em; cursor: pointer;
+  padding: 6px 10px; border: 1px solid rgba(255,255,255,.20);
+  transition: background .2s;
+}
+.flip-card-back-hint:hover { background: rgba(255,255,255,.12); }
+
+/* ─────────────────────────────────────────────────────────
+  SECCIÓN 5: POR QUÉ ELEGIRNOS
+───────────────────────────────────────────────────────── */
+.nos-porque {
+  background: var(--cream);
+  padding: 72px 80px;
+  border-top: 1px solid var(--lgray);
+}
+.nos-porque-header { margin-bottom: 48px; }
+.nos-title-dark-lg {
+  font-family: var(--sans);
+  font-size: clamp(26px, 3vw, 42px);
+  font-weight: 700; color: var(--black);
+  line-height: 1.05; letter-spacing: -.02em;
+}
+.nos-title-dark-lg em {
+  font-family: var(--serif); font-style: italic;
+  font-weight: 300; color: rgba(15,15,15,.38);
+}
+.nos-dif-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.nos-dif-item {
+  padding: 0 44px 0 0;
+  border-right: 1px solid var(--lgray);
+}
+.nos-dif-item:first-child { padding-left: 0; }
+.nos-dif-item:last-child  { border-right: none; padding-right: 0; }
+.nos-dif-redline { width: 32px; height: 1px; background: var(--red); margin-bottom: 18px; }
+.nos-dif-title { font-family: var(--sans); font-size: 18px; font-weight: 700; color: var(--black); margin-bottom: 10px; }
+.nos-dif-desc { font-family: var(--serif); font-size: 16px; font-weight: 400; color: rgba(15,15,15,.70); line-height: 1.72; }
+.nos-cta-wrap {
+  margin-top: 48px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; flex-wrap: wrap;
+}
+
+/* ── Sección: Cursor interactivo — apply pointer everywhere ─ */
+button, a, .flip-card, .nos-chip,
+.nav-mobile-link, .nav-mobile-overlay {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* ─────────────────────────────────────────────────────────
+  RESPONSIVE
+───────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .nos-hero         { padding: 44px 48px 40px; }
+  .nos-hist-text    { padding: 52px 40px; }
+  .nos-valores      { padding: 56px 48px; }
+  .nos-valores-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 0; }
+  .nos-valor-item   { border-right: none; padding: 0; border-bottom: 1px solid rgba(249,249,249,.08); padding-bottom: 32px; }
+  .nos-valor-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .nos-equipo       { padding: 56px 48px; }
+  .nos-equipo-grid  { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .nos-porque       { padding: 56px 48px; }
+  .nos-dif-grid     { grid-template-columns: 1fr; gap: 40px; }
+  .nos-dif-item     { border-right: none; padding: 0 0 40px 0; border-bottom: 1px solid var(--lgray); }
+  .nos-dif-item:last-child { border-bottom: none; padding-bottom: 0; }
+}
+
+@media (max-width: 768px) {
+  .nos-hero            { padding: 40px 24px 36px; }
+  .nos-hero-chips      { flex-direction: column; gap: 7px; align-items: flex-start; }
+
+  .nos-historia        { grid-template-columns: 1fr; }
+  .nos-hist-visual     { min-height: 260px; }
+  .nos-hist-text       { padding: 36px 24px; }
+  .nos-hist-stats      { flex-wrap: wrap; gap: 24px; }
+
+  .nos-valores         { padding: 48px 24px; }
+  .nos-valores-grid    { grid-template-columns: 1fr; gap: 0; }
+  .nos-valor-item      { border-right: none; padding: 0 0 28px 0; border-bottom: 1px solid rgba(249,249,249,.08); margin-bottom: 28px; }
+  .nos-valor-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .nos-equipo          { padding: 48px 24px; }
+  .nos-equipo-grid     { grid-template-columns: 1fr; }
+
+  .nos-porque          { padding: 48px 24px; }
+  .nos-dif-grid        { grid-template-columns: 1fr; gap: 40px; }
+  .nos-dif-item        { border-right: none; padding: 0 0 40px 0; border-bottom: 1px solid var(--lgray); }
+  .nos-dif-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .nos-cta-wrap        { flex-direction: column; align-items: stretch; }
+  .btn-primary, .btn-ghost-light { text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .nos-hist-stats { gap: 20px; }
+}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Cuenta — HERA Perfumes &amp; Joyería</title>
+  <meta name="description" content="Inicia sesión o crea tu cuenta en HERA Perfumes & Joyería para acceder a tus pedidos, favoritos y direcciones guardadas." />
+
+  <!-- ── CSS Base (Design System) ── -->
+  <link rel="stylesheet" href="../css/base/tokens.css" />
+  <link rel="stylesheet" href="../css/base/reset.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/buttons.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
+
+  <!-- ── CSS Componentes universales ── -->
+  <link rel="stylesheet" href="../css/components/navbar.css" />
+  <link rel="stylesheet" href="../css/components/drawer.css" />
+  <link rel="stylesheet" href="../css/components/footer-minimo.css" />
+
+  <!-- ── CSS Exclusivo de esta página (siempre al final) ── -->
+  <link rel="stylesheet" href="../css/pages/cuenta.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+    NAVBAR — inyectado vía fetch por navbar.js
+══════════════════════════════════════ -->
+<div id="navbar-placeholder"></div>
+
+<div class="site-wrap">
+
+  <!-- ══════════════════════════════════════
+      MAIN — auth scene: login + registro
+  ══════════════════════════════════════ -->
+  <main class="auth-main">
+    <div class="auth-scene" id="authScene">
+
+      <div class="auth-track" id="authTrack">
+
+        <!-- PANEL LOGIN -->
+        <div class="auth-panel auth-panel-login" id="panelLogin">
+          <div class="auth-panel-inner">
+            <h1 class="auth-eyebrow">Mi cuenta</h1>
+            <div class="auth-title">
+              <span class="t-sans">Bienvenido</span>
+              <span class="t-serif">de vuelta.</span>
+            </div>
+            <p class="auth-subtitle">Accede a tu cuenta para ver tus pedidos, favoritos y direcciones guardadas.</p>
+            <form class="auth-form" novalidate>
+              <div class="auth-field">
+                <label class="auth-label" for="login-email">Email</label>
+                <div class="auth-input-wrap">
+                  <input class="auth-input" type="email" id="login-email" placeholder="tu@email.com" autocomplete="email" />
+                </div>
+                <span class="auth-err" id="err-login-email">Ingresa un email válido.</span>
+              </div>
+              <div class="auth-field">
+                <label class="auth-label" for="login-pass">Contraseña</label>
+                <div class="auth-input-wrap">
+                  <input class="auth-input" type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" />
+                  <button type="button" class="pwd-toggle" data-pwd-target="login-pass">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+                <span class="auth-err" id="err-login-pass">Este campo es obligatorio.</span>
+              </div>
+              <a href="#" class="auth-forgot">¿Olvidaste tu contraseña?</a>
+              <button type="button" class="auth-btn-primary" id="btn-login">Iniciar sesión</button>
+              <button type="button" class="auth-btn-guest" id="btn-guest"><span>Continuar como invitado →</span></button>
+              <div class="auth-sep"><span>O</span></div>
+              <button type="button" class="auth-btn-google">
+                <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.6 4.418 1.582L19.91 3A11.867 11.867 0 0 0 12 0C7.27 0 3.198 2.698 1.24 6.65l4.026 3.115z"/><path fill="#34A853" d="M16.04 18.013c-1.09.703-2.474 1.078-4.04 1.078a7.077 7.077 0 0 1-6.723-4.777L1.24 17.35C3.198 21.302 7.27 24 12 24c3.27 0 6.345-1.194 8.618-3.22l-4.577-2.767z"/><path fill="#4A90E2" d="M20.618 20.78C22.93 18.634 24.364 15.5 24.364 12c0-.705-.077-1.39-.21-2.045H12v4.09h6.945c-.318 1.636-1.217 2.967-2.527 3.868l4.2 2.867z"/><path fill="#FBBC05" d="M5.277 14.314A7.11 7.11 0 0 1 4.909 12c0-.805.14-1.577.368-2.314L1.24 6.65A11.926 11.926 0 0 0 0 12c0 1.923.46 3.736 1.24 5.35l4.037-3.036z"/></svg>
+                Continuar con Google
+              </button>
+              <p class="auth-switch">¿Primera vez en HERA? <a href="#" id="link-to-register">Crear cuenta →</a></p>
+            </form>
+          </div>
+        </div><!-- /auth-panel-login -->
+
+        <!-- PANEL REGISTRO -->
+        <div class="auth-panel auth-panel-register" id="panelRegister">
+          <div class="auth-panel-inner">
+            <div class="auth-eyebrow">Nueva cuenta</div>
+            <div class="auth-title">
+              <span class="t-sans">Únete</span>
+              <span class="t-serif">a HERA.</span>
+            </div>
+            <p class="auth-subtitle">Crea tu cuenta y accede a lanzamientos exclusivos, historial de pedidos y más.</p>
+            <form class="auth-form" novalidate>
+              <div class="auth-field">
+                <label class="auth-label" for="reg-name">Nombre</label>
+                <div class="auth-input-wrap">
+                  <input class="auth-input" type="text" id="reg-name" placeholder="Tu nombre completo" autocomplete="name" />
+                </div>
+                <span class="auth-err" id="err-reg-name">Este campo es obligatorio.</span>
+              </div>
+              <div class="auth-field">
+                <label class="auth-label" for="reg-email">Email</label>
+                <div class="auth-input-wrap">
+                  <input class="auth-input" type="email" id="reg-email" placeholder="tu@email.com" autocomplete="email" />
+                </div>
+                <span class="auth-err" id="err-reg-email">Ingresa un email válido.</span>
+              </div>
+              <div class="auth-field">
+                <label class="auth-label" for="reg-pass">Contraseña</label>
+                <div class="auth-input-wrap">
+                  <input class="auth-input" type="password" id="reg-pass" placeholder="Mínimo 8 caracteres" autocomplete="new-password" />
+                  <button type="button" class="pwd-toggle" data-pwd-target="reg-pass">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+                <div class="pwd-bars"><div class="pwd-bar" id="b1"></div><div class="pwd-bar" id="b2"></div><div class="pwd-bar" id="b3"></div><div class="pwd-bar" id="b4"></div></div>
+                <p class="pwd-label" id="pwd-label"></p>
+                <span class="auth-err" id="err-reg-pass">Este campo es obligatorio.</span>
+              </div>
+              <div class="auth-field">
+                <label class="auth-label" for="reg-pass2">Confirmar contraseña</label>
+                <div class="auth-input-wrap">
+                  <input class="auth-input" type="password" id="reg-pass2" placeholder="Repite tu contraseña" autocomplete="new-password" />
+                  <button type="button" class="pwd-toggle" data-pwd-target="reg-pass2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                  <span class="val-icon" id="match-icon"></span>
+                </div>
+                <span class="auth-err" id="err-reg-pass2">Las contraseñas no coinciden.</span>
+              </div>
+              <button type="button" class="auth-btn-primary" id="btn-register">Crear cuenta</button>
+              <div class="auth-sep"><span>O</span></div>
+              <button type="button" class="auth-btn-google">
+                <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.6 4.418 1.582L19.91 3A11.867 11.867 0 0 0 12 0C7.27 0 3.198 2.698 1.24 6.65l4.026 3.115z"/><path fill="#34A853" d="M16.04 18.013c-1.09.703-2.474 1.078-4.04 1.078a7.077 7.077 0 0 1-6.723-4.777L1.24 17.35C3.198 21.302 7.27 24 12 24c3.27 0 6.345-1.194 8.618-3.22l-4.577-2.767z"/><path fill="#4A90E2" d="M20.618 20.78C22.93 18.634 24.364 15.5 24.364 12c0-.705-.077-1.39-.21-2.045H12v4.09h6.945c-.318 1.636-1.217 2.967-2.527 3.868l4.2 2.867z"/><path fill="#FBBC05" d="M5.277 14.314A7.11 7.11 0 0 1 4.909 12c0-.805.14-1.577.368-2.314L1.24 6.65A11.926 11.926 0 0 0 0 12c0 1.923.46 3.736 1.24 5.35l4.037-3.036z"/></svg>
+                Continuar con Google
+              </button>
+              <p class="auth-disclaimer">Al crear una cuenta aceptas nuestros <a href="terminos.html">Términos y condiciones</a> y <a href="aviso-privacidad.html">Política de privacidad</a>.</p>
+              <p class="auth-switch">¿Ya tienes cuenta? <a href="#" id="link-to-login">Iniciar sesión →</a></p>
+            </form>
+          </div>
+        </div><!-- /auth-panel-register -->
+
+      </div><!-- /auth-track -->
+
+      <!-- DOTS — fuera del track, parte del flujo normal -->
+      <div class="auth-dots">
+        <div class="auth-dot active" id="dot-login"></div>
+        <div class="auth-dot" id="dot-reg"></div>
+      </div>
+
+    </div><!-- /auth-scene -->
+  </main>
+
+  <!-- ══════════════════════════════════════
+      FOOTER MÍNIMO — inyectado vía fetch por footer-cuenta.js
+  ══════════════════════════════════════ -->
+  <div id="footer-minimo-placeholder"></div>
+
+</div><!-- /site-wrap -->
+
+<!-- ══════════════════════════════════════
+    CART DRAWER — inyectado vía fetch por cart-drawer.js
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
+
+<!-- ══════════════════════════════════════
+    SUCCESS OVERLAY — estado dinámico controlado por cuenta.js
+══════════════════════════════════════ -->
+<div class="auth-success-overlay" id="successOverlay">
+  <div class="auth-success-box">
+    <div class="auth-success-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,.55)" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg>
+    </div>
+    <p class="auth-success-eyebrow" id="success-eyebrow">Éxito</p>
+    <p class="auth-success-msg" id="success-msg">Bienvenido de vuelta.</p>
+    <a id="success-link" href="index.html" class="auth-success-link">Ir a la tienda →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+    SCRIPT — ES Module, único punto de entrada
+══════════════════════════════════════ -->
+<script type="module" src="../js/pages/cuenta.js"></script>
+
+</body>
+</html>

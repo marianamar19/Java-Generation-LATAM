@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nosotros — HERA Perfumes &amp; Joyería</title>
+
+  <!-- ── Design System base ──────────────────────────────── -->
+  <link rel="stylesheet" href="../css/base/tokens.css" />
+  <link rel="stylesheet" href="../css/base/reset.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
+  <link rel="stylesheet" href="../css/base/buttons.css" />
+
+  <!-- ── Componentes universales ─────────────────────────── -->
+  <link rel="stylesheet" href="../css/components/navbar.css" />
+  <link rel="stylesheet" href="../css/components/drawer.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+
+  <!-- ── Estilos de esta página ──────────────────────────── -->
+  <link rel="stylesheet" href="../css/pages/nosotros.css" />
+</head>
+<body>
+<!-- ══════════════════════════════════════
+    NAVBAR — inyectado vía fetch
+    navbar.js carga components/navbar.html
+    aquí e inicializa toda la lógica.
+══════════════════════════════════════ -->
+<div id="navbar-placeholder"></div>
+
+<!-- ══════════════════════════════════════
+    SITE-WRAP — centrado a 1440px máximo
+══════════════════════════════════════ -->
+<div class="site-wrap">
+
+  <!-- ===========================
+      SECCIÓN 1 — HERO
+  =========================== -->
+  <div class="nos-hero">
+    <div class="nos-hero-eyebrow reveal">Nuestra historia</div>
+    <h1 class="nos-hero-title reveal reveal-d1">
+      Nació de una<br>
+      <em>obsesión.</em>
+    </h1>
+    <p class="nos-hero-sub reveal reveal-d2">
+      Que cada persona merece llevar una fragancia que la represente. Sin salir de México.
+    </p>
+    <div class="nos-hero-chips reveal reveal-d3">
+      <span class="nos-chip">Fundada en Guadalajara</span>
+      <span class="nos-chip">9 Co-fundadores</span>
+    </div>
+  </div>
+
+  <!-- ===========================
+      SECCIÓN 2 — HISTORIA (CLARA)
+  =========================== -->
+  <div class="nos-historia">
+    <div class="nos-hist-visual">
+      <div class="nos-hist-redline"></div>
+      <div class="nos-hist-img-placeholder">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,0.25)" stroke-width="1.2">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <path d="m21 15-5-5L5 21"/>
+        </svg>
+        <span>Imagen editorial</span>
+      </div>
+    </div>
+    <div class="nos-hist-text">
+      <p class="nos-eyebrow reveal">Por qué HERA</p>
+      <h2 class="nos-title-dark reveal reveal-d1">
+        No vendemos perfumes.
+        <em>Vendemos identidad.</em>
+      </h2>
+      <div class="nos-hist-body reveal reveal-d2">
+        <p>HERA nació de una pregunta simple: ¿por qué es tan difícil conseguir una fragancia original de diseñador en México sin pagar precios desorbitados o arriesgarse a un fraude? Nueve personas encontraron la misma respuesta y decidieron construir la solución juntos.</p>
+        <p>Desde Guadalajara, construimos una plataforma donde el lujo no requiere un pasaporte. Cada botella llega sellada de fábrica, curada por personas que entienden qué significa usar una fragancia que te representa.</p>
+        <p>No somos una tienda más. Somos una obsesión compartida por nueve co-fundadores que creen que el aroma correcto puede cambiar cómo te percibes a ti mismo.</p>
+      </div>
+      <div class="nos-hist-divider reveal reveal-d2"></div>
+      <div class="nos-hist-stats reveal reveal-d3">
+        <div>
+          <div class="nos-hist-stat-num">2024</div>
+          <div class="nos-hist-stat-label">Año de fundación</div>
+        </div>
+        <div>
+          <div class="nos-hist-stat-num">9</div>
+          <div class="nos-hist-stat-label">Co-fundadores</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===========================
+      SECCIÓN 3 — VALORES (OSCURA)
+  =========================== -->
+  <div class="nos-valores">
+    <div class="nos-valores-header reveal">
+      <p class="nos-eyebrow" style="color:var(--red);margin-bottom:14px;">Lo que nos mueve</p>
+      <h2 class="nos-title-light">Nuestros <em>valores.</em></h2>
+    </div>
+    <div class="nos-valores-grid">
+      <div class="nos-valor-item reveal">
+        <span class="nos-valor-num">01</span>
+        <div class="nos-valor-title">Autenticidad</div>
+        <p class="nos-valor-desc">Solo vendemos lo que podemos garantizar. Cada fragancia llega sellada de fábrica.</p>
+      </div>
+      <div class="nos-valor-item reveal reveal-d1">
+        <span class="nos-valor-num">02</span>
+        <div class="nos-valor-title">Accesibilidad</div>
+        <p class="nos-valor-desc">El lujo no debería requerir un pasaporte. Traemos el mundo a tu puerta.</p>
+      </div>
+      <div class="nos-valor-item reveal reveal-d2">
+        <span class="nos-valor-num">03</span>
+        <div class="nos-valor-title">Identidad</div>
+        <p class="nos-valor-desc">Un perfume no es solo un aroma. Es quien eres antes de hablar.</p>
+      </div>
+      <div class="nos-valor-item reveal reveal-d3">
+        <span class="nos-valor-num">04</span>
+        <div class="nos-valor-title">Comunidad</div>
+        <p class="nos-valor-desc">Construimos HERA con 9 personas que comparten la misma obsesión.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===========================
+      SECCIÓN 4 — EQUIPO
+  =========================== -->
+  <div class="nos-equipo">
+    <p class="nos-eyebrow reveal">Nuestro equipo</p>
+    <h2 class="nos-title-light reveal reveal-d1" style="color:var(--black);">
+      Las personas detrás <em style="color:rgba(15,15,15,.38);">de HERA.</em>
+    </h2>
+    <p class="nos-equipo-sub reveal reveal-d2">9 co-fundadores. Una misma obsesión.</p>
+    <div class="nos-equipo-hint reveal">
+      <div class="nos-equipo-hint-dot"></div>
+      <span>Toca cualquier tarjeta para ver sus redes</span>
+    </div>
+
+    <div class="nos-equipo-grid">
+
+      <!-- CARD 1 — Christopher (Product Owner) -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="flip-card-photo">
+              <img src="https://res.cloudinary.com/dnmjhx0d7/image/upload/v1776120697/Cris_d03ksq.jpg" alt="Christopher Damian Ramírez Gómez">
+              <span class="flip-card-badge">Ver redes</span>
+            </div>
+            <div class="flip-card-info">
+              <div class="flip-card-rol">Product Owner</div>
+              <div class="flip-card-name">Christopher Damian Ramírez Gómez</div>
+            </div>
+          </div>
+          <div class="flip-card-back">
+            <div class="flip-card-back-rol">Product Owner</div>
+            <div class="flip-card-back-name">Christopher Damian Ramírez Gómez</div>
+            <div class="flip-card-links">
+              <a href="https://www.linkedin.com/in/christopher-d-ram%C3%ADrez-g/" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                <span class="flip-card-link-label">LinkedIn</span>
+                <span class="flip-card-link-handle">@Christopher</span>
+              </a>
+              <a href="https://github.com/CrisDRGomez" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span class="flip-card-link-label">GitHub</span>
+                <span class="flip-card-link-handle">@CrisDRGomez</span>
+              </a>
+            </div>
+            <span class="flip-card-back-hint">← toca para volver</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2 — Hendrick (Scrum Master) -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="flip-card-photo">
+              <img src="https://res.cloudinary.com/dnmjhx0d7/image/upload/v1776120708/Hendrick_ms3zaj.jpg" alt="Hendrick Adelaido Galarza Hernández">
+              <span class="flip-card-badge">Ver redes</span>
+            </div>
+            <div class="flip-card-info">
+              <div class="flip-card-rol">Scrum Master</div>
+              <div class="flip-card-name">Hendrick Adelaido Galarza Hernández</div>
+            </div>
+          </div>
+          <div class="flip-card-back">
+            <div class="flip-card-back-rol">Scrum Master</div>
+            <div class="flip-card-back-name">Hendrick Adelaido Galarza Hernández</div>
+            <div class="flip-card-links">
+              <a href="https://www.linkedin.com/in/hendrick-galarza/" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                <span class="flip-card-link-label">LinkedIn</span>
+                <span class="flip-card-link-handle">@hendrick-galarza</span>
+              </a>
+              <a href="https://github.com/HendrickGH" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span class="flip-card-link-label">GitHub</span>
+                <span class="flip-card-link-handle">@HendrickGH</span>
+              </a>
+            </div>
+            <span class="flip-card-back-hint">← toca para volver</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3 — Mariana (Development Team) -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="flip-card-photo">
+              <img src="https://res.cloudinary.com/dnmjhx0d7/image/upload/v1776120717/Mariana_aylkiw.jpg" alt="Mariana Gutierrez Almaguer">
+              <span class="flip-card-badge">Ver redes</span>
+            </div>
+            <div class="flip-card-info">
+              <div class="flip-card-rol">Development Team</div>
+              <div class="flip-card-name">Mariana Gutierrez Almaguer</div>
+            </div>
+          </div>
+          <div class="flip-card-back">
+            <div class="flip-card-back-rol">Development Team</div>
+            <div class="flip-card-back-name">Mariana Gutierrez Almaguer</div>
+            <div class="flip-card-links">
+              <a href="https://www.linkedin.com/in/mariana-gutierrez-almaguer-22880a226/" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                <span class="flip-card-link-label">LinkedIn</span>
+                <span class="flip-card-link-handle">@mariana-gutierrez-almaguer</span>
+              </a>
+              <a href="https://github.com/marianamar19" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span class="flip-card-link-label">GitHub</span>
+                <span class="flip-card-link-handle">@marianamar19</span>
+              </a>
+            </div>
+            <span class="flip-card-back-hint">← toca para volver</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 4 — Asahel (Development Team) -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="flip-card-photo">
+              <img src="https://res.cloudinary.com/dnmjhx0d7/image/upload/v1776120690/Asahel_pxoty5.jpg" alt="Asahel Enrique Pozas Ramírez">
+              <span class="flip-card-badge">Ver redes</span>
+            </div>
+            <div class="flip-card-info">
+              <div class="flip-card-rol">Development Team</div>
+              <div class="flip-card-name">Asahel Enrique Pozas Ramírez</div>
+            </div>
+          </div>
+          <div class="flip-card-back">
+            <div class="flip-card-back-rol">Development Team</div>
+            <div class="flip-card-back-name">Asahel Enrique Pozas Ramírez</div>
+            <div class="flip-card-links">
+              <a href="https://www.linkedin.com/in/asahel-pozas/" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                <span class="flip-card-link-label">LinkedIn</span>
+                <span class="flip-card-link-handle">@asahel-pozas</span>
+              </a>
+              <a href="https://github.com/AsahelPozas" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span class="flip-card-link-label">GitHub</span>
+                <span class="flip-card-link-handle">@AsahelPozas</span>
+              </a>
+            </div>
+            <span class="flip-card-back-hint">← toca para volver</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 5 — Francisco (Development Team) -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="flip-card-photo">
+              <img src="https://res.cloudinary.com/dnmjhx0d7/image/upload/v1776120707/Francisco_hyzbz7.jpg" alt="Francisco Ortiz Dionicio">
+              <span class="flip-card-badge">Ver redes</span>
+            </div>
+            <div class="flip-card-info">
+              <div class="flip-card-rol">Development Team</div>
+              <div class="flip-card-name">Francisco Ortiz Dionicio</div>
+            </div>
+          </div>
+          <div class="flip-card-back">
+            <div class="flip-card-back-rol">Development Team</div>
+            <div class="flip-card-back-name">Francisco Ortiz Dionicio</div>
+            <div class="flip-card-links">
+              <a href="http://www.linkedin.com/in/francisco-ortiz-dionicio" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                <span class="flip-card-link-label">LinkedIn</span>
+                <span class="flip-card-link-handle">@francisco-ortiz-dionicio</span>
+              </a>
+              <a href="https://github.com/Ferrer-System" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span class="flip-card-link-label">GitHub</span>
+                <span class="flip-card-link-handle">@Ferrer-System</span>
+              </a>
+            </div>
+            <span class="flip-card-back-hint">← toca para volver</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 6 — José Enrique (Development Team) -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="flip-card-photo">
+              <img src="https://res.cloudinary.com/dnmjhx0d7/image/upload/v1776120708/Henry_jxwivf.jpg" alt="José Enrique Villarreal Rubio">
+              <span class="flip-card-badge">Ver redes</span>
+            </div>
+            <div class="flip-card-info">
+              <div class="flip-card-rol">Development Team</div>
+              <div class="flip-card-name">José Enrique Villarreal Rubio</div>
+            </div>
+          </div>
+          <div class="flip-card-back">
+            <div class="flip-card-back-rol">Development Team</div>
+            <div class="flip-card-back-name">José Enrique Villarreal Rubio</div>
+            <div class="flip-card-links">
+              <a href="https://www.linkedin.com/in/jenvir950925/" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                <span class="flip-card-link-label">LinkedIn</span>
+                <span class="flip-card-link-handle">@jenvir950925</span>
+              </a>
+              <a href="https://github.com/Jevr95" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span class="flip-card-link-label">GitHub</span>
+                <span class="flip-card-link-handle">@Jevr95</span>
+              </a>
+            </div>
+            <span class="flip-card-back-hint">← toca para volver</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 7 — Carlos (Development Team) -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="flip-card-photo">
+              <img src="https://res.cloudinary.com/dnmjhx0d7/image/upload/v1776120696/Carlos_le1nsd.jpg" alt="Carlos Alfredo Gastelum Armendariz">
+              <span class="flip-card-badge">Ver redes</span>
+            </div>
+            <div class="flip-card-info">
+              <div class="flip-card-rol">Development Team</div>
+              <div class="flip-card-name">Carlos Alfredo Gastelum Armendariz</div>
+            </div>
+          </div>
+          <div class="flip-card-back">
+            <div class="flip-card-back-rol">Development Team</div>
+            <div class="flip-card-back-name">Carlos Alfredo Gastelum Armendariz</div>
+            <div class="flip-card-links">
+              <a href="http://www.linkedin.com/in/carlos-alfredo-gastelum-armendariz-052465142" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                <span class="flip-card-link-label">LinkedIn</span>
+                <span class="flip-card-link-handle">@carlos-alfredo-gastelum-armendariz</span>
+              </a>
+              <a href="https://github.com/cagastelum23-netizen" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span class="flip-card-link-label">GitHub</span>
+                <span class="flip-card-link-handle">@cagastelum23-netizen</span>
+              </a>
+            </div>
+            <span class="flip-card-back-hint">← toca para volver</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 8 — Miguel (Development Team) -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="flip-card-photo">
+              <img src="https://res.cloudinary.com/dnmjhx0d7/image/upload/v1776121389/Miguel_v2o8j5.jpg" alt="Miguel Angel Castro Garza">
+              <span class="flip-card-badge">Ver redes</span>
+            </div>
+            <div class="flip-card-info">
+              <div class="flip-card-rol">Development Team</div>
+              <div class="flip-card-name">Miguel Angel Castro Garza</div>
+            </div>
+          </div>
+          <div class="flip-card-back">
+            <div class="flip-card-back-rol">Development Team</div>
+            <div class="flip-card-back-name">Miguel Angel Castro Garza</div>
+            <div class="flip-card-links">
+              <a href="http://www.linkedin.com/in/miguel-c-92758a241" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                <span class="flip-card-link-label">LinkedIn</span>
+                <span class="flip-card-link-handle">@miguel-c-92758a241</span>
+              </a>
+              <a href="https://github.com/macg111104-coder" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span class="flip-card-link-label">GitHub</span>
+                <span class="flip-card-link-handle">@macg111104-coder</span>
+              </a>
+            </div>
+            <span class="flip-card-back-hint">← toca para volver</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 9 — Sergio Aaron (Development Team) -->
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="flip-card-photo">
+              <img src="https://res.cloudinary.com/dnmjhx0d7/image/upload/v1776120690/Aaron_ao84vf.jpg" alt="Sergio Aaron Valdez Montero">
+              <span class="flip-card-badge">Ver redes</span>
+            </div>
+            <div class="flip-card-info">
+              <div class="flip-card-rol">Development Team</div>
+              <div class="flip-card-name">Sergio Aaron Valdez Montero</div>
+            </div>
+          </div>
+          <div class="flip-card-back">
+            <div class="flip-card-back-rol">Development Team</div>
+            <div class="flip-card-back-name">Sergio Aaron Valdez Montero</div>
+            <div class="flip-card-links">
+              <a href="https://www.linkedin.com/in/sergio-aaron-valdez/" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                <span class="flip-card-link-label">LinkedIn</span>
+                <span class="flip-card-link-handle">@sergio-aaron-valdez</span>
+              </a>
+              <a href="https://github.com/Aaron-Valdez" target="_blank" rel="noopener noreferrer" class="flip-card-link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span class="flip-card-link-label">GitHub</span>
+                <span class="flip-card-link-handle">@Aaron-Valdez</span>
+              </a>
+            </div>
+            <span class="flip-card-back-hint">← toca para volver</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /nos-equipo-grid -->
+  </div><!-- /nos-equipo -->
+
+  <!-- ===========================
+      SECCIÓN 5 — POR QUÉ ELEGIRNOS
+  =========================== -->
+  <div class="nos-porque">
+    <div class="nos-porque-header">
+      <p class="nos-eyebrow reveal" style="margin-bottom:14px;">Por qué HERA</p>
+      <h2 class="nos-title-dark-lg reveal reveal-d1">
+        Lo que nos hace <em>diferentes.</em>
+      </h2>
+    </div>
+    <div class="nos-dif-grid">
+      <div class="nos-dif-item reveal">
+        <div class="nos-dif-redline"></div>
+        <div class="nos-dif-title">Originales garantizados</div>
+        <p class="nos-dif-desc">Cada producto llega sellado de fábrica. Nunca usados, nunca alterados. Te lo garantizamos.</p>
+      </div>
+      <div class="nos-dif-item reveal reveal-d1" style="padding-left:44px;">
+        <div class="nos-dif-redline"></div>
+        <div class="nos-dif-title">Selección curada</div>
+        <p class="nos-dif-desc">No vendemos todo. Seleccionamos cuidadosamente cada marca y cada fragancia que entra a nuestro catálogo.</p>
+      </div>
+      <div class="nos-dif-item reveal reveal-d2" style="padding-left:44px;">
+        <div class="nos-dif-redline"></div>
+        <div class="nos-dif-title">Servicio real</div>
+        <p class="nos-dif-desc">Detrás de HERA hay personas reales respondiendo tus dudas. No bots, no respuestas automáticas.</p>
+      </div>
+    </div>
+    <div class="nos-cta-wrap reveal">
+      <a href="contacto.html" class="btn-primary">¿Tienes dudas? Contáctanos</a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+      FOOTER — inyectado vía fetch
+  ══════════════════════════════════════ -->
+  <div id="footer-placeholder"></div>
+
+</div><!-- /site-wrap -->
+
+<!-- ══════════════════════════════════════
+    CART DRAWER — inyectado vía fetch por cart-drawer.js
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
+
+<!-- ══════════════════════════════════════
+    SCRIPT DE ENTRADA — ES Module
+    Importa y orquesta todos los componentes.
+══════════════════════════════════════ -->
+<script type="module" src="../js/pages/nosotros.js"></script>
+
+</body>
+</html>

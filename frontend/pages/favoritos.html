@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mis Favoritos — HERA Perfumes &amp; Joyería</title>
+  <meta name="description" content="Tus perfumes y joyas guardadas en HERA. Filtra por disponibilidad, género y categoría, y agrégalos al carrito en un clic." />
+
+  <!-- ── CSS Base (Design System) ── -->
+  <link rel="stylesheet" href="../css/base/tokens.css" />
+  <link rel="stylesheet" href="../css/base/reset.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/buttons.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
+
+  <!-- ── CSS Componentes universales ── -->
+  <link rel="stylesheet" href="../css/components/announce-bar.css" />
+  <link rel="stylesheet" href="../css/components/navbar.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+  <link rel="stylesheet" href="../css/components/drawer.css" />
+  <link rel="stylesheet" href="../css/components/newsletter.css" />
+
+  <!-- ── CSS Exclusivo de esta página (siempre al final) ── -->
+  <link rel="stylesheet" href="../css/pages/favoritos.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+    NAVBAR — inyectado vía fetch por navbar.js
+    El placeholder es reemplazado con el contenido
+    de /components/navbar.html al cargar la página.
+══════════════════════════════════════ -->
+<div id="navbar-placeholder"></div>
+
+<!-- ══════════════════════════════════════
+    SITE-WRAP — contenedor centrado max 1440px
+══════════════════════════════════════ -->
+<div class="site-wrap">
+
+  <!-- [EXCLUSIVO] MOBILE FILTER DRAWER -->
+  <div class="filter-overlay" id="filterOverlay"></div>
+  <div class="filter-drawer" id="filterDrawer">
+    <div class="filter-drawer-header">
+      <span class="filter-drawer-title">Filtros</span>
+      <button class="filter-drawer-close" id="filterDrawerClose" aria-label="Cerrar filtros">✕</button>
+    </div>
+    <div id="filter-drawer-content"><!-- populated by JS from sidebar --></div>
+  </div>
+
+  <!-- [EXCLUSIVO] PAGE HEADER -->
+  <div class="fav-header">
+    <div class="fav-eyebrow reveal">Mi colección</div>
+    <h1 class="fav-title reveal reveal-delay-1">Mis favoritos <em>de HERA.</em></h1>
+    <div class="fav-tabs">
+      <button class="fav-tab-btn active" id="tab-btn-perfumes">Perfumes</button>
+      <button class="fav-tab-btn" id="tab-btn-joyeria">Joyería</button>
+    </div>
+  </div>
+
+  <!-- [EXCLUSIVO] BODY: SIDEBAR + MAIN -->
+  <div class="fav-body">
+
+    <!-- SIDEBAR DE FILTROS -->
+    <aside class="fav-sidebar" id="fav-sidebar">
+      <div class="sidebar-head">
+        <span class="sidebar-title">Filtros</span>
+        <button class="sidebar-clear-all" id="clear-all-btn">Limpiar todo</button>
+      </div>
+
+      <!-- Disponibilidad -->
+      <div class="filter-section">
+        <div class="filter-section-title">Disponibilidad</div>
+        <label class="filter-option">
+          <input type="checkbox" data-filter="nivel" value="green">
+          <span class="nivel-dot green"></span>
+          <span>En existencia</span>
+          <span class="filter-count" id="fc-nivel-green"></span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" data-filter="nivel" value="yellow">
+          <span class="nivel-dot yellow"></span>
+          <span>Disp. limitada</span>
+          <span class="filter-count" id="fc-nivel-yellow"></span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" data-filter="nivel" value="red">
+          <span class="nivel-dot red"></span>
+          <span>Pieza exclusiva</span>
+          <span class="filter-count" id="fc-nivel-red"></span>
+        </label>
+      </div>
+
+      <!-- Género -->
+      <div class="filter-section">
+        <div class="filter-section-title">Género</div>
+        <label class="filter-option">
+          <input type="checkbox" data-filter="gen" value="masculino">
+          <span>Masculino</span>
+          <span class="filter-count" id="fc-gen-masculino"></span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" data-filter="gen" value="femenino">
+          <span>Femenino</span>
+          <span class="filter-count" id="fc-gen-femenino"></span>
+        </label>
+        <label class="filter-option">
+          <input type="checkbox" data-filter="gen" value="unisex">
+          <span>Unisex</span>
+          <span class="filter-count" id="fc-gen-unisex"></span>
+        </label>
+      </div>
+
+      <!-- Categoría / Tipo de joya — renderizado por JS según tab activo -->
+      <div class="filter-section" id="filter-cat-section">
+        <div class="filter-section-title" id="filter-cat-title">Categoría</div>
+        <div id="filter-cat-options"></div>
+      </div>
+
+      <!-- Marca — renderizado por JS según favoritos del tab activo -->
+      <div class="filter-section" id="filter-marca-section">
+        <div class="filter-section-title">Marca</div>
+        <div id="filter-marca-options"></div>
+      </div>
+    </aside>
+
+    <!-- MAIN: topbar + chips + grid + estado vacío -->
+    <main class="fav-main">
+      <button class="btn-filter-mobile" id="btn-filter-mobile">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+        Filtros
+      </button>
+
+      <div class="fav-topbar">
+        <span class="fav-count-text">
+          <strong id="count-visible">0</strong> producto<span id="count-plural">s</span> guardado<span id="count-plural2">s</span>
+        </span>
+        <!-- display:none es estado dinámico controlado por JS — excepción válida -->
+        <button class="btn-add-filtered" id="btn-add-filtered" style="display:none;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          Agregar filtrados al carrito
+        </button>
+      </div>
+
+      <div class="active-chips-row" id="active-chips-row"></div>
+
+      <!-- Grid de favoritos — poblado por JS -->
+      <div class="fav-grid" id="fav-grid"></div>
+
+      <!-- Estado vacío — visible/hidden via JS según contexto -->
+      <div class="fav-empty" id="fav-page-empty">
+        <div class="fav-empty-icon-page">
+          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <p class="fav-empty-title" id="fav-empty-title">Aún no tienes favoritos</p>
+        <p class="fav-empty-sub" id="fav-empty-sub">Guarda productos con ♥ desde el catálogo</p>
+        <a href="catalogo.html" class="fav-empty-cta" id="fav-empty-cta">Explorar catálogo</a>
+      </div>
+    </main>
+
+  </div><!-- /fav-body -->
+
+  <!-- ══════════════════════════════════════
+    NEWSLETTER — inyectado vía fetch por newsletter.js
+══════════════════════════════════════ -->
+  <div id="newsletter-placeholder"></div>
+
+  <!-- ══════════════════════════════════════
+    FOOTER — inyectado vía fetch por footer.js
+══════════════════════════════════════ -->
+  <div id="footer-placeholder"></div>
+
+</div><!-- /site-wrap -->
+
+<!-- ══════════════════════════════════════
+    CART DRAWER — inyectado vía fetch por cart-drawer.js
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
+
+<!-- ══════════════════════════════════════
+    SCRIPT — ES Module, único punto de entrada
+    Todas las dependencias se resuelven vía import
+══════════════════════════════════════ -->
+<script type="module" src="../js/pages/favoritos.js"></script>
+
+</body>
+</html>

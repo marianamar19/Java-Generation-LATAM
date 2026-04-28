@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Perfil — HERA Perfumes &amp; Joyería</title>
+ 
+  <!-- ── Design System base ── -->
+  <link rel="stylesheet" href="../css/base/tokens.css" />
+  <link rel="stylesheet" href="../css/base/reset.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/buttons.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
+ 
+  <!-- ── Componentes universales ── -->
+  <link rel="stylesheet" href="../css/components/navbar.css" />
+  <link rel="stylesheet" href="../css/components/drawer.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+ 
+  <!-- ── Estilos exclusivos de esta página ── -->
+  <link rel="stylesheet" href="../css/pages/perfil.css" />
+</head>
+<body>
+ 
+<!-- ══════════════════════════════════════
+    NAVBAR — inyectado vía fetch por navbar.js
+══════════════════════════════════════ -->
+<div id="navbar-placeholder"></div>
+ 
+<!-- ══════════════════════════════════════
+    SITE-WRAP
+══════════════════════════════════════ -->
+<div class="site-wrap">
+ 
+    <!-- ── PERFIL HEADER ───────────────────────────────────────────────── -->
+    <div class="perfil-header reveal">
+      <div class="perfil-eyebrow">Mi cuenta</div>
+      <h1 class="perfil-title">
+        Mi perfil
+        <em>de HERA.</em>
+      </h1>
+      <div class="perfil-header-meta">
+        <span class="perfil-header-tag" id="headerTagNombre">–</span>
+        <span class="perfil-header-tag" id="headerTagDesde">–</span>
+      </div>
+    </div>
+ 
+    <!-- ── PERFIL BODY ─────────────────────────────────────────────────── -->
+    <div class="perfil-body">
+ 
+      <!-- ── SIDEBAR ───────────────────────────────────────────────────── -->
+      <aside class="perfil-sidebar">
+        <div class="perfil-sidebar-user">
+          <div class="perfil-avatar">
+            <span class="perfil-avatar-iniciales" id="sidebarIniciales">––</span>
+          </div>
+          <div class="perfil-sidebar-nombre" id="sidebarNombre">Usuario HERA</div>
+          <div class="perfil-sidebar-email"  id="sidebarEmail">correo@ejemplo.com</div>
+          <div class="perfil-sidebar-desde"  id="sidebarDesde">Miembro desde 2024</div>
+        </div>
+ 
+        <div class="perfil-nav" aria-label="Secciones del perfil" role="navigation">
+          <button class="perfil-nav-btn active" data-panel="info">
+            <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="9" cy="6" r="3.5"/>
+              <path d="M2 16c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke-linecap="round"/>
+            </svg>
+            Información
+          </button>
+          <button class="perfil-nav-btn" data-panel="pedidos">
+            <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="2" width="12" height="14" rx="0"/>
+              <path d="M6 6h6M6 9h6M6 12h4" stroke-linecap="round"/>
+            </svg>
+            Mis pedidos
+          </button>
+          <button class="perfil-nav-btn" data-panel="credenciales">
+            <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="4" y="8" width="10" height="8"/>
+              <path d="M6 8V6a3 3 0 016 0v2" stroke-linecap="round"/>
+            </svg>
+            Credenciales
+          </button>
+          <button class="perfil-nav-btn" data-panel="direcciones">
+            <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 2a5 5 0 00-5 5c0 3.5 5 9 5 9s5-5.5 5-9a5 5 0 00-5-5z" stroke-linecap="round"/>
+              <circle cx="9" cy="7" r="1.5"/>
+            </svg>
+            Mis direcciones
+          </button>
+        </div>
+ 
+        <div class="perfil-sidebar-footer">
+          <button class="perfil-logout-btn" id="btnLogout">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4">
+              <path d="M5 2H2a1 1 0 00-1 1v8a1 1 0 001 1h3M9 10l3-3-3-3M5 7h7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Cerrar sesión
+          </button>
+        </div>
+      </aside>
+ 
+      <!-- ── MAIN ──────────────────────────────────────────────────────── -->
+      <main class="perfil-main">
+ 
+        <!-- ── PANEL: INFORMACIÓN ──────────────────────────────────────── -->
+        <section class="perfil-panel active" id="panel-info" aria-labelledby="titulo-info">
+ 
+          <div class="perfil-panel-eyebrow">Datos personales</div>
+          <h2 class="perfil-panel-title" id="titulo-info">
+            Mi información <em>personal</em>
+          </h2>
+ 
+          <div class="perfil-info-hero reveal">
+            <div class="perfil-info-avatar-lg">
+              <span class="perfil-info-avatar-iniciales" id="infoIniciales">––</span>
+            </div>
+            <div class="perfil-info-hero-body">
+              <div class="perfil-info-hero-nombre" id="infoNombreCompleto">Usuario HERA</div>
+              <div class="perfil-info-hero-email"  id="infoEmail">correo@ejemplo.com</div>
+              <div class="perfil-info-hero-meta"   id="infoDesde">Miembro desde 2024</div>
+            </div>
+          </div>
+ 
+          <div class="perfil-form-card reveal reveal-delay-1">
+            <div class="perfil-form-grid">
+              <!-- Campo unificado: nombre completo (Opción A) -->
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="infoNombre">Nombre completo</label>
+                <input class="perfil-input" type="text" id="infoNombre" placeholder="Tu nombre completo" autocomplete="name">
+              </div>
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="infoTel">Teléfono</label>
+                <input class="perfil-input" type="tel" id="infoTel" placeholder="+52 33 0000 0000" autocomplete="tel">
+              </div>
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="infoNacimiento">Fecha de nacimiento</label>
+                <input class="perfil-input" type="date" id="infoNacimiento">
+              </div>
+            </div>
+            <div class="perfil-form-actions">
+              <button class="perfil-btn perfil-btn-primary" id="btnGuardarInfo">Guardar cambios</button>
+              <button class="perfil-btn perfil-btn-outline" id="btnCancelarInfo">Cancelar</button>
+            </div>
+            <div class="perfil-msg perfil-msg-ok" id="infoMsgOk">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#4caf50" stroke-width="1.5"/><path d="M4 7l2 2 4-4" stroke="#4caf50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Cambios guardados correctamente.
+            </div>
+            <div class="perfil-msg perfil-msg-err" id="infoMsgErr">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M7 4v4M7 9.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              El nombre no puede estar vacío.
+            </div>
+          </div>
+ 
+        </section>
+ 
+        <!-- ── PANEL: PEDIDOS ──────────────────────────────────────────── -->
+        <section class="perfil-panel" id="panel-pedidos" aria-labelledby="titulo-pedidos">
+ 
+          <div class="perfil-panel-eyebrow">Historial</div>
+          <h2 class="perfil-panel-title" id="titulo-pedidos">
+            Mis pedidos <em>recientes</em>
+          </h2>
+ 
+          <!-- Generado dinámicamente por renderPedidos() en perfil.js -->
+          <div id="pedidosList"></div>
+ 
+        </section>
+ 
+        <!-- ── PANEL: CREDENCIALES ─────────────────────────────────────── -->
+        <section class="perfil-panel" id="panel-credenciales" aria-labelledby="titulo-cred">
+ 
+          <div class="perfil-panel-eyebrow">Seguridad</div>
+          <h2 class="perfil-panel-title" id="titulo-cred">
+            Mis credenciales <em>de acceso</em>
+          </h2>
+ 
+          <!-- Cambiar correo -->
+          <div class="perfil-cred-card reveal">
+            <div class="perfil-cred-titulo">Correo electrónico</div>
+            <div class="perfil-form-grid">
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="credEmailActual">Correo actual</label>
+                <input class="perfil-input" type="email" id="credEmailActual" placeholder="correo@ejemplo.com" readonly autocomplete="email">
+              </div>
+            </div>
+            <div class="perfil-form-grid">
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="credEmailNuevo">Nuevo correo</label>
+                <input class="perfil-input" type="email" id="credEmailNuevo" placeholder="nuevo@correo.com" autocomplete="email">
+              </div>
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="credEmailConfirm">Confirmar nuevo correo</label>
+                <input class="perfil-input" type="email" id="credEmailConfirm" placeholder="nuevo@correo.com">
+              </div>
+            </div>
+            <div class="perfil-form-actions">
+              <button class="perfil-btn perfil-btn-primary" id="btnActualizarEmail">Actualizar correo</button>
+            </div>
+            <div class="perfil-msg perfil-msg-ok" id="emailMsgOk">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#4caf50" stroke-width="1.5"/><path d="M4 7l2 2 4-4" stroke="#4caf50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Correo actualizado correctamente.
+            </div>
+            <div class="perfil-msg perfil-msg-err" id="emailMsgErr">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M7 4v4M7 9.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span id="emailMsgErrTxt">Los correos no coinciden.</span>
+            </div>
+          </div>
+ 
+          <!-- Cambiar contraseña -->
+          <div class="perfil-cred-card reveal reveal-delay-1">
+            <div class="perfil-cred-titulo">Contraseña</div>
+            <div class="perfil-form-grid">
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="credPassActual">Contraseña actual</label>
+                <input class="perfil-input" type="password" id="credPassActual" placeholder="••••••••" autocomplete="current-password">
+              </div>
+            </div>
+            <div class="perfil-form-grid">
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="credPassNueva">Nueva contraseña</label>
+                <input class="perfil-input" type="password" id="credPassNueva" placeholder="••••••••" autocomplete="new-password">
+                <span class="perfil-form-hint">Mínimo 8 caracteres.</span>
+              </div>
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="credPassConfirm">Confirmar nueva contraseña</label>
+                <input class="perfil-input" type="password" id="credPassConfirm" placeholder="••••••••">
+              </div>
+            </div>
+            <div class="perfil-form-actions">
+              <button class="perfil-btn perfil-btn-primary" id="btnActualizarPass">Actualizar contraseña</button>
+            </div>
+            <div class="perfil-msg perfil-msg-ok" id="passMsgOk">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#4caf50" stroke-width="1.5"/><path d="M4 7l2 2 4-4" stroke="#4caf50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Contraseña actualizada correctamente.
+            </div>
+            <div class="perfil-msg perfil-msg-err" id="passMsgErr">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M7 4v4M7 9.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span id="passMsgErrTxt">Las contraseñas no coinciden.</span>
+            </div>
+          </div>
+ 
+        </section>
+ 
+        <!-- ── PANEL: DIRECCIONES ──────────────────────────────────────── -->
+        <section class="perfil-panel" id="panel-direcciones" aria-labelledby="titulo-addr">
+ 
+          <div class="perfil-panel-eyebrow">Envíos</div>
+          <h2 class="perfil-panel-title" id="titulo-addr">
+            Mis direcciones <em>guardadas</em>
+          </h2>
+ 
+          <div class="perfil-addr-topbar reveal">
+            <span></span>
+            <button class="perfil-btn perfil-btn-primary" id="btnAgregarDir">
+              + Agregar dirección
+            </button>
+          </div>
+ 
+          <!-- Generado dinámicamente por renderDirs() en perfil.js -->
+          <div class="perfil-addr-grid reveal reveal-delay-1" id="addrGrid"></div>
+ 
+          <!-- Formulario add/edit — oculto hasta que el usuario lo active -->
+          <div class="perfil-addr-form-wrap" id="addrFormWrap">
+            <div class="perfil-addr-form-titulo" id="addrFormTitulo">Nueva dirección</div>
+            <input type="hidden" id="addrEditId">
+ 
+            <div class="perfil-addr-form-grid">
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="addrAlias">Alias</label>
+                <input class="perfil-input" type="text" id="addrAlias" placeholder="Ej. Casa, Oficina…">
+              </div>
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="addrNombre">Nombre del destinatario</label>
+                <input class="perfil-input" type="text" id="addrNombre" placeholder="Nombre completo" autocomplete="name">
+              </div>
+            </div>
+ 
+            <div class="perfil-addr-form-grid">
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="addrCalle">Calle y número exterior</label>
+                <input class="perfil-input" type="text" id="addrCalle" placeholder="Av. Hidalgo 1234" autocomplete="address-line1">
+              </div>
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="addrInterior">Número interior (opcional)</label>
+                <input class="perfil-input" type="text" id="addrInterior" placeholder="Depto. 5B" autocomplete="address-line2">
+              </div>
+            </div>
+ 
+            <div class="perfil-addr-form-grid three-col">
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="addrColonia">Colonia</label>
+                <input class="perfil-input" type="text" id="addrColonia" placeholder="Centro" autocomplete="address-level3">
+              </div>
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="addrCiudad">Ciudad / Municipio</label>
+                <input class="perfil-input" type="text" id="addrCiudad" placeholder="Guadalajara" autocomplete="address-level2">
+              </div>
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="addrEstado">Estado</label>
+                <input class="perfil-input" type="text" id="addrEstado" placeholder="Jalisco" autocomplete="address-level1">
+              </div>
+            </div>
+ 
+            <div class="perfil-addr-form-grid">
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="addrCP">Código postal</label>
+                <input class="perfil-input" type="text" id="addrCP" placeholder="44100" autocomplete="postal-code" maxlength="5">
+              </div>
+              <div class="perfil-form-field">
+                <label class="perfil-form-label" for="addrTel">Teléfono de contacto</label>
+                <input class="perfil-input" type="tel" id="addrTel" placeholder="+52 33 0000 0000" autocomplete="tel">
+              </div>
+            </div>
+ 
+            <div class="perfil-addr-checkbox">
+              <input type="checkbox" id="addrPredeterminada">
+              <label class="perfil-addr-checkbox-label" for="addrPredeterminada">Establecer como dirección predeterminada</label>
+            </div>
+ 
+            <div class="perfil-form-actions">
+              <button class="perfil-btn perfil-btn-primary" id="btnGuardarDir">Guardar dirección</button>
+              <button class="perfil-btn perfil-btn-outline" id="btnCancelarDir">Cancelar</button>
+            </div>
+ 
+            <div class="perfil-msg perfil-msg-ok" id="addrMsgOk">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#4caf50" stroke-width="1.5"/><path d="M4 7l2 2 4-4" stroke="#4caf50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Dirección guardada correctamente.
+            </div>
+            <div class="perfil-msg perfil-msg-err" id="addrMsgErr">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M7 4v4M7 9.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Por favor completa todos los campos obligatorios.
+            </div>
+          </div>
+ 
+        </section>
+ 
+      </main>
+    </div><!-- /perfil-body -->
+ 
+    <!-- ══════════════════════════════════════
+        FOOTER — inyectado vía fetch por footer-minimo.js
+    ══════════════════════════════════════ -->
+    <div id="footer-placeholder"></div>
+ 
+</div><!-- /site-wrap -->
+ 
+<!-- ══════════════════════════════════════
+    CART DRAWER — inyectado vía fetch por cart-drawer.js
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
+ 
+<script type="module" src="../js/pages/perfil.js"></script>
+</body>
+</html>
+ 

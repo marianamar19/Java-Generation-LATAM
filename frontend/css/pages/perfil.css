@@ -1,0 +1,390 @@
+/* ============================================================
+  perfil.css — HERA Design System
+  Descripción: Estilos exclusivos de la página de perfil de usuario.
+              Cubre el header negro, el layout sidebar + paneles,
+              todos los formularios, mensajes de feedback, panel
+              de pedidos, credenciales y direcciones.
+              Scroll reveal y site-wrap viven en layout.css.
+  Usado por:   pages/perfil.html
+   ============================================================ */
+
+/* ── Sección: Perfil Header (fondo negro) ────────────────────── */
+/* ── PERFIL-HEADER — comportamiento por breakpoint
+  Desktop  (>1024px): padding generoso, título grande con clamp
+  Tablet   (≤1024px): padding reducido
+  Móvil    (≤768px):  padding mínimo, texto adapta con clamp
+── */
+.perfil-header {
+  background: var(--black);
+  padding: 60px 80px 56px;
+}
+.perfil-eyebrow {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 11px; font-weight: 600; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--red); margin-bottom: 20px;
+}
+.perfil-eyebrow::before {
+  content: ''; display: block; width: 28px; height: 1px; background: var(--red);
+}
+.perfil-title {
+  font-family: var(--sans);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 700; letter-spacing: -.02em; line-height: .95;
+  color: var(--cream);
+}
+.perfil-title em {
+  font-family: var(--serif); font-style: italic; font-weight: 300;
+  color: rgba(249,249,249,.42); display: block; margin-top: 4px;
+}
+.perfil-header-meta {
+  margin-top: 24px; display: flex; align-items: center; gap: 20px;
+}
+.perfil-header-tag {
+  font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(249,249,249,.28); border: 1px solid rgba(249,249,249,.1);
+  padding: 4px 12px;
+}
+
+/* ── Sección: Perfil Body (layout grid) ──────────────────────── */
+/* ── PERFIL-BODY / SIDEBAR / PANELS — comportamiento por breakpoint
+  Desktop  (>1024px): grid 2 columnas (260px + 1fr), sidebar sticky
+  Tablet   (≤1024px): grid 2 columnas (220px + 1fr), padding reducido
+  Móvil    (≤768px):  1 columna, sidebar estático encima del panel
+── */
+.perfil-body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 70vh;
+}
+
+/* ── Sección: Sidebar ────────────────────────────────────────── */
+.perfil-sidebar {
+  background: var(--cream);
+  border-right: 1px solid var(--lgray);
+  position: sticky; top: 64px;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+  display: flex; flex-direction: column;
+  flex-shrink: 0;
+}
+.perfil-sidebar-user {
+  padding: 28px 28px 24px;
+  border-bottom: 1px solid var(--lgray);
+  flex-shrink: 0;
+}
+.perfil-avatar {
+  width: 68px; height: 68px; border-radius: 50%;
+  background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+}
+.perfil-avatar-iniciales {
+  font-family: var(--serif); font-size: 22px; font-style: italic; font-weight: 300;
+  color: var(--cream); letter-spacing: .04em; line-height: 1;
+}
+.perfil-sidebar-nombre {
+  font-size: 15px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 3px;
+}
+.perfil-sidebar-email {
+  font-size: 11px; color: rgba(15,15,15,.45); letter-spacing: .02em; word-break: break-all;
+}
+.perfil-sidebar-desde {
+  font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(15,15,15,.25); margin-top: 10px;
+}
+
+/* ── Sección: Nav interna del sidebar ───────────────────────── */
+.perfil-nav { flex: 1; padding: 8px 0; }
+.perfil-nav-btn {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 28px; font-size: 10px; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(15,15,15,.5); background: none; border: none; border-left: 2px solid transparent;
+  width: 100%; text-align: left; cursor: pointer;
+  transition: color .2s, background .2s, border-color .2s;
+}
+.perfil-nav-btn:hover { color: var(--black); background: rgba(15,15,15,.03); }
+.perfil-nav-btn.active {
+  color: var(--black); border-left-color: var(--red);
+  background: rgba(225,34,43,.04);
+}
+.perfil-nav-btn svg { opacity: .5; flex-shrink: 0; }
+.perfil-nav-btn.active svg { opacity: 1; }
+
+.perfil-sidebar-footer {
+  padding: 16px 28px;
+  border-top: 1px solid var(--lgray);
+  flex-shrink: 0;
+}
+.perfil-logout-btn {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(15,15,15,.35); background: none; border: none;
+  cursor: pointer; transition: color .2s; padding: 8px 0; width: 100%; text-align: left;
+}
+.perfil-logout-btn:hover { color: var(--red); }
+
+/* ── Sección: Main + Panels ──────────────────────────────────── */
+.perfil-main {
+  background: var(--lgray);
+  min-height: 70vh;
+}
+.perfil-panel {
+  display: none;
+  padding: 52px 56px 80px;
+}
+.perfil-panel.active { display: block; }
+
+.perfil-panel-eyebrow {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 8px;
+}
+.perfil-panel-eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: var(--red); }
+.perfil-panel-title {
+  font-family: var(--sans); font-size: clamp(24px, 3vw, 38px);
+  font-weight: 700; letter-spacing: -.02em; margin-bottom: 36px;
+}
+.perfil-panel-title em {
+  font-family: var(--serif); font-style: italic; font-weight: 300;
+  color: rgba(15,15,15,.3);
+}
+
+/* ── Sección: Formulario (campos compartidos por todos los paneles) ── */
+.perfil-form-card {
+  background: var(--cream); border: 1px solid rgba(15,15,15,.08);
+  padding: 32px;
+}
+.perfil-form-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 22px;
+}
+.perfil-form-grid.one-col { grid-template-columns: 1fr; }
+.perfil-form-field { display: flex; flex-direction: column; gap: 7px; }
+.perfil-form-label {
+  font-size: 9px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(15,15,15,.5);
+}
+.perfil-input,
+.perfil-select {
+  background: var(--cream); border: 1px solid rgba(15,15,15,.18);
+  padding: 12px 14px; font-size: 13px; color: var(--black);
+  outline: none; width: 100%; transition: border-color .2s;
+  border-radius: 0;
+}
+.perfil-input:focus,
+.perfil-select:focus  { border-color: var(--black); }
+.perfil-input::placeholder { color: rgba(15,15,15,.28); }
+.perfil-input:disabled { background: rgba(15,15,15,.04); color: rgba(15,15,15,.4); cursor: not-allowed; }
+.perfil-input.error   { border-color: var(--red); }
+.perfil-form-hint {
+  font-size: 11px; color: rgba(15,15,15,.38); line-height: 1.4;
+}
+
+/* ── Sección: Botones ────────────────────────────────────────── */
+.perfil-btn {
+  padding: 14px 32px; border: none;
+  font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+  cursor: pointer; transition: background .2s, color .2s, border-color .2s;
+}
+.perfil-btn-primary { background: var(--black); color: var(--cream); }
+.perfil-btn-primary:hover { background: var(--red); }
+.perfil-btn-outline { background: transparent; color: var(--black); border: 1px solid rgba(15,15,15,.25); }
+.perfil-btn-outline:hover { border-color: var(--black); background: rgba(15,15,15,.04); }
+.perfil-btn-danger  { background: transparent; color: var(--red); border: 1px solid var(--red); padding: 8px 16px; }
+.perfil-btn-danger:hover { background: var(--red); color: #fff; }
+.perfil-btn-sm { padding: 9px 18px; font-size: 9px; }
+
+.perfil-form-actions { display: flex; align-items: center; gap: 14px; margin-top: 28px; }
+
+/* ── Sección: Mensajes de feedback ───────────────────────────── */
+.perfil-msg {
+  display: none; align-items: center; gap: 10px;
+  padding: 12px 16px; margin-top: 16px;
+  font-size: 11px; font-weight: 600; letter-spacing: .08em;
+}
+.perfil-msg.show   { display: flex; }
+.perfil-msg-ok  { background: rgba(76,175,80,.1); border-left: 2px solid #4caf50; color: #2e7d32; }
+.perfil-msg-err { background: rgba(225,34,43,.08); border-left: 2px solid var(--red); color: var(--red); }
+
+/* ── Sección: Panel Info — card de avatar ────────────────────── */
+.perfil-info-hero {
+  display: flex; align-items: center; gap: 28px;
+  background: var(--cream); border: 1px solid rgba(15,15,15,.08);
+  padding: 28px; margin-bottom: 28px;
+}
+.perfil-info-avatar-lg {
+  width: 84px; height: 84px; border-radius: 50%;
+  background: var(--black);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.perfil-info-avatar-iniciales {
+  font-family: var(--serif); font-size: 26px; font-style: italic; font-weight: 300;
+  color: var(--cream);
+}
+.perfil-info-hero-body { flex: 1; }
+.perfil-info-hero-nombre { font-size: 20px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 4px; }
+.perfil-info-hero-email  { font-size: 12px; color: rgba(15,15,15,.45); margin-bottom: 8px; }
+.perfil-info-hero-meta {
+  font-size: 9px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(15,15,15,.28);
+}
+.perfil-section-sep { border: none; border-top: 1px solid rgba(15,15,15,.1); margin: 32px 0; }
+
+/* ── Sección: Panel Pedidos ──────────────────────────────────── */
+.perfil-pedidos-list { display: flex; flex-direction: column; gap: 16px; }
+.perfil-pedido-card {
+  background: var(--cream); border: 1px solid rgba(15,15,15,.08);
+  padding: 24px;
+}
+.perfil-pedido-head {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--lgray);
+}
+.perfil-pedido-num   { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.perfil-pedido-fecha { font-size: 11px; color: rgba(15,15,15,.4); letter-spacing: .04em; }
+.perfil-pedido-status {
+  font-size: 8px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  padding: 4px 10px; border: 1px solid;
+}
+.perfil-pedido-status.entregado { border-color: #4caf50; color: #4caf50; }
+.perfil-pedido-status.enviado   { border-color: #f9a825; color: #f9a825; }
+.perfil-pedido-status.procesando{ border-color: rgba(15,15,15,.28); color: rgba(15,15,15,.45); }
+.perfil-pedido-items {
+  font-size: 14px; font-family: var(--serif); font-style: italic;
+  color: rgba(15,15,15,.65); line-height: 1.5; margin-bottom: 16px;
+}
+.perfil-pedido-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.perfil-pedido-total-wrap  { display: flex; align-items: baseline; gap: 8px; }
+.perfil-pedido-total-label {
+  font-size: 9px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(15,15,15,.38);
+}
+.perfil-pedido-total { font-size: 15px; font-weight: 700; }
+.perfil-pedido-dir   { font-size: 11px; color: rgba(15,15,15,.4); }
+.perfil-pedidos-empty {
+  background: var(--cream); border: 1px solid rgba(15,15,15,.08);
+  padding: 64px 32px; text-align: center;
+}
+.perfil-pedidos-empty-icon   { margin: 0 auto 16px; opacity: .15; }
+.perfil-pedidos-empty-titulo { font-family: var(--serif); font-size: 22px; font-style: italic; color: rgba(15,15,15,.45); margin-bottom: 8px; }
+.perfil-pedidos-empty-sub    { font-size: 12px; color: rgba(15,15,15,.32); letter-spacing: .04em; margin-bottom: 28px; }
+
+/* ── Sección: Panel Credenciales ─────────────────────────────── */
+.perfil-cred-card {
+  background: var(--cream); border: 1px solid rgba(15,15,15,.08);
+  padding: 28px; margin-bottom: 20px;
+}
+.perfil-cred-titulo {
+  font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(15,15,15,.55); margin-bottom: 20px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--lgray);
+}
+
+/* ── Sección: Panel Direcciones ──────────────────────────────── */
+.perfil-addr-topbar {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;
+}
+.perfil-addr-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+}
+.perfil-addr-card {
+  background: var(--cream); border: 1px solid rgba(15,15,15,.08);
+  padding: 22px; position: relative;
+}
+.perfil-addr-alias {
+  font-size: 9px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.perfil-addr-predeterminada {
+  font-size: 8px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  background: var(--red); color: #fff; padding: 2px 7px;
+}
+.perfil-addr-nombre { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.perfil-addr-linea  { font-size: 12px; color: rgba(15,15,15,.55); line-height: 1.6; }
+.perfil-addr-tel {
+  font-size: 10px; font-weight: 600; letter-spacing: .06em;
+  color: rgba(15,15,15,.4); margin-top: 10px;
+}
+.perfil-addr-actions { display: flex; gap: 8px; margin-top: 16px; }
+.perfil-addr-empty {
+  background: var(--cream); border: 1px solid rgba(15,15,15,.08);
+  padding: 52px; text-align: center; grid-column: 1 / -1;
+}
+.perfil-addr-empty-titulo { font-family: var(--serif); font-size: 20px; font-style: italic; color: rgba(15,15,15,.4); margin-bottom: 8px; }
+.perfil-addr-empty-sub    { font-size: 11px; color: rgba(15,15,15,.3); }
+
+/* ── Sección: Formulario de dirección ───────────────────────── */
+.perfil-addr-form-wrap {
+  display: none;
+  background: var(--cream); border: 1px solid rgba(15,15,15,.08);
+  padding: 28px; margin-top: 20px;
+}
+.perfil-addr-form-wrap.show { display: block; }
+.perfil-addr-form-titulo {
+  font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--lgray);
+}
+.perfil-addr-form-grid            { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+.perfil-addr-form-grid.one-col    { grid-template-columns: 1fr; }
+.perfil-addr-form-grid.three-col  { grid-template-columns: 1fr 1fr 1fr; }
+.perfil-addr-checkbox { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.perfil-addr-checkbox input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: var(--black); }
+.perfil-addr-checkbox-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; color: rgba(15,15,15,.6); }
+
+/* ═══════════════════════════════════════
+  BREAKPOINT: TABLET — ≤1024px
+═══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .perfil-header { padding: 48px 40px 44px; }
+  .perfil-body   { grid-template-columns: 220px 1fr; }
+  .perfil-panel  { padding: 40px 40px 64px; }
+  .perfil-addr-grid { grid-template-columns: 1fr; }
+  .perfil-addr-form-grid.three-col { grid-template-columns: 1fr 1fr; }
+}
+
+/* ═══════════════════════════════════════
+  BREAKPOINT: MÓVIL — ≤768px
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .perfil-header { padding: 36px 20px 32px; }
+  .perfil-body   { grid-template-columns: 1fr; }
+  .perfil-sidebar {
+    position: static; height: auto;
+    border-right: none; border-bottom: 1px solid var(--lgray);
+    overflow-x: hidden;
+  }
+  .perfil-nav {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    padding: 4px 0;
+  }
+  .perfil-nav-btn {
+    width: 100%;
+    white-space: normal;
+    padding: 11px 20px;
+    border-left: 2px solid transparent;
+    border-bottom: none;
+  }
+  .perfil-nav-btn.active {
+    border-left-color: var(--red);
+    border-bottom-color: transparent;
+  }
+  .perfil-sidebar-user   { padding: 20px 20px 18px; }
+  .perfil-nav-btn        { padding: 11px 20px; }
+  .perfil-sidebar-footer { padding: 12px 20px; }
+  .perfil-panel          { padding: 28px 20px 52px; }
+  .perfil-form-grid      { grid-template-columns: 1fr; }
+  .perfil-addr-form-grid { grid-template-columns: 1fr; }
+  .perfil-addr-form-grid.three-col { grid-template-columns: 1fr; }
+  .perfil-info-hero      { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .perfil-pedido-head    { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+
+/* ═══════════════════════════════════════
+  BREAKPOINT: MÓVIL PEQUEÑO — ≤480px
+═══════════════════════════════════════ */
+/* No hay overrides exclusivos de perfil en ≤480px */

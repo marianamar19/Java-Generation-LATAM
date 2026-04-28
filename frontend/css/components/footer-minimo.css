@@ -1,0 +1,15 @@
+/* ── Sección: Footer mínimo ────────────────────────────────── */
+/* ── FOOTER MÍNIMO — comportamiento por breakpoint
+  Desktop  (>1024px): fila única, copyright izquierda, links derecha
+  Tablet   (≤1024px): sin cambio
+  Móvil    (≤768px):  columna apilada, copyright arriba, links abajo
+── */
+.footer-min {
+  background: var(--black); padding: 20px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px; border-top: 1px solid rgba(249,249,249,.06);
+}
+.footer-min-copy { font-size: 11px; color: rgba(249,249,249,.2); }
+.footer-min-links { display: flex; gap: 24px; }
+.footer-min-links a { font-size: 11px; color: rgba(249,249,249,.25); text-decoration: none; letter-spacing: .06em; transition: color .2s; }
+.footer-min-links a:hover { color: rgba(249,249,249,.7); }
