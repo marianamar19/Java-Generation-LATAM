@@ -87,28 +87,39 @@
 
 .cart-item:first-child { margin-top: 0; }
 
-/* ── Sección: Cart item — barra de nivel de existencia ───────── */
-.cart-item-nivel-bar {
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-  gap:             6px;
-  padding:         7px 28px;
-  font-size:       9px;
-  font-weight:     700;
-  letter-spacing:  .12em;
-  text-transform:  uppercase;
-  border-bottom:   1px solid var(--lgray);
+/* ── Sección: Cart item — badge de nivel de existencia ────────
+  Muestra punto de color + etiqueta inline sobre la marca,
+  igual al patrón summary-item-nivel del checkout.
+─────────────────────────────────────────────────────────────── */
+.cart-item-nivel {
+  display:     flex;
+  align-items: center;
+  gap:         4px;
+  margin-bottom: 4px;
 }
 
-.cart-item-nivel-bar.green  { color: #4caf50; background: rgba(76, 175, 80, .05); }
-.cart-item-nivel-bar.yellow { color: #f9a825; background: rgba(249, 168, 37, .05); }
-.cart-item-nivel-bar.red    { color: var(--red); background: rgba(225, 34, 43, .05); }
+.cart-item-nivel-dot {
+  width:       6px;
+  height:      6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display:     inline-block;
+}
 
-.cart-item-nivel-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-.cart-item-nivel-bar.green  .cart-item-nivel-dot { background: #4caf50; }
-.cart-item-nivel-bar.yellow .cart-item-nivel-dot { background: #f9a825; }
-.cart-item-nivel-bar.red    .cart-item-nivel-dot { background: var(--red); }
+.cart-item-nivel-label {
+  font-size:      9px;
+  font-weight:    700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* Colores por nivel */
+.cart-item-nivel--green  .cart-item-nivel-dot   { background: #4caf50; }
+.cart-item-nivel--green  .cart-item-nivel-label { color: #4caf50; }
+.cart-item-nivel--yellow .cart-item-nivel-dot   { background: #f9a825; }
+.cart-item-nivel--yellow .cart-item-nivel-label { color: #f9a825; }
+.cart-item-nivel--red    .cart-item-nivel-dot   { background: var(--red); }
+.cart-item-nivel--red    .cart-item-nivel-label { color: var(--red); }
 
 /* ── Sección: Cart item — cuerpo del item ───────────────────── */
 .cart-item-body {

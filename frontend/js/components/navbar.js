@@ -1,42 +1,89 @@
 /**
- * navbar.js — HERA
+ * navbar_v1.js — HERA
  *
  * Descripción: Componente universal del navbar. Carga el fragmento HTML
  *              desde /components/navbar.html, lo inyecta en el placeholder
  *              de la página y luego inicializa toda su lógica:
- *              menú móvil, dropdowns, estado de sesión, buscador y logo.
- * Exporta:     loadNavbar, setCatalog
+ *              menú móvil, dropdowns, estado de sesión, buscador, logo,
+ *              badges de carrito/favoritos y enlace activo por URL.
+ * Exporta:     loadNavbar, initNavbar, renderAccountNav,
+ *              updateCartBadge, updateFavBadge, setCatalog
  * Importado por: js/pages/index.js y todos los demás scripts de página.
  */
-
-import { isLoggedIn, clearLogin } from '../utils/storage.js';
-import { CATALOG }               from '../utils/catalog.js';
-
-/* Catálogo de productos para el buscador — cargado desde utils/catalog.js */
+ 
+import { isLoggedIn, clearLogin, getCart, getFavs } from '../utils/storage.js';
+import { CATALOG } from '../utils/catalog.js';
+ 
+/* ── Catálogo de productos para el buscador ──────────────────── */
 let _catalog = CATALOG;
-
+ 
+/* ── Guard — evita cargar el navbar más de una vez ───────────── */
+let navbarLoaded = false;
+ 
+/* ── Referencias globales — se asignan en initNavbar() ──────── */
+let accountToggle   = null;
+let accountLoginBtn = null;
+let accountDropdown = null;
+let favToggle       = null;
+let favDropdown     = null;
+let cartBadge       = null;
+let favBadge        = null;
+ 
+/* Referencia a closeMobileNav — se asigna en _initMobileNav para que logout la use */
+let _closeMobileNav = function() {};
+ 
+/* ══════════════════════════════════════
+   BADGES — carrito y favoritos
+══════════════════════════════════════ */
+ 
 /**
- * Carga el fragmento HTML del navbar desde /components/navbar.html,
- * lo inserta en #navbar-placeholder e inicializa toda la lógica.
- * @returns {Promise<void>}
+ * Lee el carrito desde storage y actualiza el contador del navbar.
+ * @returns {void}
  */
-async function loadNavbar() {
-  const placeholder = document.getElementById('navbar-placeholder');
-  if (!placeholder) return;
-
-  const response = await fetch('/components/navbar.html');
-  const html     = await response.text();
-  placeholder.innerHTML = html;
-
-  // Inicializar lógica después de que el HTML está en el DOM
-  _initSearch();
-  _initMobileNav();
-  _initAccountNav();
-  _initFavDropdown();
+function updateCartBadge() {
+  if (!cartBadge) return;
+  const count = getCart().reduce((total, item) => total + (item.qty || 1), 0);
+  cartBadge.textContent    = count;
+  cartBadge.style.display  = count > 0 ? 'flex' : 'none';
 }
-
-/* ── Búsqueda ─────────────────────────────────────────────────── */
-
+ 
+/**
+ * Lee los favoritos desde storage y actualiza el contador del navbar.
+ * @returns {void}
+ */
+function updateFavBadge() {
+  if (!favBadge) return;
+  const count = getFavs().length;
+  favBadge.textContent   = count;
+  favBadge.style.display = count > 0 ? 'flex' : 'none';
+}
+ 
+/* ══════════════════════════════════════
+   SESIÓN — cuenta nav
+══════════════════════════════════════ */
+ 
+/**
+ * Renderiza los controles de cuenta según el estado de sesión actual.
+ * Pública para que otras páginas puedan actualizar el navbar tras login/logout.
+ * @returns {void}
+ */
+function renderAccountNav() {
+  if (!accountToggle || !accountLoginBtn) return;
+ 
+  if (isLoggedIn()) {
+    accountLoginBtn.style.display = 'none';
+    accountToggle.style.display   = 'flex';
+  } else {
+    accountLoginBtn.style.display = 'flex';
+    accountToggle.style.display   = 'none';
+    if (accountDropdown) accountDropdown.style.display = 'none';
+  }
+}
+ 
+/* ══════════════════════════════════════
+   BÚSQUEDA
+══════════════════════════════════════ */
+ 
 /**
  * Inicializa el search overlay: abrir, cerrar, debounce y render de resultados.
  * @returns {void}
@@ -47,42 +94,37 @@ function _initSearch() {
   const searchResults  = document.getElementById('search-results');
   const searchCloseBtn = document.getElementById('search-close-btn');
   const searchBtn      = document.getElementById('search-btn');
-
+ 
   if (!searchOverlay || !searchBtn) return;
-
+ 
   function openSearch() {
     searchOverlay.classList.add('open');
     document.body.style.overflow = 'hidden';
-    // Pequeño delay para que la animación CSS del input termine antes de focus
     setTimeout(function() { searchInput.focus(); }, 300);
   }
-
+ 
   function closeSearch() {
     searchOverlay.classList.remove('open');
     document.body.style.overflow = '';
     searchInput.value = '';
     _renderSearchResults('', searchResults);
   }
-
+ 
   searchBtn.addEventListener('click', openSearch);
   searchCloseBtn.addEventListener('click', closeSearch);
-
-  // Cerrar al hacer clic fuera del search-box
+ 
   searchOverlay.addEventListener('click', function(e) {
     if (e.target === searchOverlay) closeSearch();
   });
-
-  // Cerrar con Escape
+ 
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeSearch();
   });
-
-  // Delegación de clicks en resultados — cierra el overlay al elegir
+ 
   searchResults.addEventListener('click', function(e) {
     if (e.target.closest('.search-result-item')) closeSearch();
   });
-
-  // Debounce para no disparar render en cada keystroke
+ 
   let searchDebounce;
   searchInput.addEventListener('input', function() {
     clearTimeout(searchDebounce);
@@ -91,7 +133,7 @@ function _initSearch() {
     }, 180);
   });
 }
-
+ 
 /**
  * Resalta la query dentro de un texto con <mark class="search-highlight">.
  * @param {string} text  - Texto original
@@ -103,7 +145,7 @@ function _highlight(text, query) {
   const re = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
   return text.replace(re, '<mark class="search-highlight">$1</mark>');
 }
-
+ 
 /**
  * Filtra el catálogo y renderiza los resultados en el contenedor.
  * @param {string}      query     - Texto de búsqueda
@@ -112,12 +154,12 @@ function _highlight(text, query) {
  */
 function _renderSearchResults(query, container) {
   const q = query.trim().toLowerCase();
-
+ 
   if (!q) {
     container.innerHTML = '<p class="search-hint">Busca por nombre o marca</p>';
     return;
   }
-
+ 
   const hits = _catalog.filter(function(p) {
     return (
       p.name.toLowerCase().includes(q)  ||
@@ -125,7 +167,7 @@ function _renderSearchResults(query, container) {
       (p.tags && p.tags.some(function(t) { return t.includes(q); }))
     );
   });
-
+ 
   if (hits.length === 0) {
     container.innerHTML =
       '<div class="search-empty">' +
@@ -134,9 +176,9 @@ function _renderSearchResults(query, container) {
       '</div>';
     return;
   }
-
+ 
   let html = '<p class="search-hint">' + hits.length + ' resultado' + (hits.length !== 1 ? 's' : '') + '</p>';
-
+ 
   hits.forEach(function(p) {
     html +=
       '<div class="search-result-item">' +
@@ -152,12 +194,14 @@ function _renderSearchResults(query, container) {
         '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.25)" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>' +
       '</div>';
   });
-
+ 
   container.innerHTML = html;
 }
-
-/* ── Menú móvil ──────────────────────────────────────────────── */
-
+ 
+/* ══════════════════════════════════════
+   MENÚ MÓVIL
+══════════════════════════════════════ */
+ 
 /**
  * Inicializa el panel lateral de navegación móvil:
  * hamburger, overlay, cierre y acordeones de submenús.
@@ -168,31 +212,31 @@ function _initMobileNav() {
   const mobilePanel   = document.getElementById('navMobilePanel');
   const mobileOverlay = document.getElementById('navMobileOverlay');
   const mobileClose   = document.getElementById('navMobileClose');
-
+ 
   if (!hamburger) return;
-
+ 
   function openMobileNav() {
     hamburger.classList.add('open');
     mobilePanel.classList.add('open');
     mobileOverlay.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
-
+ 
   function closeMobileNav() {
     hamburger.classList.remove('open');
     mobilePanel.classList.remove('open');
     mobileOverlay.classList.remove('open');
     document.body.style.overflow = '';
   }
-
+ 
   hamburger.addEventListener('click', function(e) {
     e.stopPropagation();
     mobilePanel.classList.contains('open') ? closeMobileNav() : openMobileNav();
   });
-
-  mobileClose.addEventListener('click', closeMobileNav);
-  mobileOverlay.addEventListener('click', closeMobileNav);
-
+ 
+  if (mobileClose)   mobileClose.addEventListener('click', closeMobileNav);
+  if (mobileOverlay) mobileOverlay.addEventListener('click', closeMobileNav);
+ 
   // Acordeón de "Productos" en el panel móvil
   const productosToggle = document.getElementById('mobileProductosToggle');
   const productosSub    = document.getElementById('mobileProductosSub');
@@ -203,7 +247,7 @@ function _initMobileNav() {
       productosToggle.classList.toggle('active');
     });
   }
-
+ 
   // Acordeón de "Mi cuenta" en el panel móvil — solo activo si hay sesión
   const cuentaToggle = document.getElementById('mobileCuentaToggle');
   const cuentaSub    = document.getElementById('mobileCuentaSub');
@@ -214,7 +258,7 @@ function _initMobileNav() {
       cuentaToggle.classList.toggle('active');
     });
   }
-
+ 
   // Logo en el panel: scroll al topo si estamos en index
   const navLogoLink = document.getElementById('nav-logo-link');
   if (navLogoLink) {
@@ -223,8 +267,8 @@ function _initMobileNav() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
-
-  // Dropdown de Perfumes y Joyería navegan al catálogo al clic en el item padre
+ 
+  // Navegación al catálogo desde los items de Productos
   const navItemPerfumes = document.getElementById('nav-item-perfumes');
   const navItemJoyeria  = document.getElementById('nav-item-joyeria');
   if (navItemPerfumes) {
@@ -237,116 +281,181 @@ function _initMobileNav() {
       if (!e.target.closest('a')) location.href = 'catalogo.html?tab=joyeria';
     });
   }
-
-  // Exponer closeMobileNav al scope del módulo para que logout pueda llamarla
+ 
+  // Exponer closeMobileNav para que logout pueda usarla
   _closeMobileNav = closeMobileNav;
 }
-
-/* Referencia a closeMobileNav — se asigna en _initMobileNav para que logout la use */
-let _closeMobileNav = function() {};
-
-/* ── Estado de sesión ────────────────────────────────────────── */
-
+ 
+/* ══════════════════════════════════════
+   CUENTA — dropdown desktop
+══════════════════════════════════════ */
+ 
 /**
- * Inicializa los controles de cuenta (dropdown desktop + links móvil)
- * y configura los botones de logout.
+ * Inicializa el dropdown de cuenta (desktop) y el botón de logout.
  * @returns {void}
  */
 function _initAccountNav() {
-  const accountLoginBtn      = document.getElementById('account-login-btn');
-  const accountToggle        = document.getElementById('account-toggle');
-  const accountDropdown      = document.getElementById('account-dropdown');
-  const favDropdown          = document.getElementById('fav-dropdown');
-  const btnLogout            = document.getElementById('btn-logout');
-  const btnLogoutMobile      = document.getElementById('btn-logout-mobile');
-  const mobileCuentaLoginLink = document.getElementById('mobileCuentaLoginLink');
-  const mobileCuentaToggle   = document.getElementById('mobileCuentaToggle');
-
-  if (!accountLoginBtn) return;
-
-  // Renderiza los controles de cuenta según el estado de sesión
-  function renderAccountNav() {
-    if (isLoggedIn()) {
-      // Desktop: dropdown de cuenta
-      accountLoginBtn.style.display   = 'none';
-      accountToggle.style.display     = 'flex';
-      // Móvil: acordeón de cuenta
-      mobileCuentaLoginLink.style.display = 'none';
-      mobileCuentaToggle.style.display    = 'flex';
-    } else {
-      // Desktop: link directo a cuenta.html
-      accountLoginBtn.style.display   = 'flex';
-      accountToggle.style.display     = 'none';
-      accountDropdown.style.display   = 'none';
-      // Móvil: link directo a cuenta.html
-      mobileCuentaLoginLink.style.display = 'flex';
-      mobileCuentaToggle.style.display    = 'none';
-    }
-  }
-
-  function logout() {
-    clearLogin();
-    accountDropdown.style.display = 'none';
-    renderAccountNav();
-  }
-
-  renderAccountNav();
-
+  const btnLogout       = document.getElementById('btn-logout');
+  const btnLogoutMobile = document.getElementById('btn-logout-mobile');
+ 
+  if (!accountToggle) return;
+ 
   // Toggle dropdown al clicar en el botón de cuenta
-  if (accountToggle) {
-    accountToggle.addEventListener('click', function(e) {
-      e.stopPropagation();
-      // Cerrar favoritos si estaba abierto para evitar solapamiento
-      if (favDropdown) favDropdown.style.display = 'none';
-      accountDropdown.style.display =
-        accountDropdown.style.display === 'block' ? 'none' : 'block';
-    });
-    // Evitar que un clic dentro del dropdown lo cierre
+  accountToggle.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (favDropdown) favDropdown.style.display = 'none';
+    accountDropdown.style.display =
+      accountDropdown.style.display === 'block' ? 'none' : 'block';
+  });
+ 
+  // Evitar que un clic dentro del dropdown lo cierre
+  if (accountDropdown) {
     accountDropdown.addEventListener('click', function(e) { e.stopPropagation(); });
   }
-
+ 
+  function doLogout() {
+    clearLogin();
+    if (accountDropdown) accountDropdown.style.display = 'none';
+    renderAccountNav();
+  }
+ 
   if (btnLogout) {
-    btnLogout.addEventListener('click', function(e) { e.preventDefault(); logout(); });
+    btnLogout.addEventListener('click', function(e) { e.preventDefault(); doLogout(); });
   }
   if (btnLogoutMobile) {
     btnLogoutMobile.addEventListener('click', function(e) {
       e.preventDefault();
-      logout();
+      doLogout();
       _closeMobileNav();
     });
   }
-
-  // Cerrar dropdowns al clicar fuera
+}
+ 
+/* ══════════════════════════════════════
+   DROPDOWN DE FAVORITOS (desktop)
+══════════════════════════════════════ */
+ 
+/**
+ * Inicializa el toggle del dropdown de favoritos desktop.
+ * @returns {void}
+ */
+function _initFavDropdown() {
+  if (!favToggle) return;
+ 
+  favToggle.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (accountDropdown) accountDropdown.style.display = 'none';
+    favDropdown.style.display =
+      favDropdown.style.display === 'block' ? 'none' : 'block';
+  });
+ 
+  if (favDropdown) {
+    favDropdown.addEventListener('click', function(e) { e.stopPropagation(); });
+  }
+}
+ 
+/* ══════════════════════════════════════
+   ENLACE ACTIVO — según URL actual
+══════════════════════════════════════ */
+ 
+/**
+ * Marca el enlace del navbar que corresponde a la página actual.
+ * @returns {void}
+ */
+function setActiveNavLink() {
+  const currentPath = window.location.pathname;
+  document.querySelectorAll('.nav-links a, .nav-mobile-link').forEach(link => {
+    const href = link.getAttribute('href');
+    if (!href || href === '#') return;
+    link.classList.remove('active');
+    const linkPath = href.split('?')[0];
+    if (linkPath !== '' && currentPath.includes(linkPath)) {
+      link.classList.add('active');
+    }
+  });
+}
+ 
+/* ══════════════════════════════════════
+   CIERRE DE DROPDOWNS AL CLICAR FUERA
+══════════════════════════════════════ */
+ 
+/**
+ * Cierra todos los dropdowns al clicar fuera de ellos.
+ * @returns {void}
+ */
+function _initOutsideClick() {
   document.addEventListener('click', function() {
     if (accountDropdown) accountDropdown.style.display = 'none';
     if (favDropdown)     favDropdown.style.display     = 'none';
   });
 }
-
-/* ── Dropdown de favoritos (desktop) ────────────────────────── */
-
+ 
+/* ══════════════════════════════════════
+   INIT — post-inyección del HTML
+══════════════════════════════════════ */
+ 
 /**
- * Inicializa el toggle del dropdown de favoritos desktop.
- * La lógica de render de filas la maneja fav-drawer.js.
+ * Asigna las referencias globales e inicializa toda la lógica del navbar
+ * después de que el HTML ha sido inyectado en el DOM.
+ * Puede llamarse externamente si el HTML se inyecta por otra vía.
  * @returns {void}
  */
-function _initFavDropdown() {
-  const favToggle   = document.getElementById('fav-toggle');
-  const favDropdown = document.getElementById('fav-dropdown');
-  const accountDropdown = document.getElementById('account-dropdown');
-
-  if (!favToggle) return;
-
-  favToggle.addEventListener('click', function(e) {
-    e.stopPropagation();
-    // Cerrar dropdown de cuenta si estaba abierto
-    if (accountDropdown) accountDropdown.style.display = 'none';
-    favDropdown.style.display =
-      favDropdown.style.display === 'block' ? 'none' : 'block';
-  });
-
-  // Evitar que un clic dentro del dropdown lo cierre
-  favDropdown.addEventListener('click', function(e) { e.stopPropagation(); });
+function initNavbar() {
+  accountToggle   = document.getElementById('account-toggle');
+  accountLoginBtn = document.getElementById('account-login-btn');
+  accountDropdown = document.getElementById('account-dropdown');
+  favToggle       = document.getElementById('fav-toggle');
+  favDropdown     = document.getElementById('fav-dropdown');
+  cartBadge       = document.getElementById('cart-count');
+  favBadge        = document.getElementById('fav-count');
+ 
+  _initSearch();
+  _initMobileNav();
+  renderAccountNav();
+  _initAccountNav();
+  _initFavDropdown();
+  _initOutsideClick();
+  setActiveNavLink();
+  updateCartBadge();
+  updateFavBadge();
 }
-
-export { loadNavbar };
+ 
+/* ══════════════════════════════════════
+   CARGA DEL HTML
+══════════════════════════════════════ */
+ 
+/**
+ * Carga el fragmento HTML del navbar desde /components/navbar.html,
+ * lo inserta en #navbar-placeholder e inicializa toda la lógica.
+ * Incluye guard para evitar doble carga.
+ * @returns {Promise<void>}
+ */
+async function loadNavbar() {
+  if (navbarLoaded) return;
+ 
+  const placeholder = document.getElementById('navbar-placeholder');
+  if (!placeholder) return;
+ 
+  const response = await fetch('/components/navbar.html');
+  const html     = await response.text();
+  placeholder.innerHTML = html;
+ 
+  navbarLoaded = true;
+  initNavbar();
+}
+ 
+/* ══════════════════════════════════════
+   UTILIDADES PÚBLICAS
+══════════════════════════════════════ */
+ 
+/**
+ * Reemplaza el catálogo usado por el buscador.
+ * Útil si el catálogo se carga de forma asíncrona.
+ * @param {Array<Object>} catalog - Nuevo catálogo de productos
+ * @returns {void}
+ */
+function setCatalog(catalog) {
+  _catalog = catalog;
+}
+ 
+export { loadNavbar, initNavbar, renderAccountNav, updateCartBadge, updateFavBadge, setCatalog };

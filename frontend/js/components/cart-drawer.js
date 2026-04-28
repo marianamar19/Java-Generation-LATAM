@@ -11,7 +11,7 @@
  * Importado por: js/pages/index.js
  */
 
-import { getCart, setCart }         from '../utils/storage.js';
+import { getCart, setCart }            from '../utils/storage.js';
 import { normalizePriceMXN, parseMXN } from '../utils/formatter.js';
 
 /* Umbral para envío gratis (MXN) */
@@ -34,7 +34,7 @@ async function loadCartDrawer() {
   const placeholder = document.getElementById('cart-drawer-placeholder');
   if (!placeholder) return;
   const response = await fetch('/components/cart-drawer.html');
-  const html = await response.text();
+  const html     = await response.text();
   placeholder.innerHTML = html;
   initCartDrawer();
 }
@@ -105,12 +105,12 @@ function closeCart() {
 /**
  * Agrega un producto al carrito o incrementa su cantidad si ya existe.
  * Persiste el estado, actualiza totales y abre el drawer.
- * @param {string} id     - ID único del producto
- * @param {string} brand  - Marca del producto
- * @param {string} name   - Nombre del producto
+ * @param {string}        id    - ID único del producto
+ * @param {string}        brand - Marca del producto
+ * @param {string}        name  - Nombre del producto
  * @param {string|number} price - Precio en cualquier formato
- * @param {string} vol    - Presentación (volumen o talla)
- * @param {string} nivel  - Nivel de existencia: 'green' | 'yellow' | 'red'
+ * @param {string}        vol   - Presentación (volumen o talla)
+ * @param {string}        nivel - Nivel de existencia: 'green' | 'yellow' | 'red'
  * @returns {void}
  */
 function addItemToCart(id, brand, name, price, vol, nivel) {
@@ -147,8 +147,10 @@ function addItemToCart(id, brand, name, price, vol, nivel) {
 
 /**
  * Construye y devuelve el elemento DOM de un item del carrito.
- * @param {Object} data - Datos del item (id, brand, name, priceDisplay, volVal, nivelVal, nLabel, cartId, qty)
- * @returns {HTMLElement} div.cart-item con todo el HTML interno
+ * El indicador de nivel se muestra como badge inline (punto + etiqueta)
+ * dentro del bloque de info, sobre la marca — igual que en checkout.
+ * @param {Object} data - Datos del item
+ * @returns {HTMLElement} div.cart-item listo para insertar
  */
 function _buildCartItemEl(data) {
   const { brand, name, priceDisplay, volVal, nivelVal, nLabel, cartId, qty } = data;
@@ -158,14 +160,15 @@ function _buildCartItemEl(data) {
   el.className      = 'cart-item';
   el.dataset.cartId = cartId;
   el.innerHTML      =
-    '<div class="cart-item-nivel-bar ' + nivelVal + '">' +
-      '<span class="cart-item-nivel-dot"></span>' + nLabel +
-    '</div>' +
     '<div class="cart-item-body">' +
       '<div class="cart-item-img">' +
         '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>' +
       '</div>' +
       '<div class="cart-item-info">' +
+        '<div class="cart-item-nivel cart-item-nivel--' + nivelVal + '">' +
+          '<span class="cart-item-nivel-dot"></span>' +
+          '<span class="cart-item-nivel-label">' + nLabel + '</span>' +
+        '</div>' +
         '<div class="cart-item-brand">' + brand        + '</div>' +
         '<div class="cart-item-name">'  + name         + '</div>' +
         volLine +
@@ -241,12 +244,12 @@ function _updateCartTotals() {
   shippingBar.style.width = pct + '%';
 
   if (total >= FREE_SHIPPING) {
-    shippingMsg.innerHTML          = '🎉 <span class="cart-shipping-success">¡Tienes envío gratis!</span>';
-    shippingBar.style.background   = '#2e7d32';
+    shippingMsg.innerHTML        = '🎉 <span class="cart-shipping-success">¡Tienes envío gratis!</span>';
+    shippingBar.style.background = '#2e7d32';
   } else if (total > 0) {
     const faltante = (FREE_SHIPPING - total).toLocaleString('es-MX');
-    shippingMsg.innerHTML          = 'Te faltan <span class="cart-shipping-amount">$' + faltante + ' MXN</span> para envío gratis';
-    shippingBar.style.background   = 'var(--red)';
+    shippingMsg.innerHTML        = 'Te faltan <span class="cart-shipping-amount">$' + faltante + ' MXN</span> para envío gratis';
+    shippingBar.style.background = 'var(--red)';
   } else {
     shippingMsg.innerHTML = '';
   }
@@ -260,14 +263,18 @@ function _updateCartTotals() {
 
 /**
  * Lee el DOM del carrito y persiste los items en localStorage.
+ * Lee el nivel desde la clase modificadora del badge (.cart-item-nivel--green/yellow/red).
  * @returns {void}
  */
 function _saveCartToStorage() {
   const items = [];
   cartItemsList.querySelectorAll('.cart-item').forEach(function(el) {
-    const nivelBar   = el.querySelector('.cart-item-nivel-bar');
-    const nivelClass = nivelBar
-      ? (['green', 'yellow', 'red'].find(function(c) { return nivelBar.classList.contains(c); }) || 'green')
+    // Leer nivel desde el modificador BEM del badge inline
+    const nivelEl    = el.querySelector('.cart-item-nivel');
+    const nivelClass = nivelEl
+      ? (['green', 'yellow', 'red'].find(function(c) {
+          return nivelEl.classList.contains('cart-item-nivel--' + c);
+        }) || 'green')
       : 'green';
     const volEl = el.querySelector('.cart-item-vol');
     items.push({
