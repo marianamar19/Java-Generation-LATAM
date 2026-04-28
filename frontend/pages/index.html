@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HERA — Perfumes &amp; Joyería</title>
   <meta name="description" content="Perfumes 100% originales de diseñador, nicho y árabes. Joyería exclusiva. Envío a todo México. Garantía de autenticidad en cada fragancia." />
-
+ 
   <!-- ── Design System base ── -->
   <link rel="stylesheet" href="../css/base/tokens.css" />
   <link rel="stylesheet" href="../css/base/reset.css" />
   <link rel="stylesheet" href="../css/base/typography.css" />
   <link rel="stylesheet" href="../css/base/buttons.css" />
   <link rel="stylesheet" href="../css/base/layout.css" />
-
+ 
   <!-- ── Estilos universales ── -->
   <!-- ── Componentes universales ── -->
   <link rel="stylesheet" href="../css/components/announce-bar.css" />
@@ -21,30 +21,30 @@
   <link rel="stylesheet" href="../css/components/product-card.css" />
   <link rel="stylesheet" href="../css/components/drawer.css" />
   <link rel="stylesheet" href="../css/components/newsletter.css" />
-
+ 
   <!-- ── Estilos de esta página ── -->
   <link rel="stylesheet" href="../css/pages/index.css" />
 </head>
 <body>
-
+ 
 <!-- ══════════════════════════════════════
     ANNOUNCE BAR PLACEHOLDER
     loadAnnounceBar() inyecta aquí: marquee superior.
 ══════════════════════════════════════ -->
 <div id="announce-bar-placeholder"></div> 
-
+ 
 <!-- ══════════════════════════════════════
     NAVBAR PLACEHOLDER
     loadNavbar() inyecta aquí: overlay móvil, panel lateral,
     nav y search overlay.
 ══════════════════════════════════════ -->
 <div id="navbar-placeholder"></div>
-
+ 
 <!-- ══════════════════════════════════════
     SITE WRAP — centrado máximo del layout
 ══════════════════════════════════════ -->
 <div class="site-wrap">
-
+ 
 <!-- ══════════════════════════════════════
       SECCIÓN: Hero
       [EXCLUSIVO] index.html
@@ -64,12 +64,13 @@
           <div class="hero-cursor-dot"></div>
           <div class="hero-card">
             <div class="hero-card-img">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <circle cx="8.5" cy="8.5" r="1.5"/>
-                <path d="m21 15-5-5L5 21"/>
-              </svg>
-              <span>Imagen principal<br>del perfume</span>
+              <img
+                src="https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777395579/Animale_Animale_for_Men_EDT_100_mL_q9rdzi.svg"
+                alt="Animale for Men EDT 100 mL"
+                width="350"
+                height="437"
+                loading="eager"
+              />
             </div>
             <div class="hero-card-info">
               <div class="hero-card-info-body">
@@ -112,7 +113,7 @@
       <a href="catalogo.html?tab=perfumes" class="btn-primary">Explorar perfumes</a>
     </div>
   </section>
-
+ 
 <!-- ══════════════════════════════════════
       SECCIÓN: Marquee decorativo
       Separador animado entre hero y trust
@@ -137,7 +138,7 @@
       <span>Decants</span><span class="dot">✦</span>
     </div>
   </div>
-
+ 
 <!-- ══════════════════════════════════════
       SECCIÓN: Confianza — 4 columnas de stats
       [EXCLUSIVO] index.html
@@ -164,7 +165,7 @@
       <p class="trust-stat-desc">Cientos de clientes satisfechos avalan nuestra calidad, servicio y rapidez.</p>
     </div>
   </div>
-
+ 
 <!-- ══════════════════════════════════════
       SECCIÓN: Bestsellers — carrusel de productos
       [EXCLUSIVO] index.html
@@ -187,227 +188,14 @@
     </div>
     <div class="carousel-wrapper">
       <div class="carousel-track" id="carouselTrack">
-
-        <!-- Product card: Jenny Rivera Inolvidable EDP -->
-        <div class="product-card">
-          <div class="product-badge">Más vendido</div>
-          <div class="product-img-wrap">
-            <div class="img-placeholder">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-              <span>Imagen del perfume</span>
-            </div>
-            <div class="product-overlay">
-              <button class="product-overlay-btn"
-                data-action="add-to-cart"
-                data-id="jenny-1"
-                data-brand="Jenny Rivera"
-                data-name="Inolvidable EDP"
-                data-price="$1,210 MXN"
-                data-vol="50 ml"
-                data-nivel="green">Agregar al carrito</button>
-            </div>
-            <button class="fav-btn"
-              data-product-id="jenny-1"
-              data-tipo="perfumes" data-cat="diseñador" data-gen="femenino"
-              data-nivel="green" data-vol="50 ml" data-vol-label="Presentación"
-              data-brand="Jenny Rivera" data-name="Inolvidable EDP" data-price="$1,210 MXN"
-              aria-label="Añadir a favoritos">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-          </div>
-          <div class="product-info">
-            <div class="product-brand">Jenny Rivera</div>
-            <div class="product-name">Inolvidable EDP</div>
-            <div class="product-detail">50 ml</div>
-            <div class="product-price">$1,210 MXN</div>
-            <div class="prod-nivel green"><span class="prod-nivel-dot"></span>En existencia</div>
-          </div>
-        </div>
-
-        <!-- Product card: Abercrombie & Fitch Fierce EDT -->
-        <div class="product-card">
-          <div class="product-img-wrap">
-            <div class="img-placeholder">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-              <span>Imagen del perfume</span>
-            </div>
-            <div class="product-overlay">
-              <button class="product-overlay-btn"
-                data-action="add-to-cart"
-                data-id="fierce-2"
-                data-brand="Abercrombie &amp; Fitch"
-                data-name="Fierce EDT"
-                data-price="$760 MXN"
-                data-vol="50 ml"
-                data-nivel="green">Agregar al carrito</button>
-            </div>
-            <button class="fav-btn"
-              data-product-id="fierce-2"
-              data-tipo="perfumes" data-cat="diseñador" data-gen="masculino"
-              data-nivel="green" data-vol="50 ml" data-vol-label="Presentación"
-              data-brand="Abercrombie &amp; Fitch" data-name="Fierce EDT" data-price="$760 MXN"
-              aria-label="Añadir a favoritos">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-          </div>
-          <div class="product-info">
-            <div class="product-brand">Abercrombie &amp; Fitch</div>
-            <div class="product-name">Fierce EDT</div>
-            <div class="product-detail">50 ml</div>
-            <div class="product-price">$760 MXN</div>
-            <div class="prod-nivel green"><span class="prod-nivel-dot"></span>En existencia</div>
-          </div>
-        </div>
-
-        <!-- Product card: Abercrombie & Fitch Authentic EDP -->
-        <div class="product-card">
-          <div class="product-badge product-badge--dark">Nuevo</div>
-          <div class="product-img-wrap">
-            <div class="img-placeholder">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-              <span>Imagen del perfume</span>
-            </div>
-            <div class="product-overlay">
-              <button class="product-overlay-btn"
-                data-action="add-to-cart"
-                data-id="authentic-3"
-                data-brand="Abercrombie &amp; Fitch"
-                data-name="Authentic EDP"
-                data-price="$975 MXN"
-                data-vol="50 ml"
-                data-nivel="yellow">Agregar al carrito</button>
-            </div>
-            <button class="fav-btn"
-              data-product-id="authentic-3"
-              data-tipo="perfumes" data-cat="diseñador" data-gen="unisex"
-              data-nivel="yellow" data-vol="50 ml" data-vol-label="Presentación"
-              data-brand="Abercrombie &amp; Fitch" data-name="Authentic EDP" data-price="$975 MXN"
-              aria-label="Añadir a favoritos">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-          </div>
-          <div class="product-info">
-            <div class="product-brand">Abercrombie &amp; Fitch</div>
-            <div class="product-name">Authentic EDP</div>
-            <div class="product-detail">50 ml</div>
-            <div class="product-price">$975 MXN</div>
-            <div class="prod-nivel yellow"><span class="prod-nivel-dot"></span>Disp. limitada</div>
-          </div>
-        </div>
-
-        <!-- Product card: HERA Exclusivo Signature Blanc -->
-        <div class="product-card">
-          <div class="product-img-wrap">
-            <div class="img-placeholder">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-              <span>Imagen del perfume</span>
-            </div>
-            <div class="product-overlay">
-              <button class="product-overlay-btn"
-                data-action="add-to-cart"
-                data-id="signature-4"
-                data-brand="HERA Exclusivo"
-                data-name="Signature Blanc"
-                data-price="$1,490 MXN"
-                data-vol="50 ml"
-                data-nivel="yellow">Agregar al carrito</button>
-            </div>
-            <button class="fav-btn"
-              data-product-id="signature-4"
-              data-tipo="perfumes" data-cat="nicho" data-gen="unisex"
-              data-nivel="yellow" data-vol="50 ml" data-vol-label="Presentación"
-              data-brand="HERA Exclusivo" data-name="Signature Blanc" data-price="$1,490 MXN"
-              aria-label="Añadir a favoritos">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-          </div>
-          <div class="product-info">
-            <div class="product-brand">HERA Exclusivo</div>
-            <div class="product-name">Signature Blanc</div>
-            <div class="product-detail">50 ml</div>
-            <div class="product-price">$1,490 MXN</div>
-            <div class="prod-nivel yellow"><span class="prod-nivel-dot"></span>Disp. limitada</div>
-          </div>
-        </div>
-
-        <!-- Product card: HERA Joyería Anillo Solitario -->
-        <div class="product-card">
-          <div class="product-badge">Nuevo</div>
-          <div class="product-img-wrap">
-            <div class="img-placeholder">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-              <span>Imagen de la pieza</span>
-            </div>
-            <div class="product-overlay">
-              <button class="product-overlay-btn"
-                data-action="add-to-cart"
-                data-id="anillo-1"
-                data-brand="HERA Joyería"
-                data-name="Anillo Solitario"
-                data-price="$1,290 MXN"
-                data-vol="Talla 6"
-                data-nivel="yellow">Agregar al carrito</button>
-            </div>
-            <button class="fav-btn"
-              data-product-id="anillo-1"
-              data-tipo="joyeria" data-cat="anillos" data-gen="femenino"
-              data-nivel="yellow" data-vol="Talla 6" data-vol-label="Talla"
-              data-brand="HERA Joyería" data-name="Anillo Solitario" data-price="$1,290 MXN"
-              aria-label="Añadir a favoritos">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-          </div>
-          <div class="product-info">
-            <div class="product-brand">HERA Joyería</div>
-            <div class="product-name">Anillo Solitario</div>
-            <div class="product-detail">Talla 6 · Plata .925</div>
-            <div class="product-price">$1,290 MXN</div>
-            <div class="prod-nivel yellow"><span class="prod-nivel-dot"></span>Disp. limitada</div>
-          </div>
-        </div>
-
-        <!-- Product card: HERA Joyería Collar Dorado -->
-        <div class="product-card">
-          <div class="product-img-wrap">
-            <div class="img-placeholder">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-              <span>Imagen de la pieza</span>
-            </div>
-            <div class="product-overlay">
-              <button class="product-overlay-btn"
-                data-action="add-to-cart"
-                data-id="collar-1"
-                data-brand="HERA Joyería"
-                data-name="Collar Dorado"
-                data-price="$890 MXN"
-                data-vol="40 cm"
-                data-nivel="yellow">Agregar al carrito</button>
-            </div>
-            <button class="fav-btn"
-              data-product-id="collar-1"
-              data-tipo="joyeria" data-cat="collares" data-gen="unisex"
-              data-nivel="yellow" data-vol="40 cm" data-vol-label="Largo"
-              data-brand="HERA Joyería" data-name="Collar Dorado" data-price="$890 MXN"
-              aria-label="Añadir a favoritos">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-          </div>
-          <div class="product-info">
-            <div class="product-brand">HERA Joyería</div>
-            <div class="product-name">Collar Dorado</div>
-            <div class="product-detail">40 cm · Oro 14k</div>
-            <div class="product-price">$890 MXN</div>
-            <div class="prod-nivel yellow"><span class="prod-nivel-dot"></span>Disp. limitada</div>
-          </div>
-        </div>
-
+ 
       </div><!-- /carousel-track -->
     </div><!-- /carousel-wrapper -->
     <div class="carousel-progress">
       <div class="carousel-progress-fill" id="carouselProgress"></div>
     </div>
   </section>
-
+ 
 <!-- ══════════════════════════════════════
       SECCIÓN: Por qué HERA
       [EXCLUSIVO] index.html
@@ -419,16 +207,16 @@
       <p class="pq-hera-desc">HERA nació de una obsesión: que cada persona merece llevar una fragancia que la represente. Seleccionamos marcas de todo el mundo para traerte lo mejor, sin que tengas que salir de México.</p>
       <a href="nosotros.html" class="btn-primary btn-primary--fit">Conoce a la marca</a>
     </div>
-    <div class="pq-hera-img">
-      <div class="pq-hera-img-placeholder">
-        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,0.22)" stroke-width="1.5">
-          <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>
-        </svg>
-        <span class="pq-hera-img-placeholder-text">Imagen editorial<br>de marca</span>
-      </div>
-    </div>
+    <img
+      src="https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777346712/porque_hera_bk5hwk.svg"
+      alt="Imagen editorial HERA — Por qué somos distintos"
+      class="pq-hera-img-foto"
+      width="1400"
+      height="1200"
+      loading="lazy"
+/>
   </div>
-
+ 
 <!-- ══════════════════════════════════════
       SECCIÓN: Categorías
       [EXCLUSIVO] index.html
@@ -438,7 +226,14 @@
     <h2 class="section-title reveal">Encuentra tu <em>esencia</em></h2>
     <div class="cat-grid reveal">
       <div class="cat-card" id="cat-card-perfumes">
-        <div class="cat-bg cat-bg-perfume"></div>
+        <img
+          class="cat-bg cat-bg-joy"
+          src="https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777351525/Dise%C3%B1o_sin_t%C3%ADtulo_gdpzq6.svg"
+          alt=""
+          width="1760"
+          height="1174"
+          loading="lazy"
+        />
         <div class="cat-deco">
           <svg width="150" height="260" viewBox="0 0 150 260" fill="none">
             <path d="M38 48 Q36 70 22 94 L22 218 Q22 238 75 238 Q128 238 128 218 L128 94 Q114 70 112 48 Z" fill="rgba(225,34,43,0.14)"/>
@@ -452,7 +247,14 @@
         </div>
       </div>
       <div class="cat-card" id="cat-card-joyeria">
-        <div class="cat-bg cat-bg-joy"></div>
+        <img
+          class="cat-bg cat-bg-joy"
+          src="https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777351605/Dise%C3%B1o_sin_t%C3%ADtulo_1_u6tqmo.svg"
+          alt=""
+          width="1760"
+          height="1174"
+          loading="lazy"
+        />
         <div class="cat-deco">
           <svg width="110" height="110" viewBox="0 0 120 120" fill="none">
             <circle cx="60" cy="60" r="48" stroke="rgba(230,230,230,0.18)" stroke-width="1.5"/>
@@ -469,7 +271,7 @@
       </div>
     </div>
   </section>
-
+ 
 <!-- ══════════════════════════════════════
       SECCIÓN: Novedades — grid editorial
       [EXCLUSIVO] index.html
@@ -483,140 +285,11 @@
     </div>
     <div class="editorial-grid-wrap">
       <div class="editorial-grid">
-
-        <!-- Ed item: Jenny Rivera Inolvidable EDP -->
-        <div class="ed-item reveal">
-          <div class="ed-item-header">
-            <span class="ed-item-badge ed-item-badge--red">Nuevo</span>
-            <button class="fav-btn"
-              data-product-id="jenny-1"
-              data-tipo="perfumes" data-cat="diseñador" data-gen="femenino"
-              data-nivel="green" data-vol="50 ml" data-vol-label="Presentación"
-              data-brand="Jenny Rivera" data-name="Inolvidable EDP" data-price="$1,210 MXN"
-              aria-label="Añadir a favoritos">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-          </div>
-          <div class="ed-img-zone">
-            <div class="ed-img-placeholder">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-              <span>Imagen del perfume</span>
-            </div>
-            <div class="ed-cart-overlay">
-              <button class="ed-cart-btn"
-                data-action="add-to-cart"
-                data-id="jenny-1"
-                data-brand="Jenny Rivera"
-                data-name="Inolvidable EDP"
-                data-price="$1,210 MXN"
-                data-vol-sel="true"
-                data-nivel="green">Agregar al carrito</button>
-            </div>
-          </div>
-          <div class="ed-brand">Jenny Rivera</div>
-          <div class="ed-name">Inolvidable EDP</div>
-          <div class="ed-vol-label">Presentación</div>
-          <div class="ed-vols">
-            <button class="ed-vol-btn sel" data-ml="50"  data-precio="1210">50 ml</button>
-            <button class="ed-vol-btn"     data-ml="100" data-precio="1890">100 ml</button>
-          </div>
-          <div class="ed-footer">
-            <div class="ed-price">$1,210 MXN</div>
-            <a href="producto.html?id=jenny-1" class="ed-cta">Ver producto <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
-          </div>
-          <div class="ed-nivel green"><span class="ed-nivel-dot"></span>En existencia</div>
-        </div>
-
-        <!-- Ed item: Abercrombie & Fitch Authentic EDP -->
-        <div class="ed-item reveal reveal-delay-1">
-          <div class="ed-item-header">
-            <span class="ed-item-badge ed-item-badge--dark">Edición limitada</span>
-            <button class="fav-btn"
-              data-product-id="authentic-3"
-              data-tipo="perfumes" data-cat="diseñador" data-gen="unisex"
-              data-nivel="yellow" data-vol="50 ml" data-vol-label="Presentación"
-              data-brand="Abercrombie &amp; Fitch" data-name="Authentic EDP" data-price="$975 MXN"
-              aria-label="Añadir a favoritos">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-          </div>
-          <div class="ed-img-zone">
-            <div class="ed-img-placeholder">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-              <span>Imagen del perfume</span>
-            </div>
-            <div class="ed-cart-overlay">
-              <button class="ed-cart-btn"
-                data-action="add-to-cart"
-                data-id="authentic-3"
-                data-brand="Abercrombie &amp; Fitch"
-                data-name="Authentic EDP"
-                data-price="$975 MXN"
-                data-vol-sel="true"
-                data-nivel="yellow">Agregar al carrito</button>
-            </div>
-          </div>
-          <div class="ed-brand">Abercrombie &amp; Fitch</div>
-          <div class="ed-name">Authentic EDP</div>
-          <div class="ed-vol-label">Presentación</div>
-          <div class="ed-vols">
-            <button class="ed-vol-btn sel" data-ml="50"  data-precio="975">50 ml</button>
-            <button class="ed-vol-btn"     data-ml="100" data-precio="1540">100 ml</button>
-          </div>
-          <div class="ed-footer">
-            <div class="ed-price">$975 MXN</div>
-            <a href="producto.html?id=authentic-3" class="ed-cta">Ver producto <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
-          </div>
-          <div class="ed-nivel yellow"><span class="ed-nivel-dot"></span>Disp. limitada</div>
-        </div>
-
-        <!-- Ed item: HERA Exclusivo Signature Blanc -->
-        <div class="ed-item reveal reveal-delay-2">
-          <div class="ed-item-header">
-            <span class="ed-item-badge ed-item-badge--red">Nuevo</span>
-            <button class="fav-btn"
-              data-product-id="signature-4"
-              data-tipo="perfumes" data-cat="nicho" data-gen="unisex"
-              data-nivel="yellow" data-vol="50 ml" data-vol-label="Presentación"
-              data-brand="HERA Exclusivo" data-name="Signature Blanc" data-price="$1,490 MXN"
-              aria-label="Añadir a favoritos">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-          </div>
-          <div class="ed-img-zone">
-            <div class="ed-img-placeholder">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-              <span>Imagen del perfume</span>
-            </div>
-            <div class="ed-cart-overlay">
-              <button class="ed-cart-btn"
-                data-action="add-to-cart"
-                data-id="signature-4"
-                data-brand="HERA Exclusivo"
-                data-name="Signature Blanc"
-                data-price="$1,490 MXN"
-                data-vol-sel="true"
-                data-nivel="yellow">Agregar al carrito</button>
-            </div>
-          </div>
-          <div class="ed-brand">HERA Exclusivo</div>
-          <div class="ed-name">Signature Blanc</div>
-          <div class="ed-vol-label">Presentación</div>
-          <div class="ed-vols">
-            <button class="ed-vol-btn sel" data-ml="50"  data-precio="1490">50 ml</button>
-            <button class="ed-vol-btn"     data-ml="100" data-precio="2280">100 ml</button>
-          </div>
-          <div class="ed-footer">
-            <div class="ed-price">$1,490 MXN</div>
-            <a href="producto.html?id=signature-4" class="ed-cta">Ver producto <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
-          </div>
-          <div class="ed-nivel yellow"><span class="ed-nivel-dot"></span>Disp. limitada</div>
-        </div>
-
-      </div><!-- /editorial-grid -->
+ 
+        </div><!-- /editorial-grid -->
     </div><!-- /editorial-grid-wrap -->
   </div>
-
+ 
 <!-- ══════════════════════════════════════
       SECCIÓN: Testimonials
       [EXCLUSIVO] index.html
@@ -656,27 +329,27 @@
       </div>
     </div>
   </section>
-
+ 
 <!-- ══════════════════════════════════════
       SECCIÓN: Newsletter — Club HERA
 ══════════════════════════════════════ -->
   <div id="newsletter-placeholder"></div>
-
+ 
 <!-- ══════════════════════════════════════
       FOOTER PLACEHOLDER
       loadFooter() inyecta el fragmento footer.html aquí
 ══════════════════════════════════════ -->
   <div id="footer-placeholder"></div>
-
+ 
 </div><!-- /site-wrap -->
-
+ 
 <!-- ══════════════════════════════════════
     CART DRAWER — inyectado vía fetch por cart-drawer.js
 ══════════════════════════════════════ -->
 <div id="cart-drawer-placeholder"></div>
-
+ 
 <!-- ── Script de página — type="module" para ES Modules ── -->
 <script type="module" src="../js/pages/index.js"></script>
-
+ 
 </body>
 </html>

@@ -1,5 +1,5 @@
 /**
- * perfil.js — HERA
+ * perfil_v1.js — HERA
  *
  * Descripción: Script de la página de perfil de usuario.
  *              Gestiona el auth-check, la carga de componentes
@@ -10,15 +10,21 @@
  *
  * Exporta:     (ninguno — script de página, punto de entrada)
  * Importado por: pages/perfil.html via <script type="module">
- * Dependencias:  navbar.js, footer.js, cart-drawer.js, fav-drawer.js, storage.js (isLoggedIn)
+ * Dependencias:  navbar.js, footer-minimo.js, cart-drawer.js,
+ *                fav-drawer.js, storage.js, formatter.js
  */
  
-import { loadNavbar }     from '../components/navbar.js';
-import { loadFooter }     from '../components/footer.js';
-import { initCartDrawer } from '../components/cart-drawer.js';
-import { initFavDrawer }  from '../components/fav-drawer.js';
-import { isLoggedIn }     from '../utils/storage.js';
-import { formatMXN }      from '../utils/formatter.js';
+import { loadNavbar }       from '../components/navbar.js';
+import { loadFooterMinimo } from '../components/footer-minimo.js';
+import { loadCartDrawer }   from '../components/cart-drawer.js';
+import { initFavDrawer }    from '../components/fav-drawer.js';
+import {
+  isLoggedIn,
+  logout,
+  getCurrentUser,
+  setCurrentUser
+} from '../utils/storage.js';
+import { formatMXN } from '../utils/formatter.js';
  
 /* ══════════════════════════════════════
    UTILIDADES LOCALES
@@ -30,7 +36,7 @@ import { formatMXN }      from '../utils/formatter.js';
  * @param {Element|null} ctx - Contexto (default: document)
  * @returns {Element|null}
  */
-function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
+function qs(sel, ctx)  { return (ctx || document).querySelector(sel); }
  
 /**
  * Wrapper de document.querySelectorAll que devuelve un Array real.
@@ -41,26 +47,30 @@ function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
 function qsa(sel, ctx) { return Array.from((ctx || document).querySelectorAll(sel)); }
  
 /**
- * Genera las iniciales de nombre + apellido para el avatar.
- * @param {string} nombre   - Primer nombre
- * @param {string} apellido - Primer apellido
- * @returns {string} Dos letras en mayúscula, o "–" si ambos están vacíos
+ * Genera iniciales a partir del nombre completo.
+ * Si tiene al menos dos palabras toma la primera letra de cada una.
+ * Si es una sola palabra toma las dos primeras letras.
+ * @param {string} name - Nombre completo del usuario
+ * @returns {string} Iniciales en mayúscula, o "–" si está vacío
  */
-function getIniciales(nombre, apellido) {
-  const n = (nombre || '').trim();
-  const a = (apellido || '').trim();
-  if (!n && !a) return '–';
-  return (n.charAt(0) + (a.charAt(0) || '')).toUpperCase();
+function getIniciales(name) {
+  const partes = (name || '').trim().split(/\s+/).filter(Boolean);
+  if (partes.length === 0) return '–';
+  if (partes.length >= 2)  return (partes[0][0] + partes[1][0]).toUpperCase();
+  return partes[0].substring(0, 2).toUpperCase();
 }
  
 /**
  * Formatea una fecha ISO a "dd mmm yyyy" en español.
- * @param {string} iso - Fecha ISO (ej: "2024-12-01")
- * @returns {string} Ej: "01 dic 2024", o "–" si no hay valor
+ * Devuelve "–" si la fecha está vacía o no es válida.
+ * @param {string|number} iso - Fecha ISO o timestamp
+ * @returns {string} Ej: "01 dic 2024", o "–" si no es válida
  */
 function fechaCorta(iso) {
   if (!iso) return '–';
-  return new Date(iso).toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' });
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return '–';
+  return d.toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' });
 }
  
 /**
@@ -79,9 +89,7 @@ function generarId() {
 function showMsg(el, duration) {
   if (!el) return;
   el.classList.add('show');
-  if (duration !== false) {
-    setTimeout(() => el.classList.remove('show'), duration || 3500);
-  }
+  if (duration !== false) setTimeout(() => el.classList.remove('show'), duration || 3500);
 }
  
 /**
@@ -94,14 +102,12 @@ function hideMsg(el) {
  
 /* ══════════════════════════════════════
    SCROLL REVEAL
-   Re-observa al activar paneles porque los elementos
-   del nuevo panel no estaban en el viewport.
 ══════════════════════════════════════ */
  
 /**
  * Inicializa el IntersectionObserver para las clases .reveal.
- * Se registra también para el evento hera:panel-activated,
- * que se dispara cada vez que el usuario cambia de panel.
+ * Se re-observa al activar paneles porque los elementos
+ * del nuevo panel no estaban en el viewport.
  */
 function _initScrollReveal() {
   const obs = new IntersectionObserver((entries) => {
@@ -117,33 +123,17 @@ function _initScrollReveal() {
   }
  
   observeAll();
-  // Re-observar cuando se activa un panel — sus tarjetas son nuevas en el DOM
   window.addEventListener('hera:panel-activated', observeAll);
 }
  
 /* ══════════════════════════════════════
-   DATOS DEL USUARIO — localStorage
-   TEMPORAL — Reemplazar getUser/saveUser por
-   llamadas a GET/PUT /api/usuario cuando
-   el backend esté disponible.
+   DATOS DEL USUARIO
+   Fuente única: getCurrentUser() → hera_current_user
+   Campos disponibles: id, name, email, role,
+   createdAt, lastLogin, tel, nacimiento
+   ── TEMPORAL — Reemplazar setCurrentUser por
+   PATCH /api/usuario cuando el backend esté disponible.
 ══════════════════════════════════════ */
- 
-/**
- * Lee el objeto de usuario desde localStorage.
- * @returns {Object} Datos del usuario, o {} si no existe o está corrupto
- */
-function getUser() {
-  try { return JSON.parse(localStorage.getItem('hera_user') || '{}'); }
-  catch (e) { return {}; }
-}
- 
-/**
- * Persiste el objeto de usuario en localStorage.
- * @param {Object} data - Datos actualizados del usuario
- */
-function saveUser(data) {
-  localStorage.setItem('hera_user', JSON.stringify(data));
-}
  
 /**
  * Sincroniza todos los elementos de UI que muestran datos del usuario:
@@ -152,20 +142,20 @@ function saveUser(data) {
  * Se llama al cargar la página y después de cada guardado.
  */
 function populateUserUI() {
-  const user     = getUser();
-  const nombre   = user.nombre    || '';
-  const apellido = user.apellido  || '';
-  const email    = user.email     || localStorage.getItem('hera_email') || 'usuario@hera.mx';
-  const tel      = user.tel       || '';
-  const nac      = user.nacimiento || '';
-  const desde    = user.desde     || new Date().getFullYear();
-  const iniciales = getIniciales(nombre, apellido) || email.charAt(0).toUpperCase();
-  const nombreCompleto = (nombre + (apellido ? ' ' + apellido : '')) || email.split('@')[0];
+  const user      = getCurrentUser() || {};
+  const name      = user.name       || '';
+  const email     = user.email      || 'usuario@hera.mx';
+  const tel       = user.tel        || '';
+  const nac       = user.nacimiento || '';
+  const iniciales = getIniciales(name) || email.charAt(0).toUpperCase();
+  const desde     = user.createdAt
+    ? new Date(user.createdAt).getFullYear()
+    : new Date().getFullYear();
  
   // Header — tags de bienvenida
   const hn = qs('#headerTagNombre');
   const hd = qs('#headerTagDesde');
-  if (hn) hn.textContent = nombreCompleto;
+  if (hn) hn.textContent = name || email.split('@')[0];
   if (hd) hd.textContent = 'Miembro desde ' + desde;
  
   // Sidebar — avatar e identidad
@@ -174,7 +164,7 @@ function populateUserUI() {
   const sEm  = qs('#sidebarEmail');
   const sDes = qs('#sidebarDesde');
   if (sIni) sIni.textContent = iniciales;
-  if (sNom) sNom.textContent = nombreCompleto;
+  if (sNom) sNom.textContent = name || email.split('@')[0];
   if (sEm)  sEm.textContent  = email;
   if (sDes) sDes.textContent = 'Miembro desde ' + desde;
  
@@ -184,17 +174,15 @@ function populateUserUI() {
   const iEm  = qs('#infoEmail');
   const iDes = qs('#infoDesde');
   if (iIni) iIni.textContent = iniciales;
-  if (iNom) iNom.textContent = nombreCompleto;
+  if (iNom) iNom.textContent = name || email.split('@')[0];
   if (iEm)  iEm.textContent  = email;
   if (iDes) iDes.textContent = 'Miembro desde ' + desde;
  
   // Panel info — formulario (pre-llenar con datos guardados)
   const fNom = qs('#infoNombre');
-  const fApe = qs('#infoApellido');
   const fTel = qs('#infoTel');
   const fNac = qs('#infoNacimiento');
-  if (fNom) fNom.value = nombre;
-  if (fApe) fApe.value = apellido;
+  if (fNom) fNom.value = name;
   if (fTel) fTel.value = tel;
   if (fNac) fNac.value = nac;
  
@@ -209,7 +197,7 @@ function populateUserUI() {
  
 /**
  * Inicializa los botones del panel de información personal.
- * Guardar valida nombre y apellido antes de persistir.
+ * Guardar valida el nombre antes de persistir en getCurrentUser.
  */
 function _initPanelInfo() {
   const btnGuardar  = qs('#btnGuardarInfo');
@@ -220,21 +208,15 @@ function _initPanelInfo() {
   if (btnGuardar) {
     btnGuardar.addEventListener('click', () => {
       hideMsg(msgOk); hideMsg(msgErr);
-      const nombre   = (qs('#infoNombre').value   || '').trim();
-      const apellido = (qs('#infoApellido').value || '').trim();
-      const tel      = (qs('#infoTel').value      || '').trim();
-      const nac      =  qs('#infoNacimiento').value || '';
  
-      if (!nombre || !apellido) { showMsg(msgErr); return; }
+      const name = (qs('#infoNombre').value || '').trim();
+      const tel  = (qs('#infoTel').value    || '').trim();
+      const nac  =  qs('#infoNacimiento').value || '';
  
-      const user = getUser();
-      user.nombre     = nombre;
-      user.apellido   = apellido;
-      user.tel        = tel;
-      user.nacimiento = nac;
-      if (!user.desde) user.desde = new Date().getFullYear();
+      if (!name) { showMsg(msgErr); return; }
  
-      saveUser(user);
+      const user = getCurrentUser() || {};
+      setCurrentUser({ ...user, name, tel, nacimiento: nac });
       populateUserUI();
       showMsg(msgOk);
     });
@@ -242,7 +224,6 @@ function _initPanelInfo() {
  
   if (btnCancelar) {
     btnCancelar.addEventListener('click', () => {
-      // Revertir formulario a los valores guardados
       populateUserUI();
       hideMsg(msgOk); hideMsg(msgErr);
     });
@@ -254,6 +235,19 @@ function _initPanelInfo() {
    TEMPORAL — lee de hera_orders y hera_last_order en localStorage.
    Reemplazar por fetch() a GET /api/pedidos cuando el backend esté disponible.
 ══════════════════════════════════════ */
+ 
+/**
+ * Formatea un objeto de dirección a una línea de texto legible.
+ * @param {string|Object} dir - Dirección como string u objeto
+ * @returns {string}
+ */
+function formatDireccion(dir) {
+  if (!dir) return '';
+  if (typeof dir === 'string') return dir;
+  return [dir.calle, dir.colonia, dir.ciudad, dir.estado]
+    .filter(Boolean)
+    .join(', ');
+}
  
 /**
  * Lee pedidos de localStorage y construye el listado de tarjetas.
@@ -301,6 +295,7 @@ function renderPedidos() {
     const totalDisp = p.total
       ? (typeof p.total === 'number' ? formatMXN(p.total) : p.total)
       : '–';
+    const dirTxt = formatDireccion(p.direccion);
  
     const card = document.createElement('div');
     card.className = 'perfil-pedido-card reveal';
@@ -318,12 +313,11 @@ function renderPedidos() {
           '<span class="perfil-pedido-total-label">Total</span>' +
           '<span class="perfil-pedido-total">' + totalDisp + '</span>' +
         '</div>' +
-        (p.direccion ? '<div class="perfil-pedido-dir">Enviado a: ' + p.direccion + '</div>' : '') +
+        (dirTxt ? '<div class="perfil-pedido-dir">Enviado a: ' + dirTxt + '</div>' : '') +
       '</div>';
     list.appendChild(card);
   });
  
-  // Activar scroll reveal en las tarjetas recién creadas
   window.dispatchEvent(new Event('hera:panel-activated'));
 }
  
@@ -363,9 +357,8 @@ function _initPanelCredenciales() {
         showMsg(emailMsgErr); return;
       }
  
-      const user = getUser();
-      user.email = nuevo;
-      saveUser(user);
+      const user = getCurrentUser() || {};
+      setCurrentUser({ ...user, email: nuevo });
       populateUserUI();
       qs('#credEmailNuevo').value   = '';
       qs('#credEmailConfirm').value = '';
@@ -599,7 +592,6 @@ function _initPanelDirecciones() {
       const dirs = getDirs();
       const id   = (editIdEl && editIdEl.value) || '';
  
-      // Si se marca predeterminada, limpiar el flag en las demás
       if (pred) dirs.forEach((d) => { d.predeterminada = false; });
  
       if (id) {
@@ -649,10 +641,6 @@ function _initPanelSwitching() {
     'direcciones':  'panel-direcciones',
   };
  
-  /**
-   * Activa el panel indicado y desactiva los demás.
-   * @param {string} key - Clave del panel ('info' | 'pedidos' | 'credenciales' | 'direcciones')
-   */
   function activatePanel(key) {
     qsa('.perfil-nav-btn').forEach((btn) => {
       btn.classList.toggle('active', btn.dataset.panel === key);
@@ -660,7 +648,6 @@ function _initPanelSwitching() {
     qsa('.perfil-panel').forEach((panel) => {
       panel.classList.toggle('active', panel.id === panelMap[key]);
     });
-    // renderPedidos solo cuando el panel de pedidos se activa por primera vez
     if (key === 'pedidos') renderPedidos();
     window.dispatchEvent(new Event('hera:panel-activated'));
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -670,7 +657,6 @@ function _initPanelSwitching() {
     btn.addEventListener('click', () => activatePanel(btn.dataset.panel));
   });
  
-  // Leer hash inicial para deep-link directo a un panel (ej: perfil.html#pedidos)
   const hash = window.location.hash.replace('#', '');
   if (panelMap[hash]) activatePanel(hash);
 }
@@ -681,13 +667,13 @@ function _initPanelSwitching() {
  
 /**
  * Inicializa el botón "Cerrar sesión" del sidebar de perfil.
- * Elimina la sesión y redirige a cuenta.html.
+ * Usa logout() de storage.js para limpiar toda la sesión.
  */
 function _initLogoutSidebar() {
   const btn = qs('#btnLogout');
   if (!btn) return;
   btn.addEventListener('click', () => {
-    localStorage.removeItem('hera_logged_in');
+    logout();
     window.location.href = 'cuenta.html';
   });
 }
@@ -698,21 +684,19 @@ function _initLogoutSidebar() {
 document.addEventListener('DOMContentLoaded', async () => {
  
   // 1. Auth check — redirigir inmediatamente si no hay sesión activa
-  if (!localStorage.getItem('hera_logged_in')) {
+  if (!isLoggedIn()) {
     window.location.replace('cuenta.html');
-    return; // Detener ejecución: el redirect es asíncrono pero no tiene sentido continuar
+    return;
   }
  
   // 2. Cargar navbar y esperar — CRÍTICO
-  //    Todos los componentes que dependen de #cart-btn, #fav-toggle,
-  //    #search-btn, etc. deben inicializarse DESPUÉS de este await.
   await loadNavbar();
  
-  // 3. Footer — no tiene dependencias, puede cargarse sin await
-  loadFooter();
+  // 3. Footer
+  loadFooterMinimo();
  
-  // 4. Inicializar carrito y favoritos (dependen de elementos del navbar)
-  initCartDrawer();
+  // 4. Inicializar carrito y favoritos
+  await loadCartDrawer();
   initFavDrawer();
  
   // 5. Lógica exclusiva de la página
@@ -724,3 +708,4 @@ document.addEventListener('DOMContentLoaded', async () => {
   _initPanelSwitching();
   _initLogoutSidebar();
 });
+ 

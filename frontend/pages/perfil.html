@@ -124,13 +124,10 @@
  
           <div class="perfil-form-card reveal reveal-delay-1">
             <div class="perfil-form-grid">
+              <!-- Campo unificado: nombre completo (Opción A) -->
               <div class="perfil-form-field">
-                <label class="perfil-form-label" for="infoNombre">Nombre</label>
-                <input class="perfil-input" type="text" id="infoNombre" placeholder="Tu nombre" autocomplete="given-name">
-              </div>
-              <div class="perfil-form-field">
-                <label class="perfil-form-label" for="infoApellido">Apellido</label>
-                <input class="perfil-input" type="text" id="infoApellido" placeholder="Tu apellido" autocomplete="family-name">
+                <label class="perfil-form-label" for="infoNombre">Nombre completo</label>
+                <input class="perfil-input" type="text" id="infoNombre" placeholder="Tu nombre completo" autocomplete="name">
               </div>
               <div class="perfil-form-field">
                 <label class="perfil-form-label" for="infoTel">Teléfono</label>
@@ -151,7 +148,7 @@
             </div>
             <div class="perfil-msg perfil-msg-err" id="infoMsgErr">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M7 4v4M7 9.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              Por favor completa todos los campos requeridos.
+              El nombre no puede estar vacío.
             </div>
           </div>
  
@@ -166,14 +163,14 @@
           </h2>
  
           <!-- Generado dinámicamente por renderPedidos() en perfil.js -->
-          <div class="perfil-pedidos-list reveal" id="pedidosList"></div>
+          <div id="pedidosList"></div>
  
         </section>
  
         <!-- ── PANEL: CREDENCIALES ─────────────────────────────────────── -->
         <section class="perfil-panel" id="panel-credenciales" aria-labelledby="titulo-cred">
  
-          <div class="perfil-panel-eyebrow">Acceso y seguridad</div>
+          <div class="perfil-panel-eyebrow">Seguridad</div>
           <h2 class="perfil-panel-title" id="titulo-cred">
             Mis credenciales <em>de acceso</em>
           </h2>
@@ -184,7 +181,7 @@
             <div class="perfil-form-grid">
               <div class="perfil-form-field">
                 <label class="perfil-form-label" for="credEmailActual">Correo actual</label>
-                <input class="perfil-input" type="email" id="credEmailActual" disabled>
+                <input class="perfil-input" type="email" id="credEmailActual" placeholder="correo@ejemplo.com" readonly autocomplete="email">
               </div>
             </div>
             <div class="perfil-form-grid">
@@ -342,7 +339,7 @@
     </div><!-- /perfil-body -->
  
     <!-- ══════════════════════════════════════
-        FOOTER — inyectado vía fetch por footer.js
+        FOOTER — inyectado vía fetch por footer-minimo.js
     ══════════════════════════════════════ -->
     <div id="footer-placeholder"></div>
  
@@ -356,3 +353,4 @@
 <script type="module" src="../js/pages/perfil.js"></script>
 </body>
 </html>
+ 

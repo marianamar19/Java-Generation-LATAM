@@ -4,39 +4,45 @@
  * Descripción: Script exclusivo de la página de inicio (index.html).
  *              Orquesta la carga de componentes universales e inicializa
  *              toda la lógica específica de esta página:
- *              carrusel de bestsellers, scroll reveal, selector de volumen
- *              en novedades y navegación por las categorías.
+ *              hero card, carrusel de bestsellers, novedades editoriales,
+ *              scroll reveal, selector de volumen y navegación por categorías.
+ *
+ *              Los productos se leen desde CATALOG (catalog.js) y se
+ *              renderizan mediante product-card.js — cuando llegue el
+ *              backend solo hay que cambiar la fuente de datos aquí,
+ *              las funciones de render no cambian.
+ *
  * Exporta:     (ninguno — es el entry point de la página)
  * Importado por: pages/index.html vía <script type="module">
  */
-
+ 
 import { loadAnnounceBar }               from '../components/announce-bar.js';
 import { loadNavbar }                    from '../components/navbar.js';
 import { loadCartDrawer, addItemToCart } from '../components/cart-drawer.js';
 import { initFavDrawer }                 from '../components/fav-drawer.js';
 import { loadNewsletter }                from '../components/newsletter.js';
 import { loadFooter }                    from '../components/footer.js';
-
+import { CATALOG }                       from '../utils/catalog.js';
+import { renderCard, renderCardEditorial } from '../components/product-card.js';
+ 
 /* ══════════════════════════════════════════════════════════════
-  ARRANQUE — DOMContentLoaded
+   ARRANQUE — DOMContentLoaded
 ══════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', async function() {
-
-  // Cargar el announce bar
+ 
   loadAnnounceBar();
-  // Cargar navbar (nav desktop, panel móvil, search)
   await loadNavbar();
-  // Cargar footer
   loadFooter();
-  // Cargar newsletter
   loadNewsletter();
-  // Cargar cart drawer vía fetch e inicializar — await porque fav-drawer
-  // depende de que #cart-btn y los elementos del drawer ya estén en el DOM
   await loadCartDrawer();
-
-  // Inicializar favoritos — enlaza .fav-btn y restaura estado desde localStorage
   initFavDrawer();
-
+ 
+  // Render de secciones dinámicas — antes de init para que los
+  // elementos existan cuando los listeners se enlacen
+  _renderHeroCard();
+  _renderBestSellers();
+  _renderNovedades();
+ 
   // Lógica exclusiva de esta página
   _initScrollReveal();
   _initCarousel();
@@ -45,13 +51,113 @@ document.addEventListener('DOMContentLoaded', async function() {
   _initCarouselDelegation();
   _initEditorialDelegation();
 });
-
+ 
 /* ══════════════════════════════════════
-  SCROLL REVEAL — IntersectionObserver
-  Replays cada vez que el elemento entra
-  al viewport. Design System v4.
+   RENDER — Hero card
+   Lee el producto con heroDestacado:true
+   y actualiza los textos de la hero card.
+   La estructura HTML vive en index.html —
+   solo se actualizan los valores de texto
+   y los data-attributes del botón de fav.
 ══════════════════════════════════════ */
-
+ 
+/**
+ * Busca el producto heroDestacado en el catálogo y actualiza
+ * los elementos de texto de la hero card en el DOM.
+ * @returns {void}
+ */
+function _renderHeroCard() {
+  const p = CATALOG.find(p => p.heroDestacado);
+  if (!p) return;
+ 
+  const vol = p.vols && p.vols[0]
+    ? `${p.vols[0].ml}${!p.volLabel ? ' ml' : ''}`
+    : '';
+  const volLabel = p.volLabel || 'Presentación';
+ 
+  // Textos
+  const nameEl     = document.querySelector('.hero-card-name');
+  const volEl      = document.querySelector('.hero-card-vol');
+  const volLabelEl = document.querySelector('.hero-card-vol-label');
+  const priceEl    = document.querySelector('.hero-card-price');
+  const nivelEl    = document.querySelector('.hero-card-nivel');
+  const ctaEl      = document.querySelector('.hero-card-cta');
+ 
+  if (nameEl)     nameEl.textContent     = p.name + ' by ' + p.brand;
+  if (volEl)      volEl.textContent      = vol;
+  if (volLabelEl) volLabelEl.textContent = volLabel;
+  if (priceEl)    priceEl.textContent    = p.price;
+  if (ctaEl)      ctaEl.href             = `producto.html?id=${p.id}`;
+ 
+  // Nivel de existencia
+  if (nivelEl) {
+    const labels = { green: 'En existencia', yellow: 'Disp. limitada', red: 'Sin existencia' };
+    nivelEl.className = `hero-card-nivel ${p.nivel}`;
+    const dot = nivelEl.querySelector('.hero-card-nivel-dot');
+    nivelEl.textContent = labels[p.nivel] || '';
+    if (dot) nivelEl.prepend(dot);
+  }
+ 
+  // Botón de favoritos — actualizar data-attributes
+  const favBtn = document.querySelector('.hero-card-fav');
+  if (favBtn) {
+    favBtn.dataset.productId = p.id;
+    favBtn.dataset.tipo      = p.tipo;
+    favBtn.dataset.cat       = p.cat;
+    favBtn.dataset.gen       = p.gen;
+    favBtn.dataset.nivel     = p.nivel;
+    favBtn.dataset.vol       = vol;
+    favBtn.dataset.volLabel  = volLabel;
+    favBtn.dataset.brand     = p.brand;
+    favBtn.dataset.name      = p.name;
+    favBtn.dataset.price     = p.price;
+  }
+}
+ 
+/* ══════════════════════════════════════
+   RENDER — Bestsellers
+   Filtra bestSeller:true del catálogo
+   y genera las product-cards en el track.
+══════════════════════════════════════ */
+ 
+/**
+ * Renderiza las tarjetas del carrusel de bestsellers.
+ * ── Con backend: reemplazar CATALOG.filter por
+ *    await fetch('/api/productos?bestSeller=true').then(r => r.json())
+ * @returns {void}
+ */
+function _renderBestSellers() {
+  const track = document.getElementById('carouselTrack');
+  if (!track) return;
+ 
+  const productos = CATALOG.filter(p => p.bestSeller);
+  track.innerHTML = productos.map(renderCard).join('');
+}
+ 
+/* ══════════════════════════════════════
+   RENDER — Novedades editoriales
+   Filtra nuevo:true del catálogo
+   y genera las ed-items en el grid.
+══════════════════════════════════════ */
+ 
+/**
+ * Renderiza las tarjetas del grid editorial de novedades.
+ * ── Con backend: reemplazar CATALOG.filter por
+ *    await fetch('/api/productos?nuevo=true').then(r => r.json())
+ * @returns {void}
+ */
+function _renderNovedades() {
+  const grid = document.querySelector('.editorial-grid');
+  if (!grid) return;
+ 
+  const productos = CATALOG.filter(p => p.nuevo).slice(0, 3);
+  grid.innerHTML = productos.map(renderCardEditorial).join('');
+}
+ 
+/* ══════════════════════════════════════
+   SCROLL REVEAL — IntersectionObserver
+══════════════════════════════════════ */
+ 
 /**
  * Observa todos los elementos .reveal y alterna la clase .visible
  * según entren o salgan del viewport.
@@ -60,7 +166,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 function _initScrollReveal() {
   const obs = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
-      // Añadir visible al entrar, quitar al salir — para que replaye en cada scroll
       if (e.isIntersecting) {
         e.target.classList.add('visible');
       } else {
@@ -68,17 +173,14 @@ function _initScrollReveal() {
       }
     });
   }, { threshold: 0.12 });
-
+ 
   document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
 }
-
+ 
 /* ══════════════════════════════════════
-  CARRUSEL — Bestsellers
-  Desktop: 4 cards visibles.
-  Tablet:  3 cards visibles.
-  Móvil:   2 cards visibles.
+   CARRUSEL — Bestsellers
 ══════════════════════════════════════ */
-
+ 
 /**
  * Inicializa el carrusel de products: controles anterior/siguiente,
  * barra de progreso y recalculo al resize.
@@ -89,44 +191,33 @@ function _initCarousel() {
   const prevBtn      = document.getElementById('prevBtn');
   const nextBtn      = document.getElementById('nextBtn');
   const progressFill = document.getElementById('carouselProgress');
-
+ 
   if (!track) return;
-
+ 
   const cards = track.querySelectorAll('.product-card');
   let cur     = 0;
-
-  /**
-   * Devuelve el número de cards visibles según el ancho del viewport.
-   * @returns {number} 2 | 3 | 4
-   */
+ 
   function getVis() {
     return window.innerWidth <= 768 ? 2 : window.innerWidth <= 1024 ? 3 : 4;
   }
-
-  /**
-   * Aplica la transformación al track y actualiza controles y barra.
-   * @param {boolean} animate - Si false, desactiva brevemente la transición de la barra
-   * @returns {void}
-   */
+ 
   function updateCarousel(animate) {
     const vis     = getVis();
     const maxStep = cards.length - vis;
-
-    // Clamp del índice para no salirse del rango
+ 
     if (cur < 0)       cur = 0;
     if (cur > maxStep) cur = maxStep;
-
+ 
     const w     = track.parentElement.offsetWidth;
     const cardW = (w - (vis - 1) * 2) / vis;
     track.style.transform = 'translateX(-' + (cur * (cardW + 2)) + 'px)';
-
+ 
     prevBtn.disabled = cur === 0;
     nextBtn.disabled = cur >= maxStep;
-
-    // Calcular posición y ancho del thumb de progreso
+ 
     const thumbW    = (vis / cards.length) * 100;
     const thumbLeft = (cur  / cards.length) * 100;
-
+ 
     if (!animate) progressFill.style.transition = 'none';
     progressFill.style.width = thumbW    + '%';
     progressFill.style.left  = thumbLeft + '%';
@@ -136,22 +227,18 @@ function _initCarousel() {
       }, 50);
     }
   }
-
+ 
   prevBtn.addEventListener('click', function() { if (cur > 0) { cur--; updateCarousel(true); } });
   nextBtn.addEventListener('click', function() { if (cur < cards.length - getVis()) { cur++; updateCarousel(true); } });
-
-  // Recalcular al cambiar el tamaño de la ventana (sin animación para evitar saltos)
   window.addEventListener('resize', function() { updateCarousel(false); });
-
+ 
   updateCarousel(false);
 }
-
+ 
 /* ══════════════════════════════════════
-  DELEGACIÓN — Bestsellers carousel
-  Escuchar add-to-cart en toda la pista
-  para no enlazar N listeners.
+   DELEGACIÓN — Carrusel bestsellers
 ══════════════════════════════════════ */
-
+ 
 /**
  * Delegación de eventos para los botones "Agregar al carrito" del carrusel.
  * @returns {void}
@@ -159,7 +246,7 @@ function _initCarousel() {
 function _initCarouselDelegation() {
   const carouselTrack = document.getElementById('carouselTrack');
   if (!carouselTrack) return;
-
+ 
   carouselTrack.addEventListener('click', function(e) {
     const btn = e.target.closest('[data-action="add-to-cart"]');
     if (!btn) return;
@@ -174,49 +261,41 @@ function _initCarouselDelegation() {
     );
   });
 }
-
+ 
 /* ══════════════════════════════════════
-  DELEGACIÓN — Novedades (ed-item)
-  Lee el volumen del botón .ed-vol-btn.sel
-  activo en la tarjeta al momento del click.
+   DELEGACIÓN — Novedades (ed-item)
 ══════════════════════════════════════ */
-
+ 
 /**
  * Delegación de eventos para los botones "Agregar al carrito" de las novedades.
- * El precio se calcula desde el botón de volumen activo, no desde el data-price fijo.
  * @returns {void}
  */
 function _initEditorialDelegation() {
   const editorialGrid = document.querySelector('.editorial-grid');
   if (!editorialGrid) return;
-
+ 
   editorialGrid.addEventListener('click', function(e) {
     const btn = e.target.closest('[data-action="add-to-cart"]');
     if (!btn) return;
     e.stopPropagation();
-
-    // Leer el volumen y precio del selector activo en la tarjeta
+ 
     const card      = btn.closest('.ed-item');
     const selVolBtn = card ? card.querySelector('.ed-vol-btn.sel') : null;
     const vol       = selVolBtn ? selVolBtn.textContent.trim() : '';
     const price     = selVolBtn && selVolBtn.dataset.precio
       ? '$' + parseInt(selVolBtn.dataset.precio).toLocaleString('es-MX') + ' MXN'
       : btn.dataset.price;
-
+ 
     addItemToCart(btn.dataset.id, btn.dataset.brand, btn.dataset.name, price, vol, btn.dataset.nivel);
   });
 }
-
+ 
 /* ══════════════════════════════════════
-  SELECTOR DE VOLUMEN — Novedades
-  Toggle de botones .ed-vol-btn dentro
-  de cada .ed-vols y actualización del
-  precio visible.
+   SELECTOR DE VOLUMEN — Novedades
 ══════════════════════════════════════ */
-
+ 
 /**
  * Inicializa los selectores de volumen en las tarjetas de novedades.
- * Al seleccionar un volumen se actualiza el precio mostrado en la tarjeta.
  * @returns {void}
  */
 function _initVolButtons() {
@@ -224,11 +303,9 @@ function _initVolButtons() {
     group.querySelectorAll('.ed-vol-btn').forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         e.stopPropagation();
-        // Quitar .sel de todos los botones del grupo y aplicarlo solo al clicado
         group.querySelectorAll('.ed-vol-btn').forEach(function(b) { b.classList.remove('sel'); });
         btn.classList.add('sel');
-
-        // Actualizar el precio de la tarjeta con el precio del volumen seleccionado
+ 
         const priceEl = btn.closest('.ed-item').querySelector('.ed-price');
         if (priceEl && btn.dataset.precio) {
           priceEl.textContent = '$' + parseInt(btn.dataset.precio).toLocaleString('es-MX') + ' MXN';
@@ -237,11 +314,11 @@ function _initVolButtons() {
     });
   });
 }
-
+ 
 /* ══════════════════════════════════════
-  CATEGORÍAS — Navegación al catálogo
+   CATEGORÍAS — Navegación al catálogo
 ══════════════════════════════════════ */
-
+ 
 /**
  * Enlaza las cat-cards para navegar al catálogo filtrado al hacer clic.
  * @returns {void}
@@ -249,13 +326,13 @@ function _initVolButtons() {
 function _initCatCards() {
   const catCardPerfumes = document.getElementById('cat-card-perfumes');
   const catCardJoyeria  = document.getElementById('cat-card-joyeria');
-
+ 
   if (catCardPerfumes) {
     catCardPerfumes.addEventListener('click', function() {
       location.href = 'catalogo.html?tab=perfumes';
     });
   }
-
+ 
   if (catCardJoyeria) {
     catCardJoyeria.addEventListener('click', function() {
       location.href = 'catalogo.html?tab=joyeria';
