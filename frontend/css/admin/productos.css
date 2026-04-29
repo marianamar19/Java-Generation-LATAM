@@ -1,0 +1,228 @@
+/* ============================================================
+   productos.css — HERA Admin
+   Descripción: Estilos exclusivos de la página de gestión
+                de productos del panel admin. Cubre la barra
+                de acciones, tabla de productos, badges de
+                disponibilidad, drawer de formulario y
+                overrides de Bootstrap para el formulario HERA.
+   Comportamiento por breakpoint:
+     Desktop  (>1024px): layout completo, drawer de 520px.
+     Tablet   (≤1024px): drawer de 90vw.
+     Móvil    (≤768px):  barra de acciones en columna, drawer fullscreen.
+   Usado por:   pages/admin/productos.html
+   ============================================================ */
+
+/* ── Sección: Variable exclusiva de esta página ─────────────── */
+:root {
+  --adm-drawer-w: 520px;
+}
+
+/* ── Sección: Topbar — variantes de esta página ─────────────── */
+/* El topbar base vive en layout-admin.css. Aquí solo la variante
+   con layout izquierda (título + conteo) en lugar del título solo */
+.adm-topbar-left  { display: flex; align-items: center; gap: 16px; }
+.adm-topbar-count { font-size: 11px; color: var(--adm-muted); }
+
+/* ── Sección: Avatar — sin border-radius (override Bootstrap) ── */
+.adm-avatar { border-radius: 0 !important; }
+
+/* ── Sección: Barra de acciones ─────────────────────────────── */
+.adm-actions {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-bottom:   18px;
+  gap:             12px;
+  flex-wrap:       wrap;
+}
+
+/* ── Sección: Card contenedor de tabla ──────────────────────── */
+.adm-card-table {
+  background: #FFF;
+  border:     1px solid var(--adm-border);
+}
+
+/* ── Sección: Tabla — overrides de columnas de productos ─────── */
+/* Las reglas base de .adm-table viven en components-admin.css */
+.adm-table tbody td { font-size: 12px; color: var(--adm-text); vertical-align: middle; }
+.table-hover > tbody > tr:hover > * { background-color: rgba(225,34,43,.02) !important; }
+
+.adm-prod-name  { font-weight: 600; font-size: 12px; }
+.adm-prod-brand { font-size: 10px; color: var(--adm-muted); margin-top: 1px; }
+.adm-prod-id    { font-size: 10px; color: var(--adm-muted); font-family: monospace; }
+
+/* ── Sección: Badges de disponibilidad ──────────────────────── */
+.adm-nivel {
+  font-size:      9px !important;
+  font-weight:    700;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  white-space:    nowrap;
+}
+.adm-nivel.green  { background: rgba(76,175,80,.10)  !important; color: #2e7d32       !important; border: 1px solid #4caf50; }
+.adm-nivel.yellow { background: rgba(249,168,37,.10) !important; color: #9a6800       !important; border: 1px solid #f9a825; }
+.adm-nivel.red    { background: rgba(225,34,43,.06)  !important; color: var(--adm-red) !important; border: 1px solid var(--adm-red); }
+
+/* ── Sección: Drawer overlay ────────────────────────────────── */
+.adm-drawer-overlay {
+  position:       fixed;
+  inset:          0;
+  background:     rgba(15,15,15,.45);
+  z-index:        400;
+  opacity:        0;
+  visibility:     hidden;
+  pointer-events: none;
+  transition:     opacity .3s, visibility .3s;
+}
+.adm-drawer-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+
+/* ── Sección: Drawer panel ──────────────────────────────────── */
+.adm-drawer {
+  position:       fixed;
+  top:            0;
+  right:          0;
+  bottom:         0;
+  width:          var(--adm-drawer-w);
+  background:     #F9F9F9;
+  z-index:        500;
+  transform:      translateX(100%);
+  transition:     transform .35s cubic-bezier(.4,0,.2,1);
+  display:        flex;
+  flex-direction: column;
+  box-shadow:     -8px 0 40px rgba(15,15,15,.12);
+}
+.adm-drawer.open { transform: translateX(0); }
+
+.adm-drawer-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         20px 24px;
+  background:      #FFF;
+  border-bottom:   1px solid var(--adm-border);
+  flex-shrink:     0;
+}
+.adm-drawer-title {
+  font-size:      13px;
+  font-weight:    700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color:          var(--adm-text);
+}
+.adm-drawer-close {
+  width:           32px;
+  height:          32px;
+  background:      none;
+  border:          1px solid var(--adm-border);
+  cursor:          pointer;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  color:           var(--adm-muted);
+  transition:      color .15s, border-color .15s;
+}
+.adm-drawer-close:hover { color: var(--adm-text); border-color: #ccc; }
+
+.adm-drawer-body   { flex: 1; overflow-y: auto; padding: 20px 24px; }
+.adm-drawer-footer {
+  display:     flex;
+  gap:         10px;
+  padding:     16px 24px;
+  background:  #FFF;
+  border-top:  1px solid var(--adm-border);
+  flex-shrink: 0;
+}
+
+/* ── Sección: Etiqueta de variante ──────────────────────────── */
+.adm-variant-label-small {
+  font-size:      9px;
+  font-weight:    600;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  color:          var(--adm-muted);
+  white-space:    nowrap;
+}
+
+/* ── Sección: Bootstrap overrides — formulario HERA ─────────── */
+/* Tipografía en form controls */
+.form-control, .form-select, .form-label,
+.form-check-label, .btn, .card-header {
+  font-family: 'Instrument Sans', sans-serif;
+}
+.form-control, .form-select { font-size: 13px; }
+
+/* Focus ring — rojo HERA, sin azul Bootstrap */
+.form-control:focus, .form-select:focus {
+  border-color: var(--adm-red);
+  box-shadow:   0 0 0 .25rem rgba(225,34,43,.15);
+}
+.form-check-input:focus {
+  border-color: var(--adm-red);
+  box-shadow:   0 0 0 .25rem rgba(225,34,43,.15);
+}
+
+/* Form-switch checked — verde HERA */
+.form-check-input:checked {
+  background-color: var(--adm-green);
+  border-color:     var(--adm-green);
+}
+
+/* Card header — secciones del formulario */
+.adm-drawer-body .card-header {
+  font-size:      9px;
+  font-weight:    700;
+  letter-spacing: .20em;
+  text-transform: uppercase;
+  color:          var(--adm-muted);
+  background:     #FAFAFA;
+  padding:        8px 16px;
+}
+.adm-drawer-body .card { border-color: var(--adm-border); }
+
+/* Form label — estilo HERA */
+.adm-drawer-body .form-label {
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color:          var(--adm-text);
+  margin-bottom:  4px;
+}
+.adm-drawer-body .form-label .req { color: var(--adm-red); margin-left: 2px; }
+
+/* Botón primario — rojo HERA */
+.btn-primary {
+  --bs-btn-bg:                  var(--adm-red);
+  --bs-btn-border-color:        var(--adm-red);
+  --bs-btn-hover-bg:            var(--adm-red-hover);
+  --bs-btn-hover-border-color:  var(--adm-red-hover);
+  --bs-btn-active-bg:           var(--adm-red-hover);
+  --bs-btn-active-border-color: var(--adm-red-hover);
+  --bs-btn-focus-shadow-rgb:    225, 34, 43;
+  font-size:      11px;
+  font-weight:    700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+/* ── Sección: Toast ─────────────────────────────────────────── */
+#adm-toast {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size:   12px;
+  background:  #0F0F0F;
+}
+
+/* ═══════════════════════════════════════
+   BREAKPOINT: TABLET — ≤1024px
+═══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  :root { --adm-drawer-w: 90vw; }
+}
+
+/* ═══════════════════════════════════════
+   BREAKPOINT: MÓVIL — ≤768px
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  :root { --adm-drawer-w: 100vw; }
+  .adm-actions { flex-direction: column; align-items: stretch; }
+}

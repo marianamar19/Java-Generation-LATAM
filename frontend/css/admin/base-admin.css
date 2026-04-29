@@ -1,0 +1,39 @@
+/* ============================================================
+   base-admin.css — HERA Admin
+   Descripción: Reset base y estilos de documento exclusivos
+                del panel de administración. Sobreescribe
+                Bootstrap donde sea necesario para alinearse
+                con el Design System HERA.
+   Usado por:   pages/admin/*.html
+   Debe cargarse después de: typography.css, Bootstrap CSS
+   ============================================================ */
+
+/* ── Sección: Modelo de caja universal ─────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin:     0;
+  padding:    0;
+}
+
+/* ── Sección: Documento ─────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Sección: Body ──────────────────────────────────────────── */
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background:  var(--adm-content-bg);
+  color:       var(--adm-text);
+  overflow-x:  hidden;
+}
+
+/* ── Sección: Scrollbar personalizado (WebKit) ──────────────── */
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-track { background: #0A0A0A; }
+::-webkit-scrollbar-thumb { background: var(--adm-red); }
+
+/* ── Sección: Bootstrap overrides — border-radius global = 0 ── */
+/* El Design System HERA no usa bordes redondeados */
+.rounded, .rounded-1, .rounded-2,
+.rounded-3, .rounded-circle { border-radius: 0 !important; }

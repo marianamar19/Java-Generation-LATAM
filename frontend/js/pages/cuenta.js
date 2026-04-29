@@ -442,6 +442,8 @@ function submitForm(type) {
           role:      'admin',
           lastLogin: new Date().toISOString()
         });
+        /* Guardar sesión admin — requerido por guardAdmin() en dashboard.js */
+        localStorage.setItem('hera_admin_auth', JSON.stringify({ loggedIn: true }));
         showSuccessOverlay(
           'Acceso Admin',
           'Bienvenido al panel de administración.',
@@ -581,7 +583,12 @@ async function initCuentaPage() {
      Endpoint esperado: POST /api/auth/login | POST /api/auth/register
   ── */
   if (isLoggedIn() && getCurrentUser()) {
-    window.location.href = 'index.html';
+    const currentUser = getCurrentUser();
+    if (currentUser.role === 'admin') {
+      window.location.href = 'admin/dashboard.html';
+    } else {
+      window.location.href = 'index.html';
+    }
   }
 }
  

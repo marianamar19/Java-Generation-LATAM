@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Productos — HERA Admin</title>
+
+  <!-- ── Tipografía compartida con el sitio ── -->
+  <link rel="stylesheet" href="../../css/base/typography.css" />
+
+  <!-- ── Bootstrap 5 — grid, form controls, toast ── -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <!-- ── Design System Admin ── -->
+  <link rel="stylesheet" href="../../css/admin/tokens-admin.css" />
+  <link rel="stylesheet" href="../../css/admin/base-admin.css" />
+  <link rel="stylesheet" href="../../css/admin/layout-admin.css" />
+  <link rel="stylesheet" href="../../css/admin/components-admin.css" />
+
+  <!-- ── Estilos exclusivos de esta página ── -->
+  <link rel="stylesheet" href="../../css/admin/productos.css" />
+</head>
+<body>
+
+<div class="adm-wrap">
+
+  <!-- ══════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════ -->
+  <aside class="adm-sidebar">
+    <div class="adm-sidebar-logo">
+      <div class="adm-logo-brand">Hera</div>
+      <div class="adm-logo-sub">Panel Admin</div>
+    </div>
+    <nav aria-label="Navegación del panel admin">
+      <div class="adm-nav-section">
+        <div class="adm-nav-label">Principal</div>
+        <a href="dashboard.html" class="adm-nav-item" aria-label="Dashboard">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span class="adm-nav-text">Dashboard</span>
+        </a>
+        <a href="ordenes.html" class="adm-nav-item" aria-label="Órdenes">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+          <span class="adm-nav-text">Órdenes</span>
+        </a>
+        <a href="productos.html" class="adm-nav-item active" aria-label="Productos">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          <span class="adm-nav-text">Productos</span>
+        </a>
+        <a href="clientes.html" class="adm-nav-item" aria-label="Clientes">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <span class="adm-nav-text">Clientes</span>
+        </a>
+      </div>
+      <div class="adm-nav-section">
+        <div class="adm-nav-label">Sitio</div>
+        <a href="configuracion.html" class="adm-nav-item" aria-label="Configuración">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          <span class="adm-nav-text">Configuración</span>
+        </a>
+      </div>
+    </nav>
+    <div class="adm-sidebar-bottom">
+      <a href="../../pages/index.html" class="adm-nav-item" aria-label="Ver sitio público">
+        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span class="adm-nav-text">Ver sitio</span>
+      </a>
+      <button class="adm-nav-item" id="btn-logout" aria-label="Cerrar sesión del panel admin">
+        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span class="adm-nav-text">Cerrar sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════════════════
+       MAIN
+  ══════════════════════════════════════ -->
+  <div class="adm-main">
+
+    <header class="adm-topbar">
+      <div class="adm-topbar-left">
+        <h1 class="adm-topbar-title">Productos</h1>
+        <span class="adm-topbar-count" id="prod-count"></span>
+      </div>
+      <div class="adm-avatar" aria-label="Usuario administrador">AD</div>
+    </header>
+
+    <main class="adm-content">
+
+      <!-- BARRA DE ACCIONES -->
+      <div class="adm-actions">
+        <div class="d-flex gap-2 flex-wrap align-items-center flex-fill">
+          <div class="input-group input-group-sm" style="max-width:320px;">
+            <input type="text" class="form-control" id="prod-search"
+              placeholder="Buscar por nombre o marca..." aria-label="Buscar productos" />
+            <button class="btn btn-outline-secondary" type="button" aria-label="Ejecutar búsqueda">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
+          </div>
+          <select class="form-select form-select-sm" id="filter-tipo" style="min-width:150px;" aria-label="Filtrar por tipo">
+            <option value="">Todos los tipos</option>
+            <option value="perfumes">Perfumes</option>
+            <option value="joyeria">Joyería</option>
+          </select>
+          <select class="form-select form-select-sm" id="filter-nivel" style="min-width:170px;" aria-label="Filtrar por disponibilidad">
+            <option value="">Toda disponibilidad</option>
+            <option value="green">En existencia</option>
+            <option value="yellow">Disp. limitada</option>
+            <option value="red">Pieza exclusiva</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-sm" id="btn-nuevo" aria-label="Agregar nuevo producto">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nuevo producto
+        </button>
+      </div>
+
+      <!-- TABLA -->
+      <div class="adm-card-table">
+        <table class="table table-hover adm-table mb-0" aria-label="Tabla de productos del catálogo">
+          <thead>
+            <tr>
+              <th scope="col">Producto</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Categoría</th>
+              <th scope="col">Precio base</th>
+              <th scope="col">Variantes</th>
+              <th scope="col">Disponibilidad</th>
+              <th scope="col">Activo</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="prod-tbody"></tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+</div><!-- /adm-wrap -->
+
+<!-- ══════════════════════════════════════
+     DRAWER OVERLAY
+══════════════════════════════════════ -->
+<div class="adm-drawer-overlay" id="drawer-overlay" aria-hidden="true"></div>
+
+<!-- ══════════════════════════════════════
+     DRAWER — Formulario de producto
+══════════════════════════════════════ -->
+<aside class="adm-drawer" id="prod-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+
+  <div class="adm-drawer-header">
+    <span class="adm-drawer-title" id="drawer-title">Nuevo producto</span>
+    <button class="adm-drawer-close" id="drawer-close" aria-label="Cerrar formulario">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="adm-drawer-body">
+
+    <!-- ── Identidad ── -->
+    <div class="card mb-3">
+      <div class="card-header">Identidad</div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-label" for="f-brand">Marca <span class="req">*</span></label>
+            <input class="form-control" type="text" id="f-brand" placeholder="Ej: Dior" />
+            <div class="form-text" id="f-marca-preview"></div>
+            <div class="invalid-feedback" id="err-brand">Campo obligatorio.</div>
+            <input type="hidden" id="f-marca" />
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="f-name">Nombre del producto <span class="req">*</span></label>
+            <input class="form-control" type="text" id="f-name" placeholder="Ej: Sauvage EDP" />
+            <div class="invalid-feedback" id="err-name">Campo obligatorio.</div>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="f-id">ID único <span class="req">*</span></label>
+            <input class="form-control" type="text" id="f-id" placeholder="Ej: sauvage-7" />
+            <div class="invalid-feedback" id="err-id">Campo obligatorio.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Clasificación ── -->
+    <div class="card mb-3">
+      <div class="card-header">Clasificación</div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-6">
+            <label class="form-label" for="f-tipo">Tipo <span class="req">*</span></label>
+            <select class="form-select" id="f-tipo">
+              <option value="">Seleccionar</option>
+              <option value="perfumes">Perfumes</option>
+              <option value="joyeria">Joyería</option>
+            </select>
+            <div class="invalid-feedback" id="err-tipo">Selecciona un tipo.</div>
+          </div>
+          <div class="col-6">
+            <label class="form-label" for="f-cat">Categoría <span class="req">*</span></label>
+            <select class="form-select" id="f-cat">
+              <option value="">Seleccionar</option>
+              <optgroup label="Perfumes">
+                <option value="diseñador">Diseñador</option>
+                <option value="nicho">Nicho</option>
+                <option value="arabes">Árabes</option>
+                <option value="testers">Testers</option>
+                <option value="decants">Decants</option>
+                <option value="sets">Sets</option>
+                <option value="body-mist">Body Mist</option>
+              </optgroup>
+              <optgroup label="Joyería">
+                <option value="anillos">Anillos</option>
+                <option value="aretes">Aretes</option>
+                <option value="collares">Collares</option>
+                <option value="brazaletes">Brazaletes</option>
+              </optgroup>
+            </select>
+            <div class="invalid-feedback" id="err-cat">Selecciona una categoría.</div>
+          </div>
+          <div class="col-6">
+            <label class="form-label" for="f-gen">Género <span class="req">*</span></label>
+            <select class="form-select" id="f-gen">
+              <option value="">Seleccionar</option>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+              <option value="unisex">Unisex</option>
+            </select>
+            <div class="invalid-feedback" id="err-gen">Selecciona un género.</div>
+          </div>
+          <div class="col-6">
+            <label class="form-label" for="f-fam">Familia olfativa</label>
+            <select class="form-select" id="f-fam">
+              <option value="">Sin familia (joyería)</option>
+              <option value="floral">Floral</option>
+              <option value="oriental">Oriental</option>
+              <option value="amaderado">Amaderado</option>
+              <option value="fresco">Fresco</option>
+              <option value="gourmand">Gourmand</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Precio y variantes ── -->
+    <div class="card mb-3">
+      <div class="card-header">Precio y variantes</div>
+      <div class="card-body">
+        <div class="row g-3 mb-3">
+          <div class="col-6">
+            <label class="form-label" for="f-vol-label">Etiqueta de variante</label>
+            <select class="form-select" id="f-vol-label">
+              <option value="Presentación">Presentación (ml)</option>
+              <option value="Talla">Talla</option>
+              <option value="Material">Material</option>
+              <option value="Largo">Largo</option>
+            </select>
+          </div>
+        </div>
+        <div id="variants-list" class="d-flex flex-column gap-2 mb-3"></div>
+        <button class="btn btn-outline-secondary btn-sm w-100" id="btn-add-variant" type="button"
+          style="border-style:dashed; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;"
+          aria-label="Agregar variante">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Agregar variante
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Merchandising ── -->
+    <div class="card mb-3">
+      <div class="card-header">Merchandising</div>
+      <div class="card-body">
+        <div class="row g-3 mb-3">
+          <div class="col-6">
+            <label class="form-label" for="f-nivel">Disponibilidad <span class="req">*</span></label>
+            <select class="form-select" id="f-nivel">
+              <option value="">Seleccionar</option>
+              <option value="green">En existencia</option>
+              <option value="yellow">Disponibilidad limitada</option>
+              <option value="red">Pieza exclusiva</option>
+            </select>
+            <div class="invalid-feedback" id="err-nivel">Selecciona el nivel.</div>
+          </div>
+          <div class="col-6">
+            <label class="form-label" for="f-badge">Badge</label>
+            <input class="form-control" type="text" id="f-badge" placeholder="Ej: Más vendido, -20%" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center py-2 border-top">
+          <label class="form-label mb-0" for="f-nuevo">Marcar como nuevo</label>
+          <div class="form-check form-switch mb-0">
+            <input class="form-check-input" type="checkbox" id="f-nuevo" role="switch" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center py-2 border-top mt-1">
+          <label class="form-label mb-0" for="f-activo">Producto activo en el sitio</label>
+          <div class="form-check form-switch mb-0">
+            <input class="form-check-input" type="checkbox" id="f-activo" role="switch" checked />
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /drawer-body -->
+
+  <div class="adm-drawer-footer">
+    <button class="btn btn-outline-secondary" id="btn-cancel-drawer" type="button">Cancelar</button>
+    <button class="btn btn-primary flex-fill" id="btn-save-product" type="button">Guardar producto</button>
+  </div>
+
+</aside>
+
+<!-- ══════════════════════════════════════
+     TOAST — Bootstrap
+══════════════════════════════════════ -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index:9999;">
+  <div id="adm-toast" class="toast text-white border-0" role="status" aria-live="polite" aria-atomic="true">
+    <div class="d-flex align-items-center">
+      <div class="toast-body d-flex align-items-center gap-2">
+        <span id="toast-dot" style="width:7px;height:7px;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
+        <span id="toast-msg"></span>
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 ms-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS — necesario para Toast API -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script de la página -->
+<script type="module" src="../../js/admin/productos.js"></script>
+
+</body>
+</html>
