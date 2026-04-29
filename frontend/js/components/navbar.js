@@ -273,12 +273,12 @@ function _initMobileNav() {
   const navItemJoyeria  = document.getElementById('nav-item-joyeria');
   if (navItemPerfumes) {
     navItemPerfumes.addEventListener('click', function(e) {
-      if (!e.target.closest('a')) location.href = 'catalogo.html?tab=perfumes';
+      if (!e.target.closest('a')) location.href = '/pages/catalogo.html?tab=perfumes';
     });
   }
   if (navItemJoyeria) {
     navItemJoyeria.addEventListener('click', function(e) {
-      if (!e.target.closest('a')) location.href = 'catalogo.html?tab=joyeria';
+      if (!e.target.closest('a')) location.href = '/pages/catalogo.html?tab=joyeria';
     });
   }
  
