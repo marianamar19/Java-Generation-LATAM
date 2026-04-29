@@ -781,6 +781,10 @@ section.hero { padding: 0; }
   .trust-item:nth-child(even) { border-right: none; }
   .pq-hera-text        { padding: 48px; }
   .cat-grid            { gap: 3px; }
+ 
+  /* NOVEDADES — Tablet: 2 columnas */
+  .editorial-grid      { grid-template-columns: repeat(2, 1fr); padding: 8px 48px 24px; gap: 12px; }
+  .editorial-header    { padding: 48px 48px 36px; }
 }
  
 /* ── Sección: Responsivo — Móvil ≤768px ────────────────────── */
@@ -838,6 +842,10 @@ section.hero { padding: 0; }
   .pq-hera             { grid-template-columns: 1fr; }
   .pq-hera-text        { padding: 36px 20px; border-right: none; border-bottom: 1px solid var(--lgray); }
   .pq-hera-img         { min-height: 240px; }
+ 
+  /* NOVEDADES — Móvil: 1 columna, padding reducido */
+  .editorial-grid      { grid-template-columns: 1fr; padding: 8px 20px 24px; gap: 12px; }
+  .editorial-header    { padding: 40px 20px 28px; flex-direction: column; align-items: flex-start; gap: 16px; }
 }
  
 /* ── Sección: Responsivo — Móvil pequeño ≤480px ────────────── */
