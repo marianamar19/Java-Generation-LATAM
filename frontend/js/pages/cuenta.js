@@ -448,7 +448,7 @@ function submitForm(type) {
           'Acceso Admin',
           'Bienvenido al panel de administración.',
           true,
-          'admin/dashboard.html'
+          '/pages/admin/dashboard.html'
         );
         return;
       }
@@ -585,9 +585,9 @@ async function initCuentaPage() {
   if (isLoggedIn() && getCurrentUser()) {
     const currentUser = getCurrentUser();
     if (currentUser.role === 'admin') {
-      window.location.href = 'admin/dashboard.html';
+      window.location.replace('/pages/admin/dashboard.html');
     } else {
-      window.location.href = 'index.html';
+      window.location.replace('/pages/index.html');
     }
   }
 }

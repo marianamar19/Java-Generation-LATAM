@@ -5,7 +5,7 @@
  *              Gestiona el auth-check, carga de datos (localStorage
  *              con fallback a datos demo), renderizado de KPIs,
  *              tabla de órdenes recientes, panel de estatus,
- *              top productos, gráfica de ventas y logout.
+ *              top productos y gráfica de ventas.
  *
  * Exporta:     (ninguno — script de página, punto de entrada)
  * Importado por: pages/admin/dashboard.html via <script type="module">
@@ -13,23 +13,12 @@
  * Dependencias externas:
  *   - Chart.js 4.4.3 (cargado via CDN antes de este script)
  */
-
-/* ══════════════════════════════════════
-   GUARD — Verificar sesión admin
-   Redirige inmediatamente si no hay sesión activa.
-   Debe ejecutarse antes que cualquier otra lógica.
-══════════════════════════════════════ */
-(function guardAdmin() {
-  try {
-    const auth = JSON.parse(localStorage.getItem('hera_admin_auth') || 'null');
-    if (!auth || !auth.loggedIn) {
-      window.location.href = '../../pages/cuenta.html';
-    }
-  } catch (e) {
-    window.location.href = '../../pages/cuenta.html';
-  }
-}());
-
+ 
+import { guardAdmin, initLogout, buildEmptyState } from './admin-utils.js';
+ 
+/* Ejecutar guard inmediatamente — antes que cualquier otra lógica */
+guardAdmin();
+ 
 /* ══════════════════════════════════════
    DATOS DEMO — TEMPORAL
    Fuente: hera_orders en localStorage con fallback a estos datos.
@@ -44,7 +33,7 @@ const DEMO_ORDERS = [
   { id: 'ORD-20260415-006', fecha: '2026-04-15T09:00', cliente: { nombre: 'Pedro Vargas', email: 'pedro@mail.com'  }, items: [{ productId: 'anillo-1',  name: 'Anillo Solitario', qty: 1, precio: 1290 }], pago: { total: 1389 }, estatus: 'entregado'  },
   { id: 'ORD-20260414-007', fecha: '2026-04-14T16:30', cliente: { nombre: 'Valeria Cruz', email: 'val@mail.com'    }, items: [{ productId: 'collar-1',  name: 'Collar Dorado',    qty: 1, precio: 890  }], pago: { total: 989  }, estatus: 'enviado'    },
 ];
-
+ 
 /* ══════════════════════════════════════
    CONFIGURACIÓN DE ESTATUS
    Fuente de verdad para colores y etiquetas de badges.
@@ -58,7 +47,7 @@ const STATUS_CONFIG = {
   entregado:  { label: 'Entregado',  color: '#4caf50' },
   cancelado:  { label: 'Cancelado',  color: '#E1222B' },
 };
-
+ 
 /* ══════════════════════════════════════
    PUNTO DE ENTRADA
 ══════════════════════════════════════ */
@@ -70,15 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
   renderStatusList(orders);
   renderTopProducts(orders);
   renderSalesChart();
-  _initLogout();
+  initLogout();
 });
-
+ 
 /* ══════════════════════════════════════
    FECHA EN TOPBAR
    Formatea la fecha actual en español sin depender de
    capitalización automática del browser.
 ══════════════════════════════════════ */
-
+ 
 /**
  * Renderiza la fecha actual en el elemento #adm-date del topbar.
  * @returns {void}
@@ -86,20 +75,20 @@ document.addEventListener('DOMContentLoaded', () => {
 function renderDate() {
   const el = document.getElementById('adm-date');
   if (!el) return;
-
+ 
   const now   = new Date();
   const dias  = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
   const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   const str   = `${dias[now.getDay()]}, ${now.getDate()} de ${meses[now.getMonth()]} de ${now.getFullYear()}`;
-
+ 
   // Capitalizar solo la primera letra del string completo
   el.textContent = str.charAt(0).toUpperCase() + str.slice(1);
 }
-
+ 
 /* ══════════════════════════════════════
    CARGA DE ÓRDENES
 ══════════════════════════════════════ */
-
+ 
 /**
  * Lee órdenes de localStorage. Si no hay datos, devuelve DEMO_ORDERS.
  * TEMPORAL — Reemplazar con fetch('/api/orders') cuando exista backend.
@@ -113,11 +102,11 @@ function _loadOrders() {
     return DEMO_ORDERS;
   }
 }
-
+ 
 /* ══════════════════════════════════════
    KPI CARDS
 ══════════════════════════════════════ */
-
+ 
 /**
  * Calcula y renderiza las 4 KPI cards del dashboard:
  * órdenes hoy, ingresos hoy, productos activos y pendientes.
@@ -129,7 +118,7 @@ function renderKPIs(orders) {
   const ordersHoy  = orders.filter((o) => o.fecha && o.fecha.slice(0, 10) === today);
   const ingresosHoy = ordersHoy.reduce((sum, o) => sum + (o.pago?.total || 0), 0);
   const pendientes  = orders.filter((o) => o.estatus === 'pendiente').length;
-
+ 
   /* ── TEMPORAL — contar productos desde localStorage
      Reemplazar con: fetch('/api/products/count')
   ── */
@@ -138,14 +127,14 @@ function renderKPIs(orders) {
     const prods = JSON.parse(localStorage.getItem('hera_products') || 'null');
     productCount = prods ? prods.length : 0;
   } catch (e) { productCount = 0; }
-
+ 
   const elOrdenes      = document.getElementById('kpi-ordenes');
   const elIngresos     = document.getElementById('kpi-ingresos');
   const elIngresosSub  = document.getElementById('kpi-ingresos-sub');
   const elProductos    = document.getElementById('kpi-productos');
   const elPendientes   = document.getElementById('kpi-pendientes');
   const cardPendientes = document.getElementById('kpi-card-pendientes');
-
+ 
   if (elOrdenes)    elOrdenes.textContent   = ordersHoy.length;
   if (elIngresos)   elIngresos.textContent  = '$' + ingresosHoy.toLocaleString('es-MX') + ' MXN';
   if (elIngresosSub) elIngresosSub.textContent = ordersHoy.length > 0
@@ -153,18 +142,18 @@ function renderKPIs(orders) {
     : 'Sin ventas registradas hoy';
   if (elProductos)  elProductos.textContent = productCount;
   if (elPendientes) elPendientes.textContent = pendientes;
-
+ 
   // Acento rojo en la card de pendientes cuando hay órdenes por atender
   if (cardPendientes && pendientes > 0) {
     cardPendientes.classList.add('adm-kpi-card--alert');
     elPendientes.classList.add('adm-kpi-value--accent');
   }
 }
-
+ 
 /* ══════════════════════════════════════
    TABLA DE ÓRDENES RECIENTES
 ══════════════════════════════════════ */
-
+ 
 /**
  * Construye y renderiza las últimas 7 órdenes en la tabla.
  * @param {Array} orders - Array de órdenes
@@ -173,14 +162,14 @@ function renderKPIs(orders) {
 function renderOrdersTable(orders) {
   const tbody = document.getElementById('adm-orders-tbody');
   if (!tbody) return;
-
+ 
   const recientes = orders.slice(0, 7);
-
+ 
   if (recientes.length === 0) {
     tbody.innerHTML = `<tr><td colspan="6">${_buildEmptyState('Sin órdenes registradas aún')}</td></tr>`;
     return;
   }
-
+ 
   tbody.innerHTML = recientes.map((o) => {
     const fecha      = o.fecha ? new Date(o.fecha).toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
     const numProds   = o.items ? o.items.length : 0;
@@ -188,7 +177,7 @@ function renderOrdersTable(orders) {
     const total      = o.pago?.total ? '$' + o.pago.total.toLocaleString('es-MX') : '—';
     const nombre     = o.cliente?.nombre || '—';
     const email      = o.cliente?.email  || '';
-
+ 
     return (
       `<tr>
         <td><span class="adm-order-id">${o.id}</span></td>
@@ -204,11 +193,11 @@ function renderOrdersTable(orders) {
     );
   }).join('');
 }
-
+ 
 /* ══════════════════════════════════════
    HELPERS DE CONSTRUCCIÓN DOM
 ══════════════════════════════════════ */
-
+ 
 /**
  * Construye el HTML de un badge de estatus.
  * @param {string} estatus - Clave de estatus ('pendiente' | 'confirmado' | etc.)
@@ -223,25 +212,11 @@ function _buildBadge(estatus) {
     `</span>`
   );
 }
-
-/**
- * Construye el HTML del estado vacío reutilizable.
- * @param {string} texto - Mensaje a mostrar
- * @returns {string} HTML del estado vacío
- */
-function _buildEmptyState(texto) {
-  return (
-    `<div class="adm-empty">` +
-      `<svg class="adm-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>` +
-      `<span class="adm-empty-text">${texto}</span>` +
-    `</div>`
-  );
-}
-
+ 
 /* ══════════════════════════════════════
    PANEL DERECHO — Estatus de órdenes
 ══════════════════════════════════════ */
-
+ 
 /**
  * Renderiza la lista de estatus con conteo de órdenes por estado.
  * El color del dot se aplica via style="" porque proviene de
@@ -252,11 +227,11 @@ function _buildEmptyState(texto) {
 function renderStatusList(orders) {
   const container = document.getElementById('adm-status-list');
   if (!container) return;
-
+ 
   // Contar órdenes por estatus
   const conteo = {};
   orders.forEach((o) => { conteo[o.estatus] = (conteo[o.estatus] || 0) + 1; });
-
+ 
   container.innerHTML = Object.keys(STATUS_CONFIG).map((key) => {
     const cfg   = STATUS_CONFIG[key];
     const count = conteo[key] || 0;
@@ -271,11 +246,11 @@ function renderStatusList(orders) {
     );
   }).join('');
 }
-
+ 
 /* ══════════════════════════════════════
    PANEL DERECHO — Top productos
 ══════════════════════════════════════ */
-
+ 
 /**
  * Agrega las unidades vendidas por producto y renderiza
  * los 5 más vendidos en el panel lateral derecho.
@@ -285,7 +260,7 @@ function renderStatusList(orders) {
 function renderTopProducts(orders) {
   const container = document.getElementById('adm-top-products');
   if (!container) return;
-
+ 
   // Agregar conteo de unidades por productId
   const conteo = {};
   orders.forEach((o) => {
@@ -297,16 +272,16 @@ function renderTopProducts(orders) {
       conteo[item.productId].count += item.qty || 1;
     });
   });
-
+ 
   const sorted = Object.values(conteo)
     .sort((a, b) => b.count - a.count)
     .slice(0, 5);
-
+ 
   if (sorted.length === 0) {
     container.innerHTML = _buildEmptyState('Sin ventas registradas aún');
     return;
   }
-
+ 
   container.innerHTML = sorted.map((p) =>
     `<div class="adm-top-item">` +
       `<div class="adm-top-info">` +
@@ -317,14 +292,14 @@ function renderTopProducts(orders) {
     `</div>`
   ).join('');
 }
-
+ 
 /* ══════════════════════════════════════
    GRÁFICA DE VENTAS — Chart.js
    TEMPORAL — datos demo visuales hasta que hera_orders
    tenga historial real de 7 días.
    Reemplazar con agregación de hera_orders por fecha.
 ══════════════════════════════════════ */
-
+ 
 /**
  * Inicializa la gráfica de barras de ventas de los últimos 7 días.
  * Depende de Chart.js cargado via CDN antes de este script.
@@ -333,10 +308,10 @@ function renderTopProducts(orders) {
 function renderSalesChart() {
   const canvas = document.getElementById('adm-chart-ventas');
   if (!canvas || typeof Chart === 'undefined') return;
-
+ 
   const labels = ['11 abr', '12 abr', '13 abr', '14 abr', '15 abr', '16 abr', '17 abr'];
   const data   = [8400, 12300, 6800, 15200, 9800, 18400, 13600];
-
+ 
   new Chart(canvas, {
     type: 'bar',
     data: {
@@ -350,7 +325,8 @@ function renderSalesChart() {
       }],
     },
     options: {
-      responsive: true,
+      responsive:          true,
+      maintainAspectRatio: false,  /* Usa el alto del contenedor — evita el loop de resize */
       plugins: {
         legend: { display: false },
         tooltip: {
@@ -382,21 +358,5 @@ function renderSalesChart() {
     },
   });
 }
-
-/* ══════════════════════════════════════
-   LOGOUT
-══════════════════════════════════════ */
-
-/**
- * Inicializa el botón de cerrar sesión del sidebar.
- * Elimina la sesión admin de localStorage y redirige a cuenta.html.
- * @returns {void}
- */
-function _initLogout() {
-  const btn = document.getElementById('btn-logout');
-  if (!btn) return;
-  btn.addEventListener('click', () => {
-    try { localStorage.removeItem('hera_admin_auth'); } catch (e) { /* silencioso */ }
-    window.location.href = '../../pages/cuenta.html';
-  });
-}
+ 
+/* fin dashboard.js */
