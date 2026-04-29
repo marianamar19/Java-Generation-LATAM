@@ -1,0 +1,51 @@
+/* ============================================================
+   tokens-admin.css — HERA Admin
+   Descripción: Variables CSS exclusivas del panel de
+                administración. Extiende los tokens del
+                Design System HERA con variables propias
+                del tema admin (sidebar negro, topbar blanco).
+                También sobreescribe los tokens de Bootstrap
+                para alinearlos con la identidad HERA.
+   Usado por:   pages/admin/*.html
+   Debe cargarse antes que cualquier otro CSS del admin.
+   ============================================================ */
+
+:root {
+
+  /* ── Bootstrap overrides ────────────────────────────────── */
+  --bs-primary:           #E1222B;
+  --bs-primary-rgb:       225, 34, 43;
+  --bs-body-bg:           #F9F9F9;
+  --bs-body-color:        #0F0F0F;
+  --bs-border-color:      #E6E6E6;
+  --bs-border-radius:     0;
+  --bs-border-radius-sm:  0;
+  --bs-border-radius-lg:  0;
+  --bs-border-radius-xl:  0;
+  --bs-font-sans-serif:   'Instrument Sans', sans-serif;
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  --adm-sidebar-w:    240px;
+  --adm-topbar-h:     60px;
+
+  /* ── Colores de fondo ────────────────────────────────────── */
+  --adm-sidebar-bg:   #0A0A0A;
+  --adm-topbar-bg:    #FFFFFF;
+  --adm-content-bg:   #F9F9F9;
+  --adm-card-bg:      #FFFFFF;
+
+  /* ── Bordes ─────────────────────────────────────────────── */
+  --adm-border:       #E6E6E6;
+
+  /* ── Paleta de acento ────────────────────────────────────── */
+  --adm-red:          #E1222B;
+  --adm-red-hover:    #c41c24;
+  --adm-green:        #4caf50;
+  --adm-yellow:       #f9a825;
+  --adm-blue:         #1a6fc4;
+
+  /* ── Tipografía ─────────────────────────────────────────── */
+  --adm-text:         #0F0F0F;
+  --adm-muted:        rgba(15, 15, 15, .45);
+  --adm-sidebar-text: rgba(249, 249, 249, .55);
+}

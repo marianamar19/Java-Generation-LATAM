@@ -1,0 +1,225 @@
+/* ============================================================
+   layout-admin.css — HERA Admin
+   Descripción: Estructura principal del panel de administración.
+                Cubre el wrapper raíz, sidebar negro, main,
+                topbar sticky y área de contenido.
+   Comportamiento por breakpoint:
+     Desktop  (>1024px): sidebar completo de 240px + main.
+     Tablet   (≤1024px): sidebar colapsado a 60px (solo íconos).
+     Móvil    (≤768px):  sidebar oculto, layout en columna.
+   Usado por:   pages/admin/*.html
+   ============================================================ */
+
+/* ── Sección: Wrapper raíz ──────────────────────────────────── */
+.adm-wrap {
+  display:    flex;
+  min-height: 100vh;
+}
+
+/* ── Sección: Sidebar ───────────────────────────────────────── */
+/* ── SIDEBAR — comportamiento por breakpoint
+   Desktop  (>1024px): 240px fijo, texto + íconos visibles
+   Tablet   (≤1024px): 60px, solo íconos, texto oculto
+   Móvil    (≤768px):  oculto completamente
+── */
+.adm-sidebar {
+  width:        var(--adm-sidebar-w);
+  background:   var(--adm-sidebar-bg);
+  display:      flex;
+  flex-direction: column;
+  position:     fixed;
+  top:          0;
+  left:         0;
+  height:       100vh;
+  z-index:      100;
+  overflow-y:   auto;
+  border-right: 1px solid rgba(249, 249, 249, .06);
+  transition:   width .2s ease;
+}
+
+/* ── Sección: Sidebar — logo ────────────────────────────────── */
+.adm-sidebar-logo {
+  padding:       28px 24px 22px;
+  border-bottom: 1px solid rgba(249, 249, 249, .07);
+  flex-shrink:   0;
+}
+
+.adm-logo-brand {
+  font-family:    'Cormorant Garamond', serif;
+  font-size:      26px;
+  font-weight:    600;
+  font-style:     italic;
+  letter-spacing: .08em;
+  color:          #F9F9F9;
+  line-height:    1;
+}
+
+.adm-logo-sub {
+  font-family:    'Instrument Sans', sans-serif;
+  font-size:      9px;
+  font-weight:    600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color:          var(--adm-sidebar-text);
+  margin-top:     5px;
+}
+
+/* ── Sección: Sidebar — nav ─────────────────────────────────── */
+.adm-nav-section {
+  padding:       18px 0 10px;
+  border-bottom: 1px solid rgba(249, 249, 249, .06);
+}
+
+.adm-nav-label {
+  font-size:      9px;
+  font-weight:    600;
+  letter-spacing: .20em;
+  text-transform: uppercase;
+  color:          rgba(249, 249, 249, .25);
+  padding:        0 20px;
+  margin-bottom:  6px;
+}
+
+.adm-nav-item {
+  display:         flex;
+  align-items:     center;
+  gap:             11px;
+  padding:         9px 20px;
+  font-size:       12px;
+  font-weight:     500;
+  color:           var(--adm-sidebar-text);
+  text-decoration: none;
+  border:          none;
+  background:      none;
+  width:           100%;
+  text-align:      left;
+  cursor:          pointer;
+  transition:      color .15s, background .15s;
+  letter-spacing:  .02em;
+}
+
+.adm-nav-item:hover {
+  color:      #F9F9F9;
+  background: rgba(249, 249, 249, .05);
+}
+
+.adm-nav-item.active {
+  background:  var(--adm-red);
+  color:       #FFFFFF;
+  font-weight: 600;
+}
+
+.adm-nav-item.active:hover { background: var(--adm-red-hover); }
+
+.adm-nav-icon {
+  width:      14px;
+  height:     14px;
+  flex-shrink: 0;
+  opacity:    .7;
+}
+
+.adm-nav-item.active .adm-nav-icon { opacity: 1; }
+
+/* ── Sección: Sidebar — footer (ver sitio / logout) ─────────── */
+.adm-sidebar-bottom {
+  margin-top: auto;
+  padding:    12px 0;
+  border-top: 1px solid rgba(249, 249, 249, .06);
+  flex-shrink: 0;
+}
+
+/* ── Sección: Main ──────────────────────────────────────────── */
+.adm-main {
+  margin-left:    var(--adm-sidebar-w);
+  flex:           1;
+  display:        flex;
+  flex-direction: column;
+  min-width:      0;
+  background:     var(--adm-content-bg);
+  transition:     margin-left .2s ease;
+}
+
+/* ── Sección: Topbar ────────────────────────────────────────── */
+.adm-topbar {
+  height:          var(--adm-topbar-h);
+  background:      var(--adm-topbar-bg);
+  border-bottom:   1px solid var(--adm-border);
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         0 32px;
+  position:        sticky;
+  top:             0;
+  z-index:         90;
+  flex-shrink:     0;
+}
+
+.adm-topbar-title {
+  font-size:      15px;
+  font-weight:    700;
+  letter-spacing: .04em;
+  color:          var(--adm-text);
+}
+
+.adm-topbar-right {
+  display:     flex;
+  align-items: center;
+  gap:         16px;
+}
+
+.adm-topbar-date {
+  font-size: 12px;
+  color:     var(--adm-muted);
+}
+
+/* ── Sección: Avatar del administrador ──────────────────────── */
+.adm-avatar {
+  width:          32px;
+  height:         32px;
+  background:     var(--adm-red);
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  font-size:      11px;
+  font-weight:    700;
+  color:          #fff;
+  letter-spacing: .06em;
+  flex-shrink:    0;
+}
+
+/* ── Sección: Área de contenido ─────────────────────────────── */
+.adm-content {
+  padding: 28px 32px;
+  flex:    1;
+}
+
+/* ═══════════════════════════════════════
+   BREAKPOINT: TABLET — ≤1024px
+   Sidebar colapsado a solo íconos (60px).
+═══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  :root { --adm-sidebar-w: 60px; }
+
+  .adm-logo-sub,
+  .adm-nav-label,
+  .adm-nav-text { display: none; }
+
+  .adm-sidebar-logo { padding: 20px 16px; text-align: center; }
+  .adm-logo-brand   { font-size: 18px; }
+  .adm-nav-item     { justify-content: center; padding: 12px 0; }
+  .adm-nav-icon     { width: 18px; height: 18px; opacity: .6; }
+}
+
+/* ═══════════════════════════════════════
+   BREAKPOINT: MÓVIL — ≤768px
+   Sidebar oculto. Layout en columna.
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  :root { --adm-sidebar-w: 0px; }
+
+  .adm-sidebar { display: none; }
+  .adm-topbar  { padding: 0 16px; }
+  .adm-content { padding: 20px 16px; }
+
+  .adm-topbar-date { display: none; }
+}

@@ -1,0 +1,92 @@
+/* ============================================================
+   dashboard.css — HERA Admin
+   Descripción: Estilos exclusivos de la página dashboard.html.
+                Cubre el grid de KPI cards y el grid principal
+                de dos columnas (tabla + paneles laterales).
+   Comportamiento por breakpoint:
+     Desktop  (>1024px): KPIs en 4 columnas, dash-grid 2 col.
+     Tablet   (≤1024px): KPIs en 2 columnas, dash-grid 1 col.
+     Móvil    (≤768px):  KPIs en 2 columnas comprimidas.
+   Usado por:   pages/admin/dashboard.html
+   ============================================================ */
+
+/* ── Sección: KPI Cards grid ────────────────────────────────── */
+.adm-kpi-grid {
+  display:               grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:                   16px;
+  margin-bottom:         24px;
+}
+
+.adm-kpi-card {
+  background:   var(--adm-card-bg);
+  border:       1px solid var(--adm-border);
+  padding:      20px 22px;
+  border-left:  3px solid transparent;
+  transition:   border-color .2s;
+}
+
+/* Variante de alerta — acento rojo cuando hay pendientes */
+.adm-kpi-card--alert { border-left-color: var(--adm-red); }
+
+.adm-kpi-label {
+  font-size:      9px;
+  font-weight:    700;
+  letter-spacing: .20em;
+  text-transform: uppercase;
+  color:          var(--adm-muted);
+  margin-bottom:  10px;
+}
+
+.adm-kpi-value {
+  font-size:      32px;
+  font-weight:    700;
+  color:          var(--adm-text);
+  line-height:    1;
+  letter-spacing: -.01em;
+}
+
+/* Variante con color de acento — ingresos y pendientes críticos */
+.adm-kpi-value--accent { color: var(--adm-red); }
+
+.adm-kpi-sub {
+  font-size:  11px;
+  color:      var(--adm-muted);
+  margin-top: 6px;
+}
+
+/* ── Sección: Grid principal del dashboard ──────────────────── */
+.adm-dash-grid {
+  display:               grid;
+  grid-template-columns: 1fr 300px;
+  gap:                   20px;
+  align-items:           start;
+}
+
+.adm-left-col {
+  display:        flex;
+  flex-direction: column;
+  gap:            20px;
+}
+
+.adm-right-col {
+  display:        flex;
+  flex-direction: column;
+  gap:            20px;
+}
+
+/* ═══════════════════════════════════════
+   BREAKPOINT: TABLET — ≤1024px
+═══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .adm-kpi-grid  { grid-template-columns: repeat(2, 1fr); }
+  .adm-dash-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════
+   BREAKPOINT: MÓVIL — ≤768px
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .adm-kpi-grid  { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+  .adm-kpi-value { font-size: 24px; }
+}
