@@ -1,128 +1,95 @@
 package com.hera.backend.controller;
 
+import com.hera.backend.dto.request.ProductoCreateRequest;
 import com.hera.backend.dto.response.ProductoResponseDTO;
 import com.hera.backend.service.ProductoService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Controlador de productos (catálogo)
- *
- * ¿QUÉ hace? Expone endpoints para consultar productos
- * ¿PARA QUÉ sirve? Mostrar catálogo, búsquedas, detalle de producto
- * Endpoints públicos (no requieren autenticación)
- */
 @RestController
 @RequestMapping("/api/productos")
 @RequiredArgsConstructor
 @Slf4j
-@Tag(name = "Productos", description = "Consulta del catálogo de productos (público)")
+@Tag(name = "Productos", description = "Gestión de productos")
 public class ProductoController {
 
     private final ProductoService productoService;
 
+    // ========== ENDPOINTS PÚBLICOS ==========
+
     @GetMapping
-    @Operation(
-            summary = "Listar todos los productos",
-            description = "Retorna todos los productos activos del catálogo sin filtros"
-    )
-    @ApiResponse(
-            responseCode = "200",
-            description = "Lista de productos obtenida exitosamente",
-            content = @Content(array = @ArraySchema(schema = @Schema(implementation = ProductoResponseDTO.class)))
-    )
-    public ResponseEntity<List<ProductoResponseDTO>> listarTodos(){
-        log.info("Listando todos los productos");
+    public ResponseEntity<List<ProductoResponseDTO>> listarTodos() {
         return ResponseEntity.ok(productoService.listarTodos());
     }
 
     @GetMapping("/tipo/{tipo}")
-    @Operation(
-            summary = "Listar productos por tipo",
-            description = "Filtra productos por tipo: 'perfumes' o 'joyeria'"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Productos filtrados exitosamente"),
-            @ApiResponse(responseCode = "400", description = "Tipo inválido (debe ser 'perfumes' o 'joyeria')")
-    })
-    public ResponseEntity<List<ProductoResponseDTO>> listarPorTipo(
-            @Parameter(description = "Tipo de producto: perfumes o joyeria", example = "perfumes", required = true)
-            @PathVariable String tipo){
-        log.info("Listar producto por tipo: {}", tipo);
+    public ResponseEntity<List<ProductoResponseDTO>> listarPorTipo(@PathVariable String tipo) {
         return ResponseEntity.ok(productoService.listarPorTipo(tipo));
     }
 
     @GetMapping("/slug/{slug}")
-    @Operation(
-            summary = "Obtener producto por slug",
-            description = "Retorna un producto específico usando su slug (URL amigable). Ejemplo: 'dior-sauvage-edp'"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Producto encontrado"),
-            @ApiResponse(responseCode = "404", description = "Producto no encontrado")
-    })
-    public ResponseEntity<ProductoResponseDTO> obtenerPorSlug(
-            @Parameter(description = "Slug del producto (URL amigable)", example = "dior-sauvage-edp", required = true)
-            @PathVariable String slug){
-        log.info("Buscando producto por slug: {}", slug);
+    public ResponseEntity<ProductoResponseDTO> obtenerPorSlug(@PathVariable String slug) {
         return ResponseEntity.ok(productoService.obtenerPorSlug(slug));
     }
 
     @GetMapping("/destacados")
-    @Operation(
-            summary = "Productos destacados",
-            description = "Retorna productos con flag esDestacado=true (para la sección hero de la home)"
-    )
-    public  ResponseEntity<List<ProductoResponseDTO>> listarDestacados(){
-        log.info("Listar productos destacados");
+    public ResponseEntity<List<ProductoResponseDTO>> listarDestacados() {
         return ResponseEntity.ok(productoService.listarDestacados());
     }
 
     @GetMapping("/bestsellers")
-    @Operation(
-            summary = "Bestsellers",
-            description = "Retorna productos más vendidos (flag esBestSeller=true) para el carrusel de la home"
-    )
-    public  ResponseEntity<List<ProductoResponseDTO>> listarBestsellers(){
-        log.info("Listando bestsellers");
+    public ResponseEntity<List<ProductoResponseDTO>> listarBestsellers() {
         return ResponseEntity.ok(productoService.listarBestsellers());
     }
 
     @GetMapping("/nuevos")
-    @Operation(
-            summary = "Productos nuevos",
-            description = "Retorna productos recién agregados (flag esNuevo=true) para la sección editorial de la home"
-    )
-    public  ResponseEntity<List<ProductoResponseDTO>> listarNuevos(){
-        log.info("Listando productos nuevos");
+    public ResponseEntity<List<ProductoResponseDTO>> listarNuevos() {
         return ResponseEntity.ok(productoService.listarNuevos());
     }
 
-    /**
-     * Buscar productos por palabra clave
-     */
     @GetMapping("/buscar")
-    @Operation(
-            summary = "Buscar productos",
-            description = "Busca productos por coincidencia en nombre o descripción. Si no se proporciona query, retorna todos."
-    )
-    public ResponseEntity<List<ProductoResponseDTO>> buscar(
-            @Parameter(description = "Término de búsqueda", example = "sauvage")
-            @RequestParam(value = "q", required = false) String query){
-        log.info("Buscando productos con query: {}", query);
-        return ResponseEntity.ok(productoService.buscar(query));
+    public ResponseEntity<List<ProductoResponseDTO>> buscar(@RequestParam(required = false) String q) {
+        return ResponseEntity.ok(productoService.buscar(q));
     }
 
+    // ========== ENDPOINTS DE ADMIN (solo ADMIN) ==========
+
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ProductoResponseDTO> crearProducto(@Valid @RequestBody ProductoCreateRequest request) {
+        log.info("Creando nuevo producto: {}", request.getNombre());
+        return ResponseEntity.status(HttpStatus.CREATED).body(productoService.crearProducto(request));
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ProductoResponseDTO> actualizarProducto(
+            @PathVariable Long id,
+            @Valid @RequestBody ProductoCreateRequest request) {
+        log.info("Actualizando producto ID: {}", id);
+        return ResponseEntity.ok(productoService.actualizarProducto(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
+        log.info("Eliminando producto ID: {}", id);
+        productoService.eliminarProducto(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/destacado")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ProductoResponseDTO> toggleDestacado(@PathVariable Long id) {
+        log.info("Toggle destacado producto ID: {}", id);
+        return ResponseEntity.ok(productoService.toggleDestacado(id));
+    }
 }

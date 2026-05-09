@@ -39,7 +39,7 @@ public class AuthController {
     /**
      * Registro de nuevo usuario
      */
-    @PostMapping("/registro")
+    @PostMapping("/")
     @Operation(
             summary = "Registro de nuevo usuario",
             description = "Crea una nueva cuenta de usuario en el sistema. EL email debe ser único."

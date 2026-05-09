@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface OcasionRepository extends JpaRepository<Ocasion, Long> {
 
     Optional<Ocasion> findByNombre(String nombre);
+
+    Optional<Ocasion> findById(Long id);
 }

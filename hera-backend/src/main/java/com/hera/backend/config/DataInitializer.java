@@ -104,9 +104,9 @@ private void inicializarCatalogos() {
 
     // Géneros
     if (generoRepository.count() == 0) {
-        generoRepository.save(Genero.builder().id(1).nombre("masculino").build());
-        generoRepository.save(Genero.builder().id(2).nombre("femenino").build());
-        generoRepository.save(Genero.builder().id(3).nombre("unisex").build());
+        generoRepository.save(Genero.builder().id(1L).nombre("masculino").build());
+        generoRepository.save(Genero.builder().id(2L).nombre("femenino").build());
+        generoRepository.save(Genero.builder().id(3L).nombre("unisex").build());
         log.info("Géneros creados");
     }
 
