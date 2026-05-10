@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface AcordeRepository extends JpaRepository<Acorde, Integer> {
+public interface AcordeRepository extends JpaRepository<Acorde, Long> {
 
     Optional<Acorde> findByNombre(String nombre);
 }

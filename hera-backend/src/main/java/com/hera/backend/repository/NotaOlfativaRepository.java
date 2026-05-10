@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface NotaOlfativaRepository extends JpaRepository<NotaOlfativa, Integer> {
+public interface NotaOlfativaRepository extends JpaRepository<NotaOlfativa, Long> {
 
     Optional<NotaOlfativa> findByNombre(String nombre);
     List<NotaOlfativa> findByTipo(String tipo);

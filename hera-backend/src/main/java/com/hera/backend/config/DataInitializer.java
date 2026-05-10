@@ -94,11 +94,11 @@ private void inicializarCatalogos() {
     // Niveles de disponibilidad
     if (nivelDisponibilidadRepository.count() == 0) {
         nivelDisponibilidadRepository.save(NivelDisponibilidad.builder()
-                .id(1).codigo("green").nombre("En existencia").colorHex("#2e7d32").orden(1).build());
+                .id(1L).codigo("green").nombre("En existencia").colorHex("#2e7d32").orden(1).build());
         nivelDisponibilidadRepository.save(NivelDisponibilidad.builder()
-                .id(2).codigo("yellow").nombre("Disponibilidad limitada").colorHex("#ed6c02").orden(2).build());
+                .id(2L).codigo("yellow").nombre("Disponibilidad limitada").colorHex("#ed6c02").orden(2).build());
         nivelDisponibilidadRepository.save(NivelDisponibilidad.builder()
-                .id(3).codigo("red").nombre("Pieza exclusiva").colorHex("#d32f2f").orden(3).build());
+                .id(3L).codigo("red").nombre("Pieza exclusiva").colorHex("#d32f2f").orden(3).build());
         log.info("Niveles de disponibilidad creados");
     }
 
@@ -113,15 +113,15 @@ private void inicializarCatalogos() {
     // Familias olfativas
     if (familiaOlfativaRepository.count() == 0) {
         familiaOlfativaRepository.save(FamiliaOlfativa.builder()
-                .id(1).nombre("floral").descripcion("Notas de flores").orden(1).build());
+                .id(1L).nombre("floral").descripcion("Notas de flores").orden(1).build());
         familiaOlfativaRepository.save(FamiliaOlfativa.builder()
-                .id(2).nombre("oriental").descripcion("Notas cálidas").orden(2).build());
+                .id(2L).nombre("oriental").descripcion("Notas cálidas").orden(2).build());
         familiaOlfativaRepository.save(FamiliaOlfativa.builder()
-                .id(3).nombre("amaderado").descripcion("Notas de maderas").orden(3).build());
+                .id(3L).nombre("amaderado").descripcion("Notas de maderas").orden(3).build());
         familiaOlfativaRepository.save(FamiliaOlfativa.builder()
-                .id(4).nombre("fresco").descripcion("Notas cítricas").orden(4).build());
+                .id(4L).nombre("fresco").descripcion("Notas cítricas").orden(4).build());
         familiaOlfativaRepository.save(FamiliaOlfativa.builder()
-                .id(5).nombre("gourmand").descripcion("Notas dulces").orden(5).build());
+                .id(5L).nombre("gourmand").descripcion("Notas dulces").orden(5).build());
         log.info("Familias olfativas creadas");
     }
 }

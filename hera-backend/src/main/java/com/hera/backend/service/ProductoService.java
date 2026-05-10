@@ -62,6 +62,22 @@ public class ProductoService {
         return productoMapper.toDTO(producto);
     }
 
+    // MÉTODO - Buscar por productId (String) y devolver la ENTIDAD
+    @Transactional(readOnly = true)
+    public Producto obtenerPorProductId(String productId) {
+        log.debug("Buscando producto por productId: {}", productId);
+
+        return productoRepository.findByProductoId(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Producto", "productId", productId));
+    }
+
+    //  Método auxiliar  - Si se necesita el DTO también
+    @Transactional(readOnly = true)
+    public ProductoResponseDTO obtenerPorProductIdDTO(String productId) {
+        Producto producto = obtenerPorProductId(productId);
+        return productoMapper.toDTO(producto);
+    }
+
     @Transactional(readOnly = true)
     public List<ProductoResponseDTO> listarDestacados() {
         return productoRepository.findByEsDestacadoTrueAndActivoTrue().stream()
