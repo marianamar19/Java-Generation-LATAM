@@ -143,9 +143,12 @@ function _buildFavRowCheckout(item, isMobile) {
   row.dataset.favId = item.id;
   row.className = 'fav-row ' + (isMobile ? 'fav-row--mobile' : 'fav-row--desktop');
   row.innerHTML =
-    '<div class="fav-row-img"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.25)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div>' +
-    '<div class="fav-row-body">' +
-      '<div class="fav-row-nivel fav-row-nivel--' + nNivel + '"><span class="fav-row-nivel-dot"></span><span class="fav-row-nivel-label">' + nLabel + '</span></div>' +
+    '<div class="fav-row-img">' +
+      (item.img
+        ? '<img src="' + item.img + '" alt="' + item.name + '" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;">'
+        : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.25)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>'
+      ) +
+    '</div>' +
       '<div class="fav-row-brand">' + item.brand + '</div>' +
       '<div class="fav-row-name">'  + item.name  + '</div>' +
       volLine +
@@ -279,10 +282,13 @@ function renderItems() {
     var el = document.createElement('div');
     el.className = 'summary-item';
     el.innerHTML =
-      '<div class="summary-item-img">' +
-        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,0.2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>' +
-        '<span class="item-qty-badge">' + item.qty + '</span>' +
+        '<div class="summary-item-img">' +
+          (item.img
+            ? '<img src="' + item.img + '" alt="' + item.name + '" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;">'
+            : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,0.2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>'
+          ) +
       '</div>' +
+      '<span class="item-qty-badge">' + item.qty + '</span>' + 
       '<div class="summary-item-info">' +
         '<div class="summary-item-nivel summary-item-nivel--' + nNivel + '">' +
           '<span class="summary-item-nivel-dot"></span>' +
