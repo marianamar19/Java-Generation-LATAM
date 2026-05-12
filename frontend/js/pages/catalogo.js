@@ -45,7 +45,7 @@ const CATALOG = [
   { id:'collar-1',     img:'https://res.cloudinary.com/dgvvsw6fs/image/upload/c_crop,ar_3:4/v1777449161/photo-1623321673989-830eff0fd59f_tbh1ru.avif',     brand:'HERA Joyería',       name:'Collar Dorado',      price:'$890 MXN',   precio:890,  badge:'',            cat:'collares',  gen:'unisex',   fam:'',          marca:'hera-joyeria',     nuevo:false, tipo:'joyeria',  nivel:'yellow', vols:[{ml:'40 cm',precio:890},{ml:'45 cm',precio:890},{ml:'50 cm',precio:920}], volLabel:'Largo', masVariantes:false },
   { id:'brazalete-1',  img:'https://res.cloudinary.com/dgvvsw6fs/image/upload/c_crop,ar_3:4/v1777449374/photo-1774294546043-df9ecc9bd70e_y196w8.avif',  brand:'HERA Joyería',       name:'Brazalete Minimal',  price:'$750 MXN',   precio:750,  badge:'Nuevo',        cat:'brazaletes',gen:'unisex',   fam:'',          marca:'hera-joyeria',     nuevo:true,  tipo:'joyeria',  nivel:'red',    vols:[{ml:'Plata .925',precio:750},{ml:'Oro 18k',precio:1200}], volLabel:'Material', masVariantes:false },
 ];
- 
+
 /* ══════════════════════════════════════
   ARRANQUE — DOMContentLoaded
 ══════════════════════════════════════ */

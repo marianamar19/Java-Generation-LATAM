@@ -99,6 +99,7 @@ function _toggleFav(btn) {
   const tipo     = btn.dataset.tipo     || 'perfumes';
   const cat      = btn.dataset.cat      || '';
   const gen      = btn.dataset.gen      || '';
+  const img      = btn.dataset.img      || '';
 
   const card      = btn.closest('.ed-item');
   const selVolBtn = card ? card.querySelector('.ed-vol-btn.sel') : null;
@@ -110,7 +111,7 @@ function _toggleFav(btn) {
   } else {
     btn.classList.add('active');
     if (!favorites.find(function(f) { return f.id === id; })) {
-      favorites.push({ id, brand, name, price, vol, volLabel, nivel, tipo, cat, gen });
+      favorites.push({ id, brand, name, price, vol, volLabel, nivel, tipo, cat, gen, img });
     }
     if (favCountBadge) {
       favCountBadge.style.transform = 'scale(1.5)';
@@ -180,7 +181,9 @@ function _buildFavRow(item, isMobile) {
 
   row.innerHTML =
     '<div class="fav-row-img">' +
-      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.25)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>' +
+    (item.img
+    ? '<img src="' + item.img + '" alt="' + item.name + '" style="width:100%;height:100%;object-fit:cover;display:block;">'
+    : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.25)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>') +
     '</div>' +
     '<div class="fav-row-body">' +
       '<div class="fav-row-nivel fav-row-nivel--' + nNivel + '">' +
