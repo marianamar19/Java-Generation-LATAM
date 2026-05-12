@@ -1,0 +1,208 @@
+/* ============================================================
+   components-admin.css — HERA Admin
+   Descripción: Componentes reutilizables del panel admin:
+                cards de contenido, tabla de órdenes, badges
+                de estatus, panel de status, top productos,
+                wrapper de gráfica y estado vacío.
+                Estos componentes aparecen en más de una
+                página del admin.
+   Usado por:   pages/admin/*.html
+   ============================================================ */
+ 
+/* ── Sección: Cards de contenido ────────────────────────────── */
+.adm-card {
+  background: var(--adm-card-bg);
+  border:     1px solid var(--adm-border);
+}
+ 
+.adm-card-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         14px 20px;
+  border-bottom:   1px solid var(--adm-border);
+}
+ 
+.adm-card-title {
+  font-size:      9px;
+  font-weight:    700;
+  letter-spacing: .20em;
+  text-transform: uppercase;
+  color:          var(--adm-text);
+}
+ 
+.adm-card-link {
+  font-size:       11px;
+  color:           var(--adm-red);
+  text-decoration: none;
+  font-weight:     600;
+  letter-spacing:  .04em;
+}
+ 
+.adm-card-link:hover { color: var(--adm-red-hover); }
+ 
+/* ── Sección: Tabla de órdenes ──────────────────────────────── */
+.adm-table {
+  width:           100%;
+  border-collapse: collapse;
+}
+ 
+.adm-table thead th {
+  font-size:      9px;
+  font-weight:    700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color:          var(--adm-muted);
+  padding:        10px 20px;
+  border-bottom:  1px solid var(--adm-border);
+  background:     #FAFAFA;
+  text-align:     left;
+  white-space:    nowrap;
+}
+ 
+.adm-table tbody tr {
+  border-bottom: 1px solid var(--adm-border);
+  transition:    background .10s;
+}
+ 
+.adm-table tbody tr:last-child { border-bottom: none; }
+.adm-table tbody tr:hover      { background: rgba(225, 34, 43, .02); }
+ 
+.adm-table tbody td {
+  padding:        13px 20px;
+  font-size:      12px;
+  color:          var(--adm-text);
+  vertical-align: middle;
+}
+ 
+/* Celdas específicas de la tabla de órdenes */
+.adm-order-id {
+  font-family:    'Instrument Sans', sans-serif;
+  font-weight:    700;
+  font-size:      11px;
+  letter-spacing: .06em;
+  color:          var(--adm-text);
+}
+ 
+.adm-order-name  { font-size: 12px; font-weight: 500; }
+.adm-order-email { font-size: 10px; color: var(--adm-muted); margin-top: 2px; }
+.adm-order-qty   { font-size: 12px; color: var(--adm-muted); }
+.adm-order-total { font-weight: 700; font-size: 13px; }
+.adm-order-date  { font-size: 11px; color: var(--adm-muted); white-space: nowrap; }
+ 
+/* ── Sección: Badges de estatus ─────────────────────────────── */
+.adm-badge {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            5px;
+  font-size:      9px;
+  font-weight:    700;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  padding:        3px 8px;
+  border:         1px solid;
+  white-space:    nowrap;
+}
+ 
+.adm-badge-dot {
+  width:        5px;
+  height:       5px;
+  border-radius: 50%;
+  flex-shrink:  0;
+}
+ 
+/* Variantes por estatus */
+.adm-badge--pendiente  { border-color: var(--adm-yellow); color: #9a6800;         background: rgba(249,168,37,.08); }
+.adm-badge--pendiente  .adm-badge-dot { background: var(--adm-yellow); }
+.adm-badge--confirmado { border-color: var(--adm-blue);   color: var(--adm-blue); background: rgba(26,111,196,.06); }
+.adm-badge--confirmado .adm-badge-dot { background: var(--adm-blue); }
+.adm-badge--enviado    { border-color: var(--adm-green);  color: #2e7d32;         background: rgba(76,175,80,.08); }
+.adm-badge--enviado    .adm-badge-dot { background: var(--adm-green); }
+.adm-badge--entregado  { border-color: var(--adm-green);  color: #2e7d32;         background: rgba(76,175,80,.08); }
+.adm-badge--entregado  .adm-badge-dot { background: var(--adm-green); }
+.adm-badge--cancelado  { border-color: var(--adm-red);    color: var(--adm-red);  background: rgba(225,34,43,.06); }
+.adm-badge--cancelado  .adm-badge-dot { background: var(--adm-red); }
+ 
+/* ── Sección: Panel de estatus de órdenes ───────────────────── */
+.adm-status-row {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         11px 20px;
+  border-bottom:   1px solid var(--adm-border);
+}
+ 
+.adm-status-row:last-child { border-bottom: none; }
+ 
+.adm-status-label {
+  display:     flex;
+  align-items: center;
+  gap:         9px;
+  font-size:   12px;
+  font-weight: 500;
+  color:       var(--adm-text);
+}
+ 
+.adm-status-dot {
+  width:         7px;
+  height:        7px;
+  border-radius: 50%;
+  flex-shrink:   0;
+  /* El color se aplica via style="" en JS porque proviene
+     de STATUS_CONFIG en tiempo de ejecución — excepción aceptada */
+}
+ 
+.adm-status-count {
+  font-size:   14px;
+  font-weight: 700;
+  color:       var(--adm-text);
+}
+ 
+/* ── Sección: Top productos más vendidos ────────────────────── */
+.adm-top-item {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         11px 20px;
+  border-bottom:   1px solid var(--adm-border);
+  gap:             12px;
+}
+ 
+.adm-top-item:last-child { border-bottom: none; }
+ 
+.adm-top-info  { flex: 1; min-width: 0; }
+.adm-top-name  { font-size: 12px; font-weight: 500; color: var(--adm-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.adm-top-brand { font-size: 10px; color: var(--adm-muted); margin-top: 1px; }
+.adm-top-count { font-size: 12px; font-weight: 700; color: var(--adm-red); flex-shrink: 0; }
+ 
+/* ── Sección: Wrapper de gráfica ────────────────────────────── */
+/* max-height fijo en el wrapper evita el loop de redimensionamiento
+   de Chart.js — sin esto el canvas crece en cada tick de resize */
+.adm-chart-wrap {
+  padding:    20px 20px 16px;
+  position:   relative;
+  height:     260px;
+}
+ 
+/* ── Sección: Estado vacío reutilizable ─────────────────────── */
+.adm-empty {
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  padding:         32px 20px;
+  gap:             8px;
+}
+ 
+.adm-empty-icon {
+  width:   32px;
+  height:  32px;
+  opacity: .2;
+  color:   var(--adm-text);
+}
+ 
+.adm-empty-text {
+  font-size:  12px;
+  color:      var(--adm-muted);
+  text-align: center;
+}

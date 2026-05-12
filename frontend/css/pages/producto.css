@@ -27,10 +27,11 @@
 /* La imagen principal recibe width/height calculados por JS
    para ajustarse al viewport sin desbordarse */
 .product-img-main {
+  transition: opacity .15s ease;
   flex-shrink: 0;
   aspect-ratio: 3/4;
-  background: var(--lgray);
-  border: 1.5px dashed rgba(15, 15, 15, .14);
+  background: transparent;
+  border: 1.5px none;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,6 +42,7 @@
 }
 .product-img-main svg  { opacity: .2; }
 .product-img-main span { font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(15, 15, 15, .28); }
+.product-img-main img { transition: opacity .15s ease; }
 
 /* Tira de miniaturas vertical */
 .product-thumbs-wrap {
@@ -81,7 +83,7 @@
   width: 62px;
   aspect-ratio: 3/4;
   flex-shrink: 0;
-  background: var(--lgray);
+  background: transparent;
   border: 1.5px solid transparent;
   display: flex;
   align-items: center;
@@ -159,6 +161,28 @@
 .btn-fav-lg:hover    { border-color: var(--red); color: var(--red); }
 .btn-fav-lg.active   { border-color: var(--red); color: var(--red); }
 .btn-fav-lg.active svg { fill: var(--red); }
+
+/* ── Badge de nivel de disponibilidad (hero del producto) ─── */
+/* Generado por initNivelBadge(); recibe clase .green/.yellow/.red */
+.prod-nivel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+}
+.prod-nivel-badge-dot    { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.prod-nivel-badge.green  { border-color: #4caf50; color: #4caf50; }
+.prod-nivel-badge.green  .prod-nivel-badge-dot { background: #4caf50; }
+.prod-nivel-badge.yellow { border-color: #f9a825; color: #f9a825; }
+.prod-nivel-badge.yellow .prod-nivel-badge-dot { background: #f9a825; }
+.prod-nivel-badge.red    { border-color: var(--red); color: var(--red); }
+.prod-nivel-badge.red    .prod-nivel-badge-dot { background: var(--red); }
 
 /* Divisor y descripción */
 .product-divider { border: none; border-top: 1px solid var(--lgray); margin-bottom: 24px; }
@@ -256,7 +280,7 @@
 .perf-title-em  { font-family: var(--serif); font-style: italic; font-weight: 300; color: rgba(249, 249, 249, .35); }
 .perf-subtitle  { font-size: 13px; color: rgba(249, 249, 249, .35); max-width: 340px; line-height: 1.65; font-family: var(--serif); font-weight: 400; }
 .perf-grid      { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-.perf-item      { padding: 32px 28px; background: var(--red); transition: background .2s; }
+.perf-item      { padding: 32px 28px; background: var(--red); transition: background .2s, opacity .65s ease, transform .65s ease; }
 .perf-item:hover { background: #c41c24; }
 .perf-item-label { font-size: 9px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: rgba(255, 255, 255, .65); margin-bottom: 20px; }
 .perf-dots       { display: flex; gap: 6px; margin-bottom: 14px; }
@@ -319,7 +343,7 @@
 /* Tarjeta de variante de familia */
 .fm-card         { background: var(--black); position: relative; overflow: hidden; cursor: default; }
 .fm-card:hover .fm-overlay { opacity: 1; }
-.fm-img-wrap     { aspect-ratio: 3/4; overflow: hidden; background: var(--dgray); display: flex; align-items: center; justify-content: center; position: relative; }
+.fm-img-wrap     { aspect-ratio: 3/4; overflow: hidden; background: transparent; display: flex; align-items: center; justify-content: center; position: relative; }
 .fm-placeholder  { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
 .fm-placeholder svg  { opacity: .2; }
 .fm-placeholder span { font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(249, 249, 249, .2); }
@@ -477,6 +501,17 @@
 .similar-grid .ed-footer         { padding-top: 8px; margin-top: 4px; }
 .similar-grid .ed-nivel          { margin-top: 3px; }
 
+/* ── Badges de tarjetas de producto (grid similar, catálogo) ── */
+/* Necesario cuando product-card.css no contiene estos estilos     */
+.ed-badge      { font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 3px 8px; margin-right: auto; }
+.ed-badge-red  { background: var(--red); color: #fff; }
+.ed-badge-gray { background: var(--dgray); color: var(--cream); }
+
+/* Fix reveal animation en tarjetas — ed-item tiene su propio transition
+   que anula al de .reveal; se reincorporan opacity y transform aquí    */
+.ed-item.reveal,
+.similar-grid .ed-item { transition: background .3s, box-shadow .3s, border-color .3s, opacity .65s ease, transform .65s ease; }
+
 /* ── Sección: Search overlay ───────────────────────────────── */
 .search-overlay {
   position: fixed;
@@ -542,14 +577,22 @@
   .product-thumbs          { flex-direction: row; width: auto !important; flex: 1; height: 62px !important; }
   .product-thumb           { width: auto; flex: 1; }
   .product-details         { padding: 64px 48px; }
-  .details-grid            { grid-template-columns: 1fr; gap: 48px; }
-  .product-notes-section   { padding: 0 48px 64px; }
+  .details-grid            { grid-template-columns: 1fr; gap: 32px; }
+  .details-col-title--hidden { display: none; }  /* evita el hueco grande entre sección 1 y 2 */
+  .product-notes-section   { padding: 64px 48px; }   /* padding-top: 0 causaba texto pegado al borde */
   .product-performance     { padding: 64px 48px; }
   .perf-grid               { grid-template-columns: repeat(3, 1fr); }
   .product-context         { padding: 64px 48px; }
   .product-family          { padding: 64px 48px; }
   .product-reviews         { padding: 64px 48px; }
-  .reviews-layout          { grid-template-columns: 220px 1fr; gap: 40px; }
+  /* Resumen (col 1) + Formulario (col 2) en fila 1.
+     Lista de reseñas ocupa el ancho completo en fila 2.
+     Así el sticky del resumen jamás tapa la lista.           */
+  .reviews-layout            { grid-template-columns: 220px 1fr; gap: 40px; }
+  .reviews-summary           { grid-row: 1; grid-column: 1; position: static; }
+  .review-form-col           { grid-row: 1; grid-column: 2; }
+  .review-list-col           { grid-row: 2; grid-column: 1 / -1; border-left: none; padding-left: 0; border-top: 1px solid var(--lgray); padding-top: 40px; }
+  .review-list-scroll        { max-height: none; }
   .product-similar         { padding: 64px 48px; }
   .similar-grid            { grid-template-columns: repeat(2, 1fr); }
 }
@@ -573,12 +616,18 @@
   .product-performance     { padding: 52px 20px; }
   .perf-grid               { grid-template-columns: 1fr; gap: 2px; }
   .product-context         { padding: 52px 20px; }
+  /* Altura mínima fija en los labels evita que texto de distinto
+     número de líneas empuje los ctx-card a distintas alturas      */
+  .context-label           { min-height: 2.8em; display: flex; align-items: flex-end; padding-bottom: 4px; }
   .product-family          { padding: 52px 20px; }
+  .family-grid             { grid-template-columns: 1fr !important; } /* anula el repeat(N,1fr) inline del JS */
   .product-reviews         { padding: 52px 20px; }
-  .reviews-layout          { grid-template-columns: 1fr; gap: 48px; }
-  .reviews-summary         { position: static; }
-  .review-form-col         { border-left: none; padding-left: 0; border-top: 1px solid var(--lgray); padding-top: 40px; }
-  .review-list-col         { border-left: none; padding-left: 0; border-top: 1px solid var(--lgray); padding-top: 40px; }
+  .reviews-layout          { grid-template-columns: 1fr; gap: 40px; }
+  /* Orden móvil: calificación → reseñas → formulario */
+  .reviews-summary         { grid-row: auto; grid-column: auto; position: static; order: 1; }
+  .review-list-col         { grid-row: auto; grid-column: auto; order: 2; border-left: none; padding-left: 0; border-top: 1px solid var(--lgray); padding-top: 32px; }
+  .review-form-col         { grid-row: auto; grid-column: auto; order: 3; border-left: none; padding-left: 0; border-top: 1px solid var(--lgray); padding-top: 32px; }
+  .review-list-scroll      { max-height: none; }
   .product-similar         { padding: 52px 20px; }
   .similar-grid            { grid-template-columns: repeat(2, 1fr); gap: 10px; }
 }

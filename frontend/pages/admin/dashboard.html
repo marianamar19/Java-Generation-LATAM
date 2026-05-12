@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — HERA Admin</title>
+ 
+  <!-- ── Tipografía compartida con el sitio ── -->
+  <link rel="stylesheet" href="../../css/base/typography.css" />
+ 
+  <!-- ── Bootstrap 5 — grid y utilidades base ── -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+ 
+  <!-- ── Design System Admin ── -->
+  <link rel="stylesheet" href="../../css/admin/tokens-admin.css" />
+  <link rel="stylesheet" href="../../css/admin/base-admin.css" />
+  <link rel="stylesheet" href="../../css/admin/layout-admin.css" />
+  <link rel="stylesheet" href="../../css/admin/components-admin.css" />
+ 
+  <!-- ── Estilos exclusivos de esta página ── -->
+  <link rel="stylesheet" href="../../css/admin/dashboard.css" />
+</head>
+<body>
+ 
+<div class="adm-wrap">
+ 
+  <!-- ══════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════ -->
+  <aside class="adm-sidebar">
+ 
+    <div class="adm-sidebar-logo">
+      <div class="adm-logo-brand">Hera</div>
+      <div class="adm-logo-sub">Panel Admin</div>
+    </div>
+ 
+    <nav aria-label="Navegación del panel admin">
+ 
+      <div class="adm-nav-section">
+        <div class="adm-nav-label">Principal</div>
+ 
+        <a href="dashboard.html" class="adm-nav-item active" aria-label="Dashboard">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span class="adm-nav-text">Dashboard</span>
+        </a>
+ 
+        <a href="ordenes.html" class="adm-nav-item" aria-label="Órdenes">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+          <span class="adm-nav-text">Órdenes</span>
+        </a>
+ 
+        <a href="productos.html" class="adm-nav-item" aria-label="Productos">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          <span class="adm-nav-text">Productos</span>
+        </a>
+ 
+        <a href="clientes.html" class="adm-nav-item" aria-label="Clientes">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <span class="adm-nav-text">Clientes</span>
+        </a>
+      </div>
+ 
+      <div class="adm-nav-section">
+        <div class="adm-nav-label">Sitio</div>
+ 
+        <a href="configuracion.html" class="adm-nav-item" aria-label="Configuración">
+          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          <span class="adm-nav-text">Configuración</span>
+        </a>
+      </div>
+ 
+    </nav>
+ 
+    <div class="adm-sidebar-bottom">
+      <a href="../../pages/index.html" class="adm-nav-item" aria-label="Ver sitio público">
+        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span class="adm-nav-text">Ver sitio</span>
+      </a>
+      <button class="adm-nav-item" id="btn-logout" aria-label="Cerrar sesión del panel admin">
+        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span class="adm-nav-text">Cerrar sesión</span>
+      </button>
+    </div>
+ 
+  </aside>
+ 
+  <!-- ══════════════════════════════════════
+       MAIN
+  ══════════════════════════════════════ -->
+  <div class="adm-main">
+ 
+    <!-- TOPBAR -->
+    <header class="adm-topbar">
+      <h1 class="adm-topbar-title">Dashboard</h1>
+      <div class="adm-topbar-right">
+        <span class="adm-topbar-date" id="adm-date"></span>
+        <div class="adm-avatar" aria-label="Usuario administrador">AD</div>
+      </div>
+    </header>
+ 
+    <!-- CONTENT -->
+    <main class="adm-content">
+ 
+      <!-- KPI CARDS -->
+      <div class="adm-kpi-grid">
+        <div class="adm-kpi-card">
+          <div class="adm-kpi-label">Órdenes hoy</div>
+          <div class="adm-kpi-value" id="kpi-ordenes">0</div>
+          <div class="adm-kpi-sub">Total del día</div>
+        </div>
+        <div class="adm-kpi-card">
+          <div class="adm-kpi-label">Ingresos hoy</div>
+          <div class="adm-kpi-value adm-kpi-value--accent" id="kpi-ingresos">$0 MXN</div>
+          <div class="adm-kpi-sub" id="kpi-ingresos-sub">Sin ventas registradas hoy</div>
+        </div>
+        <div class="adm-kpi-card">
+          <div class="adm-kpi-label">Productos activos</div>
+          <div class="adm-kpi-value" id="kpi-productos">0</div>
+          <div class="adm-kpi-sub">En el catálogo</div>
+        </div>
+        <div class="adm-kpi-card" id="kpi-card-pendientes">
+          <div class="adm-kpi-label">Pendientes</div>
+          <div class="adm-kpi-value" id="kpi-pendientes">0</div>
+          <div class="adm-kpi-sub">Por atender</div>
+        </div>
+      </div>
+ 
+      <!-- GRID PRINCIPAL -->
+      <div class="adm-dash-grid">
+ 
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="adm-left-col">
+ 
+          <!-- Órdenes recientes -->
+          <div class="adm-card">
+            <div class="adm-card-header">
+              <span class="adm-card-title">Órdenes recientes</span>
+              <a href="ordenes.html" class="adm-card-link">Ver todas →</a>
+            </div>
+            <table class="adm-table" aria-label="Tabla de órdenes recientes">
+              <thead>
+                <tr>
+                  <th scope="col">Orden</th>
+                  <th scope="col">Cliente</th>
+                  <th scope="col">Productos</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Estatus</th>
+                  <th scope="col">Fecha</th>
+                </tr>
+              </thead>
+              <tbody id="adm-orders-tbody"></tbody>
+            </table>
+          </div>
+ 
+          <!-- Gráfica de ventas -->
+          <div class="adm-card">
+            <div class="adm-card-header">
+              <span class="adm-card-title">Ventas — últimos 7 días</span>
+            </div>
+            <div class="adm-chart-wrap">
+              <canvas id="adm-chart-ventas"></canvas>
+            </div>
+          </div>
+ 
+        </div>
+ 
+        <!-- COLUMNA DERECHA -->
+        <div class="adm-right-col">
+ 
+          <div class="adm-card">
+            <div class="adm-card-header">
+              <span class="adm-card-title">Estatus de órdenes</span>
+            </div>
+            <div id="adm-status-list"></div>
+          </div>
+ 
+          <div class="adm-card">
+            <div class="adm-card-header">
+              <span class="adm-card-title">Más vendidos</span>
+            </div>
+            <div id="adm-top-products"></div>
+          </div>
+ 
+        </div>
+ 
+      </div>
+    </main>
+  </div>
+ 
+</div>
+ 
+<!-- Bootstrap JS — necesario para utilidades de componentes Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+ 
+<!-- Chart.js — debe cargarse antes que dashboard.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+ 
+<!-- Script de la página -->
+<script type="module" src="../../js/admin/dashboard.js"></script>
+ 
+</body>
+</html>
