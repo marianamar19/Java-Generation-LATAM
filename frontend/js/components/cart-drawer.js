@@ -11,7 +11,7 @@
  * Importado por: js/pages/index.js
  */
 
-import { getCart, setCart }            from '../utils/storage.js';
+import { getCarrito, addToCart, updateCartItem, removeCartItem}            from '../utils/api.js';
 import { normalizePriceMXN, parseMXN } from '../utils/formatter.js';
 
 /* Umbral para envío gratis (MXN) */
@@ -75,7 +75,7 @@ function initCartDrawer() {
   if (cartEmptyCta)    cartEmptyCta.addEventListener('click',    closeCart);
 
   // Cargar carrito persistido al arrancar la página
-  _loadCartFromStorage();
+  _loadCartFromAPI();
 }
 
 /* ── Abrir / Cerrar ─────────────────────────────────────────── */
@@ -113,34 +113,16 @@ function closeCart() {
  * @param {string}        nivel - Nivel de existencia: 'green' | 'yellow' | 'red'
  * @returns {void}
  */
-function addItemToCart(id, brand, name, price, vol, nivel) {
-  const priceDisplay = normalizePriceMXN(price);
-  const nivelVal     = nivel || 'green';
-  const volVal       = vol   || '';
-  const nLabel       = { green: 'En existencia', yellow: 'Disp. limitada', red: 'Pieza exclusiva' }[nivelVal] || 'En existencia';
-  const cartId       = 'cart-' + name.replace(/\s/g, '-').toLowerCase();
-
-  const existing = cartItemsList.querySelector('[data-cart-id="' + cartId + '"]');
-
-  if (existing) {
-    // Si ya existe: solo sumar 1 a la cantidad
-    const qEl = existing.querySelector('.qty-num');
-    qEl.textContent = parseInt(qEl.textContent) + 1;
-  } else {
-    // Si no existe: crear el item y añadirlo al inicio
-    const item = _buildCartItemEl({ id, brand, name, priceDisplay, volVal, nivelVal, nLabel, cartId, qty: 1 });
-    cartItemsList.insertBefore(item, cartItemsList.firstChild);
-    _bindCartItem(item);
+async function addItemToCart(varianteId) {
+  try {
+    await addToCart(varianteId, 1);       // POST /api/carrito/items
+    await _loadCartFromAPI();             // recarga el drawer con el estado real de la BD
+    cartBadge.style.transform = 'scale(1.5)';
+    setTimeout(function() { cartBadge.style.transform = 'scale(1)'; }, 200);
+    openCart();
+  } catch (e) {
+    console.error('Error agregando al carrito:', e);
   }
-
-  _updateCartTotals();
-  _saveCartToStorage();
-
-  // Feedback visual en el badge — escala y vuelve al tamaño normal
-  cartBadge.style.transform = 'scale(1.5)';
-  setTimeout(function() { cartBadge.style.transform = 'scale(1)'; }, 200);
-
-  openCart();
 }
 
 /* ── Construcción de items DOM ───────────────────────────────── */
@@ -192,27 +174,43 @@ function _buildCartItemEl(data) {
  * @returns {void}
  */
 function _bindCartItem(item) {
-  item.querySelector('.qty-minus').addEventListener('click', function() {
-    const qEl = item.querySelector('.qty-num');
-    const q   = parseInt(qEl.textContent);
+  item.querySelector('.qty-minus').addEventListener('click', async function() {
+    const qEl    = item.querySelector('.qty-num');
+    const q      = parseInt(qEl.textContent);
+    const itemId = item.dataset.itemId;
     if (q > 1) {
-      qEl.textContent = q - 1;
-      _updateCartTotals();
-      _saveCartToStorage();
+      try {
+        await updateCartItem(itemId, q - 1);  // PUT /api/carrito/items/{itemId}?cantidad=N
+        qEl.textContent = q - 1;
+        _updateCartTotals();
+      } catch (e) {
+        console.error('Error al reducir cantidad:', e);
+      }
     }
   });
 
-  item.querySelector('.qty-plus').addEventListener('click', function() {
-    const qEl = item.querySelector('.qty-num');
-    qEl.textContent = parseInt(qEl.textContent) + 1;
-    _updateCartTotals();
-    _saveCartToStorage();
+  item.querySelector('.qty-plus').addEventListener('click', async function() {
+    const qEl    = item.querySelector('.qty-num');
+    const q      = parseInt(qEl.textContent);
+    const itemId = item.dataset.itemId;
+    try {
+      await updateCartItem(itemId, q + 1);    // PUT /api/carrito/items/{itemId}?cantidad=N
+      qEl.textContent = q + 1;
+      _updateCartTotals();
+    } catch (e) {
+      console.error('Error al aumentar cantidad:', e);
+    }
   });
 
-  item.querySelector('.cart-item-remove').addEventListener('click', function() {
-    item.remove();
-    _updateCartTotals();
-    _saveCartToStorage();
+  item.querySelector('.cart-item-remove').addEventListener('click', async function() {
+    const itemId = item.dataset.itemId;
+    try {
+      await removeCartItem(itemId);           // DELETE /api/carrito/items/{itemId}
+      item.remove();
+      _updateCartTotals();
+    } catch (e) {
+      console.error('Error al eliminar item:', e);
+    }
   });
 }
 
@@ -266,58 +264,40 @@ function _updateCartTotals() {
  * Lee el nivel desde la clase modificadora del badge (.cart-item-nivel--green/yellow/red).
  * @returns {void}
  */
-function _saveCartToStorage() {
-  const items = [];
-  cartItemsList.querySelectorAll('.cart-item').forEach(function(el) {
-    // Leer nivel desde el modificador BEM del badge inline
-    const nivelEl    = el.querySelector('.cart-item-nivel');
-    const nivelClass = nivelEl
-      ? (['green', 'yellow', 'red'].find(function(c) {
-          return nivelEl.classList.contains('cart-item-nivel--' + c);
-        }) || 'green')
-      : 'green';
-    const volEl = el.querySelector('.cart-item-vol');
-    items.push({
-      id:    el.dataset.cartId,
-      brand: el.querySelector('.cart-item-brand').textContent,
-      name:  el.querySelector('.cart-item-name').textContent,
-      price: el.querySelector('.cart-item-price').textContent,
-      vol:   volEl ? volEl.textContent : '',
-      nivel: nivelClass,
-      qty:   parseInt(el.querySelector('.qty-num').textContent),
-    });
-  });
-  setCart(items);
-}
+
 
 /**
  * Lee los items de localStorage y reconstruye el DOM del carrito.
  * Llamado al cargar la página para restaurar el estado previo.
  * @returns {void}
  */
-function _loadCartFromStorage() {
-  const items = getCart();
-  cartItemsList.innerHTML = '';
 
-  if (items && items.length) {
-    items.forEach(function(it) {
-      const nivelVal     = it.nivel || 'green';
-      const nLabel       = { green: 'En existencia', yellow: 'Disp. limitada', red: 'Pieza exclusiva' }[nivelVal] || 'En existencia';
-      const priceDisplay = normalizePriceMXN(it.price);
-      const cartId       = it.id;
+async function _loadCartFromAPI() {
+  try {
+    const carrito = await getCarrito();           // GET /api/carrito
+    cartItemsList.innerHTML = '';
 
-      const el = _buildCartItemEl({
-        brand: it.brand, name: it.name, priceDisplay,
-        volVal: it.vol || '', nivelVal, nLabel, cartId, qty: it.qty || 1,
+    if (carrito.items && carrito.items.length) {
+      carrito.items.forEach(function(it) {
+        const nivelVal     = it.nivelDisponibilidad || 'green';
+        const nLabel       = { green: 'En existencia', yellow: 'Disp. limitada', red: 'Pieza exclusiva' }[nivelVal] || 'En existencia';
+        const priceDisplay = normalizePriceMXN(it.precioUnitario);
+        const el = _buildCartItemEl({
+          brand: it.marca, name: it.nombre, priceDisplay,
+          volVal: it.variante || '', nivelVal, nLabel,
+          cartId: it.id,        // ID real del item en BD
+          qty: it.cantidad || 1,
+        });
+        el.dataset.itemId = it.id;   // guardamos el ID para las llamadas a la API
+        cartItemsList.appendChild(el);
+        _bindCartItem(el);
       });
-      cartItemsList.appendChild(el);
-      _bindCartItem(el);
-    });
+    }
+    _updateCartTotals();
+  } catch (e) {
+    console.error('Error cargando carrito:', e);
   }
-
-  _updateCartTotals();
 }
-
 /* ── Checkout ────────────────────────────────────────────────── */
 
 /**
@@ -325,7 +305,6 @@ function _loadCartFromStorage() {
  * @returns {void}
  */
 function _goToCheckout() {
-  _saveCartToStorage();
   window.location.href = 'checkout.html';
 }
 

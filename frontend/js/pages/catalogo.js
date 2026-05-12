@@ -203,7 +203,7 @@ function construirCardProducto(p) {
         variantesHTML = `
             <div class="ed-vol-label">Presentación</div>
             <div class="ed-vols">
-                ${p.variantes.map((v, i) => `<button class="ed-vol-btn${i === 0 ? ' sel' : ''}" data-precio="${v.precio}">${v.valor}</button>`).join('')}
+            ${p.variantes.map((v, i) => `<button class="ed-vol-btn${i === 0 ? ' sel' : ''}" data-precio="${v.precio}" data-variante-id="${v.id}">${v.valor}</button>`).join('')}
             </div>
         `;
     }
@@ -218,7 +218,7 @@ function construirCardProducto(p) {
         <div class="ed-img-zone">
             ${imgHTML}
             <div class="ed-cart-overlay">
-                <button class="ed-cart-btn">Agregar al carrito</button>
+            <button class="ed-cart-btn" data-variante-id="${p.variantes && p.variantes[0] ? p.variantes[0].id : ''}">Agregar al carrito</button>
             </div>
         </div>
         <div class="ed-brand">${p.marca || ''}</div>
@@ -232,27 +232,27 @@ function construirCardProducto(p) {
     `;
     
     // Evento para selector de variante
-    card.querySelectorAll('.ed-vol-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            card.querySelectorAll('.ed-vol-btn').forEach(b => b.classList.remove('sel'));
-            btn.classList.add('sel');
-            const precio = btn.dataset.precio;
-            if (precio) {
-                card.querySelector('.ed-price').textContent = `$${parseInt(precio).toLocaleString('es-MX')} MXN`;
-            }
+        card.querySelectorAll('.ed-vol-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                card.querySelectorAll('.ed-vol-btn').forEach(b => b.classList.remove('sel'));
+                btn.classList.add('sel');
+                const precio = btn.dataset.precio;
+                if (precio) {
+                    card.querySelector('.ed-price').textContent = `$${parseInt(precio).toLocaleString('es-MX')} MXN`;
+                }
+                // Actualizar varianteId en el botón del carrito según la variante seleccionada
+                const cartBtn = card.querySelector('.ed-cart-btn');
+                if (cartBtn) cartBtn.dataset.varianteId = btn.dataset.varianteId;
+            });
         });
-    });
     
     // Evento para agregar al carrito
-    const cartBtn = card.querySelector('.ed-cart-btn');
-    cartBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const selVol = card.querySelector('.ed-vol-btn.sel');
-        const precio = selVol?.dataset.precio || p.precioNumerico;
-        const vol = selVol?.textContent || '';
-        addItemToCart(p.productId, p.marca, p.nombre, `$${precio.toLocaleString('es-MX')} MXN`, vol, nivel);
-    });
+        const cartBtn = card.querySelector('.ed-cart-btn');
+        cartBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            addItemToCart(cartBtn.dataset.varianteId);
+        });
     
     return card;
 }

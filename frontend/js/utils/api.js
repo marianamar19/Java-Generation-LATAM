@@ -178,6 +178,8 @@ export async function searchProductos(query) {
     return response.json();
 }
 
+//--Endpoints carrito--
+
 export async function getCarrito() {
     return get('/api/carrito');
 }
@@ -197,6 +199,8 @@ export async function removeCartItem(itemId) {
 export async function clearCart() {
     return del('/api/carrito/vaciar');
 }
+
+//--FIN--Endpoints carrito
 
 export async function getDirecciones() {
     return get('/api/direcciones');

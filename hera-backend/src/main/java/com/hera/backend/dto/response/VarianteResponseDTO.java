@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @Builder
 public class VarianteResponseDTO {
 
+    private Long id;
     private String valor;       // '50 ml', '100 ml', 'Talla M'
     private BigDecimal precio;  // Precio de esta variante
     private BigDecimal precioDescuento; // Precio con descuento (si aplica)

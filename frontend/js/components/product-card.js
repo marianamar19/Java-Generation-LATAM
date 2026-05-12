@@ -98,7 +98,7 @@ export function renderCard(p) {
         <div class="product-overlay">
           <button class="product-overlay-btn"
             data-action="add-to-cart"
-            data-id="${p.id}"
+            data-variante-id="${p.varianteId}"
             data-brand="${p.brand}"
             data-name="${p.name}"
             data-price="${p.price}"
@@ -188,7 +188,7 @@ export function renderCardEditorial(p) {
         <div class="ed-cart-overlay">
           <button class="ed-cart-btn"
             data-action="add-to-cart"
-            data-id="${p.id}"
+            data-variante-id="${p.varianteId}"
             data-brand="${p.brand}"
             data-name="${p.name}"
             data-price="${p.price}"

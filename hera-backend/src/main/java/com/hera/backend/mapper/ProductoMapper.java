@@ -167,6 +167,7 @@ public class ProductoMapper {
         return variantes.stream()
                 .filter(v -> v.getActivo() != null && v.getActivo())
                 .map(v -> VarianteResponseDTO.builder()
+                        .id(v.getId())
                         .valor(v.getNombreVariante())
                         .precio(v.getPrecio())
                         .precioDescuento(v.getPrecioDescuento())

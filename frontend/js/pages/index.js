@@ -23,6 +23,7 @@ import { initFavDrawer }                 from '../components/fav-drawer.js';
 import { loadNewsletter }                from '../components/newsletter.js';
 import { loadFooter }                    from '../components/footer.js';
 import { CATALOG }                       from '../utils/catalog.js';
+import { getProductos }                  from '../utils/api.js';
 import { renderCard, renderCardEditorial } from '../components/product-card.js';
  
 /* ══════════════════════════════════════════════════════════════
@@ -39,17 +40,15 @@ document.addEventListener('DOMContentLoaded', async function() {
  
   // Render de secciones dinámicas — antes de init para que los
   // elementos existan cuando los listeners se enlacen
-  _renderHeroCard();
-  _renderBestSellers();
-  _renderNovedades();
+_renderHeroCard();
+await _renderBestSellers();   
+await _renderNovedades();
  
   // Lógica exclusiva de esta página
-  _initScrollReveal();
-  _initCarousel();
-  _initVolButtons();
-  _initCatCards();
-  _initCarouselDelegation();
-  _initEditorialDelegation();
+_initScrollReveal();
+_initCatCards();
+_initCarouselDelegation();
+_initEditorialDelegation();
 });
  
 /* ══════════════════════════════════════
@@ -126,12 +125,30 @@ function _renderHeroCard() {
  *    await fetch('/api/productos?bestSeller=true').then(r => r.json())
  * @returns {void}
  */
-function _renderBestSellers() {
+async function _renderBestSellers() {
   const track = document.getElementById('carouselTrack');
   if (!track) return;
- 
-  const productos = CATALOG.filter(p => p.bestSeller);
-  track.innerHTML = productos.map(renderCard).join('');
+
+  try {
+    const raw      = await getProductos();
+    const productos = raw
+      .filter(p => p.esBestSeller)
+      .map(p => ({
+        ...p,
+        id:        p.productId,
+        brand:     p.marca,
+        name:      p.nombre,
+        price:     p.precio,
+        nivel:     p.nivelDisponibilidad,
+        badge:     p.badge || '',
+        varianteId: p.variantes && p.variantes[0] ? p.variantes[0].id : null,
+        vols:      p.variantes ? p.variantes.map(v => ({ ml: v.volumen, precio: v.precio })) : [],
+      }));
+    track.innerHTML = productos.map(renderCard).join('');
+    _initCarousel();   // reinicia el carrusel con los nuevos elementos
+  } catch (e) {
+    console.error('Error cargando bestsellers:', e);
+  }
 }
  
 /* ══════════════════════════════════════
@@ -146,12 +163,31 @@ function _renderBestSellers() {
  *    await fetch('/api/productos?nuevo=true').then(r => r.json())
  * @returns {void}
  */
-function _renderNovedades() {
+async function _renderNovedades() {
   const grid = document.querySelector('.editorial-grid');
   if (!grid) return;
- 
-  const productos = CATALOG.filter(p => p.nuevo).slice(0, 3);
-  grid.innerHTML = productos.map(renderCardEditorial).join('');
+
+  try {
+    const raw      = await getProductos();
+    const productos = raw
+      .filter(p => p.esNuevo)
+      .slice(0, 3)
+      .map(p => ({
+        ...p,
+        id:        p.productId,
+        brand:     p.marca,
+        name:      p.nombre,
+        price:     p.precio,
+        nivel:     p.nivelDisponibilidad,
+        badge:     p.badge || '',
+        varianteId: p.variantes && p.variantes[0] ? p.variantes[0].id : null,
+        vols:      p.variantes ? p.variantes.map(v => ({ ml: v.volumen, precio: v.precio })) : [],
+      }));
+    grid.innerHTML = productos.map(renderCardEditorial).join('');
+    _initVolButtons();   // reinicia los selectores de volumen con los nuevos elementos
+  } catch (e) {
+    console.error('Error cargando novedades:', e);
+  }
 }
  
 /* ══════════════════════════════════════
@@ -251,14 +287,7 @@ function _initCarouselDelegation() {
     const btn = e.target.closest('[data-action="add-to-cart"]');
     if (!btn) return;
     e.stopPropagation();
-    addItemToCart(
-      btn.dataset.id,
-      btn.dataset.brand,
-      btn.dataset.name,
-      btn.dataset.price,
-      btn.dataset.vol,
-      btn.dataset.nivel
-    );
+    addItemToCart(btn.dataset.varianteId);
   });
 }
  
@@ -286,7 +315,7 @@ function _initEditorialDelegation() {
       ? '$' + parseInt(selVolBtn.dataset.precio).toLocaleString('es-MX') + ' MXN'
       : btn.dataset.price;
  
-    addItemToCart(btn.dataset.id, btn.dataset.brand, btn.dataset.name, price, vol, btn.dataset.nivel);
+    addItemToCart(btn.dataset.varianteId);
   });
 }
  
