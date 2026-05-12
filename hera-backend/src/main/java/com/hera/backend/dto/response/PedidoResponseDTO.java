@@ -19,6 +19,7 @@ import java.util.List;
 @Builder
 public class PedidoResponseDTO {
 
+    private Long id;
     private String numeroPedido;
     private String nombreContacto;
     private String emailContacto;
@@ -37,6 +38,9 @@ public class PedidoResponseDTO {
 
     private String estado; // 'pendiente', 'confirmado', 'enviado', 'entregado'
     private LocalDateTime fechaPedido;
+    private LocalDateTime fechaConfirmacion;
+    private LocalDateTime fechaEnvio;
+    private LocalDateTime fechaEntrega;
 
     private List<DetallePedidoResponseDTO> items;
 }
