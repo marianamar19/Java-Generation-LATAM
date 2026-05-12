@@ -33,7 +33,7 @@ const STATUS_CONFIG = {
     entregado:  { label: 'Entregado',  color: '#4caf50' },
     cancelado:  { label: 'Cancelado',  color: '#E1222B' },
 };
-
+ 
 /* ══════════════════════════════════════
    ESTADO GLOBAL
 ══════════════════════════════════════ */
@@ -80,7 +80,7 @@ async function cargarDatos() {
         productosGlobal = [];
     }
 }
-
+ 
 /* ══════════════════════════════════════
    RENDER KPIs
 ══════════════════════════════════════ */
@@ -114,7 +114,7 @@ function renderKPIs() {
         elPendientes.classList.add('adm-kpi-value--accent');
     }
 }
-
+ 
 /* ══════════════════════════════════════
    TABLA DE ÓRDENES
 ══════════════════════════════════════ */
@@ -190,7 +190,7 @@ function renderStatusList(orders) {
         `;
     }).join('');
 }
-
+ 
 /* ══════════════════════════════════════
    TOP PRODUCTOS
 ══════════════════════════════════════ */
@@ -230,7 +230,7 @@ function renderTopProducts(orders) {
         </div>
     `).join('');
 }
-
+ 
 /* ══════════════════════════════════════
    GRÁFICA DE VENTAS
 ══════════════════════════════════════ */

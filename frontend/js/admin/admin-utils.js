@@ -11,7 +11,7 @@ const CUENTA_URL = '/pages/cuenta.html';
 /* ══════════════════════════════════════
    GUARD — Verificar sesión admin
 ══════════════════════════════════════ */
-
+ 
 /**
  * Verifica que exista una sesión admin válida usando api.js
  * @returns {boolean}
@@ -33,11 +33,11 @@ function guardAdmin() {
 
     return true;
 }
-
+ 
 /* ══════════════════════════════════════
    LOGOUT
 ══════════════════════════════════════ */
-
+ 
 /**
  * Inicializa el botón de cerrar sesión del sidebar.
  * Usa la función logout de api.js
@@ -51,11 +51,10 @@ function initLogout() {
         // logout() ya redirige a cuenta.html
     });
 }
-
+ 
 /* ══════════════════════════════════════
    EMPTY STATE (sin cambios)
 ══════════════════════════════════════ */
-
 function buildEmptyState(texto, icon) {
     const icons = {
         doc: '<svg class="adm-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>',
@@ -64,5 +63,4 @@ function buildEmptyState(texto, icon) {
     const svg = icons[icon] || icons.doc;
     return `<div class="adm-empty">${svg}<span class="adm-empty-text">${texto}</span></div>`;
 }
-
 export { guardAdmin, initLogout, buildEmptyState };

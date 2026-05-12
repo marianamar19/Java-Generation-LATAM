@@ -51,6 +51,7 @@
   background: radial-gradient(ellipse 50% 80% at 82% 50%, rgba(225,34,43,.04) 0%, transparent 65%);
   pointer-events: none;
 }
+
 .nos-hero-eyebrow {
   display: flex; align-items: center; gap: 12px;
   font-size: 11px; font-weight: 600; letter-spacing: .25em;
@@ -104,34 +105,28 @@
   border-bottom: 1px solid var(--lgray);
 }
 
+/* Columna visual — imagen ocupa 65% del ancho, centrada verticalmente */
+.nos-hist-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 85%;
+  z-index: 2;
+}
+
 /* Columna visual — fondo gris claro */
 .nos-hist-visual {
   background: #ececec;
   position: relative; overflow: hidden;
   display: flex; align-items: center; justify-content: center;
 }
+
 /* Línea roja vertical de acento */
 .nos-hist-redline {
   position: absolute; right: 0; top: 15%; bottom: 15%;
   width: 2px; background: var(--red); opacity: .6;
-}
-/* Placeholder ocupa 65% del ancho de la columna */
-.nos-hist-img-placeholder {
-  position: relative; z-index: 2;
-  width: 65%; aspect-ratio: 3/4;
-  border: 1.5px dashed rgba(15,15,15,.18);
-  background: rgba(255,255,255,.4);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 10px;
-}
-.nos-hist-img-placeholder img { /*Regla para controlar el tamaño de la imagen en seccion 2  */
-  width: 160%;
-  height: 150%;
-  object-fit: cover;  
-}
-.nos-hist-img-placeholder span {
-  font-size: 10px; font-weight: 600; letter-spacing: .14em;
-  text-transform: uppercase; color: rgba(15,15,15,.30);
 }
 
 /* Columna de texto */
@@ -396,6 +391,18 @@ button, a, .flip-card, .nos-chip,
 @media (max-width: 768px) {
   .nos-hero            { padding: 40px 24px 36px; }
   .nos-hero-chips      { flex-direction: column; gap: 7px; align-items: flex-start; }
+
+  /* Reposicionar imagen hacia la mano y el frasco */
+  .nos-hero-img        { object-position: 30% 65%; }
+
+  .nos-hero::before { background: linear-gradient( to bottom,
+      #0c0907 0%,
+      #0c0907 30%,
+      rgba(12,9,7,.70) 52%,
+      rgba(12,9,7,0) 80%
+      );
+    }
+  
 
   .nos-historia        { grid-template-columns: 1fr; }
   .nos-hist-visual     { min-height: 260px; }
