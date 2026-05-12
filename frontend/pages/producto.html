@@ -3,44 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dior Sauvage Eau de Parfum — HERA Perfumes &amp; Joyería</title>
-  <meta name="description" content="Sauvage EDP de Dior: lavanda silvestre, pimienta de Sichuan y sándalo de Mysore. Original, sellado de fábrica, envío a todo México." />
+  <title id="page-title">Producto — HERA Perfumes &amp; Joyería</title>
+  <meta name="description" id="meta-description" content="Detalles del producto en HERA." />
 
-  <!-- ── Design System base ── -->
-  <link rel="stylesheet" href="../css/base/typography.css" />
+  <!-- CSS Base -->
   <link rel="stylesheet" href="../css/base/tokens.css" />
   <link rel="stylesheet" href="../css/base/reset.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
   <link rel="stylesheet" href="../css/base/buttons.css" />
   <link rel="stylesheet" href="../css/base/layout.css" />
 
-  <!-- ── Componentes universales ── -->
+  <!-- Componentes universales -->
   <link rel="stylesheet" href="../css/components/navbar.css" />
   <link rel="stylesheet" href="../css/components/drawer.css" />
   <link rel="stylesheet" href="../css/components/product-card.css" />
   <link rel="stylesheet" href="../css/components/newsletter.css" />
   <link rel="stylesheet" href="../css/components/footer.css" />
 
-  <!-- ── Estilos exclusivos de esta página ── -->
+  <!-- Estilos exclusivos de producto -->
   <link rel="stylesheet" href="../css/pages/producto.css" />
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-    PLACEHOLDER: Navbar universal
-    El fragmento components/navbar.html se inyecta aquí
-    por js/components/navbar.js vía fetch.
-══════════════════════════════════════ -->
 <div id="navbar-placeholder"></div>
 
 <div class="site-wrap">
 
-  <!-- ══════════════════════════════════════
-      SECCIÓN: Product Stage — hero del producto
-  ══════════════════════════════════════ -->
   <section class="product-stage">
     <div class="product-layout">
 
-      <!-- ── Galería de imágenes ── -->
+      <!-- Galería de imágenes (dinámica) -->
       <div class="product-gallery">
         <div class="product-thumbs-wrap">
           <button class="thumb-nav-btn" id="thumb-prev" disabled>
@@ -48,17 +40,7 @@
               <path d="m18 15-6-6-6 6"/>
             </svg>
           </button>
-          <div class="product-thumbs">
-            <div class="product-thumb active">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.22)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            </div>
-            <div class="product-thumb">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.22)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            </div>
-            <div class="product-thumb">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.22)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            </div>
-          </div>
+          <div class="product-thumbs" id="product-thumbs"></div>
           <button class="thumb-nav-btn" id="thumb-next">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <path d="m6 9 6 6 6-6"/>
@@ -66,36 +48,28 @@
           </button>
         </div>
         <div class="product-img-main">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-            <rect x="3" y="3" width="18" height="18" rx="1"/>
-            <circle cx="8.5" cy="8.5" r="1.5"/>
-            <path d="m21 15-5-5L5 21"/>
-          </svg>
-          <span>Imagen del perfume</span>
+          <img id="main-product-img" alt="Imagen principal del producto" style="width:100%; height:100%; object-fit:contain;" />
         </div>
-      </div><!-- /product-gallery -->
+      </div>
 
-      <!-- ── Información del producto ── -->
+      <!-- Información del producto (dinámica) -->
       <div class="product-info">
-        <div class="product-badge" id="prod-badge">Más vendido</div>
-        <div class="product-brand-tag" id="prod-brand">Dior</div>
-        <h1 class="product-name" id="prod-name">Sauvage</h1>
-        <div class="product-concentration" id="prod-concentration">Eau de Parfum</div>
-        <div class="product-meta-chips" id="prod-chips">
-          <span class="product-meta-chip">Diseñador</span>
-          <span class="product-meta-chip">Masculino</span>
-        </div>
+        <div class="product-badge" id="prod-badge"></div>
+        <div class="product-brand-tag" id="prod-brand"></div>
+        <h1 class="product-name" id="prod-name"></h1>
+        <div class="product-concentration" id="prod-concentration"></div>
+        <div class="product-meta-chips" id="prod-chips"></div>
         <div class="product-rating-row" id="prod-rating-row">
-          <span class="product-stars" id="prod-stars-display">★★★★<span class="empty">★</span></span>
-          <span class="product-rating-num" id="prod-rating">4.4</span>
-          <span class="product-rating-count" id="prod-review-count">124 reseñas</span>
+          <span class="product-stars" id="prod-stars-display"></span>
+          <span class="product-rating-num" id="prod-rating"></span>
+          <span class="product-rating-count" id="prod-review-count"></span>
         </div>
-        <div class="product-price" id="prod-price">$2,490 MXN</div>
+        <div class="product-price" id="prod-price"></div>
         <div class="product-size-label">Presentación</div>
         <div class="product-sizes" id="prod-sizes"></div>
         <div class="prod-nivel-badge" id="prod-nivel-badge">
           <span class="prod-nivel-badge-dot"></span>
-          <span id="prod-nivel-label">Pieza exclusiva</span>
+          <span id="prod-nivel-label"></span>
         </div>
         <div class="product-actions">
           <button class="btn-add-cart" id="btn-add-cart-main">Añadir al carrito</button>
@@ -106,207 +80,74 @@
           </button>
         </div>
         <hr class="product-divider" />
-        <p class="product-desc" id="prod-desc">Una fuerza de la naturaleza hecha perfume. Sauvage EDP profundiza la tradición con una apertura de lavanda silvestre y pimienta de Sichuan, mientras una base de sándalo de Mysore y ámbar gris le otorgan una durabilidad excepcional. Un clásico contemporáneo.</p>
-      </div><!-- /product-info -->
+        <p class="product-desc" id="prod-desc"></p>
+      </div>
 
-    </div><!-- /product-layout -->
+    </div>
   </section>
 
-  <!-- ══════════════════════════════════════
-      SECCIÓN: Notas olfativas
-  ══════════════════════════════════════ -->
+  <!-- Notas olfativas (dinámico) -->
   <section class="product-notes-section">
     <div class="notes-section-header reveal">
       <div class="notes-section-eyebrow">Composición</div>
       <div class="notes-section-title">Notas <em>olfativas</em></div>
     </div>
     <div class="notes-cols reveal" id="notes-cols">
-      <div class="notes-col">
-        <div class="notes-col-label">Salida</div>
-        <ul class="notes-list" id="notes-head"></ul>
-      </div>
-      <div class="notes-col">
-        <div class="notes-col-label">Corazón</div>
-        <ul class="notes-list" id="notes-heart"></ul>
-      </div>
-      <div class="notes-col">
-        <div class="notes-col-label">Base</div>
-        <ul class="notes-list" id="notes-base"></ul>
-      </div>
+      <div class="notes-col"><div class="notes-col-label">Salida</div><ul id="notes-head"></ul></div>
+      <div class="notes-col"><div class="notes-col-label">Corazón</div><ul id="notes-heart"></ul></div>
+      <div class="notes-col"><div class="notes-col-label">Base</div><ul id="notes-base"></ul></div>
     </div>
-    <p class="notes-footnote reveal">Las notas de salida son las primeras en percibirse. Las de corazón definen el carácter. Las de fondo son la firma duradera.</p>
   </section>
 
-  <!-- ══════════════════════════════════════
-      SECCIÓN: Ficha técnica y acordes
-  ══════════════════════════════════════ -->
+  <!-- Ficha técnica (dinámica) -->
   <section class="product-details">
     <div class="details-eyebrow reveal">Perfil del perfume</div>
-    <div class="details-grid">
-      <div class="reveal">
-        <div class="details-col-title">Ficha técnica</div>
-        <div class="intel-row"><div class="intel-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><div><div class="intel-text-label">Marca</div><div class="intel-text-value">Dior</div></div></div>
-        <div class="intel-row"><div class="intel-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 3"/></svg></div><div><div class="intel-text-label">Concentración</div><div class="intel-text-value">Eau de Parfum</div></div></div>
-        <div class="intel-row"><div class="intel-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg></div><div><div class="intel-text-label">Género</div><div class="intel-text-value">Masculino</div></div></div>
-        <div class="intel-row"><div class="intel-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div><div><div class="intel-text-label">Categoría</div><div class="intel-text-value">Diseñador</div></div></div>
-      </div>
-      <div class="reveal reveal-d1">
-        <div class="details-col-title details-col-title--hidden">_</div>
-        <div class="intel-row"><div class="intel-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div><div class="intel-text-label">País de origen</div><div class="intel-text-value">Francia</div></div></div>
-        <div class="intel-row"><div class="intel-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c1.5 0 3 .5 4 1.5C17 4.5 18 6 18 8c0 4-6 13-6 13S6 12 6 8c0-2 1-3.5 2-4.5S10.5 2 12 2z"/><circle cx="12" cy="8" r="2"/></svg></div><div><div class="intel-text-label">Perfumista</div><div class="intel-text-value">François Demachy</div></div></div>
-        <div class="intel-row"><div class="intel-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12C12 6 6 3 6 3s0 4 3 7M12 12c0-6 6-9 6-9s0 4-3 7"/></svg></div><div><div class="intel-text-label">Familia olfativa</div><div class="intel-text-value">Aromática amaderada</div></div></div>
-        <div class="intel-row"><div class="intel-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div class="intel-text-label">Lanzamiento</div><div class="intel-text-value">2018</div></div></div>
-      </div>
-      <div class="reveal reveal-d2">
-        <div class="details-col-title">Acordes principales</div>
-        <div id="accords-container"></div>
-      </div>
-    </div>
+    <div class="details-grid" id="details-grid"></div>
   </section>
 
-  <!-- ══════════════════════════════════════
-      SECCIÓN: Performance
-  ══════════════════════════════════════ -->
+  <!-- Performance (dinámico) -->
   <section class="product-performance">
     <div class="perf-header reveal">
-      <div>
-        <div class="perf-section-label">Desempeño</div>
-        <div class="perf-title">¿Cómo se <em class="perf-title-em">comporta?</em></div>
-      </div>
-      <p class="perf-subtitle">Basado en las opiniones de nuestra comunidad de compradores.</p>
+      <div><div class="perf-section-label">Desempeño</div><div class="perf-title">¿Cómo se <em>comporta?</em></div></div>
     </div>
-    <div class="perf-grid">
-      <div class="perf-item reveal">
-        <div class="perf-item-label">Longevidad</div>
-        <div class="perf-dots" id="longevity-dots"></div>
-        <div class="perf-level" id="longevity-level">Alta</div>
-        <div class="perf-desc">La fragancia permanece perceptible durante 8 a 12 horas en piel.</div>
-      </div>
-      <div class="perf-item reveal reveal-d1">
-        <div class="perf-item-label">Estela (Sillage)</div>
-        <div class="perf-dots" id="sillage-dots"></div>
-        <div class="perf-level" id="sillage-level">Alta</div>
-        <div class="perf-desc">Se proyecta a una distancia notable; quienes te rodean lo percibirán.</div>
-      </div>
-      <div class="perf-item reveal reveal-d2">
-        <div class="perf-item-label">Puntuación general</div>
-        <div class="perf-rating-big"><span class="perf-rating-num">4.4</span><span class="perf-rating-max">/ 5</span></div>
-        <div class="perf-stars-display">★★★★<span class="empty">★</span></div>
-        <div class="perf-review-count">Basado en 124 reseñas verificadas</div>
-      </div>
-    </div>
+    <div class="perf-grid" id="perf-grid"></div>
   </section>
 
-  <!-- ══════════════════════════════════════
-      SECCIÓN: Contexto   de uso
-  ══════════════════════════════════════ -->
+  <!-- Contexto de uso (dinámico) -->
   <section class="product-context">
     <div class="context-eyebrow reveal">Cuándo usarlo</div>
-    <div class="context-row-1 reveal">
-      <div class="context-block">
-        <div class="context-label">Momento del día</div>
-        <div class="context-cards" id="time-cards"></div>
-      </div>
-      <div class="context-block context-block-wide">
-        <div class="context-label">Temporada recomendada</div>
-        <div class="context-cards" id="season-cards"></div>
-      </div>
-    </div>
-    <div class="context-block reveal reveal-d1">
-      <div class="context-label">Ocasión ideal</div>
-      <div class="context-cards" id="occasion-cards"></div>
-    </div>
+    <div id="context-container"></div>
   </section>
 
-  <!-- ══════════════════════════════════════
-      SECCIÓN: Familia del perfume
-  ══════════════════════════════════════ -->
+  <!-- Familia del perfume (dinámico) -->
   <section class="product-family" id="family-section">
     <div class="family-header reveal">
       <div class="family-eyebrow">La familia</div>
-      <div class="family-title">Otras versiones de <em class="family-title-em" id="family-title-name">Sauvage</em></div>
+      <div class="family-title">Otras versiones de <em id="family-title-name"></em></div>
     </div>
     <div class="family-grid reveal" id="family-scroll"></div>
   </section>
 
-  <!-- ══════════════════════════════════════
-      SECCIÓN: Reseñas
-  ══════════════════════════════════════ -->
+  <!-- Reseñas (dinámico) -->
   <section class="product-reviews" id="reviews-section">
     <div class="reviews-eyebrow reveal">Lo que dicen</div>
-    <div class="reviews-layout">
-      <div class="reviews-summary reveal">
-        <div class="reviews-big-num">4.4</div>
-        <div class="reviews-big-label">de 5 estrellas</div>
-        <div class="reviews-stars-lg">★★★★<span class="empty">★</span></div>
-        <div id="review-dist"></div>
-      </div>
-      <div class="review-form-col reveal">
-        <div class="review-form-title">Deja tu reseña</div>
-        <div class="review-form-group">
-          <label class="review-form-label">Tu calificación</label>
-          <div class="review-star-input" id="star-input">
-            <span data-val="1">★</span>
-            <span data-val="2">★</span>
-            <span data-val="3">★</span>
-            <span data-val="4">★</span>
-            <span data-val="5">★</span>
-          </div>
-        </div>
-        <div class="review-form-group">
-          <label class="review-form-label">Nombre</label>
-          <input type="text" class="review-form-input" id="rev-name" placeholder="Ej. Carlos M." maxlength="40" />
-        </div>
-        <div class="review-form-group">
-          <label class="review-form-label">Ciudad</label>
-          <input type="text" class="review-form-input" id="rev-city" placeholder="Ej. Guadalajara, Jal." maxlength="40" />
-        </div>
-        <div class="review-form-group">
-          <label class="review-form-label">Tu comentario</label>
-          <textarea class="review-form-textarea" id="rev-text" placeholder="Cuéntanos tu experiencia con este perfume..." maxlength="400"></textarea>
-        </div>
-        <button class="review-form-btn" id="rev-submit">Publicar reseña</button>
-        <p class="review-form-success" id="rev-success">¡Gracias por tu reseña!</p>
-      </div>
-      <div class="review-list-col reveal">
-        <div class="review-list-col-title" id="rev-list-count">Reseñas</div>
-        <div class="review-list-scroll" id="review-list"></div>
-      </div>
-    </div>
+    <div class="reviews-layout" id="reviews-layout"></div>
   </section>
 
-  <!-- ══════════════════════════════════════
-      SECCIÓN: Productos similares
-  ══════════════════════════════════════ -->
+  <!-- Productos similares (dinámico) -->
   <section class="product-similar">
     <div class="similar-eyebrow">Quizás también</div>
     <div class="similar-title"><strong>También te</strong> podría gustar</div>
     <div class="similar-grid" id="similar-grid"></div>
   </section>
 
-<!-- ══════════════════════════════════════
-      Newsletter — inyectado vía fetch por newsletter.js
-══════════════════════════════════════ -->
   <div id="newsletter-placeholder"></div>
-
-<!-- ══════════════════════════════════════
-      FOOTER PLACEHOLDER
-      loadFooter() inyecta el fragmento footer.html aquí
-══════════════════════════════════════ -->
   <div id="footer-placeholder"></div>
 
-</div><!-- /site-wrap -->
+</div>
 
-<!-- ══════════════════════════════════════
-    CART DRAWER — inyectado vía fetch por cart-drawer.js
-══════════════════════════════════════ -->
 <div id="cart-drawer-placeholder"></div>
 
-<!-- ══════════════════════════════════════
-    SCRIPT: Módulo de la página
-    Único <script> de la página. Carga en cascada:
-    navbar.js → cart-drawer.js → fav-drawer.js → producto.js
-══════════════════════════════════════ -->
 <script type="module" src="../js/pages/producto.js"></script>
 </body>
 </html>

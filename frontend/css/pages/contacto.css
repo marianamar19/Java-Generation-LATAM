@@ -104,6 +104,17 @@
   z-index: 1;
 }
 
+/*Adaptación del avatar a imagen*/
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top; /* prioriza la cara */
+  border-radius: 50%;
+  display: block;
+}
+
 /* ── Sección: Indicador de estado "En línea" ────────────────── */
 .avatar-status {
   display: inline-flex;

@@ -65,18 +65,18 @@ const PRODUCT = {
   longevity: 4, sillage: 4, rating: 4.4, reviewCount: 124,
   seasons: ['otono', 'invierno'], timeOfDay: ['noche'], occasions: ['cita', 'gala', 'casual'],
   sizes: [
-    { ml: 60,  price: '$1,890 MXN', value: 1890 },
-    { ml: 100, price: '$2,490 MXN', value: 2490 },
-    { ml: 200, price: '$3,290 MXN', value: 3290 },
+    { ml: 60,  price: '$1,890 MXN', value: 1890, img: 'https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777440279/WhatsApp_Image_2026-04-28_at_10.27.02_PM_3_bocruu.jpg'},
+    { ml: 100, price: '$2,490 MXN', value: 2490, img: 'https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777440284/WhatsApp_Image_2026-04-28_at_10.27.03_PM_kukzvv.jpg'},
+    { ml: 200, price: '$3,290 MXN', value: 3290, img: 'https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777440281/WhatsApp_Image_2026-04-28_at_10.27.03_PM_1_m37zng.jpg'},
   ],
   activeSize: 1, nivel: 'red', volLabel: 'Presentación',
   tipo: 'perfumes', cat: 'diseñador', gen: 'masculino',
   family: [
-    { name: 'Sauvage EDT',       concentration: 'Eau de Toilette', price: '$1,690 MXN', vol: '100 ml', nivel: 'red' },
-    { name: 'Sauvage EDP',       concentration: 'Eau de Parfum',   price: '$2,490 MXN', vol: '100 ml', nivel: 'red', current: true },
-    { name: 'Sauvage Parfum',    concentration: 'Parfum',           price: '$3,190 MXN', vol: '75 ml',  nivel: 'red' },
-    { name: 'Sauvage Elixir',    concentration: 'Elixir',           price: '$3,890 MXN', vol: '60 ml',  nivel: 'red' },
-    { name: 'Sauvage Eau Forte', concentration: 'Eau Forte',        price: '$2,190 MXN', vol: '100 ml', nivel: 'red' },
+    { name: 'Sauvage EDT',       concentration: 'Eau de Toilette', img: 'https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dw378b49e0/images/41676579/large/41676579_x1.jpg?sw=2200&sh=2500', price: '$1,690 MXN', vol: '100 ml', nivel: 'red' },
+    { name: 'Sauvage EDP',       concentration: 'Eau de Parfum', img: 'https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dwdbe214e2/images/39882541/large/39882541_x1.jpg?sw=2200&sh=2500',  price: '$2,490 MXN', vol: '100 ml', nivel: 'red', current: true },
+    { name: 'Sauvage Parfum',    concentration: 'Parfum',   img: 'https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dwb13a66e5/images/40397845/large/40397845_x1.jpg?sw=2200&sh=2500',        price: '$3,190 MXN', vol: '75 ml',  nivel: 'red' },
+    { name: 'Sauvage Elixir',    concentration: 'Elixir',    img: 'https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dw9b91bf30/images/42786853/large/42786853_x1.jpg?sw=2200&sh=2500',       price: '$3,890 MXN', vol: '60 ml',  nivel: 'red' },
+    { name: 'Sauvage Eau Forte', concentration: 'Eau Forte',   img: 'https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dw2b04f8f5/images/44123188/large/44123188_x1.jpg?sw=2200&sh=2500',     price: '$2,190 MXN', vol: '100 ml', nivel: 'red' },
   ],
   reviews: [
     { author: 'Carlos M.',  city: 'Guadalajara, Jal.', rating: 5, text: 'Increíble duración. Lo uso para salidas nocturnas y al día siguiente sigue presente. Definitivamente el mejor de la colección Sauvage.', date: 'Marzo 2025' },
@@ -87,9 +87,14 @@ const PRODUCT = {
   ],
   ratingDist: [82, 28, 10, 3, 1],
   similar: [
-    { id: 'bleu-chanel',   tipo: 'perfumes', cat: 'diseñador', gen: 'masculino', brand: 'Chanel', name: 'Bleu de Chanel EDP', price: '$2,890 MXN', badge: null,    nivel: 'red',    volLabel: 'Presentación', vols: [{ ml: 50, precio: 2890 }, { ml: 100, precio: 4200 }] },
-    { id: 'ysl-myslf',     tipo: 'perfumes', cat: 'diseñador', gen: 'masculino', brand: 'YSL',   name: 'Myself EDP',        price: '$1,990 MXN', badge: 'Nuevo',  nivel: 'yellow', volLabel: 'Presentación', vols: [{ ml: 60, precio: 1990 }, { ml: 100, precio: 2890 }] },
-    { id: 'aventus-creed', tipo: 'perfumes', cat: 'nicho',     gen: 'masculino', brand: 'Creed', name: 'Aventus EDP',       price: '$4,290 MXN', badge: 'Nicho',  nivel: 'red',    volLabel: 'Presentación', vols: [{ ml: 50, precio: 4290 }, { ml: 75,  precio: 5890 }] },
+    { id: 'bleu-chanel',   tipo: 'perfumes', cat: 'diseñador', gen: 'masculino', brand: 'Chanel', name: 'Bleu de Chanel EDP', img: 'https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dwb06470b3/images/31531703/large/31531703_x1.jpg?sw=2200&sh=2500', price: '$2,890 MXN', badge: null,    nivel: 'red',    volLabel: 'Presentación', vols: [{ ml: 50, precio: 2890 }, { ml: 100, precio: 4200 }] },
+    { id: 'ysl-myslf',     tipo: 'perfumes', cat: 'diseñador', gen: 'masculino', brand: 'YSL',   name: 'Myself EDP', img: 'https://www.yslbeauty.com.mx/dw/image/v2/AATL_PRD/on/demandware.static/-/Sites-ysl-master-catalog/es_MX/dwea5d1bb8/2024/pdp/fragancia/YSLM-51115YSL/3614273852821%20(60ML)/ysl_dmi_fram_myslf_edp_packshot_front_60ml_3000x3000px_3614273852821_rgb.jpg?sw=1536&sh=1536&sm=cut&sfrm=jpeg&q=85',       price: '$1,990 MXN', badge: 'Nuevo',  nivel: 'yellow', volLabel: 'Presentación', vols: [{ ml: 60, precio: 1990 }, { ml: 100, precio: 2890 }] },
+    { id: 'aventus-creed', tipo: 'perfumes', cat: 'nicho',     gen: 'masculino', brand: 'Creed', name: 'Aventus EDP',  img: 'https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dw06b20c29/images/40626051/large/40626051_x1.jpg?sw=2200&sh=2500',     price: '$4,290 MXN', badge: 'Nicho',  nivel: 'red',    volLabel: 'Presentación', vols: [{ ml: 50, precio: 4290 }, { ml: 75,  precio: 5890 }] },
+  ],
+  imgs: [
+    'https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777440282/WhatsApp_Image_2026-04-28_at_10.27.02_PM_cx55jc.jpg',
+    'https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777440278/WhatsApp_Image_2026-04-28_at_10.27.02_PM_2_ohxcbl.jpg',
+    'https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777440277/WhatsApp_Image_2026-04-28_at_10.27.02_PM_1_hij9ew.jpg',
   ],
 };
  
@@ -191,11 +196,20 @@ function initSizeSelector() {
       document.getElementById('prod-price').textContent = s.price;
       document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+
+      const mainImg = document.getElementById('main-product-img');
+      if (mainImg && s.img) {
+        mainImg.style.opacity = '0';
+        setTimeout(() => {
+          mainImg.src = s.img;
+          mainImg.style.opacity = '1';
+        }, 150);
+      }
     });
     cont.appendChild(btn);
   });
 }
- 
+
 /* ══════════════════════════════════════════════════════════════
    NIVEL BADGE (exclusive)
    ══════════════════════════════════════════════════════════════ */
@@ -250,30 +264,31 @@ function initMainActions() {
  
   // Botón grande de favoritos del hero
   const mainFavBtn = document.getElementById('btn-fav-main');
-  let mainFavActive = false;
   if (mainFavBtn) {
     // Sincroniza estado inicial con la lista de favoritos persistida
     if (getFavorites().some(f => f.id === PRODUCT.id)) {
-      mainFavActive = true;
       mainFavBtn.classList.add('active');
     }
     mainFavBtn.addEventListener('click', () => {
-      mainFavActive = !mainFavActive;
-      mainFavBtn.classList.toggle('active', mainFavActive);
-      if (mainFavActive) {
-        const selSize = PRODUCT.sizes[selectedSizeIdx];
-        mainFavBtn.dataset.productId = PRODUCT.id;
-        mainFavBtn.dataset.brand     = PRODUCT.brand;
-        mainFavBtn.dataset.name      = `${PRODUCT.name} EDP`;
-        mainFavBtn.dataset.price     = selSize.price;
-        mainFavBtn.dataset.nivel     = PRODUCT.nivel || 'green';
-        mainFavBtn.dataset.volLabel  = PRODUCT.volLabel || 'Presentación';
-        mainFavBtn.dataset.tipo      = PRODUCT.tipo || 'perfumes';
-        mainFavBtn.dataset.cat       = PRODUCT.cat || '';
-        mainFavBtn.dataset.gen       = PRODUCT.gen || '';
-        mainFavBtn.dataset.vol       = `${selSize.ml} ml`;
-      }
+      // Dataset siempre actualizado (necesario tanto al añadir como al quitar)
+      // para que _toggleFav pueda construir el objeto completo del favorito.
+      // NO se toca classList aquí — _toggleFav lo gestiona internamente.
+      const selSize = PRODUCT.sizes[selectedSizeIdx];
+      mainFavBtn.dataset.productId = PRODUCT.id;
+      mainFavBtn.dataset.brand     = PRODUCT.brand;
+      mainFavBtn.dataset.name      = `${PRODUCT.name} EDP`;
+      mainFavBtn.dataset.price     = selSize.price;
+      mainFavBtn.dataset.nivel     = PRODUCT.nivel || 'green';
+      mainFavBtn.dataset.volLabel  = PRODUCT.volLabel || 'Presentación';
+      mainFavBtn.dataset.tipo      = PRODUCT.tipo || 'perfumes';
+      mainFavBtn.dataset.cat       = PRODUCT.cat || '';
+      mainFavBtn.dataset.gen       = PRODUCT.gen || '';
+      mainFavBtn.dataset.vol       = `${selSize.ml} ml`;
       _toggleFav(mainFavBtn);
+      // btn-fav-main usa clase .btn-fav-lg, no .fav-btn —
+      // _toggleFav no lo alcanza con su querySelectorAll;
+      // sincronizamos el estado visual del corazón aquí
+      mainFavBtn.classList.toggle('active', getFavorites().some(f => f.id === PRODUCT.id));
     });
   }
 }
@@ -301,11 +316,35 @@ function initGallery() {
   const THUMB_H       = Math.round(THUMB_W * 4 / 3);
   let thumbOffset     = 0;
   const thumbMaxOffset = Math.max(0, galleryThumbs.length - THUMB_VISIBLE);
+
+  // ── Poblar galería con imágenes de PRODUCT.imgs ──────────────
+const mainImg = document.getElementById('main-product-img');
+
+if (PRODUCT.imgs && PRODUCT.imgs.length) {
+  // Imagen principal: arranca con la primera
+  if (mainImg) mainImg.src = PRODUCT.imgs[0];
+
+  // Thumbs: reemplaza el SVG placeholder por un <img> real
+  galleryThumbs.forEach((thumb, i) => {
+    if (PRODUCT.imgs[i]) {
+      thumb.innerHTML = `<img src="${PRODUCT.imgs[i]}"
+        style="width:100%; height:100%; object-fit:contain;" />`;
+    }
+  });
+}
  
-  galleryThumbs.forEach(thumb => {
+  galleryThumbs.forEach((thumb, i) => {
     thumb.addEventListener('click', () => {
       galleryThumbs.forEach(t => t.classList.remove('active'));
       thumb.classList.add('active');
+
+      if (mainImg && PRODUCT.imgs && PRODUCT.imgs[i]) {
+      mainImg.style.opacity = '0';
+      setTimeout(() => {
+        mainImg.src = PRODUCT.imgs[i];
+        mainImg.style.opacity = '1';
+      }, 150);
+    }
     });
   });
  
@@ -550,10 +589,13 @@ function initFamilyGrid() {
     card.innerHTML = `
       ${badge}
       <div class="fm-img-wrap">
-        <div class="fm-placeholder">
+        ${v.img
+      ? `<img src="${v.img}" style="width:100%; height:100%; object-fit:contain;" />`
+      : `<div class="fm-placeholder">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
           <span>Imagen del perfume</span>
-        </div>
+        </div>`
+    }
         <div class="fm-overlay">
           <button class="fm-overlay-btn">${btnLabel}</button>
         </div>
@@ -752,10 +794,13 @@ function initSimilarGrid() {
         </button>
       </div>
       <div class="ed-img-zone">
-        <div class="ed-img-placeholder">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-          <span>Imagen del perfume</span>
-        </div>
+      ${p.img
+        ? `<img src="${p.img}" style="width:100%; height:100%; object-fit:contain;" />`
+        : `<div class="ed-img-placeholder">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            <span>Imagen del perfume</span>
+          </div>`
+}
         <div class="ed-cart-overlay">
           <button class="ed-cart-btn" data-brand="${p.brand}" data-name="${p.name}"
             data-price="${p.price}" data-nivel="${nNivel}">Agregar al carrito</button>
@@ -789,11 +834,25 @@ function initSimilarGrid() {
       favBtn.addEventListener('click', e => { e.stopPropagation(); _toggleFav(favBtn); });
     }
  
-    // Botón de carrito rápido desde el overlay de la tarjeta
+    // Botón de carrito rápido desde el overlay de la tarjeta.
+    // Lee el volumen seleccionado en ese momento para:
+    //   1. Mostrar el ml correcto en el carrito
+    //   2. Usar el precio del volumen seleccionado
+    //   3. Generar un ID único por volumen (distintas presentaciones
+    //      deben ser líneas separadas en el carrito, no acumular qty)
     const cartBtn = item.querySelector('.ed-cart-btn');
     if (cartBtn) {
       cartBtn.addEventListener('click', () => {
-        addItemToCart(p.id, cartBtn.dataset.brand, cartBtn.dataset.name, cartBtn.dataset.price, '', cartBtn.dataset.nivel || 'green');
+        const selVol   = item.querySelector('.ed-vol-btn.sel');
+        const ml       = selVol ? selVol.dataset.ml : '';
+        const volStr   = ml ? ml + ' ml' : '';
+        const priceVal = selVol ? parseInt(selVol.dataset.precio) : null;
+        const priceStr = priceVal ? formatMXN(priceVal) : p.price;
+        // ID único por producto + volumen — evita que distintas
+        // presentaciones se acumulen en el mismo item del carrito
+        const uniqueId = ml ? `${p.id}-${ml}ml` : p.id;
+        const fullName = volStr ? `${p.name} ${volStr}` : p.name;
+        addItemToCart(uniqueId, p.brand, fullName, priceStr, volStr, p.nivel || 'green');
       });
     }
  

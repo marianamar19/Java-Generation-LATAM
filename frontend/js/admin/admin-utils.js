@@ -1,38 +1,37 @@
 /**
- * admin-utils.js — HERA Admin
- *
- * Descripción: Utilidades compartidas por todas las páginas del
- *              panel de administración. Centraliza el auth-check,
- *              el logout y el helper de estado vacío para evitar
- *              duplicación entre páginas del admin.
- *
- * Exporta:     guardAdmin, initLogout, buildEmptyState
- * Importado por: js/admin/dashboard.js, js/admin/productos.js
- *                y todos los demás scripts de página del admin.
+ * admin-utils.js — HERA Admin (VERSIÓN CORREGIDA)
+ * Ahora usa sessionStorage (mismo que api.js)
  */
+
+import { isAuthenticated, getCurrentUser, logout } from '../utils/api.js';
+
+/* Ruta absoluta a cuenta */
+const CUENTA_URL = '/pages/cuenta.html';
 
 /* ══════════════════════════════════════
    GUARD — Verificar sesión admin
-   Redirige inmediatamente si no hay sesión activa.
-   Llamar al inicio de cada script de página admin,
-   antes de cualquier otra lógica.
 ══════════════════════════════════════ */
 
 /**
- * Verifica que exista una sesión admin válida en localStorage.
- * Si no existe o está corrupta, redirige a cuenta.html.
- * Debe ejecutarse como IIFE al inicio de cada módulo admin.
- * @returns {void}
+ * Verifica que exista una sesión admin válida usando api.js
+ * @returns {boolean}
  */
 function guardAdmin() {
-  try {
-    const auth = JSON.parse(localStorage.getItem('hera_admin_auth') || 'null');
-    if (!auth || !auth.loggedIn) {
-      window.location.href = '../../pages/cuenta.html';
+    // Verificar autenticación real
+    if (!isAuthenticated()) {
+        sessionStorage.setItem('redirectAfterLogin', window.location.pathname);
+        window.location.replace(CUENTA_URL);
+        return false;
     }
-  } catch (e) {
-    window.location.href = '../../pages/cuenta.html';
-  }
+
+    // Verificar que sea ADMIN
+    const user = getCurrentUser();
+    if (!user || user.rol !== 'ADMIN') {
+        window.location.replace('/pages/index.html');
+        return false;
+    }
+
+    return true;
 }
 
 /* ══════════════════════════════════════
@@ -41,41 +40,29 @@ function guardAdmin() {
 
 /**
  * Inicializa el botón de cerrar sesión del sidebar.
- * Elimina hera_admin_auth de localStorage y redirige a cuenta.html.
- * @returns {void}
+ * Usa la función logout de api.js
  */
 function initLogout() {
-  const btn = document.getElementById('btn-logout');
-  if (!btn) return;
-  btn.addEventListener('click', () => {
-    try { localStorage.removeItem('hera_admin_auth'); } catch (e) { /* silencioso */ }
-    window.location.href = '../../pages/cuenta.html';
-  });
+    const btn = document.getElementById('btn-logout');
+    if (!btn) return;
+    
+    btn.addEventListener('click', async () => {
+        await logout();  // Usa la función de api.js
+        // logout() ya redirige a cuenta.html
+    });
 }
 
 /* ══════════════════════════════════════
-   EMPTY STATE
+   EMPTY STATE (sin cambios)
 ══════════════════════════════════════ */
 
-/**
- * Construye el HTML del estado vacío reutilizable en tablas y listas.
- * Compatible con el SVG de productos (caja) y el de órdenes (documento).
- * @param {string} texto  - Mensaje descriptivo a mostrar
- * @param {'box'|'doc'} [icon='doc'] - Ícono a usar: 'box' para productos, 'doc' para órdenes
- * @returns {string} HTML del estado vacío
- */
 function buildEmptyState(texto, icon) {
-  const icons = {
-    doc: '<svg class="adm-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>',
-    box: '<svg class="adm-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>',
-  };
-  const svg = icons[icon] || icons.doc;
-  return (
-    `<div class="adm-empty">` +
-      svg +
-      `<span class="adm-empty-text">${texto}</span>` +
-    `</div>`
-  );
+    const icons = {
+        doc: '<svg class="adm-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>',
+        box: '<svg class="adm-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>',
+    };
+    const svg = icons[icon] || icons.doc;
+    return `<div class="adm-empty">${svg}<span class="adm-empty-text">${texto}</span></div>`;
 }
 
 export { guardAdmin, initLogout, buildEmptyState };

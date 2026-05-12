@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HERA — Perfumes &amp; Joyería</title>
+  <meta name="description" content="Perfumes 100% originales de diseñador, nicho y árabes. Joyería exclusiva. Envío a todo México. Garantía de autenticidad en cada fragancia." />
+ 
+  <!-- ── Design System base ── -->
+  <link rel="stylesheet" href="../css/base/tokens.css" />
+  <link rel="stylesheet" href="../css/base/reset.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/buttons.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
+ 
+  <!-- ── Estilos universales ── -->
+  <!-- ── Componentes universales ── -->
+  <link rel="stylesheet" href="../css/components/announce-bar.css" />
+  <link rel="stylesheet" href="../css/components/navbar.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+  <link rel="stylesheet" href="../css/components/product-card.css" />
+  <link rel="stylesheet" href="../css/components/drawer.css" />
+  <link rel="stylesheet" href="../css/components/newsletter.css" />
+ 
+  <!-- ── Estilos de esta página ── -->
+  <link rel="stylesheet" href="../css/pages/index.css" />
+</head>
+<body>
+ 
+<!-- ══════════════════════════════════════
+    ANNOUNCE BAR PLACEHOLDER
+    loadAnnounceBar() inyecta aquí: marquee superior.
+══════════════════════════════════════ -->
+<div id="announce-bar-placeholder"></div> 
+ 
+<!-- ══════════════════════════════════════
+    NAVBAR PLACEHOLDER
+    loadNavbar() inyecta aquí: overlay móvil, panel lateral,
+    nav y search overlay.
+══════════════════════════════════════ -->
+<div id="navbar-placeholder"></div>
+ 
+<!-- ══════════════════════════════════════
+    SITE WRAP — centrado máximo del layout
+══════════════════════════════════════ -->
+<div class="site-wrap">
+ 
+<!-- ══════════════════════════════════════
+      SECCIÓN: Hero
+      [EXCLUSIVO] index.html
+══════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow reveal">Nueva Colección 2025</div>
+      <h1 class="hero-title reveal reveal-delay-1">El lujo<br>que huele<br><em>diferente.</em></h1>
+      <p class="hero-sub reveal reveal-delay-2">Fragancias cuidadosamente seleccionadas para quienes no necesitan permiso para destacar.</p>
+      <div class="hero-ctas reveal reveal-delay-3">
+        <a href="catalogo.html?tab=perfumes" class="btn-primary">Explorar perfumes</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img-wrap">
+        <div class="hero-card-wrap">
+          <div class="hero-cursor-dot"></div>
+          <div class="hero-card">
+            <div class="hero-card-img">
+              <img
+                src="https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777395579/Animale_Animale_for_Men_EDT_100_mL_q9rdzi.svg"
+                alt="Animale for Men EDT 100 mL"
+                width="350"
+                height="437"
+                loading="eager"
+              />
+            </div>
+            <div class="hero-card-info">
+              <div class="hero-card-info-body">
+                <div class="hero-card-label">Más vendido esta semana</div>
+                <div class="hero-card-name">Inolvidable by Jenny Rivera</div>
+                <div class="hero-card-vol-label">Presentación</div>
+                <div class="hero-card-vol">50 ml</div>
+                <div class="hero-card-footer">
+                  <div class="hero-card-price">$1,210 MXN</div>
+                  <button
+                    class="hero-card-fav fav-btn"
+                    data-product-id="jenny-1"
+                    data-tipo="perfumes"
+                    data-cat="diseñador"
+                    data-gen="femenino"
+                    data-nivel="green"
+                    data-vol="50 ml"
+                    data-vol-label="Presentación"
+                    data-brand="Jenny Rivera"
+                    data-name="Inolvidable EDP"
+                    data-price="$1,210 MXN"
+                    aria-label="Añadir a favoritos">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                  </button>
+                  <a href="producto.html?id=jenny-1" class="hero-card-cta">Ver producto →</a>
+                </div>
+                <div class="hero-card-nivel green">
+                  <span class="hero-card-nivel-dot"></span>En existencia
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- CTA visible solo en móvil (los hero-ctas se ocultan en ≤768px) -->
+    <div class="hero-cta-mobile">
+      <a href="catalogo.html?tab=perfumes" class="btn-primary">Explorar perfumes</a>
+    </div>
+  </section>
+ 
+<!-- ══════════════════════════════════════
+      SECCIÓN: Marquee decorativo
+      Separador animado entre hero y trust
+══════════════════════════════════════ -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>Envío gratis en compras mayores a $1,500 MXN</span><span class="dot">✦</span>
+      <span>Envío a Todo México</span><span class="dot">✦</span>
+      <span>Perfumes de Diseñador</span><span class="dot">✦</span>
+      <span>Perfumes Árabes</span><span class="dot">✦</span>
+      <span>Sets de Perfumes</span><span class="dot">✦</span>
+      <span>Perfumes Exclusivos</span><span class="dot">✦</span>
+      <span>Testers</span><span class="dot">✦</span>
+      <span>Decants</span><span class="dot">✦</span>
+      <span>Envío gratis en compras mayores a $1,500 MXN</span><span class="dot">✦</span>
+      <span>Envío a Todo México</span><span class="dot">✦</span>
+      <span>Perfumes de Diseñador</span><span class="dot">✦</span>
+      <span>Perfumes Árabes</span><span class="dot">✦</span>
+      <span>Sets de Perfumes</span><span class="dot">✦</span>
+      <span>Perfumes Exclusivos</span><span class="dot">✦</span>
+      <span>Testers</span><span class="dot">✦</span>
+      <span>Decants</span><span class="dot">✦</span>
+    </div>
+  </div>
+ 
+<!-- ══════════════════════════════════════
+      SECCIÓN: Confianza — 4 columnas de stats
+      [EXCLUSIVO] index.html
+══════════════════════════════════════ -->
+  <div class="trust-section">
+    <div class="trust-item reveal">
+      <div class="trust-deco-line"></div>
+      <div class="trust-stat-num">100%<br>Original</div>
+      <p class="trust-stat-desc">Cada fragancia que vendemos llega sellada de fábrica. Nunca usada, nunca alterada.</p>
+    </div>
+    <div class="trust-item reveal reveal-delay-1">
+      <div class="trust-deco-line"></div>
+      <div class="trust-stat-num">+80<br>Marcas</div>
+      <p class="trust-stat-desc">Diseñador, árabe, nicho y exclusivo. Todas las categorías en un solo lugar.</p>
+    </div>
+    <div class="trust-item reveal reveal-delay-2">
+      <div class="trust-deco-line"></div>
+      <div class="trust-stat-num">Envío<br>Seguro</div>
+      <p class="trust-stat-desc">Empaque protegido, tracking incluido y entrega a todo México sin complicaciones.</p>
+    </div>
+    <div class="trust-item reveal reveal-delay-3">
+      <div class="trust-deco-line"></div>
+      <div class="trust-stat-num">4.9★<br>Rating</div>
+      <p class="trust-stat-desc">Cientos de clientes satisfechos avalan nuestra calidad, servicio y rapidez.</p>
+    </div>
+  </div>
+ 
+<!-- ══════════════════════════════════════
+      SECCIÓN: Bestsellers — carrusel de productos
+      [EXCLUSIVO] index.html
+══════════════════════════════════════ -->
+  <section class="products">
+    <div class="products-header reveal">
+      <div>
+        <p class="section-label">Lo más vendido</p>
+        <h2 class="section-title">Bestsellers <em>de la semana</em></h2>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="prevBtn" disabled>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button class="carousel-btn" id="nextBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        <a href="catalogo.html" class="view-all">Ver todos →</a>
+      </div>
+    </div>
+    <div class="carousel-wrapper">
+      <div class="carousel-track" id="carouselTrack">
+ 
+      </div><!-- /carousel-track -->
+    </div><!-- /carousel-wrapper -->
+    <div class="carousel-progress">
+      <div class="carousel-progress-fill" id="carouselProgress"></div>
+    </div>
+  </section>
+ 
+<!-- ══════════════════════════════════════
+      SECCIÓN: Por qué HERA
+      [EXCLUSIVO] index.html
+══════════════════════════════════════ -->
+  <div class="pq-hera">
+    <div class="pq-hera-text">
+      <p class="pq-hera-label reveal">Por qué HERA</p>
+      <h2 class="pq-hera-title reveal reveal-delay-1">No vendemos perfumes.<br><em>Vendemos identidad.</em></h2>
+      <p class="pq-hera-desc">HERA nació de una obsesión: que cada persona merece llevar una fragancia que la represente. Seleccionamos marcas de todo el mundo para traerte lo mejor, sin que tengas que salir de México.</p>
+      <a href="nosotros.html" class="btn-primary btn-primary--fit">Conoce a la marca</a>
+    </div>
+    <img
+      src="https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777346712/porque_hera_bk5hwk.svg"
+      alt="Imagen editorial HERA — Por qué somos distintos"
+      class="pq-hera-img-foto"
+      width="1400"
+      height="1200"
+      loading="lazy"
+/>
+  </div>
+ 
+<!-- ══════════════════════════════════════
+      SECCIÓN: Categorías
+      [EXCLUSIVO] index.html
+══════════════════════════════════════ -->
+  <section class="categories">
+    <p class="section-label reveal">Explora por categoría</p>
+    <h2 class="section-title reveal">Encuentra tu <em>esencia</em></h2>
+    <div class="cat-grid reveal">
+      <div class="cat-card" id="cat-card-perfumes">
+        <img
+          class="cat-bg cat-bg-joy"
+          src="https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777351525/Dise%C3%B1o_sin_t%C3%ADtulo_gdpzq6.svg"
+          alt=""
+          width="1760"
+          height="1174"
+          loading="lazy"
+        />
+        <div class="cat-deco">
+          <svg width="150" height="260" viewBox="0 0 150 260" fill="none">
+            <path d="M38 48 Q36 70 22 94 L22 218 Q22 238 75 238 Q128 238 128 218 L128 94 Q114 70 112 48 Z" fill="rgba(225,34,43,0.14)"/>
+          </svg>
+        </div>
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <div class="cat-eyebrow">Categoría principal</div>
+          <div class="cat-title">Perfumes</div>
+          <div class="cat-link">Explorar colección <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+        </div>
+      </div>
+      <div class="cat-card" id="cat-card-joyeria">
+        <img
+          class="cat-bg cat-bg-joy"
+          src="https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777351605/Dise%C3%B1o_sin_t%C3%ADtulo_1_u6tqmo.svg"
+          alt=""
+          width="1760"
+          height="1174"
+          loading="lazy"
+        />
+        <div class="cat-deco">
+          <svg width="110" height="110" viewBox="0 0 120 120" fill="none">
+            <circle cx="60" cy="60" r="48" stroke="rgba(230,230,230,0.18)" stroke-width="1.5"/>
+            <circle cx="60" cy="60" r="32" stroke="rgba(230,230,230,0.12)" stroke-width="1"/>
+            <path d="M60 22 L69 46 L95 46 L74 61 L82 86 L60 71 L38 86 L46 61 L25 46 L51 46 Z" fill="rgba(230,230,230,0.1)"/>
+          </svg>
+        </div>
+        <div class="cat-overlay"></div>
+        <div class="cat-content">
+          <div class="cat-eyebrow">Colección especial</div>
+          <div class="cat-title">Joyería</div>
+          <div class="cat-link">Ver piezas <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+<!-- ══════════════════════════════════════
+      SECCIÓN: Novedades — grid editorial
+      [EXCLUSIVO] index.html
+══════════════════════════════════════ -->
+  <div class="editorial-sel">
+    <div class="editorial-header reveal">
+      <div>
+        <p class="section-label section-label--dark">Recién llegados</p>
+        <h2 class="section-title section-title--light">Novedades <em>2025</em></h2>
+      </div>
+    </div>
+    <div class="editorial-grid-wrap">
+      <div class="editorial-grid">
+ 
+        </div><!-- /editorial-grid -->
+    </div><!-- /editorial-grid-wrap -->
+  </div>
+ 
+<!-- ══════════════════════════════════════
+      SECCIÓN: Testimonials
+      [EXCLUSIVO] index.html
+══════════════════════════════════════ -->
+  <section class="testimonials">
+    <div class="test-header reveal">
+      <div>
+        <p class="section-label">Lo que dicen</p>
+        <h2 class="section-title">Clientes que <em>regresan</em></h2>
+      </div>
+      <div class="rating-wrap">
+        <div class="rating-score">
+          <div class="rating-num">4.9</div>
+          <span class="rating-star">★</span>
+        </div>
+        <div class="rating-label">Calificación promedio</div>
+      </div>
+    </div>
+    <div class="test-grid">
+      <div class="test-card reveal">
+        <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="test-text">Llevo comprando en HERA más de un año. La calidad de los perfumes es exactamente la que esperaba. Llegaron sellados y en tiempo récord.</p>
+        <div class="test-author">María G.</div>
+        <div class="test-location">Guadalajara, Jalisco</div>
+      </div>
+      <div class="test-card reveal reveal-delay-1">
+        <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="test-text">La página da mucha confianza desde el inicio. El empaque llegó impecable y el olor del Fierce es exactamente el que recordaba desde siempre.</p>
+        <div class="test-author">Carlos R.</div>
+        <div class="test-location">Ciudad de México</div>
+      </div>
+      <div class="test-card reveal reveal-delay-2">
+        <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="test-text">Compré el Inolvidable para regalo y la persona quedó emocionada. El servicio es rápido y la atención al cliente resolvió mi duda en minutos.</p>
+        <div class="test-author">Sofía M.</div>
+        <div class="test-location">Monterrey, N.L.</div>
+      </div>
+    </div>
+  </section>
+ 
+<!-- ══════════════════════════════════════
+      SECCIÓN: Newsletter — Club HERA
+══════════════════════════════════════ -->
+  <div id="newsletter-placeholder"></div>
+ 
+<!-- ══════════════════════════════════════
+      FOOTER PLACEHOLDER
+      loadFooter() inyecta el fragmento footer.html aquí
+══════════════════════════════════════ -->
+  <div id="footer-placeholder"></div>
+ 
+</div><!-- /site-wrap -->
+ 
+<!-- ══════════════════════════════════════
+    CART DRAWER — inyectado vía fetch por cart-drawer.js
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
+ 
+<!-- ── Script de página — type="module" para ES Modules ── -->
+<script type="module" src="../js/pages/index.js"></script>
+ 
+</body>
+</html>
