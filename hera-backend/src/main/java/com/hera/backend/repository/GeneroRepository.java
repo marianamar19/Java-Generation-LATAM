@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface GeneroRepository extends JpaRepository<Genero, Integer> {
+public interface GeneroRepository extends JpaRepository<Genero, Long> {
 
     Optional<Genero> findByNombre(String nombre);
 }

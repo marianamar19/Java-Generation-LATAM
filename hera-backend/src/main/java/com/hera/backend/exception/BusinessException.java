@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus;
  *   - Monto mínimo no alcanzado
  */
 @Getter
-public class BusinessException extends Throwable {
+public class BusinessException extends RuntimeException {
 
     private final HttpStatus status;
 

@@ -69,4 +69,10 @@ public class TestController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/ping")
+    public Map<String, String> ping() {
+        return Map.of("status", "ok", "message", "Test controller works!");
+    }
+
 }

@@ -3,8 +3,8 @@ package com.hera.backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class MomentoDia {
 
     @Id
-    private Integer id;
+    private Long id;
 
     @Column(unique = true, nullable = false, length = 20)
     private String nombre;

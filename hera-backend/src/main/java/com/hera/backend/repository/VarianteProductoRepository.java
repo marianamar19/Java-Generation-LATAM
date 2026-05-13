@@ -14,4 +14,6 @@ public interface VarianteProductoRepository  extends JpaRepository<VarianteProdu
     List<VarianteProducto> findByProductoIdAndActivoTrue(Long productoId);
     Optional<VarianteProducto> findBySku(String sku);
     boolean existsBySku(String sku);
+
+    void deleteByProductoId(Long id);
 }
