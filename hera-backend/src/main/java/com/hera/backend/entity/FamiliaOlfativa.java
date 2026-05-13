@@ -16,7 +16,7 @@ import java.util.List;
 public class FamiliaOlfativa {
 
     @Id
-    private Long id;
+    private Integer id;
 
     @Column(unique = true, nullable = false, length = 100)
     private String nombre;

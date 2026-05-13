@@ -25,7 +25,7 @@
 <div class="adm-wrap">
 
   <!-- ══════════════════════════════════════
-       SIDEBAR
+       SIDEBAR 
   ══════════════════════════════════════ -->
   <aside class="adm-sidebar">
     <div class="adm-sidebar-logo">
@@ -39,24 +39,9 @@
           <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
           <span class="adm-nav-text">Dashboard</span>
         </a>
-        <a href="ordenes.html" class="adm-nav-item" aria-label="Órdenes">
-          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
-          <span class="adm-nav-text">Órdenes</span>
-        </a>
         <a href="productos.html" class="adm-nav-item active" aria-label="Productos">
           <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
           <span class="adm-nav-text">Productos</span>
-        </a>
-        <a href="clientes.html" class="adm-nav-item" aria-label="Clientes">
-          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-          <span class="adm-nav-text">Clientes</span>
-        </a>
-      </div>
-      <div class="adm-nav-section">
-        <div class="adm-nav-label">Sitio</div>
-        <a href="configuracion.html" class="adm-nav-item" aria-label="Configuración">
-          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-          <span class="adm-nav-text">Configuración</span>
         </a>
       </div>
     </nav>
@@ -176,9 +161,9 @@
             <div class="invalid-feedback" id="err-name">Campo obligatorio.</div>
           </div>
           <div class="col-12">
-            <label class="form-label" for="f-id">ID único <span class="req">*</span></label>
-            <input class="form-control" type="text" id="f-id" placeholder="Ej: sauvage-7" />
-            <div class="invalid-feedback" id="err-id">Campo obligatorio.</div>
+            <label class="form-label" for="f-id">ID único</label>
+            <input class="form-control" type="text" id="f-id" placeholder="Se genera automáticamente" readonly />
+            <div class="form-text">Se genera automáticamente desde Marca + Nombre</div>
           </div>
         </div>
       </div>
@@ -203,19 +188,19 @@
             <select class="form-select" id="f-cat">
               <option value="">Seleccionar</option>
               <optgroup label="Perfumes">
-                <option value="diseñador">Diseñador</option>
-                <option value="nicho">Nicho</option>
-                <option value="arabes">Árabes</option>
-                <option value="testers">Testers</option>
-                <option value="decants">Decants</option>
-                <option value="sets">Sets</option>
-                <option value="body-mist">Body Mist</option>
+                <option value="Diseñador">Diseñador</option>
+                <option value="Nicho">Nicho</option>
+                <option value="Árabes">Árabes</option>
+                <option value="Testers">Testers</option>
+                <option value="Decants">Decants</option>
+                <option value="Sets">Sets</option>
+                <option value="Body Mist">Body Mist</option>
               </optgroup>
               <optgroup label="Joyería">
-                <option value="anillos">Anillos</option>
-                <option value="aretes">Aretes</option>
-                <option value="collares">Collares</option>
-                <option value="brazaletes">Brazaletes</option>
+                <option value="Anillos">Anillos</option>
+                <option value="Aretes">Aretes</option>
+                <option value="Collares">Collares</option>
+                <option value="Brazaletes">Brazaletes</option>
               </optgroup>
             </select>
             <div class="invalid-feedback" id="err-cat">Selecciona una categoría.</div>
@@ -250,23 +235,66 @@
       <div class="card-header">Precio y variantes</div>
       <div class="card-body">
         <div class="row g-3 mb-3">
-          <div class="col-6">
-            <label class="form-label" for="f-vol-label">Etiqueta de variante</label>
-            <select class="form-select" id="f-vol-label">
-              <option value="Presentación">Presentación (ml)</option>
-              <option value="Talla">Talla</option>
-              <option value="Material">Material</option>
-              <option value="Largo">Largo</option>
-            </select>
+          <div class="col-12">
+            <label class="form-label" for="f-precio-base">Precio base (MXN) <span class="req">*</span></label>
+            <input class="form-control" type="number" id="f-precio-base" placeholder="Ej: 2490" min="1" step="1" />
+            <div class="invalid-feedback" id="err-precio-base">El precio debe ser mayor a 0.</div>
           </div>
         </div>
-        <div id="variants-list" class="d-flex flex-column gap-2 mb-3"></div>
-        <button class="btn btn-outline-secondary btn-sm w-100" id="btn-add-variant" type="button"
-          style="border-style:dashed; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;"
-          aria-label="Agregar variante">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Agregar variante
-        </button>
+        <div class="row g-3 mb-3">
+          <div class="col-12">
+            <label class="form-label">Variantes (opcional)</label>
+            <div id="variants-list" class="d-flex flex-column gap-2 mb-3"></div>
+            <button class="btn btn-outline-secondary btn-sm w-100" id="btn-add-variant" type="button"
+              style="border-style:dashed; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;"
+              aria-label="Agregar variante">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Agregar variante
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- SECCIÓN: IMÁGENES DEL PRODUCTO (AGREGADA) -->
+    <!-- ===================================================== -->
+    <div class="card mb-3">
+      <div class="card-header">Imágenes del producto</div>
+      <div class="card-body">
+        
+        <!-- Imagen principal -->
+        <div class="mb-3">
+          <label class="form-label" for="f-imagen-principal">Imagen principal (URL)</label>
+          <div class="input-group">
+            <input class="form-control" type="text" id="f-imagen-principal" 
+              placeholder="https://res.cloudinary.com/.../imagen.jpg" />
+            <button class="btn btn-outline-secondary" type="button" id="btn-preview-img">
+              Vista previa
+            </button>
+          </div>
+          <div class="form-text">URL de la imagen principal del producto (Cloudinary recomendado)</div>
+          <div id="preview-img-container" class="mt-2" style="display: none;">
+            <img id="preview-img" src="" alt="Vista previa" style="max-width: 150px; max-height: 150px; border-radius: 8px;" />
+          </div>
+        </div>
+
+        <!-- Imágenes adicionales (galería) -->
+        <div class="mb-3">
+          <label class="form-label">Galería de imágenes (adicionales)</label>
+          <div id="galeria-imagenes-list" class="d-flex flex-wrap gap-2 mb-2">
+            <div class="text-muted small">No hay imágenes adicionales</div>
+          </div>
+          <div class="input-group">
+            <input class="form-control" type="text" id="f-imagen-extra" 
+              placeholder="https://res.cloudinary.com/.../imagen2.jpg" />
+            <button class="btn btn-outline-secondary" type="button" id="btn-agregar-imagen">
+              + Agregar
+            </button>
+          </div>
+          <div class="form-text">URLs de imágenes adicionales para la galería del producto</div>
+        </div>
+
       </div>
     </div>
 

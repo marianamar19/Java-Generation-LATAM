@@ -13,9 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,15 +65,11 @@ public class AuthController {
     })
     public ResponseEntity<AuthResponse> registrar(
             @Parameter(description = "Datos de registro del usuario", required = true)
-            @Valid @RequestBody RegistroRequest request, HttpServletResponse response){
+            @Valid @RequestBody RegistroRequest request){
         log.info("Solicitud de registro para email: {}", request.getEmail());
-        AuthResponse authResponse = authService.registrar(request);
-
-        // Agregar cookie segura
-        agregarCookieSegura(response, authResponse.getToken());
-        return ResponseEntity.ok(authResponse);
+        AuthResponse response = authService.registrar(request);
+        return ResponseEntity.ok(response);
     }
-
 
     /**
      * Login de usuario
@@ -106,13 +100,10 @@ public class AuthController {
     })
     public ResponseEntity<AuthResponse> login(
             @Parameter(description = "Credenciales de acceso", required = true)
-            @Valid @RequestBody AuthRequest request, HttpServletResponse response) throws BusinessException {
+            @Valid @RequestBody AuthRequest request) throws BusinessException {
         log.info("Intento de login para email: {}", request.getEmail());
-        AuthResponse authResponse = authService.login(request);
-
-        // Agregar cookie segura
-        agregarCookieSegura(response, authResponse.getToken());
-        return ResponseEntity.ok(authResponse);
+        AuthResponse response = authService.login(request);
+        return ResponseEntity.ok(response);
     }
 
     /**
@@ -153,16 +144,6 @@ public class AuthController {
             return ResponseEntity.ok(java.util.Map.of("valido", isValid));
         }
         return ResponseEntity.ok(java.util.Map.of("valido", false, "message", "No se proporcionó token"));
-    }
-
-    private void agregarCookieSegura(HttpServletResponse response, String token) {
-        Cookie cookie = new Cookie("HERA_TOKEN", token);
-        cookie.setHttpOnly(true);  // Inaccesible desde JavaScript (protege contra XSS)
-        cookie.setSecure(false);   // En producción: true (solo HTTPS)
-        cookie.setPath("/");       // Disponible en toda la aplicación
-        cookie.setMaxAge(24 * 60 * 60);  // 24 horas
-        cookie.setAttribute("SameSite", "Strict"); // Protege contra CSRF
-        response.addCookie(cookie);
     }
 
 }

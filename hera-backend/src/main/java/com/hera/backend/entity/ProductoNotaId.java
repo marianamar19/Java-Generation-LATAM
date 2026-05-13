@@ -14,5 +14,5 @@ import java.io.Serializable;
 public class ProductoNotaId implements Serializable {
 
     private Long productoId;
-    private Long notaId;
+    private Integer notaId;
 }

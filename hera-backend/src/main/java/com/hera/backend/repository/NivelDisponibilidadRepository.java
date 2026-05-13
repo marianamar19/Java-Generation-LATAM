@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface NivelDisponibilidadRepository extends JpaRepository<NivelDisponibilidad, Long> {
+public interface NivelDisponibilidadRepository extends JpaRepository<NivelDisponibilidad, Integer> {
 
     Optional<NivelDisponibilidad> findByCodigo(String codigo);
     Optional<NivelDisponibilidad> findByNombre(String nombre);

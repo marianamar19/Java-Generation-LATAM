@@ -2,8 +2,6 @@ package com.hera.backend.repository;
 
 import com.hera.backend.entity.Ocasion;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -12,8 +10,4 @@ import java.util.Optional;
 public interface OcasionRepository extends JpaRepository<Ocasion, Long> {
 
     Optional<Ocasion> findByNombre(String nombre);
-
-    @Override
-    @NonNull
-    Optional<Ocasion> findById(Long id);
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Mapper para convertir entre la entidad Usuario y su DTO de respuesta
- * <p>
+ *
  * ¿QUÉ hace? Transforma Usuario (entidad JPA) en UsuarioResponseDTO
  * ¿PARA QUÉ sirve? Enviar datos del usuario al front sin exponer campos sensibles
  */

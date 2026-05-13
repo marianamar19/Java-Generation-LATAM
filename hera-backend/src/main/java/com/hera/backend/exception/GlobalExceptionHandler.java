@@ -39,21 +39,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    // ESTE MÉTODO - Captura RuntimeException y los convierte en 400
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Map<String, Object>> handleRuntimeException(RuntimeException ex) {
-        log.warn("Error de negocio: {}", ex.getMessage());
-
-        Map<String, Object> response = buildErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                "Bad Request",
-                ex.getMessage(),  // ← Usa el mensaje original
-                null
-        );
-
-        return ResponseEntity.badRequest().body(response);
-    }
-
 
     /**
      * Maneja excepciones de validación de Bean Validation (@Valid)

@@ -1,6 +1,5 @@
 package com.hera.backend.security;
 
-import com.hera.backend.config.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,7 @@ public class JwtService {
     private final SecretKey jwtSecretKey;
 
     // Tiempo de expiracion en milesegundos
-    private static final long EXPIRATION = JwtConfig.EXPIRATION; // 24 horas
+    private static final long EXPIRATION = 86400000; // 24 horas
 
     /**
      * Extrae el email/username del token JWT

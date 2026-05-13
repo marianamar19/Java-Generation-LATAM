@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface MomentoDiaRepository extends JpaRepository<MomentoDia, Long> {
+public interface MomentoDiaRepository extends JpaRepository<MomentoDia, Integer> {
 
     Optional<MomentoDia> findByNombre(String nombre);
 }

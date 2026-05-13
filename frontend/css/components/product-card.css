@@ -222,7 +222,14 @@
   gap:             10px;
   transition:      background .3s, border-color .3s;
 }
- 
+
+.ed-img-zone img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .ed-item:hover .ed-img-placeholder { background: rgba(249,249,249,.06); border-color: rgba(249,249,249,.15); }
  
 .ed-img-placeholder svg     { opacity: .25; color: var(--dgray); transition: color .3s, opacity .3s; }
@@ -388,3 +395,17 @@
   .editorial-grid      { grid-template-columns: 1fr; padding: 16px 20px 32px; gap: 12px; }
   .editorial-header    { padding: 40px 20px 28px; }
 }
+/* ── Sección: Editorial item — imagen real (Cloudinary) ─────── */
+.ed-img {
+  width:        100%;
+  aspect-ratio: 3/4;
+  object-fit:   contain;
+  display:      block;
+  background:   var(--lgray);
+  transition:   background .3s;
+}
+ 
+.ed-item:hover .ed-img { background: rgba(249,249,249,.06); }
+ 
+/* Ajuste para productos similares en página de producto */
+.similar-grid .ed-img { aspect-ratio: 4/5; }

@@ -16,7 +16,7 @@ import java.util.List;
 public class NivelDisponibilidad {
 
     @Id
-    private Long id;
+    private Integer id;
 
     @Column(unique = true, nullable = false, length = 20)
     private String codigo;

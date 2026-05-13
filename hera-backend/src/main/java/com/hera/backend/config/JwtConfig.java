@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.crypto.SecretKey;
-import java.security.SecureRandom;
 import java.util.Base64;
 
 /*
@@ -15,23 +14,17 @@ import java.util.Base64;
 @Configuration
 public class JwtConfig {
 
+    //Clave harcodeada en Base64
+    private static final String HARDCODED_SECRET = "aGVyYS1iYWNrZW5kLXNlY3JldC1rZXktMjU2Yml0cy1zZWN1cmU=";
+
     //Tiempos de expiracion Hardcodeados
-    public static final long EXPIRATION = 86400000; // 24 horas
-    public static final long REFRESH_EXPIRATION = 604800000; // 7 días
+    public static  final long EXPIRATION = 86400000; // 24 horas
+    public static  final long REFRESH_EXPIRATION = 604800000; // 7 dias
 
     @Bean
-    public SecretKey jwtSecretKey() {
-        // Generar una clave criptográficamente segura al arrancar
-        SecureRandom random = new SecureRandom();
-        byte[] keyBytes = new byte[32]; // 256 bits
-        random.nextBytes(keyBytes);
-
-        // Codificar en Base64 (por si quieres guardarla para debugging)
-        String generatedSecret = Base64.getEncoder().encodeToString(keyBytes);
-
-        System.out.println("JWT Secret generada automáticamente (válida hasta reiniciar)");
-        System.out.println("   NOTA: Al reiniciar la aplicación, los tokens anteriores quedarán inválidos");
-
-        return Keys.hmacShaKeyFor(keyBytes);
+    public SecretKey jwtSecretKey(){
+        byte[] decoded = Base64.getDecoder().decode(HARDCODED_SECRET);
+        return Keys.hmacShaKeyFor(decoded);
     }
+
 }
