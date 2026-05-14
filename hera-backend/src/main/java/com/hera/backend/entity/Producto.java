@@ -74,6 +74,12 @@ public class Producto {
     @Column(name = "pais_origen", length = 100)
     private String paisOrigen;
 
+    @Column(length = 20)
+    private String concentracion; // EDP, EDT, EDC, PAR, ELI, FRA — solo perfumes
+
+    @Column(length = 10)
+    private String material; // PLT, ORO — solo joyería
+
     private Integer longevidad;
     private Integer estela;
 

@@ -126,7 +126,7 @@ public class CarritoController {
 
         log.info("Cantidad actualizada - item: {}, nueva cantidad: {}", itemId, cantidad);
 
-        return ResponseEntity.ok(java.util.Map.of("message", "Cantidad actualizada"));
+        return ResponseEntity.ok(Map.of("message", "Cantidad actualizada"));
     }
 
     /**
@@ -150,7 +150,7 @@ public class CarritoController {
 
         log.info("Item eliminado del carrito: {}", itemId);
 
-        return ResponseEntity.ok(java.util.Map.of("message", "Item eliminado"));
+        return ResponseEntity.ok(Map.of("message", "Item eliminado"));
     }
 
     /**
@@ -173,7 +173,7 @@ public class CarritoController {
 
         log.info("Carrito vaciado: {}", carrito.getId());
 
-        return ResponseEntity.ok(java.util.Map.of("message", "Carrito vaciado"));
+        return ResponseEntity.ok(Map.of("message", "Carrito vaciado"));
     }
 
 }

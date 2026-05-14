@@ -14,5 +14,5 @@ import java.io.Serializable;
 public class ProductoMomentoDiaId implements Serializable {
 
     private Long productoId;
-    private Integer momentoId;
+    private Long momentoId;
 }

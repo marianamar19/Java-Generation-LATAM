@@ -42,6 +42,7 @@ public class ProductoMapper {
 
         return ProductoResponseDTO.builder()
                 // Identificación básica
+                .id(producto.getId())
                 .productId(producto.getProductoId())
                 .slug(producto.getSlug())
                 .nombre(producto.getNombre())
@@ -63,6 +64,8 @@ public class ProductoMapper {
                         ? producto.getGenero().getNombre() : null)
                 .familiaOlfativa(producto.getFamiliaOlfativa() != null
                         ? producto.getFamiliaOlfativa().getNombre() : null)
+                .concentracion(producto.getConcentracion())
+                .material(producto.getMaterial())
 
                 // Contenido textual
                 .descripcion(producto.getDescripcion())
