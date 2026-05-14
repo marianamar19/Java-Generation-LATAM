@@ -2,9 +2,12 @@
  * confirmacion.js — HERA
  *
  * Descripción: Lógica exclusiva de la página de confirmación de pedido.
- *              Lee la orden desde localStorage (hera_last_order), redirige
- *              a index.html si no existe, renderiza todos los datos del
- *              pedido en el DOM e inicializa el scroll reveal.
+ *              Lee el número de orden desde la URL (?orden=HERA-2025-001),
+ *              consulta el backend vía GET /api/pedidos/rastrear/{numeroPedido}
+ *              y renderiza todos los datos en el DOM.
+ *
+ *              Ya no depende de localStorage para los datos de la orden.
+ *              localStorage solo se usa para limpiar el carrito tras confirmar.
  *
  * Exporta:     (ninguno — script de página, entry point único)
  * Importado por: pages/confirmacion.html vía <script type="module">
@@ -14,41 +17,35 @@ import { loadNavbar }    from '../components/navbar.js';
 import { loadFooter }    from '../components/footer.js';
 import { initCartDrawer} from '../components/cart-drawer.js';
 import { initFavDrawer } from '../components/fav-drawer.js';
-import { parseMXN }      from '../utils/formatter.js';
 
+/* ── URL base del backend ───────────────────────────────────────
+   Cuando el backend esté en producción, cambiar por la URL real.
+   Ejemplo: 'https://api.hera.mx'                                */
+const API_BASE = 'http://localhost:8080';
 
 /* ══════════════════════════════════════════════════════
    INICIALIZACIÓN ASÍNCRONA
-   Orden obligatorio: loadNavbar (await) → loadFooter →
-   initCartDrawer → initFavDrawer → lógica de página.
 ══════════════════════════════════════════════════════ */
 
 document.addEventListener('DOMContentLoaded', async function () {
 
-  /* ── 1. Guard: redirigir si no hay orden registrada ── */
-  const order = _readOrder();
-  if (!order) {
-    // No hay datos de compra — el usuario llegó directamente a esta URL
+  /* ── 1. Leer número de orden desde la URL ── */
+  const params      = new URLSearchParams(window.location.search);
+  const numeroPedido = params.get('orden');
+
+  if (!numeroPedido) {
+    // Alguien llegó a esta página sin número de orden en la URL
     window.location.href = 'index.html';
     return;
   }
 
-  /* ── 2. Navbar: SIEMPRE await antes de cualquier componente
-          que dependa de #cart-btn, #fav-toggle, #search-btn, etc. ── */
+  /* ── 2. Cargar componentes universales ── */
   await loadNavbar();
-
-  /* ── 3. Footer: no tiene dependencias, no requiere await ── */
   loadFooter();
-
-  /* ── 4. Cart drawer: inicia tras el navbar para que #cart-btn exista ── */
   initCartDrawer();
-
-  /* ── 5. Fav drawer: inicia tras el cart drawer (depende de addItemToCart) ── */
   initFavDrawer();
 
-  /* ── 6. Mensaje de carrito vacío personalizado para esta página
-          El carrito se vacía en checkout; este texto es exclusivo
-          de confirmacion.html y sobreescribe el genérico del componente ── */
+  /* ── 3. Mensaje de carrito vacío personalizado para esta página ── */
   const cartEmptyEl = document.getElementById('cart-empty');
   if (cartEmptyEl) {
     const cartEmptyP = cartEmptyEl.querySelector('p');
@@ -57,115 +54,192 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
   }
 
-  /* ── 7. Lógica exclusiva de la página ── */
-  _renderOrder(order);
+  /* ── 4. Consultar la orden al backend ── */
+  _mostrarCargando();
+
+  try {
+    const order = await _fetchOrden(numeroPedido);
+    _renderOrder(order);
+    _limpiarCarritoLocal();
+  } catch (err) {
+    _mostrarError(err.message);
+    return;
+  }
+
+  /* ── 5. Scroll reveal ── */
   _initScrollReveal();
 });
 
 
 /* ══════════════════════════════════════════════════════
-   LECTURA DE ORDEN
+   FETCH — consulta al backend
 ══════════════════════════════════════════════════════ */
 
 /**
- * Lee y parsea la orden guardada en localStorage por checkout.js.
- * @returns {Object|null} Objeto de orden o null si no existe o está corrupto
+ * Consulta GET /api/pedidos/rastrear/{numeroPedido} y devuelve
+ * el objeto PedidoResponseDTO parseado.
+ *
+ * No requiere token JWT porque el endpoint /rastrear es público —
+ * el número de orden actúa como identificador suficientemente opaco.
+ * Si en el futuro se protege, agregar el header Authorization aquí.
+ *
+ * @param {string} numeroPedido - Ej: "HERA-2025-001"
+ * @returns {Promise<Object>} PedidoResponseDTO del backend
+ * @throws {Error} Si la respuesta no es 200 o el fetch falla
  */
-function _readOrder() {
-  try {
-    return JSON.parse(localStorage.getItem('hera_last_order') || 'null');
-  } catch (e) {
-    return null;
+async function _fetchOrden(numeroPedido) {
+  const res = await fetch(
+    `${API_BASE}/api/pedidos/rastrear/${encodeURIComponent(numeroPedido)}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + (localStorage.getItem('hera_token') || ''),
+},
+    }
+  );
+
+  if (!res.ok) {
+    if (res.status === 404) {
+      throw new Error('No encontramos una orden con ese número. Verifica el enlace o contáctanos por WhatsApp.');
+    }
+    throw new Error('Ocurrió un error al consultar tu orden. Intenta de nuevo o contáctanos.');
   }
+
+  return res.json();
 }
 
 
 /* ══════════════════════════════════════════════════════
-   HELPERS DE FORMATO
+   ESTADO DE CARGA Y ERROR
 ══════════════════════════════════════════════════════ */
 
 /**
- * Convierte el código interno del método de pago a texto legible en español.
- * @param {string} m - Código de método: 'card' | 'paypal' | 'transfer'
- * @returns {string} Nombre legible del método de pago
+ * Muestra un estado de carga discreto mientras se consulta el backend.
+ * Usa los mismos elementos del DOM que _renderOrder() llenará después.
  */
-function _metodoTexto(m) {
-  if (m === 'card')     return 'Tarjeta de crédito / débito';
-  if (m === 'paypal')   return 'PayPal';
-  if (m === 'transfer') return 'Transferencia SPEI';
-  return m || '—';
+function _mostrarCargando() {
+  const ids = ['heroOrderNum', 'heroFecha', 'heroTotal', 'heroMetodo',
+               'datosContacto', 'datosDireccion', 'datosMetodo', 'datosEnvio'];
+  ids.forEach(function (id) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = 'Cargando...';
+  });
+}
+
+/**
+ * Muestra un mensaje de error en el hero cuando el fetch falla.
+ * @param {string} mensaje - Texto del error a mostrar al usuario
+ */
+function _mostrarError(mensaje) {
+  const heroOrderNum = document.getElementById('heroOrderNum');
+  const heroFecha    = document.getElementById('heroFecha');
+  if (heroOrderNum) heroOrderNum.textContent = 'Error';
+  if (heroFecha)    heroFecha.textContent    = mensaje;
+
+  // Oculta la sección de artículos para no mostrar contenido vacío
+  const totalsEl = document.getElementById('orderTotals');
+  if (totalsEl) totalsEl.style.display = 'none';
 }
 
 
 /* ══════════════════════════════════════════════════════
-   RENDERIZADO DINÁMICO DE ORDEN
-   Llena todos los placeholders del DOM con los datos
-   de la orden leída desde localStorage.
+   RENDERIZADO — mapeo PedidoResponseDTO → DOM
+   Mapeo de campos:
+     backend              → DOM id
+     numeroPedido         → heroOrderNum
+     fechaPedido          → heroFecha
+     total                → heroTotal
+     metodoPago           → heroMetodo, datosMetodo
+     nombreContacto       → datosContacto
+     emailContacto        → datosContacto
+     telefonoContacto     → datosContacto
+     direccion.calle      → datosDireccion
+     direccion.colonia    → datosDireccion
+     direccion.ciudad     → datosDireccion
+     direccion.estado     → datosDireccion
+     direccion.cp         → datosDireccion
+     metodoEnvio          → datosEnvio
+     costoEnvio           → datosEnvio, totalEnvio
+     subtotal             → totalSubtotal
+     descuento            → totalDescuento
+     total                → totalFinal
+     items[].nombreProducto → order-item-name
+     items[].variante       → order-item-name (sufijo)
+     items[].precioUnitario → order-item-price
+     items[].cantidad       → order-item-qty
 ══════════════════════════════════════════════════════ */
 
 /**
- * Inyecta los datos de la orden en los elementos del DOM.
- * Cubre: hero meta, datos de contacto, dirección, método de pago,
- * bloque SPEI condicional, envío, lista de artículos y totales.
- * @param {Object} order - Objeto de orden guardado por checkout.js
- * @returns {void}
+ * Inyecta todos los datos del PedidoResponseDTO en el DOM.
+ * @param {Object} order - PedidoResponseDTO recibido del backend
  */
 function _renderOrder(order) {
 
   /* ── Hero meta ── */
-  document.getElementById('heroOrderNum').textContent = order.orderNum || '—';
-  document.getElementById('heroFecha').textContent    = order.fecha   || '—';
-  document.getElementById('heroTotal').textContent    = order.total   || '—';
-  document.getElementById('heroMetodo').textContent   = _metodoTexto(order.metodo);
+  document.getElementById('heroOrderNum').textContent = order.numeroPedido || '—';
+  document.getElementById('heroFecha').textContent    = _formatFecha(order.fechaPedido);
+  document.getElementById('heroTotal').textContent    = _formatMXN(order.total);
+  document.getElementById('heroMetodo').textContent   = _metodoTexto(order.metodoPago);
 
   /* ── Datos de contacto ── */
   document.getElementById('datosContacto').innerHTML =
-    '<strong>' + (order.nombre   || '—') + '</strong><br>' +
-    (order.email    || '') + '<br>' +
-    (order.telefono || '');
+    '<strong>' + (order.nombreContacto   || '—') + '</strong><br>' +
+    (order.emailContacto    || '') + '<br>' +
+    (order.telefonoContacto || '');
 
   /* ── Dirección de entrega ── */
   const dir = order.direccion || {};
   document.getElementById('datosDireccion').innerHTML =
-    (dir.calle  || '') + '<br>' +
-    (dir.ciudad || '') +
-    (dir.estado ? ', ' + dir.estado : '') +
-    (dir.cp     ? ' CP ' + dir.cp   : '');
+    (dir.calle   ? dir.calle + '<br>' : '') +
+    (dir.colonia ? dir.colonia + '<br>' : '') +
+    (dir.ciudad  || '') +
+    (dir.estado  ? ', ' + dir.estado : '') +
+    (dir.cp      ? ' CP ' + dir.cp   : '');
 
   /* ── Método de pago ── */
-  document.getElementById('datosMetodo').textContent = _metodoTexto(order.metodo);
+  document.getElementById('datosMetodo').textContent = _metodoTexto(order.metodoPago);
 
   /* ── Bloque SPEI — solo visible si el método es transferencia ── */
-  if (order.metodo === 'transfer') {
-    document.getElementById('speiBlock').style.display  = 'block';
-    document.getElementById('speiOrderNum').textContent = order.orderNum || '—';
+  if (order.metodoPago === 'TRANSFERENCIA' || order.metodoPago === 'transfer') {
+    const speiBlock   = document.getElementById('speiBlock');
+    const speiOrderEl = document.getElementById('speiOrderNum');
+    if (speiBlock)   speiBlock.style.display   = 'block';
+    if (speiOrderEl) speiOrderEl.textContent   = order.numeroPedido || '—';
   }
 
   /* ── Envío ── */
-  document.getElementById('datosEnvio').textContent = order.envio || 'Gratis';
+  const costoEnvio = parseFloat(order.costoEnvio) || 0;
+  document.getElementById('datosEnvio').textContent =
+    _metodoEnvioTexto(order.metodoEnvio) +
+    (costoEnvio > 0 ? ' — ' + _formatMXN(order.costoEnvio) : ' — Gratis');
 
-  /* ── Lista de artículos — construida dinámicamente ── */
+  /* ── Lista de artículos ── */
   const items  = order.items || [];
   const listEl = document.getElementById('orderItemsList');
 
   if (items.length) {
     let html = '';
     items.forEach(function (it) {
+      // Combina nombreProducto + variante para mostrar "Sauvage EDP 100 ml"
+      const nombreCompleto = it.nombreProducto +
+        (it.variante ? ' ' + it.variante : '');
+
       html +=
         '<div class="order-item reveal">' +
           '<div class="order-item-img">' +
-            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.2)" stroke-width="1.5">' +
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" ' +
+            'stroke="rgba(15,15,15,.2)" stroke-width="1.5">' +
               '<rect x="3" y="3" width="18" height="18" rx="1"/>' +
               '<circle cx="8.5" cy="8.5" r="1.5"/>' +
               '<path d="m21 15-5-5L5 21"/>' +
             '</svg>' +
           '</div>' +
           '<div class="order-item-body">' +
-            '<div class="order-item-brand">' + (it.brand || '') + '</div>' +
-            '<div class="order-item-name">'  + (it.name  || '') + '</div>' +
+            '<div class="order-item-name">'  + nombreCompleto + '</div>' +
             '<div class="order-item-meta">' +
-              '<span class="order-item-price">' + (it.price || '') + '</span>' +
-              '<span class="order-item-qty">×'  + (it.qty  || 1)  + '</span>' +
+              '<span class="order-item-price">' + _formatMXN(it.precioUnitario) + '</span>' +
+              '<span class="order-item-qty">×' + (it.cantidad || 1) + '</span>' +
             '</div>' +
           '</div>' +
         '</div>';
@@ -177,49 +251,114 @@ function _renderOrder(order) {
       'color:rgba(15,15,15,.4);padding:24px 0;">No hay artículos registrados.</p>';
   }
 
-  /* ── Totales — JS activa la visibilidad del bloque ── */
+  /* ── Totales ── */
   const totalsEl = document.getElementById('orderTotals');
   totalsEl.style.display = 'flex';
 
-  // Subtotal: suma precios × cantidades de cada artículo
-  let subtotal = 0;
-  items.forEach(function (it) {
-    subtotal += parseMXN(it.price) * (it.qty || 1);
-  });
-  document.getElementById('totalSubtotal').textContent =
-    '$' + subtotal.toLocaleString('es-MX') + ' MXN';
+  document.getElementById('totalSubtotal').textContent = _formatMXN(order.subtotal);
 
-  // Descuento — solo visible si la orden lo incluye
-  const descuentoNum = order.descuento
-    ? parseInt(String(order.descuento).replace(/[^0-9]/g, '')) || 0
-    : 0;
-  if (descuentoNum > 0) {
+  const descuento = parseFloat(order.descuento) || 0;
+  if (descuento > 0) {
     document.getElementById('rowDescuento').style.display  = 'flex';
-    document.getElementById('totalDescuento').textContent  = '−' + order.descuento;
+    document.getElementById('totalDescuento').textContent  = '−' + _formatMXN(order.descuento);
   }
 
-  document.getElementById('totalEnvio').textContent = order.envio || 'Gratis';
-  document.getElementById('totalFinal').textContent = order.total || '—';
+  document.getElementById('totalEnvio').textContent  =
+    costoEnvio > 0 ? _formatMXN(order.costoEnvio) : 'Gratis';
+  document.getElementById('totalFinal').textContent  = _formatMXN(order.total);
 }
 
 
 /* ══════════════════════════════════════════════════════
-   SCROLL REVEAL — IntersectionObserver
-   Design System v4: replay cada vez que el elemento
-   entra o sale del viewport.
+   HELPERS DE FORMATO
 ══════════════════════════════════════════════════════ */
 
 /**
- * Inicializa el IntersectionObserver para animar los elementos .reveal.
- * Se llama en dos fases:
- *   1. Elementos estáticos presentes en el DOM desde el inicio.
- *   2. Elementos .reveal inyectados dinámicamente por _renderOrder()
- *      (los .order-item dentro de #orderItemsList).
- * @returns {void}
+ * Formatea un BigDecimal del backend como precio en MXN.
+ * @param {number|string|null} amount
+ * @returns {string} Ej: "$2,490 MXN"
+ */
+function _formatMXN(amount) {
+  const n = parseFloat(amount);
+  if (isNaN(n)) return '—';
+  return '$' + n.toLocaleString('es-MX', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }) + ' MXN';
+}
+
+/**
+ * Formatea un LocalDateTime del backend a texto legible en español.
+ * El backend devuelve ISO 8601: "2025-05-12T14:30:00"
+ * @param {string|null} fechaISO
+ * @returns {string} Ej: "12 de mayo de 2025"
+ */
+function _formatFecha(fechaISO) {
+  if (!fechaISO) return '—';
+  try {
+    return new Date(fechaISO).toLocaleDateString('es-MX', {
+      year:  'numeric',
+      month: 'long',
+      day:   'numeric',
+    });
+  } catch (e) {
+    return fechaISO;
+  }
+}
+
+/**
+ * Convierte el código de método de pago del backend a texto legible.
+ * Acepta tanto los valores del enum de Spring como los del frontend anterior.
+ * @param {string} m
+ * @returns {string}
+ */
+function _metodoTexto(m) {
+  if (!m) return '—';
+  const val = m.toUpperCase();
+  if (val === 'TARJETA'      || val === 'CARD')     return 'Tarjeta de crédito / débito';
+  if (val === 'PAYPAL')                              return 'PayPal';
+  if (val === 'TRANSFERENCIA'|| val === 'TRANSFER')  return 'Transferencia SPEI';
+  return m;
+}
+
+/**
+ * Convierte el código de método de envío del backend a texto legible.
+ * @param {string} m
+ * @returns {string}
+ */
+function _metodoEnvioTexto(m) {
+  if (!m) return '—';
+  const val = m.toUpperCase();
+  if (val === 'LOCAL')    return 'Entrega local (sábados)';
+  if (val === 'NACIONAL') return 'Envío nacional';
+  if (val === 'EXPRESS')  return 'Envío express';
+  return m;
+}
+
+/**
+ * Limpia el carrito de localStorage después de confirmar la orden.
+ * El carrito del backend ya se procesó — no necesitamos mantenerlo localmente.
+ */
+function _limpiarCarritoLocal() {
+  try {
+    localStorage.removeItem('hera_cart');
+    localStorage.removeItem('hera_last_order');
+  } catch (e) {
+    // localStorage puede no estar disponible — no es crítico
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════════════════════ */
+
+/**
+ * Inicializa el IntersectionObserver para los elementos .reveal.
+ * Se llama después de _renderOrder() para que los .order-item
+ * dinámicos también queden observados.
  */
 function _initScrollReveal() {
-
-  /* Observer reutilizable — activa/desactiva .visible al entrar/salir del viewport */
   function _makeObserver() {
     return new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -229,18 +368,14 @@ function _initScrollReveal() {
     }, { threshold: 0.12 });
   }
 
-  /* Fase 1 — elementos estáticos del HTML */
   const staticObs = _makeObserver();
   document.querySelectorAll('.reveal').forEach(function (el) {
     staticObs.observe(el);
   });
 
-  /* Fase 2 — elementos .reveal generados dinámicamente por _renderOrder()
-     Si ya están en el viewport se activan directamente; si no, se observan */
   const dynamicObs = _makeObserver();
   document.querySelectorAll('#orderItemsList .reveal').forEach(function (el) {
     if (el.getBoundingClientRect().top < window.innerHeight) {
-      // El elemento ya es visible sin scroll — activar inmediatamente
       el.classList.add('visible');
     } else {
       dynamicObs.observe(el);
