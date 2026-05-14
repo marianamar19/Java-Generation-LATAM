@@ -421,6 +421,7 @@ section.hero { padding: 0; }
 .carousel-progress-fill { position: absolute; top: 0; height: 100%; background: var(--red); transition: left .35s ease, width .35s ease; }
 
 /* ── Sección: ed-item dentro del carrusel de bestsellers ─────── */
+.carousel-wrapper { background: var(--lgray); }
 
 .carousel-track {
   gap: 16px;

@@ -142,7 +142,7 @@ async function _renderBestSellers() {
         nivel:     p.nivelDisponibilidad,
         badge:     p.badge || '',
         varianteId: p.variantes && p.variantes[0] ? p.variantes[0].id : null,
-        vols:      p.variantes ? p.variantes.map(v => ({ ml: /^\d+$/.test(String(v.valor)) ? v.valor + ' ml' : v.valor, precio: v.precio })) : [],
+        vols:      p.variantes ? p.variantes.map(v => ({ ml: /^\d+$/.test(String(v.valor)) ? v.valor + ' ml' : v.valor, precio: v.precio, id: v.id })) : [],
       }));
     track.innerHTML = productos.map(renderCard).join('');
     _initCarousel();   // reinicia el carrusel con los nuevos elementos
@@ -230,7 +230,7 @@ function _initCarousel() {
 
   if (!track) return;
 
-  const cards = track.querySelectorAll('.product-card');
+  const cards = track.querySelectorAll('.ed-item');
   let cur     = 0;
 
   function getVis() {
@@ -283,11 +283,41 @@ function _initCarouselDelegation() {
   const carouselTrack = document.getElementById('carouselTrack');
   if (!carouselTrack) return;
 
+  // Actualizar varianteId del botón de carrito al seleccionar una variante
   carouselTrack.addEventListener('click', function(e) {
+    const volBtn = e.target.closest('.ed-vol-btn');
+    if (volBtn) {
+      const card = volBtn.closest('.ed-item');
+      if (!card) return;
+      card.querySelectorAll('.ed-vol-btn').forEach(function(b) { b.classList.remove('sel'); });
+      volBtn.classList.add('sel');
+      const precio = volBtn.dataset.precio;
+      if (precio) {
+        card.querySelector('.ed-price').textContent = '$' + parseInt(precio).toLocaleString('es-MX') + ' MXN';
+      }
+      // Buscar la variante correspondiente por label y actualizar el botón de carrito
+      const label = volBtn.textContent.trim();
+      const cartBtn = card.querySelector('[data-action="add-to-cart"]');
+      if (cartBtn) {
+        // Buscar en el array de vols del producto el id de la variante seleccionada
+        const varianteId = volBtn.dataset.varianteId;
+        if (varianteId) cartBtn.dataset.varianteId = varianteId;
+      }
+      return;
+    }
+
     const btn = e.target.closest('[data-action="add-to-cart"]');
     if (!btn) return;
     e.stopPropagation();
-    addItemToCart(btn.dataset.varianteId);
+
+    // Leer la variante seleccionada en la tarjeta actual
+    const card = btn.closest('.ed-item');
+    const selVolBtn = card ? card.querySelector('.ed-vol-btn.sel') : null;
+    const varianteId = selVolBtn && selVolBtn.dataset.varianteId
+      ? selVolBtn.dataset.varianteId
+      : btn.dataset.varianteId;
+
+    addItemToCart(varianteId);
   });
 }
 

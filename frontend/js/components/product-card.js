@@ -78,42 +78,37 @@ function _nivel(nivel, prefix) {
  * @returns {string} HTML de la tarjeta
  */
 export function renderCard(p) {
-  const vol       = _defaultVol(p);
-  const badgeHtml = _badge(p.badge);
-  const nivelHtml = _nivel(p.nivel, 'prod');
   const volLabel  = p.volLabel || 'Presentación';
-  let detalle = vol;
-  if (p.tipo === 'joyeria' && p.vols && p.vols[0]) {
-    detalle = vol + ' · ' + p.vols[0].ml;
+  const vols      = p.vols || [];
+  const nivelHtml = _nivel(p.nivel, 'ed');
+  const imgLabel  = p.tipo === 'joyeria' ? 'Imagen de la pieza' : 'Imagen del producto';
+
+  // Badge
+  let badgeHtml = '';
+  if (p.badge) {
+    const mod = (p.badge === '-20%' || p.badge === 'Ed. limitada') ? '--dark' : '--red';
+    badgeHtml = `<span class="ed-item-badge ed-item-badge${mod}">${p.badge}</span>`;
   }
 
+  // Botones de volumen
+  const volBtns = vols.map((v, i) => `
+    <button class="ed-vol-btn${i === 0 ? ' sel' : ''}"
+      data-ml="${v.ml}"
+      data-precio="${v.precio}"
+      data-variante-id="${v.id || ''}">${v.ml}</button>
+  `).join('');
+
   return `
-    <div class="product-card">
-      ${badgeHtml}
-      <div class="product-img-wrap">
-        ${p.img
-            ? `<img src="${p.img}" alt="${p.name}" loading="lazy" />`
-            : `<div class="img-placeholder">${SVG_PLACEHOLDER}<span>Imagen del producto</span></div>`
-          }
-        <div class="product-overlay">
-          <button class="product-overlay-btn"
-            data-action="add-to-cart"
-            data-variante-id="${p.varianteId}"
-            data-brand="${p.brand}"
-            data-name="${p.name}"
-            data-price="${p.price}"
-            data-vol="${vol}"
-            data-nivel="${p.nivel}"
-            data-img="${p.img || ''}"
-            >Agregar al carrito</button>
-        </div>
+    <div class="ed-item">
+      <div class="ed-item-header">
+        ${badgeHtml}
         <button class="fav-btn"
           data-product-id="${p.id}"
-          data-tipo="${p.tipo}"
-          data-cat="${p.cat}"
-          data-gen="${p.gen}"
+          data-tipo="${p.tipo || ''}"
+          data-cat="${p.cat || ''}"
+          data-gen="${p.gen || ''}"
           data-nivel="${p.nivel}"
-          data-vol="${vol}"
+          data-vol="${vols[0] ? vols[0].ml : ''}"
           data-vol-label="${volLabel}"
           data-brand="${p.brand}"
           data-name="${p.name}"
@@ -123,13 +118,32 @@ export function renderCard(p) {
           ${SVG_FAV}
         </button>
       </div>
-      <div class="product-info">
-        <div class="product-brand">${p.brand}</div>
-        <div class="product-name">${p.name}</div>
-        <div class="product-detail">${detalle}</div>
-        <div class="product-price">${p.price}</div>
-        ${nivelHtml}
+      <div class="ed-img-zone">
+        ${p.img
+          ? `<img src="${p.img}" alt="${p.name}" loading="lazy" />`
+          : `<div class="ed-img-placeholder">${SVG_PLACEHOLDER}<span>${imgLabel}</span></div>`
+        }
+        <div class="ed-cart-overlay">
+          <button class="ed-cart-btn"
+            data-action="add-to-cart"
+            data-variante-id="${p.varianteId}"
+            data-brand="${p.brand}"
+            data-name="${p.name}"
+            data-price="${p.price}"
+            data-nivel="${p.nivel}"
+            data-img="${p.img || ''}"
+            >Agregar al carrito</button>
+        </div>
       </div>
+      <div class="ed-brand">${p.brand}</div>
+      <div class="ed-name">${p.name}</div>
+      <div class="ed-vol-label">${volLabel}</div>
+      <div class="ed-vols">${volBtns}</div>
+      <div class="ed-footer">
+        <div class="ed-price">${p.price}</div>
+        <a href="producto.html?id=${p.id}" class="ed-cta">Ver producto ${SVG_ARROW}</a>
+      </div>
+      ${nivelHtml}
     </div>
   `.trim();
 }

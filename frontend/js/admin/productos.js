@@ -422,8 +422,10 @@ function populateForm(p) {
     if (slugPreview && p.slug) slugPreview.textContent = `slug: ${p.slug}`;
 
     const chkNuevo = document.getElementById('f-nuevo');
+    const chkBestSeller = document.getElementById('f-bestseller');
     const chkActivo = document.getElementById('f-activo');
     if (chkNuevo) chkNuevo.checked = !!p.esNuevo;
+    if (chkBestSeller) chkBestSeller.checked = !!p.esBestSeller;
     if (chkActivo) chkActivo.checked = p.activo !== false;
 
     const list = document.getElementById('variants-list');
@@ -442,8 +444,10 @@ function resetForm() {
     fields.forEach(id => setVal(id, ''));
     
     const chkNuevo = document.getElementById('f-nuevo');
+    const chkBestSeller = document.getElementById('f-bestseller');
     const chkActivo = document.getElementById('f-activo');
     if (chkNuevo) chkNuevo.checked = false;
+    if (chkBestSeller) chkBestSeller.checked = false;
     if (chkActivo) chkActivo.checked = true;
     
     const slugPreview = document.getElementById('f-marca-preview');
@@ -532,6 +536,7 @@ async function saveProduct() {
         nivelDisponibilidad: document.getElementById('f-nivel').value,
         badge: document.getElementById('f-badge').value.trim() || null,
         esNuevo: document.getElementById('f-nuevo').checked,
+        esBestSeller: document.getElementById('f-bestseller').checked,
         activo: document.getElementById('f-activo').checked !== false,
         variantes: variants,
         imagenPrincipalUrl: imagenPrincipalUrl,
