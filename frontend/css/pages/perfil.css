@@ -180,6 +180,30 @@
   font-size: 11px; color: rgba(15,15,15,.38); line-height: 1.4;
 }
 
+/* ── Teléfono con prefijo ─────────────────────────────────────── */
+.perfil-tel-wrap {
+  display: flex;
+  align-items: stretch;
+}
+.perfil-tel-prefix {
+  background: rgba(15,15,15,.04);
+  border: 1px solid rgba(15,15,15,.18);
+  border-right: none;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: rgba(15,15,15,.5);
+  user-select: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.perfil-tel-input {
+  border-radius: 0 !important;
+  flex: 1;
+  min-width: 0;
+}
+
 /* ── Sección: Botones ────────────────────────────────────────── */
 .perfil-btn {
   padding: 14px 32px; border: none;
@@ -287,12 +311,21 @@
   display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;
 }
 .perfil-addr-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+  display: grid; grid-template-columns: 1fr;
+  gap: 18px;
+  align-items: start;
 }
 .perfil-addr-card {
   background: var(--cream); border: 1px solid rgba(15,15,15,.08);
-  padding: 22px; position: relative;
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
 }
+
+.perfil-addr-info { flex: 1; }
+
 .perfil-addr-alias {
   font-size: 9px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
   color: var(--red); margin-bottom: 12px;
@@ -308,14 +341,34 @@
   font-size: 10px; font-weight: 600; letter-spacing: .06em;
   color: rgba(15,15,15,.4); margin-top: 10px;
 }
-.perfil-addr-actions { display: flex; gap: 8px; margin-top: 16px; }
+
+.perfil-addr-actions { 
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.perfil-addr-actions .perfil-btn {
+  min-width: 120px;
+  text-align: center;
+}
+
 .perfil-addr-empty {
   background: var(--cream); border: 1px solid rgba(15,15,15,.08);
   padding: 52px; text-align: center; grid-column: 1 / -1;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .perfil-addr-empty-titulo { font-family: var(--serif); font-size: 20px; font-style: italic; color: rgba(15,15,15,.4); margin-bottom: 8px; }
 .perfil-addr-empty-sub    { font-size: 11px; color: rgba(15,15,15,.3); }
 
+#addrGrid:has(~ #addrFormWrap.show),
+#addrFormWrap.show ~ #addrGrid {
+  display: none;
+}
 /* ── Sección: Formulario de dirección ───────────────────────── */
 .perfil-addr-form-wrap {
   display: none;

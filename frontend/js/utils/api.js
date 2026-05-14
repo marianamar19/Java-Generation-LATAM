@@ -308,3 +308,23 @@ export async function postResena(productId, reviewData) {
 export async function getProductoHistorial(id) {
     return get(`/api/productos/${id}/historial`);
 }
+
+// ========== MÉTODOS PARA CARDS DEL INDEX ==========
+
+// Productos destacados → hero card del index
+export async function getDestacados() {
+    const response = await fetch(`${API_BASE_URL}/api/productos/destacados`);
+    return response.json();
+}
+
+// Productos bestsellers → carrusel del index
+export async function getBestsellers() {
+    const response = await fetch(`${API_BASE_URL}/api/productos/bestsellers`);
+    return response.json();
+}
+
+// Productos nuevos → sección editorial del index
+export async function getNuevos() {
+    const response = await fetch(`${API_BASE_URL}/api/productos/nuevos`);
+    return response.json();
+}

@@ -64,47 +64,29 @@
           <div class="hero-cursor-dot"></div>
           <div class="hero-card">
             <div class="hero-card-img">
-              <img
-                src="https://res.cloudinary.com/dgvvsw6fs/image/upload/c_crop,ar_3:4/v1777435414/Inolvidable_om7vkr.png"
-                alt="Inolvidable by Jenny Rivera EDT 50 mL"
-                width="350"
-                height="437"
-                loading="eager"
-              />
+              <img id="heroCardImg" src="" alt="" width="350" height="437" loading="eager" style="display:none"/>
+              <div class="hero-card-img-placeholder" id="heroCardPlaceholder"></div>
             </div>
             <div class="hero-card-info">
               <div class="hero-card-info-body">
                 <div class="hero-card-label">Más vendido esta semana</div>
-                <div class="hero-card-name">Inolvidable by Jenny Rivera</div>
-                <div class="hero-card-vol-label">Presentación</div>
-                <div class="hero-card-vol">50 ml</div>
+                <div class="hero-card-name" id="heroCardName"></div>
+                <div class="hero-card-vol-label" id="heroCardVolLabel"></div>
+                <div class="hero-card-vol" id="heroCardVol"></div>
                 <div class="hero-card-footer">
-                  <div class="hero-card-price">$1,210 MXN</div>
-                  <button
-                    class="hero-card-fav fav-btn"
-                    data-product-id="jenny-1"
-                    data-tipo="perfumes"
-                    data-cat="diseñador"
-                    data-gen="femenino"
-                    data-nivel="green"
-                    data-vol="50 ml"
-                    data-vol-label="Presentación"
-                    data-brand="Jenny Rivera"
-                    data-name="Inolvidable by Jenny Rivera EDT 50 mL"
-                    data-price="$1,210 MXN"
-                    aria-label="Añadir a favoritos">
+                  <div class="hero-card-price" id="heroCardPrice"></div>
+                  <button class="hero-card-fav fav-btn" aria-label="Añadir a favoritos">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                     </svg>
                   </button>
-                  <a href="producto.html?id=jenny-1" class="hero-card-cta">Ver producto →</a>
+                  <a href="#" class="hero-card-cta" id="heroCardCta">Ver producto →</a>
                 </div>
-                <div class="hero-card-nivel green">
-                  <span class="hero-card-nivel-dot"></span>En existencia
+                <div class="hero-card-nivel" id="heroCardNivel">
+                  <span class="hero-card-nivel-dot"></span>
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
@@ -113,7 +95,7 @@
       <a href="catalogo.html?tab=perfumes" class="btn-primary">Explorar perfumes</a>
     </div>
   </section>
- 
+
 <!-- ══════════════════════════════════════
       SECCIÓN: Marquee decorativo
       Separador animado entre hero y trust
@@ -138,7 +120,7 @@
       <span>Decants</span><span class="dot">✦</span>
     </div>
   </div>
- 
+
 <!-- ══════════════════════════════════════
       SECCIÓN: Confianza — 4 columnas de stats
       [EXCLUSIVO] index.html

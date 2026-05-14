@@ -5,61 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Productos — HERA Admin</title>
 
-  <!-- ── Tipografía compartida con el sitio ── -->
   <link rel="stylesheet" href="../../css/base/typography.css" />
-
-  <!-- ── Bootstrap 5 — grid, form controls, toast ── -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 
-  <!-- ── Design System Admin ── -->
   <link rel="stylesheet" href="../../css/admin/tokens-admin.css" />
   <link rel="stylesheet" href="../../css/admin/base-admin.css" />
   <link rel="stylesheet" href="../../css/admin/layout-admin.css" />
   <link rel="stylesheet" href="../../css/admin/components-admin.css" />
-
-  <!-- ── Estilos exclusivos de esta página ── -->
   <link rel="stylesheet" href="../../css/admin/productos.css" />
 </head>
 <body>
 
 <div class="adm-wrap">
 
-  <!-- ══════════════════════════════════════
-       SIDEBAR 
-  ══════════════════════════════════════ -->
-  <aside class="adm-sidebar">
-    <div class="adm-sidebar-logo">
-      <div class="adm-logo-brand">Hera</div>
-      <div class="adm-logo-sub">Panel Admin</div>
-    </div>
-    <nav aria-label="Navegación del panel admin">
-      <div class="adm-nav-section">
-        <div class="adm-nav-label">Principal</div>
-        <a href="dashboard.html" class="adm-nav-item" aria-label="Dashboard">
-          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          <span class="adm-nav-text">Dashboard</span>
-        </a>
-        <a href="productos.html" class="adm-nav-item active" aria-label="Productos">
-          <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-          <span class="adm-nav-text">Productos</span>
-        </a>
-      </div>
-    </nav>
-    <div class="adm-sidebar-bottom">
-      <a href="../../pages/index.html" class="adm-nav-item" aria-label="Ver sitio público">
-        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        <span class="adm-nav-text">Ver sitio</span>
-      </a>
-      <button class="adm-nav-item" id="btn-logout" aria-label="Cerrar sesión del panel admin">
-        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        <span class="adm-nav-text">Cerrar sesión</span>
-      </button>
-    </div>
-  </aside>
+  <div id="adm-sidebar-placeholder"></div>
 
-  <!-- ══════════════════════════════════════
-       MAIN
-  ══════════════════════════════════════ -->
   <div class="adm-main">
 
     <header class="adm-topbar">
@@ -75,44 +35,46 @@
       <!-- BARRA DE ACCIONES -->
       <div class="adm-actions">
         <div class="d-flex gap-2 flex-wrap align-items-center flex-fill">
-          <div class="input-group input-group-sm" style="max-width:320px;">
+          <div class="input-group input-group-sm" style="max-width:280px;">
             <input type="text" class="form-control" id="prod-search"
-              placeholder="Buscar por nombre o marca..." aria-label="Buscar productos" />
-            <button class="btn btn-outline-secondary" type="button" aria-label="Ejecutar búsqueda">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              placeholder="Buscar por nombre o marca..." />
+            <button class="btn btn-outline-secondary" type="button">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </button>
           </div>
-          <select class="form-select form-select-sm" id="filter-tipo" style="min-width:150px;" aria-label="Filtrar por tipo">
+          <select class="form-select form-select-sm" id="filter-tipo" style="max-width:150px;">
             <option value="">Todos los tipos</option>
             <option value="perfumes">Perfumes</option>
             <option value="joyeria">Joyería</option>
           </select>
-          <select class="form-select form-select-sm" id="filter-nivel" style="min-width:170px;" aria-label="Filtrar por disponibilidad">
+          <select class="form-select form-select-sm" id="filter-nivel" style="max-width:170px;">
             <option value="">Toda disponibilidad</option>
             <option value="green">En existencia</option>
             <option value="yellow">Disp. limitada</option>
             <option value="red">Pieza exclusiva</option>
           </select>
         </div>
-        <button class="btn btn-primary btn-sm" id="btn-nuevo" aria-label="Agregar nuevo producto">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <button class="btn btn-primary btn-sm" id="btn-nuevo">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Nuevo producto
         </button>
       </div>
 
       <!-- TABLA -->
       <div class="adm-card-table">
-        <table class="table table-hover adm-table mb-0" aria-label="Tabla de productos del catálogo">
+        <table class="table table-hover adm-table mb-0">
           <thead>
             <tr>
-              <th scope="col">Producto</th>
-              <th scope="col">Tipo</th>
-              <th scope="col">Categoría</th>
-              <th scope="col">Precio base</th>
-              <th scope="col">Variantes</th>
-              <th scope="col">Disponibilidad</th>
-              <th scope="col">Activo</th>
-              <th scope="col">Acciones</th>
+              <th>Producto</th>
+              <th>Tipo / Género</th>
+              <th>Categoría</th>
+              <th>Conc/Mat</th>
+              <th>Precio base</th>
+              <th>Variantes</th>
+              <th>Flags</th>
+              <th>Disponibilidad</th>
+              <th>Activo</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody id="prod-tbody"></tbody>
@@ -121,246 +83,257 @@
 
     </main>
   </div>
-
-</div><!-- /adm-wrap -->
-
-<!-- ══════════════════════════════════════
-     DRAWER OVERLAY
-══════════════════════════════════════ -->
-<div class="adm-drawer-overlay" id="drawer-overlay" aria-hidden="true"></div>
+</div>
 
 <!-- ══════════════════════════════════════
-     DRAWER — Formulario de producto
+     MODAL — Formulario de producto
 ══════════════════════════════════════ -->
-<aside class="adm-drawer" id="prod-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+<div class="modal fade adm-modal" id="prod-modal" tabindex="-1"
+     aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
 
-  <div class="adm-drawer-header">
-    <span class="adm-drawer-title" id="drawer-title">Nuevo producto</span>
-    <button class="adm-drawer-close" id="drawer-close" aria-label="Cerrar formulario">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-  </div>
-
-  <div class="adm-drawer-body">
-
-    <!-- ── Identidad ── -->
-    <div class="card mb-3">
-      <div class="card-header">Identidad</div>
-      <div class="card-body">
-        <div class="row g-3">
-          <div class="col-12">
-            <label class="form-label" for="f-brand">Marca <span class="req">*</span></label>
-            <input class="form-control" type="text" id="f-brand" placeholder="Ej: Dior" />
-            <div class="form-text" id="f-marca-preview"></div>
-            <div class="invalid-feedback" id="err-brand">Campo obligatorio.</div>
-            <input type="hidden" id="f-marca" />
-          </div>
-          <div class="col-12">
-            <label class="form-label" for="f-name">Nombre del producto <span class="req">*</span></label>
-            <input class="form-control" type="text" id="f-name" placeholder="Ej: Sauvage EDP" />
-            <div class="invalid-feedback" id="err-name">Campo obligatorio.</div>
-          </div>
-          <div class="col-12">
-            <label class="form-label" for="f-id">ID único</label>
-            <input class="form-control" type="text" id="f-id" placeholder="Se genera automáticamente" readonly />
-            <div class="form-text">Se genera automáticamente desde Marca + Nombre</div>
-          </div>
-        </div>
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">Nuevo producto</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
-    </div>
 
-    <!-- ── Clasificación ── -->
-    <div class="card mb-3">
-      <div class="card-header">Clasificación</div>
-      <div class="card-body">
-        <div class="row g-3">
-          <div class="col-6">
-            <label class="form-label" for="f-tipo">Tipo <span class="req">*</span></label>
-            <select class="form-select" id="f-tipo">
-              <option value="">Seleccionar</option>
-              <option value="perfumes">Perfumes</option>
-              <option value="joyeria">Joyería</option>
-            </select>
-            <div class="invalid-feedback" id="err-tipo">Selecciona un tipo.</div>
-          </div>
-          <div class="col-6">
-            <label class="form-label" for="f-cat">Categoría <span class="req">*</span></label>
-            <select class="form-select" id="f-cat">
-              <option value="">Seleccionar</option>
-              <optgroup label="Perfumes">
-                <option value="Diseñador">Diseñador</option>
-                <option value="Nicho">Nicho</option>
-                <option value="Árabes">Árabes</option>
-                <option value="Testers">Testers</option>
-                <option value="Decants">Decants</option>
-                <option value="Sets">Sets</option>
-                <option value="Body Mist">Body Mist</option>
-              </optgroup>
-              <optgroup label="Joyería">
-                <option value="Anillos">Anillos</option>
-                <option value="Aretes">Aretes</option>
-                <option value="Collares">Collares</option>
-                <option value="Brazaletes">Brazaletes</option>
-              </optgroup>
-            </select>
-            <div class="invalid-feedback" id="err-cat">Selecciona una categoría.</div>
-          </div>
-          <div class="col-6">
-            <label class="form-label" for="f-gen">Género <span class="req">*</span></label>
-            <select class="form-select" id="f-gen">
-              <option value="">Seleccionar</option>
-              <option value="masculino">Masculino</option>
-              <option value="femenino">Femenino</option>
-              <option value="unisex">Unisex</option>
-            </select>
-            <div class="invalid-feedback" id="err-gen">Selecciona un género.</div>
-          </div>
-          <div class="col-6">
-            <label class="form-label" for="f-fam">Familia olfativa</label>
-            <select class="form-select" id="f-fam">
-              <option value="">Sin familia (joyería)</option>
-              <option value="floral">Floral</option>
-              <option value="oriental">Oriental</option>
-              <option value="amaderado">Amaderado</option>
-              <option value="fresco">Fresco</option>
-              <option value="gourmand">Gourmand</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
+      <!-- TABS -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-identidad" type="button" role="tab">Identidad</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-precio" type="button" role="tab">Precio y variantes</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-merch" type="button" role="tab">Merchandising</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-contexto" type="button" role="tab">Contexto</button>
+        </li>
+      </ul>
 
-    <!-- ── Precio y variantes ── -->
-    <div class="card mb-3">
-      <div class="card-header">Precio y variantes</div>
-      <div class="card-body">
-        <div class="row g-3 mb-3">
-          <div class="col-12">
-            <label class="form-label" for="f-precio-base">Precio base (MXN) <span class="req">*</span></label>
-            <input class="form-control" type="number" id="f-precio-base" placeholder="Ej: 2490" min="1" step="1" />
-            <div class="invalid-feedback" id="err-precio-base">El precio debe ser mayor a 0.</div>
+      <div class="modal-body">
+        <div class="tab-content">
+
+          <!-- TAB: IDENTIDAD -->
+          <!-- TAB: IDENTIDAD -->
+          <div class="tab-pane fade show active" id="tab-identidad" role="tabpanel">
+            <div class="d-flex gap-3" style="align-items:start;">
+
+              <!-- Columna izquierda: imágenes -->
+              <div style="width:150px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;">
+                <div class="adm-img-preview adm-drop-zone" id="img-preview" style="position:relative;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                  <span>Arrastra aquí</span>
+                </div>
+                <div class="adm-gallery-grid" id="galeria-imagenes-list">
+                  <span style="font-size:10px;color:var(--adm-muted);">Galería vacía</span>
+                </div>
+                <div class="input-group input-group-sm">
+                  <input class="form-control" type="text" id="f-imagen-url" placeholder="URL imagen..." />
+                  <button class="btn btn-outline-secondary" type="button" id="btn-agregar-imagen">+</button>
+                </div>
+              </div>
+
+              <!-- Columna derecha: campos -->
+              <div class="flex-fill">
+
+                <div class="row g-2 mb-2">
+                  <div class="col-4">
+                    <label class="form-label" for="f-brand">Marca <span class="req">*</span></label>
+                    <input class="form-control form-control-sm" type="text" id="f-brand" placeholder="Ej: Dior" />
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" for="f-name">Nombre <span class="req">*</span></label>
+                    <input class="form-control form-control-sm" type="text" id="f-name" placeholder="Ej: Sauvage" />
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" id="lbl-conc-mat" for="f-conc-mat">Concentración <span class="req">*</span></label>
+                    <select class="form-select form-select-sm" id="f-conc-mat">
+                      <option value="">Seleccionar</option>
+                      <option value="EDP">EDP</option>
+                      <option value="EDT">EDT</option>
+                      <option value="EDC">EDC</option>
+                      <option value="PAR">Parfum</option>
+                      <option value="ELI">Elixir</option>
+                      <option value="FRA">Fragancia (Body Mist)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row g-2 mb-2">
+                  <div class="col-4">
+                    <label class="form-label" for="f-tipo">Tipo <span class="req">*</span></label>
+                    <select class="form-select form-select-sm" id="f-tipo">
+                      <option value="">Seleccionar</option>
+                      <option value="perfumes">Perfumes</option>
+                      <option value="joyeria">Joyería</option>
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" for="f-cat">Categoría <span class="req">*</span></label>
+                    <select class="form-select form-select-sm" id="f-cat">
+                      <option value="">Seleccionar</option>
+                      <option value="Diseñador">Diseñador</option>
+                      <option value="Árabe">Árabe</option>
+                      <option value="Nicho">Nicho</option>
+                      <option value="Exclusivo">Exclusivo</option>
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" for="f-gen">Género <span class="req">*</span></label>
+                    <select class="form-select form-select-sm" id="f-gen">
+                      <option value="">Seleccionar</option>
+                      <option value="masculino">Masculino</option>
+                      <option value="femenino">Femenino</option>
+                      <option value="unisex">Unisex</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row g-2 mb-2">
+                  <div class="col-4">
+                    <label class="form-label" for="f-fam">Familia olfativa</label>
+                    <select class="form-select form-select-sm" id="f-fam">
+                      <option value="">Sin familia</option>
+                      <option value="floral">Floral</option>
+                      <option value="oriental">Oriental</option>
+                      <option value="amaderado">Amaderado</option>
+                      <option value="fresco">Fresco</option>
+                      <option value="gourmand">Gourmand</option>
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" for="f-pais">País de origen</label>
+                    <input class="form-control form-control-sm" type="text" id="f-pais" placeholder="Ej: Francia" />
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" for="f-anio">Año de lanzamiento</label>
+                    <input class="form-control form-control-sm" type="number" id="f-anio" placeholder="Ej: 2015" />
+                  </div>
+                </div>
+
+                <div class="row g-2">
+                  <div class="col-12">
+                    <label class="form-label" for="f-descripcion">Descripción</label>
+                    <textarea class="form-control form-control-sm" id="f-descripcion"
+                      rows="5" placeholder="Describe el producto..."></textarea>
+                  </div>
+                </div>
+
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="row g-3 mb-3">
-          <div class="col-12">
-            <label class="form-label">Variantes (opcional)</label>
+
+          <!-- TAB: PRECIO Y VARIANTES -->
+          <div class="tab-pane fade" id="tab-precio" role="tabpanel">
+            <div class="row g-3 mb-3">
+              <div class="col-6">
+                <label class="form-label" for="f-precio-base">Precio base (MXN) <span class="req">*</span></label>
+                <input class="form-control" type="number" id="f-precio-base"
+                  placeholder="Ej: 2490" min="1" step="1" />
+              </div>
+            </div>
+            <label class="form-label">Variantes</label>
             <div id="variants-list" class="d-flex flex-column gap-2 mb-3"></div>
             <button class="btn btn-outline-secondary btn-sm w-100" id="btn-add-variant" type="button"
-              style="border-style:dashed; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;"
-              aria-label="Agregar variante">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Agregar variante
+              style="border-style:dashed;font-size:11px;letter-spacing:.06em;text-transform:uppercase;">
+              + Agregar variante
             </button>
           </div>
+
+          <!-- TAB: MERCHANDISING -->
+          <div class="tab-pane fade" id="tab-merch" role="tabpanel">
+            <div class="row g-3 mb-3">
+              <div class="col-6">
+                <label class="form-label" for="f-nivel">Disponibilidad <span class="req">*</span></label>
+                <select class="form-select" id="f-nivel">
+                  <option value="">Seleccionar</option>
+                  <option value="green">En existencia</option>
+                  <option value="yellow">Disponibilidad limitada</option>
+                  <option value="red">Pieza exclusiva</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label" for="f-badge">Badge</label>
+                <input class="form-control" type="text" id="f-badge" placeholder="Ej: -20%, Más vendido" />
+              </div>
+            </div>
+            <div class="d-flex flex-column gap-1">
+              <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                <div>
+                  <div class="form-label mb-0">Marcar como nuevo</div>
+                  <div class="form-text">Aparece en sección "Novedades" del index</div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" id="f-nuevo" role="switch" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                <div>
+                  <div class="form-label mb-0">Marcar como bestseller</div>
+                  <div class="form-text">Aparece en el carrusel del index</div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" id="f-bestseller" role="switch" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                <div>
+                  <div class="form-label mb-0">Marcar como destacado</div>
+                  <div class="form-text">Aparece en la hero card del index</div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" id="f-destacado" role="switch" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center py-2">
+                <div>
+                  <div class="form-label mb-0">Producto activo en el sitio</div>
+                  <div class="form-text">Visible para los clientes</div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" id="f-activo" role="switch" checked />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: CONTEXTO -->
+          <div class="tab-pane fade" id="tab-contexto" role="tabpanel">
+            <p class="text-muted" style="font-size:12px;">
+              Próximamente — temporadas, momentos del día, ocasiones y notas olfativas.
+            </p>
+          </div>
+
         </div>
       </div>
-    </div>
 
-    <!-- ===================================================== -->
-    <!-- SECCIÓN: IMÁGENES DEL PRODUCTO (AGREGADA) -->
-    <!-- ===================================================== -->
-    <div class="card mb-3">
-      <div class="card-header">Imágenes del producto</div>
-      <div class="card-body">
-        
-        <!-- Imagen principal -->
-        <div class="mb-3">
-          <label class="form-label" for="f-imagen-principal">Imagen principal (URL)</label>
-          <div class="input-group">
-            <input class="form-control" type="text" id="f-imagen-principal" 
-              placeholder="https://res.cloudinary.com/.../imagen.jpg" />
-            <button class="btn btn-outline-secondary" type="button" id="btn-preview-img">
-              Vista previa
-            </button>
-          </div>
-          <div class="form-text">URL de la imagen principal del producto (Cloudinary recomendado)</div>
-          <div id="preview-img-container" class="mt-2" style="display: none;">
-            <img id="preview-img" src="" alt="Vista previa" style="max-width: 150px; max-height: 150px; border-radius: 8px;" />
-          </div>
-        </div>
-
-        <!-- Imágenes adicionales (galería) -->
-        <div class="mb-3">
-          <label class="form-label">Galería de imágenes (adicionales)</label>
-          <div id="galeria-imagenes-list" class="d-flex flex-wrap gap-2 mb-2">
-            <div class="text-muted small">No hay imágenes adicionales</div>
-          </div>
-          <div class="input-group">
-            <input class="form-control" type="text" id="f-imagen-extra" 
-              placeholder="https://res.cloudinary.com/.../imagen2.jpg" />
-            <button class="btn btn-outline-secondary" type="button" id="btn-agregar-imagen">
-              + Agregar
-            </button>
-          </div>
-          <div class="form-text">URLs de imágenes adicionales para la galería del producto</div>
-        </div>
-
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="btn-save-product">Guardar producto</button>
       </div>
+
     </div>
-
-    <!-- ── Merchandising ── -->
-    <div class="card mb-3">
-      <div class="card-header">Merchandising</div>
-      <div class="card-body">
-        <div class="row g-3 mb-3">
-          <div class="col-6">
-            <label class="form-label" for="f-nivel">Disponibilidad <span class="req">*</span></label>
-            <select class="form-select" id="f-nivel">
-              <option value="">Seleccionar</option>
-              <option value="green">En existencia</option>
-              <option value="yellow">Disponibilidad limitada</option>
-              <option value="red">Pieza exclusiva</option>
-            </select>
-            <div class="invalid-feedback" id="err-nivel">Selecciona el nivel.</div>
-          </div>
-          <div class="col-6">
-            <label class="form-label" for="f-badge">Badge</label>
-            <input class="form-control" type="text" id="f-badge" placeholder="Ej: Más vendido, -20%" />
-          </div>
-        </div>
-        <div class="d-flex justify-content-between align-items-center py-2 border-top">
-          <label class="form-label mb-0" for="f-nuevo">Marcar como nuevo</label>
-          <div class="form-check form-switch mb-0">
-            <input class="form-check-input" type="checkbox" id="f-nuevo" role="switch" />
-          </div>
-        </div>
-        <div class="d-flex justify-content-between align-items-center py-2 border-top mt-1">
-          <label class="form-label mb-0" for="f-activo">Producto activo en el sitio</label>
-          <div class="form-check form-switch mb-0">
-            <input class="form-check-input" type="checkbox" id="f-activo" role="switch" checked />
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /drawer-body -->
-
-  <div class="adm-drawer-footer">
-    <button class="btn btn-outline-secondary" id="btn-cancel-drawer" type="button">Cancelar</button>
-    <button class="btn btn-primary flex-fill" id="btn-save-product" type="button">Guardar producto</button>
   </div>
+</div>
 
-</aside>
-
-<!-- ══════════════════════════════════════
-     TOAST — Bootstrap
-══════════════════════════════════════ -->
+<!-- TOAST -->
 <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index:9999;">
-  <div id="adm-toast" class="toast text-white border-0" role="status" aria-live="polite" aria-atomic="true">
+  <div id="adm-toast" class="toast text-white border-0" role="status" aria-live="polite">
     <div class="d-flex align-items-center">
       <div class="toast-body d-flex align-items-center gap-2">
         <span id="toast-dot" style="width:7px;height:7px;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
         <span id="toast-msg"></span>
       </div>
-      <button type="button" class="btn-close btn-close-white me-2 ms-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+      <button type="button" class="btn-close btn-close-white me-2 ms-auto" data-bs-dismiss="toast"></button>
     </div>
   </div>
 </div>
 
-<!-- Bootstrap JS — necesario para Toast API -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Script de la página -->
 <script type="module" src="../../js/admin/productos.js"></script>
 
 </body>

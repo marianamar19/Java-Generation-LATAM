@@ -23,7 +23,32 @@ import { initFavDrawer }                 from '../components/fav-drawer.js';
 import { loadNewsletter }                from '../components/newsletter.js';
 import { loadFooter }                    from '../components/footer.js';
 import { CATALOG }                       from '../utils/catalog.js';
-import { renderCard, renderCardEditorial } from '../components/product-card.js';
+import { getDestacados, getBestsellers, getNuevos } from '../utils/api.js';
+
+function _mapProducto(p) {
+  const variantes = p.variantes || [];
+  return {
+    id:            p.productId,
+    slug:          p.slug,
+    name:          p.nombre,
+    brand:         p.marca,
+    tipo:          p.tipo,
+    cat:           p.categoria,
+    gen:           p.genero,
+    price:         p.precio,
+    nivel:         p.nivelDisponibilidad,
+    badge:         p.badge         || '',
+    img:           p.imagenPrincipalUrl || '',
+    nuevo:         p.esNuevo,
+    bestSeller:    p.esBestSeller,
+    heroDestacado: p.esDestacado,
+    volLabel:      variantes[0]?.etiquetaTipo || '',
+    vols:          variantes.map(v => ({
+      ml:     v.valor,
+      precio: v.precio
+    }))
+  };
+}
 
 /* ══════════════════════════════════════════════════════════════
   ARRANQUE — DOMContentLoaded
@@ -38,9 +63,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   // Render de secciones dinámicas — antes de init para que los
   // elementos existan cuando los listeners se enlacen
-  _renderHeroCard();
-  _renderBestSellers();
-  _renderNovedades();
+  await _renderHeroCard();
+  await _renderBestSellers();
+  await _renderNovedades();
   initFavDrawer();
   // Lógica exclusiva de esta página
   _initScrollReveal();
@@ -65,52 +90,65 @@ document.addEventListener('DOMContentLoaded', async function() {
  * los elementos de texto de la hero card en el DOM.
  * @returns {void}
  */
-function _renderHeroCard() {
-  const p = CATALOG.find(p => p.heroDestacado);
-  if (!p) return;
+async function _renderHeroCard() {
+  try {
+    const data = await getDestacados();
+    const productos = data.map(_mapProducto);
+    const p = productos[0];
+    if (!p) return;
 
-  const vol = p.vols && p.vols[0]
-    ? `${p.vols[0].ml}${!p.volLabel ? ' ml' : ''}`
-    : '';
-  const volLabel = p.volLabel || 'Presentación';
+    const vol      = p.vols?.[0] ? `${p.vols[0].ml}` : '';
+    const volLabel = p.volLabel || 'Presentación';
 
-  // Textos
-  const nameEl     = document.querySelector('.hero-card-name');
-  const volEl      = document.querySelector('.hero-card-vol');
-  const volLabelEl = document.querySelector('.hero-card-vol-label');
-  const priceEl    = document.querySelector('.hero-card-price');
-  const nivelEl    = document.querySelector('.hero-card-nivel');
-  const ctaEl      = document.querySelector('.hero-card-cta');
+    // Imagen
+    const img = document.getElementById('heroCardImg');
+    const placeholder = document.getElementById('heroCardPlaceholder');
+    if (img && p.img) {
+      img.src = p.img;
+      img.alt = p.name;
+      img.style.display = 'block';
+      if (placeholder) placeholder.style.display = 'none';
+    }
 
-  if (nameEl)     nameEl.textContent     = p.name + ' by ' + p.brand;
-  if (volEl)      volEl.textContent      = vol;
-  if (volLabelEl) volLabelEl.textContent = volLabel;
-  if (priceEl)    priceEl.textContent    = p.price;
-  if (ctaEl)      ctaEl.href             = `producto.html?id=${p.id}`;
+    // Textos
+    const nameEl     = document.getElementById('heroCardName');
+    const volEl      = document.getElementById('heroCardVol');
+    const volLabelEl = document.getElementById('heroCardVolLabel');
+    const priceEl    = document.getElementById('heroCardPrice');
+    const ctaEl      = document.getElementById('heroCardCta');
+    const nivelEl    = document.getElementById('heroCardNivel');
 
-  // Nivel de existencia
-  if (nivelEl) {
-    const labels = { green: 'En existencia', yellow: 'Disp. limitada', red: 'Sin existencia' };
-    nivelEl.className = `hero-card-nivel ${p.nivel}`;
-    const dot = nivelEl.querySelector('.hero-card-nivel-dot');
-    nivelEl.textContent = labels[p.nivel] || '';
-    if (dot) nivelEl.prepend(dot);
-  }
+    if (nameEl)     nameEl.textContent     = p.name + ' by ' + p.brand;
+    if (volEl)      volEl.textContent      = vol;
+    if (volLabelEl) volLabelEl.textContent = volLabel;
+    if (priceEl)    priceEl.textContent    = p.price;
+    if (ctaEl)      ctaEl.href             = `producto.html?id=${p.id}`;
 
-  // Botón de favoritos — actualizar data-attributes
-  const favBtn = document.querySelector('.hero-card-fav');
-  if (favBtn) {
-    favBtn.dataset.productId = p.id;
-    favBtn.dataset.tipo      = p.tipo;
-    favBtn.dataset.cat       = p.cat;
-    favBtn.dataset.gen       = p.gen;
-    favBtn.dataset.nivel     = p.nivel;
-    favBtn.dataset.vol       = vol;
-    favBtn.dataset.volLabel  = volLabel;
-    favBtn.dataset.brand     = p.brand;
-    favBtn.dataset.name      = p.name;
-    favBtn.dataset.price     = p.price;
-    favBtn.dataset.img       = p.img || '';
+    if (nivelEl) {
+      const labels = { green: 'En existencia', yellow: 'Disp. limitada', red: 'Sin existencia' };
+      nivelEl.className = `hero-card-nivel ${p.nivel}`;
+      const dot = nivelEl.querySelector('.hero-card-nivel-dot');
+      nivelEl.textContent = labels[p.nivel] || '';
+      if (dot) nivelEl.prepend(dot);
+    }
+
+    // Botón favoritos
+    const favBtn = document.querySelector('.hero-card-fav');
+    if (favBtn) {
+      favBtn.dataset.productId = p.id;
+      favBtn.dataset.tipo      = p.tipo;
+      favBtn.dataset.cat       = p.cat;
+      favBtn.dataset.gen       = p.gen;
+      favBtn.dataset.nivel     = p.nivel;
+      favBtn.dataset.vol       = vol;
+      favBtn.dataset.volLabel  = volLabel;
+      favBtn.dataset.brand     = p.brand;
+      favBtn.dataset.name      = p.name;
+      favBtn.dataset.price     = p.price;
+      favBtn.dataset.img       = p.img || '';
+    }
+  } catch (e) {
+    console.error('Error cargando hero card:', e);
   }
 }
 
@@ -126,12 +164,16 @@ function _renderHeroCard() {
  *    await fetch('/api/productos?bestSeller=true').then(r => r.json())
  * @returns {void}
  */
-function _renderBestSellers() {
+async function _renderBestSellers() {
   const track = document.getElementById('carouselTrack');
   if (!track) return;
-
-  const productos = CATALOG.filter(p => p.bestSeller);
-  track.innerHTML = productos.map(renderCard).join('');
+  try {
+    const data = await getBestsellers();
+    const productos = data.map(_mapProducto);
+    track.innerHTML = productos.map(renderCard).join('');
+  } catch (e) {
+    console.error('Error cargando bestsellers:', e);
+  }
 }
 
 /* ══════════════════════════════════════
@@ -146,12 +188,17 @@ function _renderBestSellers() {
  *    await fetch('/api/productos?nuevo=true').then(r => r.json())
  * @returns {void}
  */
-function _renderNovedades() {
+
+async function _renderNovedades() {
   const grid = document.querySelector('.editorial-grid');
   if (!grid) return;
-
-  const productos = CATALOG.filter(p => p.nuevo).slice(0, 3);
-  grid.innerHTML = productos.map(renderCardEditorial).join('');
+  try {
+    const data = await getNuevos();
+    const productos = data.map(_mapProducto).slice(0, 3);
+    grid.innerHTML = productos.map(renderCardEditorial).join('');
+  } catch (e) {
+    console.error('Error cargando novedades:', e);
+  }
 }
 
 /* ══════════════════════════════════════

@@ -17,7 +17,7 @@ import { initFavDrawer } from '../components/fav-drawer.js';
 import { login, register, isAuthenticated, clearAuth } from '../utils/api.js';
 
 /* ══════════════════════════════════════
-   AUTH SCENE — track deslizante
+  AUTH SCENE — track deslizante
 ══════════════════════════════════════ */
 
 function switchToRegister() {
@@ -39,7 +39,7 @@ function switchToLogin() {
 }
 
 /* ══════════════════════════════════════
-   PASSWORD UTILITIES
+  PASSWORD UTILITIES
 ══════════════════════════════════════ */
 
 function togglePassword(inputId, btn) {
@@ -93,7 +93,7 @@ function checkPasswordsMatch() {
 }
 
 /* ══════════════════════════════════════
-   VALIDACIÓN DE FORMULARIOS
+  VALIDACIÓN DE FORMULARIOS
 ══════════════════════════════════════ */
 
 function clearError(inputId, errorId) {
@@ -156,7 +156,7 @@ function validateRegister() {
 }
 
 /* ══════════════════════════════════════
-   SUCCESS OVERLAY
+  SUCCESS OVERLAY
 ══════════════════════════════════════ */
 
 function showSuccessOverlay(title, message, redirect = true, redirectUrl = 'index.html') {
@@ -181,7 +181,7 @@ function showSuccessOverlay(title, message, redirect = true, redirectUrl = 'inde
 }
 
 /* ══════════════════════════════════════
-   SUBMIT — Autenticación real
+  SUBMIT — Autenticación real
 ══════════════════════════════════════ */
 
 async function submitForm(type) {
@@ -263,7 +263,7 @@ async function submitForm(type) {
 }
 
 /* ══════════════════════════════════════
-   EVENT LISTENERS
+  EVENT LISTENERS
 ══════════════════════════════════════ */
 
 function initEventListeners() {
@@ -310,7 +310,7 @@ function initEventListeners() {
 }
 
 /* ══════════════════════════════════════
-   INICIALIZACIÓN — CORREGIDA (SIN BUCLE)
+  INICIALIZACIÓN — CORREGIDA (SIN BUCLE)
 ══════════════════════════════════════ */
 
 async function initCuentaPage() {

@@ -27,7 +27,7 @@
   /* ── Layout ─────────────────────────────────────────────── */
   --adm-sidebar-w:    240px;
   --adm-topbar-h:     60px;
-
+  --adm-modal-w:      860px;
   /* ── Colores de fondo ────────────────────────────────────── */
   --adm-sidebar-bg:   #0A0A0A;
   --adm-topbar-bg:    #FFFFFF;

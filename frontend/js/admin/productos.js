@@ -1,578 +1,527 @@
 /**
  * productos.js — HERA Admin
- * Gestión de productos: listar, crear, editar, eliminar, activar/desactivar.
- * VERSIÓN CORREGIDA - Usa /api/productos directamente
+ * Gestión de productos: listar, crear, editar, eliminar.
  */
 
-import { guardAdmin, initLogout, buildEmptyState } from './admin-utils.js';
+import { guardAdmin, initLogout, loadAdminSidebar, buildEmptyState, escapeHtml, capitalize, showToast } from './admin-utils.js';
 import { getProductos, createProducto, updateProducto, deleteProducto } from '../utils/api.js';
 
 guardAdmin();
 
 let productosGlobal = [];
-let editingId = null;
+let editingId       = null;
+let imageState      = { principal: null, galeria: [] };
 
-// Campos obligatorios del formulario
-const REQUIRED_FIELDS = [
-    'f-brand', 'f-name', 'f-tipo', 'f-cat', 'f-gen', 'f-nivel', 'f-precio-base'
-];
+const REQUIRED_FIELDS = ['f-brand', 'f-name', 'f-conc-mat', 'f-tipo', 'f-cat', 'f-gen', 'f-nivel', 'f-precio-base'];
 
-// =====================================================
-// GENERACIÓN AUTOMÁTICA DE ID Y SLUG
-// =====================================================
-function generateProductIdAndSlug() {
-    const marca = document.getElementById('f-brand')?.value.trim() || '';
-    const nombre = document.getElementById('f-name')?.value.trim() || '';
-    
-    if (marca && nombre) {
-        // Generar ID único: MARCA-NOMBRE
-        let productId = `${marca}-${nombre}`.toUpperCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^A-Z0-9-]/g, '');
-        
-        if (productId.length > 50) productId = productId.substring(0, 50);
-        document.getElementById('f-id').value = productId;
-        
-        // Generar slug
-        let slug = `${marca}-${nombre}`.toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^a-z0-9-]/g, '')
-            .replace(/-+/g, '-');
-        
-        const slugPreview = document.getElementById('f-marca-preview');
-        if (slugPreview) slugPreview.textContent = `slug: ${slug}`;
-    }
-}
+/* ══════════════════════════════════════
+   INICIALIZACIÓN
+══════════════════════════════════════ */
 
-// =====================================================
-// IMAGEN - VISTA PREVIA
-// =====================================================
-let imagenesGaleria = [];
-
-function initImagenPreview() {
-    const imgPrincipalInput = document.getElementById('f-imagen-principal');
-    const btnPreview = document.getElementById('btn-preview-img');
-    const previewContainer = document.getElementById('preview-img-container');
-    const previewImg = document.getElementById('preview-img');
-    
-    if (!imgPrincipalInput || !btnPreview) return;
-    
-    btnPreview.addEventListener('click', () => {
-        const url = imgPrincipalInput.value.trim();
-        if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
-            previewImg.src = url;
-            previewContainer.style.display = 'block';
-        } else if (url) {
-            showToast('URL inválida (debe comenzar con http:// o https://)', '#f9a825');
-        }
-    });
-    
-    imgPrincipalInput.addEventListener('input', () => {
-        previewContainer.style.display = 'none';
-    });
-}
-
-function initGaleriaImagenes() {
-    const btnAgregar = document.getElementById('btn-agregar-imagen');
-    const inputExtra = document.getElementById('f-imagen-extra');
-    
-    if (!btnAgregar) return;
-    
-    btnAgregar.addEventListener('click', () => {
-        const url = inputExtra?.value.trim();
-        if (!url) {
-            showToast('Ingresa una URL de imagen', '#f9a825');
-            return;
-        }
-        if (!url.startsWith('http://') && !url.startsWith('https://')) {
-            showToast('URL inválida', '#f9a825');
-            return;
-        }
-        
-        imagenesGaleria.push(url);
-        renderGaleriaImagenes();
-        inputExtra.value = '';
-    });
-}
-
-function renderGaleriaImagenes() {
-    const galeriaList = document.getElementById('galeria-imagenes-list');
-    if (!galeriaList) return;
-    
-    if (imagenesGaleria.length === 0) {
-        galeriaList.innerHTML = '<div class="text-muted small">No hay imágenes adicionales</div>';
-        return;
-    }
-    
-    galeriaList.innerHTML = imagenesGaleria.map((url, index) => `
-        <div class="galeria-item" style="position: relative; width: 80px; height: 80px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
-            <img src="${url}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://placehold.co/80x80?text=Error'">
-            <button type="button" class="btn-remove-galeria" data-index="${index}" 
-                style="position: absolute; top: 2px; right: 2px; width: 20px; height: 20px; background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 50%; font-size: 12px; cursor: pointer;">✕</button>
-        </div>
-    `).join('');
-    
-    galeriaList.querySelectorAll('.btn-remove-galeria').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const index = parseInt(btn.dataset.index);
-            imagenesGaleria.splice(index, 1);
-            renderGaleriaImagenes();
-        });
-    });
-}
-
-// =====================================================
-// PUNTO DE ENTRADA
-// =====================================================
 document.addEventListener('DOMContentLoaded', async () => {
-    const brandInput = document.getElementById('f-brand');
-    const nameInput = document.getElementById('f-name');
-    if (brandInput) brandInput.addEventListener('input', generateProductIdAndSlug);
-    if (nameInput) nameInput.addEventListener('input', generateProductIdAndSlug);
-    
-    initImagenPreview();
-    initGaleriaImagenes();
-    
+    loadAdminSidebar('productos');
+    initLogout();
     await cargarProductos();
     renderTable(productosGlobal);
-    initDrawer();
+    initModal();
     initFilters();
-    initLogout();
+    initImagenes();
+    initConcentracionMaterial();
 });
 
-// =====================================================
-// CARGAR PRODUCTOS
-// =====================================================
+/* ══════════════════════════════════════
+   CARGAR PRODUCTOS
+══════════════════════════════════════ */
+
 async function cargarProductos() {
     try {
-        // ✅ CORREGIDO: Usar la función getProductos de api.js
-        // getProductos() ya hace fetch a /api/productos
         productosGlobal = await getProductos();
         updateCount();
-    } catch (error) {
-        console.error('Error cargando productos:', error);
-        showToast('Error al cargar productos: ' + error.message, '#E1222B');
+    } catch (e) {
+        console.error('Error cargando productos:', e);
+        showToast('Error al cargar productos', '#E1222B');
         productosGlobal = [];
     }
 }
 
 function updateCount() {
     const el = document.getElementById('prod-count');
-    if (el) {
-        const activos = productosGlobal.filter(p => p.activo !== false).length;
-        el.textContent = `${productosGlobal.length} productos · ${activos} activos`;
-    }
+    if (!el) return;
+    const activos = productosGlobal.filter(p => p.activo !== false).length;
+    el.textContent = `${productosGlobal.length} productos · ${activos} activos`;
 }
 
-// =====================================================
-// RENDER TABLA
-// =====================================================
+/* ══════════════════════════════════════
+   RENDER TABLA
+══════════════════════════════════════ */
+
 function renderTable(list) {
     const tbody = document.getElementById('prod-tbody');
     if (!tbody) return;
 
     if (!list || list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8">${buildEmptyState('Sin productos', 'box')}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="9">${buildEmptyState('Sin productos', 'box')}</td></tr>`;
         return;
     }
 
     tbody.innerHTML = list.map(p => `
         <tr>
             <td>
-                <div class="adm-prod-name">${escapeHtml(p.nombre || '—')}</div>
-                <div class="adm-prod-brand">${escapeHtml(p.marca || '—')}</div>
-                <div class="adm-prod-id">${escapeHtml(p.productoId || '—')}</div>
+                <div class="adm-prod-cell">
+                    <div class="adm-prod-thumb">
+                        ${p.imagenPrincipalUrl
+                            ? `<img src="${p.imagenPrincipalUrl}" alt="${escapeHtml(p.nombre)}" loading="lazy" />`
+                            : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>`
+                        }
+                    </div>
+                    <div class="adm-prod-info">
+                        <div class="adm-prod-name">${escapeHtml(p.nombre || '—')}</div>
+                        <div class="adm-prod-brand">${escapeHtml(p.marca || '—')}</div>
+                        <div class="adm-prod-id">${escapeHtml(p.productId || '—')}</div>
+                    </div>
+                </div>
             </td>
-            <td>${capitalize(p.tipo || '—')}</td>
+            <td>
+                <div>${capitalize(p.tipo || '—')}</div>
+                <div style="font-size:10px;color:var(--adm-muted);">${capitalize(p.genero || '—')}</div>
+            </td>
             <td>${capitalize(p.categoria || '—')}</td>
+            <td style="font-size:11px;color:var(--adm-muted);">
+                ${p.concentracion || p.material || '—'}
+            </td>
             <td style="font-weight:600;">${p.precio || '—'}</td>
+            <td><span class="adm-variantes-count">${p.variantes?.length || 0} variante${(p.variantes?.length || 0) !== 1 ? 's' : ''}</span></td>
+            <td>${buildFlags(p)}</td>
             <td>${buildNivel(p.nivelDisponibilidad)}</td>
             <td>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" ${p.activo !== false ? 'checked' : ''}
-                        data-toggle-id="${p.productoId}" role="switch" />
+                <div class="form-check form-switch mb-0">
+                    <input class="form-check-input" type="checkbox" role="switch"
+                        ${p.activo !== false ? 'checked' : ''}
+                        data-toggle-id="${p.productId}" />
                 </div>
             </td>
             <td>
                 <div class="d-flex gap-1">
-                    <button class="btn btn-sm btn-outline-secondary" data-edit-id="${p.productoId}">
+                    <button class="btn btn-sm btn-outline-secondary" data-edit-id="${p.productId}" aria-label="Editar">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                     </button>
-                    <button class="btn btn-sm btn-outline-danger" data-delete-id="${p.productoId}">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+                    <button class="btn btn-sm btn-outline-danger" data-delete-id="${p.productId}" aria-label="Eliminar">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
                     </button>
                 </div>
             </td>
         </tr>
     `).join('');
 
-    tbody.querySelectorAll('[data-edit-id]').forEach(btn => {
-        btn.addEventListener('click', () => openDrawer(btn.dataset.editId));
-    });
-    tbody.querySelectorAll('[data-delete-id]').forEach(btn => {
-        btn.addEventListener('click', () => deleteProduct(btn.dataset.deleteId));
-    });
-    tbody.querySelectorAll('[data-toggle-id]').forEach(chk => {
-        chk.addEventListener('change', () => toggleActivo(chk.dataset.toggleId, chk.checked));
-    });
-}
-
-function capitalize(str) {
-    if (!str) return '—';
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    tbody.querySelectorAll('[data-edit-id]').forEach(btn =>
+        btn.addEventListener('click', () => openModal(btn.dataset.editId))
+    );
+    tbody.querySelectorAll('[data-delete-id]').forEach(btn =>
+        btn.addEventListener('click', () => deleteProduct(btn.dataset.deleteId))
+    );
+    tbody.querySelectorAll('[data-toggle-id]').forEach(input =>
+        input.addEventListener('change', () => toggleActivo(input.dataset.toggleId, input.checked))
+    );
 }
 
 function buildNivel(nivel) {
     const labels = { green: 'En existencia', yellow: 'Disp. limitada', red: 'Pieza exclusiva' };
-    const n = nivel || 'green';
-    return `<span class="badge adm-nivel ${n}">${labels[n] || n}</span>`;
+    return `<span class="adm-nivel ${nivel || ''}">${labels[nivel] || '—'}</span>`;
 }
 
-function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+function buildFlags(p) {
+    const flags = [];
+    if (p.esNuevo)      flags.push(`<span class="adm-flag adm-flag-nuevo">Nuevo</span>`);
+    if (p.esBestSeller) flags.push(`<span class="adm-flag adm-flag-best">Bestseller</span>`);
+    if (p.esDestacado)  flags.push(`<span class="adm-flag adm-flag-dest">Destacado</span>`);
+    return flags.length ? flags.join('') : `<span style="font-size:11px;color:var(--adm-muted);">—</span>`;
 }
 
-// =====================================================
-// FILTROS
-// =====================================================
+/* ══════════════════════════════════════
+   FILTROS
+══════════════════════════════════════ */
+
 function initFilters() {
-    const searchInput = document.getElementById('prod-search');
-    const filterTipo = document.getElementById('filter-tipo');
+    const search      = document.getElementById('prod-search');
+    const filterTipo  = document.getElementById('filter-tipo');
     const filterNivel = document.getElementById('filter-nivel');
 
-    function applyFilters() {
-        const q = searchInput?.value.trim().toLowerCase() || '';
-        const tipo = filterTipo?.value || '';
-        const nivel = filterNivel?.value || '';
+    const apply = () => {
+        let list = [...productosGlobal];
+        const q = search?.value.trim().toLowerCase();
+        if (q) list = list.filter(p =>
+            p.nombre?.toLowerCase().includes(q) || p.marca?.toLowerCase().includes(q)
+        );
+        if (filterTipo?.value)  list = list.filter(p => p.tipo === filterTipo.value);
+        if (filterNivel?.value) list = list.filter(p => p.nivelDisponibilidad === filterNivel.value);
+        renderTable(list);
+    };
 
-        const filtered = productosGlobal.filter(p => {
-            const matchQ = !q || (p.nombre || '').toLowerCase().includes(q) || (p.marca || '').toLowerCase().includes(q);
-            const matchTipo = !tipo || p.tipo === tipo;
-            const matchNivel = !nivel || p.nivelDisponibilidad === nivel;
-            return matchQ && matchTipo && matchNivel;
-        });
-        renderTable(filtered);
-    }
-
-    if (searchInput) searchInput.addEventListener('input', applyFilters);
-    if (filterTipo) filterTipo.addEventListener('change', applyFilters);
-    if (filterNivel) filterNivel.addEventListener('change', applyFilters);
+    search?.addEventListener('input', apply);
+    filterTipo?.addEventListener('change', apply);
+    filterNivel?.addEventListener('change', apply);
+    document.getElementById('btn-nuevo')?.addEventListener('click', () => openModal());
 }
 
-// =====================================================
-// ACCIONES
-// =====================================================
-async function toggleActivo(id, activo) {
-    try {
-        const producto = productosGlobal.find(p => p.productoId === id);
-        if (!producto) return;
-        await updateProducto(producto.id, { ...producto, activo });
-        await cargarProductos();
-        renderTable(productosGlobal);
-        showToast(activo ? 'Producto activado' : 'Producto desactivado', '#4caf50');
-    } catch (error) {
-        showToast('Error: ' + error.message, '#E1222B');
+/* ══════════════════════════════════════
+   MODAL
+══════════════════════════════════════ */
+
+function initModal() {
+    document.getElementById('btn-save-product')?.addEventListener('click', saveProduct);
+}
+
+function openModal(productoId = null) {
+    editingId = productoId;
+    const modalEl = document.getElementById('prod-modal');
+    const title   = document.getElementById('modal-title');
+
+    if (productoId) {
+        const p = productosGlobal.find(p => p.productId === productoId);
+        if (p) populateForm(p);
+        if (title) title.textContent = 'Editar producto';
+    } else {
+        resetForm();
+        if (title) title.textContent = 'Nuevo producto';
+    }
+
+    const firstTab = document.querySelector('#prod-modal .nav-link');
+    if (firstTab) bootstrap.Tab.getOrCreateInstance(firstTab).show();
+    bootstrap.Modal.getOrCreateInstance(modalEl).show();
+}
+
+/* ══════════════════════════════════════
+   CAMPO CONCENTRACIÓN / MATERIAL
+══════════════════════════════════════ */
+
+function initConcentracionMaterial() {
+    document.getElementById('f-tipo')?.addEventListener('change', e => {
+        updateConcMatField(e.target.value);
+    });
+}
+
+function updateConcMatField(tipo) {
+    const label  = document.getElementById('lbl-conc-mat');
+    const select = document.getElementById('f-conc-mat');
+    if (!label || !select) return;
+
+    const currentVal = select.value;
+
+    if (tipo === 'joyeria') {
+        label.innerHTML = 'Material <span class="req">*</span>';
+        select.innerHTML = `
+            <option value="">Seleccionar</option>
+            <option value="PLT">Plata</option>
+            <option value="ORO">Oro</option>`;
+    } else {
+        label.innerHTML = 'Concentración <span class="req">*</span>';
+        select.innerHTML = `
+            <option value="">Seleccionar</option>
+            <option value="EDP">EDP</option>
+            <option value="EDT">EDT</option>
+            <option value="EDC">EDC</option>
+            <option value="PAR">Parfum</option>
+            <option value="ELI">Elixir</option>
+            <option value="FRA">Fragancia (Body Mist)</option>`;
+    }
+
+    // Restaurar valor si sigue siendo válido
+    if ([...select.options].some(o => o.value === currentVal)) {
+        select.value = currentVal;
     }
 }
 
-async function deleteProduct(id) {
-    if (!confirm('¿Eliminar este producto? No se puede deshacer.')) return;
-    try {
-        const producto = productosGlobal.find(p => p.productoId === id);
-        if (!producto) return;
-        await deleteProducto(producto.id);
-        await cargarProductos();
-        renderTable(productosGlobal);
-        showToast('Producto eliminado', '#E1222B');
-    } catch (error) {
-        showToast('Error: ' + error.message, '#E1222B');
-    }
-}
+/* ══════════════════════════════════════
+   IMÁGENES
+══════════════════════════════════════ */
 
-// =====================================================
-// VARIANTES
-// =====================================================
-function addVariantRow(nombreVariante = '', precio = '') {
-    const list = document.getElementById('variants-list');
-    if (!list) return;
+function initImagenes() {
+    const addBtn   = document.getElementById('btn-agregar-imagen');
+    const urlInput = document.getElementById('f-imagen-url');
+    const dropZone = document.getElementById('img-preview');
 
-    const row = document.createElement('div');
-    row.className = 'd-flex align-items-center gap-2 mb-2';
-    row.innerHTML = `
-        <input type="text" class="form-control form-control-sm variant-ml" placeholder="Ej: 100 ml, Talla M" value="${escapeHtml(nombreVariante)}" style="flex:2;" />
-        <input type="number" class="form-control form-control-sm variant-precio" placeholder="Precio MXN" value="${precio}" style="flex:1;" min="0" step="1" />
-        <button class="btn btn-sm btn-outline-danger" type="button" aria-label="Eliminar variante">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-    `;
-
-    row.querySelector('.btn-outline-danger').addEventListener('click', () => {
-        if (list.querySelectorAll('.d-flex').length > 1) {
-            row.remove();
-        } else {
-            showToast('Debe haber al menos una variante', '#f9a825');
-        }
+    addBtn?.addEventListener('click', () => {
+        const url = urlInput?.value.trim();
+        if (url) { addImage(url); urlInput.value = ''; }
+    });
+    urlInput?.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); addBtn?.click(); }
     });
 
+    if (dropZone) {
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            const index = parseInt(e.dataTransfer.getData('text/plain'));
+            if (!isNaN(index)) promoteToMain(index);
+        });
+    }
+}
+
+function addImage(url) {
+    if (!url.startsWith('http')) { showToast('URL inválida', '#f9a825'); return; }
+    if (!imageState.principal) { imageState.principal = url; renderPrincipal(); }
+    else { imageState.galeria.push(url); renderGaleria(); }
+}
+
+function removePrincipal() {
+    imageState.principal = imageState.galeria.length > 0 ? imageState.galeria.shift() : null;
+    renderPrincipal(); renderGaleria();
+}
+
+function promoteToMain(index) {
+    const newMain = imageState.galeria[index];
+    if (!newMain) return;
+    imageState.galeria.splice(index, 1);
+    if (imageState.principal) imageState.galeria.unshift(imageState.principal);
+    imageState.principal = newMain;
+    renderPrincipal(); renderGaleria();
+}
+
+function renderPrincipal() {
+    const preview = document.getElementById('img-preview');
+    if (!preview) return;
+    if (imageState.principal) {
+        preview.innerHTML = `
+            <img src="${imageState.principal}" style="width:100%;height:100%;object-fit:cover;" />
+            <button class="adm-img-remove-principal" id="btn-remove-principal" aria-label="Eliminar imagen principal">✕</button>`;
+        preview.querySelector('#btn-remove-principal')?.addEventListener('click', e => {
+            e.stopPropagation(); removePrincipal();
+        });
+    } else {
+        preview.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            <span>Arrastra aquí</span>`;
+    }
+}
+
+function renderGaleria() {
+    const container = document.getElementById('galeria-imagenes-list');
+    if (!container) return;
+    if (imageState.galeria.length === 0) {
+        container.innerHTML = '<span style="font-size:10px;color:var(--adm-muted);">Galería vacía</span>';
+        return;
+    }
+    container.innerHTML = imageState.galeria.map((url, i) => `
+        <div class="adm-gallery-thumb" draggable="true" data-index="${i}" title="Arrastra para hacer principal">
+            <img src="${url}" onerror="this.style.display='none'" />
+            <button class="adm-gallery-thumb-remove" data-index="${i}" aria-label="Eliminar imagen">✕</button>
+        </div>`
+    ).join('');
+
+    container.querySelectorAll('.adm-gallery-thumb').forEach(thumb => {
+        thumb.addEventListener('dragstart', e => {
+            e.dataTransfer.setData('text/plain', thumb.dataset.index);
+            thumb.classList.add('dragging');
+        });
+        thumb.addEventListener('dragend', () => thumb.classList.remove('dragging'));
+    });
+    container.querySelectorAll('.adm-gallery-thumb-remove').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.stopPropagation();
+            imageState.galeria.splice(parseInt(btn.dataset.index), 1);
+            renderGaleria();
+        });
+    });
+}
+
+/* ══════════════════════════════════════
+   VARIANTES
+══════════════════════════════════════ */
+
+function addVariantRow(valor = '', precio = '') {
+    const list = document.getElementById('variants-list');
+    if (!list) return;
+    const row = document.createElement('div');
+    row.className = 'adm-variant-row';
+    row.innerHTML = `
+        <input class="form-control form-control-sm" type="text" placeholder="Ej: 50 ml" value="${escapeHtml(valor)}" />
+        <input class="form-control form-control-sm" type="number" placeholder="Precio MXN" value="${precio}" min="0" />
+        <button class="btn btn-sm btn-outline-danger" type="button" aria-label="Eliminar variante">✕</button>`;
+    row.querySelector('button').addEventListener('click', () => row.remove());
     list.appendChild(row);
 }
 
 function getVariants() {
-    const rows = document.querySelectorAll('#variants-list .d-flex');
-    const variants = [];
-    rows.forEach((row) => {
-        const nombreVariante = row.querySelector('.variant-ml')?.value.trim() || '';
-        const precio = parseFloat(row.querySelector('.variant-precio')?.value) || 0;
-        if (nombreVariante && precio > 0) {
-            variants.push({ nombreVariante, precio, etiquetaTipo: 'Presentación' });
-        }
-    });
-    return variants;
+    return [...document.querySelectorAll('#variants-list .adm-variant-row')].map(row => {
+        const inputs = row.querySelectorAll('input');
+        return { valor: inputs[0]?.value.trim() || '', precio: parseFloat(inputs[1]?.value) || 0 };
+    }).filter(v => v.valor);
 }
 
-// =====================================================
-// DRAWER - PANEL LATERAL
-// =====================================================
-function initDrawer() {
-    const btnNuevo = document.getElementById('btn-nuevo');
-    const overlay = document.getElementById('drawer-overlay');
-    const btnClose = document.getElementById('drawer-close');
-    const btnCancel = document.getElementById('btn-cancel-drawer');
-    const btnSave = document.getElementById('btn-save-product');
-    const btnAddVar = document.getElementById('btn-add-variant');
+document.getElementById('btn-add-variant')?.addEventListener('click', () => addVariantRow());
 
-    if (btnNuevo) btnNuevo.addEventListener('click', () => openDrawer(null));
-    if (overlay) overlay.addEventListener('click', closeDrawer);
-    if (btnClose) btnClose.addEventListener('click', closeDrawer);
-    if (btnCancel) btnCancel.addEventListener('click', closeDrawer);
-    if (btnSave) btnSave.addEventListener('click', saveProduct);
-    if (btnAddVar) btnAddVar.addEventListener('click', () => addVariantRow());
-}
+/* ══════════════════════════════════════
+   FORMULARIO
+══════════════════════════════════════ */
 
-function openDrawer(editId) {
-    editingId = editId;
-    const drawer = document.getElementById('prod-drawer');
-    const overlay = document.getElementById('drawer-overlay');
-    const title = document.getElementById('drawer-title');
-    const btnSave = document.getElementById('btn-save-product');
-
-    imagenesGaleria = [];
-    renderGaleriaImagenes();
-
-    if (editId) {
-        const prod = productosGlobal.find(p => p.productoId === editId);
-        if (!prod) return;
-        title.textContent = 'Editar producto';
-        btnSave.textContent = 'Guardar cambios';
-        populateForm(prod);
-    } else {
-        title.textContent = 'Nuevo producto';
-        btnSave.textContent = 'Guardar producto';
-        resetForm();
-        addVariantRow();
-    }
-
-    if (overlay) overlay.classList.add('open');
-    if (drawer) drawer.classList.add('open');
-    setTimeout(() => {
-        const first = document.getElementById('f-brand');
-        if (first) first.focus();
-    }, 350);
-}
-
-function closeDrawer() {
-    const drawer = document.getElementById('prod-drawer');
-    const overlay = document.getElementById('drawer-overlay');
-    if (overlay) overlay.classList.remove('open');
-    if (drawer) drawer.classList.remove('open');
-    editingId = null;
-}
-
-// =====================================================
-// FORMULARIO
-// =====================================================
 function populateForm(p) {
-    setVal('f-brand', p.marca || '');
-    setVal('f-name', p.nombre || '');
-    setVal('f-id', p.productoId || '');
-    setVal('f-tipo', p.tipo || '');
-    setVal('f-cat', p.categoria || '');
-    setVal('f-gen', p.genero || '');
-    setVal('f-fam', p.familiaOlfativa || '');
-    setVal('f-nivel', p.nivelDisponibilidad || '');
-    setVal('f-badge', p.badge || '');
-    setVal('f-precio-base', p.precioNumerico || p.precioBase || 0);
-    
-    if (p.imagenPrincipalUrl) {
-        setVal('f-imagen-principal', p.imagenPrincipalUrl);
-        const previewContainer = document.getElementById('preview-img-container');
-        const previewImg = document.getElementById('preview-img');
-        if (previewContainer && previewImg) {
-            previewImg.src = p.imagenPrincipalUrl;
-            previewContainer.style.display = 'block';
-        }
-    }
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val ?? ''; };
 
-    const slugPreview = document.getElementById('f-marca-preview');
-    if (slugPreview && p.slug) slugPreview.textContent = `slug: ${p.slug}`;
+    set('f-brand',       p.marca || '');
+    set('f-name',        p.nombre || '');
+    set('f-tipo',        p.tipo || '');
+    set('f-cat',         p.categoria || '');
+    set('f-gen',         p.genero || '');
+    set('f-fam',         p.familiaOlfativa || '');
+    set('f-pais',        p.paisOrigen || '');
+    set('f-anio',        p.anioLanzamiento || '');
+    set('f-descripcion', p.descripcion || '');
+    set('f-nivel',       p.nivelDisponibilidad || '');
+    set('f-badge',       p.badge || '');
+    set('f-precio-base', p.precioNumerico || '');
 
-    const chkNuevo = document.getElementById('f-nuevo');
-    const chkActivo = document.getElementById('f-activo');
-    if (chkNuevo) chkNuevo.checked = !!p.esNuevo;
-    if (chkActivo) chkActivo.checked = p.activo !== false;
+    // Campo dinámico concentración/material
+    updateConcMatField(p.tipo || '');
+    const concMatVal = p.concentracion || p.material || '';
+    setTimeout(() => {
+        const select = document.getElementById('f-conc-mat');
+        if (select) select.value = concMatVal;
+    }, 0);
+
+    const chk = (id, val) => { const el = document.getElementById(id); if (el) el.checked = !!val; };
+    chk('f-nuevo',       p.esNuevo);
+    chk('f-bestseller',  p.esBestSeller);
+    chk('f-destacado',   p.esDestacado);
+    chk('f-activo',      p.activo !== false);
 
     const list = document.getElementById('variants-list');
     if (list) list.innerHTML = '';
-    if (p.variantes && p.variantes.length > 0) {
-        p.variantes.forEach(v => addVariantRow(v.valor, v.precio));
-    } else {
-        addVariantRow();
-    }
+    if (p.variantes?.length) p.variantes.forEach(v => addVariantRow(v.valor, v.precio));
+    else addVariantRow();
 
+    imageState.principal = p.imagenPrincipalUrl || null;
+    imageState.galeria   = p.imagenes?.map(i => i.url || i).filter(Boolean) || [];
+    renderPrincipal();
+    renderGaleria();
     clearErrors();
 }
 
 function resetForm() {
-    const fields = ['f-brand', 'f-name', 'f-id', 'f-badge', 'f-tipo', 'f-cat', 'f-gen', 'f-fam', 'f-nivel', 'f-precio-base', 'f-imagen-principal'];
-    fields.forEach(id => setVal(id, ''));
-    
-    const chkNuevo = document.getElementById('f-nuevo');
-    const chkActivo = document.getElementById('f-activo');
-    if (chkNuevo) chkNuevo.checked = false;
-    if (chkActivo) chkActivo.checked = true;
-    
-    const slugPreview = document.getElementById('f-marca-preview');
-    if (slugPreview) slugPreview.textContent = '';
-    
+    ['f-brand','f-name','f-tipo','f-cat','f-gen','f-fam',
+     'f-pais','f-anio','f-descripcion','f-nivel','f-badge','f-precio-base'
+    ].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+
+    const concMat = document.getElementById('f-conc-mat');
+    if (concMat) concMat.value = '';
+
+    ['f-nuevo','f-bestseller','f-destacado'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.checked = false;
+    });
+    const activo = document.getElementById('f-activo');
+    if (activo) activo.checked = true;
+
     const list = document.getElementById('variants-list');
     if (list) list.innerHTML = '';
-    
-    imagenesGaleria = [];
-    renderGaleriaImagenes();
-    const previewContainer = document.getElementById('preview-img-container');
-    if (previewContainer) previewContainer.style.display = 'none';
-    
-    clearErrors();
-}
+    addVariantRow();
 
-function setVal(id, val) {
-    const el = document.getElementById(id);
-    if (el) el.value = val;
+    imageState = { principal: null, galeria: [] };
+    renderPrincipal();
+    renderGaleria();
+    clearErrors();
+
+    // Resetear campo a concentración por defecto
+    updateConcMatField('perfumes');
 }
 
 function validateForm() {
     let ok = true;
     REQUIRED_FIELDS.forEach(id => {
         const el = document.getElementById(id);
-        const value = el?.value?.trim();
-        if (!value || (id === 'f-precio-base' && parseFloat(value) <= 0)) {
-            if (el) el.classList.add('is-invalid');
-            ok = false;
-        } else {
-            if (el) el.classList.remove('is-invalid');
-        }
+        if (!el?.value?.trim()) { el?.classList.add('is-invalid'); ok = false; }
+        else el?.classList.remove('is-invalid');
     });
+    const precio = document.getElementById('f-precio-base');
+    if (precio && parseFloat(precio.value) <= 0) {
+        precio.classList.add('is-invalid'); ok = false;
+    }
     return ok;
 }
 
 function clearErrors() {
-    REQUIRED_FIELDS.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.remove('is-invalid');
-    });
+    REQUIRED_FIELDS.forEach(id => document.getElementById(id)?.classList.remove('is-invalid'));
 }
 
-// =====================================================
-// GUARDAR PRODUCTO
-// =====================================================
+/* ══════════════════════════════════════
+   GUARDAR PRODUCTO
+══════════════════════════════════════ */
+
 async function saveProduct() {
-    if (!validateForm()) {
-        showToast('Completa los campos obligatorios correctamente', '#f9a825');
-        return;
-    }
+    if (!validateForm()) { showToast('Completa los campos obligatorios', '#f9a825'); return; }
 
-    const marca = document.getElementById('f-brand').value.trim();
-    const nombre = document.getElementById('f-name').value.trim();
-    const precioBase = parseFloat(document.getElementById('f-precio-base').value);
-    const imagenPrincipalUrl = document.getElementById('f-imagen-principal')?.value.trim() || null;
-    
-    if (isNaN(precioBase) || precioBase <= 0) {
-        showToast('El precio base debe ser mayor a 0', '#f9a825');
-        return;
-    }
-    
-    const productId = `${marca}-${nombre}`.toUpperCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^A-Z0-9-]/g, '');
-    
-    const slug = `${marca}-${nombre}`.toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^a-z0-9-]/g, '')
-        .replace(/-+/g, '-');
-    
-    const variants = getVariants();
+    const tipo     = document.getElementById('f-tipo').value;
+    const concMat  = document.getElementById('f-conc-mat').value;
+    const esPerfume = tipo === 'perfumes';
 
-    const productData = {
-        nombre: nombre,
-        productoId: productId,
-        slug: slug,
-        tipo: document.getElementById('f-tipo').value,
-        precioBase: precioBase,
-        marca: marca,
-        categoria: document.getElementById('f-cat').value,
-        genero: document.getElementById('f-gen').value,
-        familiaOlfativa: document.getElementById('f-fam').value || null,
+    const data = {
+        nombre:              document.getElementById('f-name').value.trim(),
+        marca:               document.getElementById('f-brand').value.trim(),
+        tipo,
+        concentracion:       esPerfume ? concMat : null,
+        material:            !esPerfume ? concMat : null,
+        categoria:           document.getElementById('f-cat').value,
+        genero:              document.getElementById('f-gen').value,
+        familiaOlfativa:     document.getElementById('f-fam').value || null,
+        paisOrigen:          document.getElementById('f-pais').value.trim() || null,
+        anioLanzamiento:     parseInt(document.getElementById('f-anio').value) || null,
+        descripcion:         document.getElementById('f-descripcion').value.trim() || null,
+        precioBase:          parseFloat(document.getElementById('f-precio-base').value),
         nivelDisponibilidad: document.getElementById('f-nivel').value,
-        badge: document.getElementById('f-badge').value.trim() || null,
-        esNuevo: document.getElementById('f-nuevo').checked,
-        activo: document.getElementById('f-activo').checked !== false,
-        variantes: variants,
-        imagenPrincipalUrl: imagenPrincipalUrl,
-        imagenesExtra: imagenesGaleria.length > 0 ? JSON.stringify(imagenesGaleria) : null
+        badge:               document.getElementById('f-badge').value.trim() || null,
+        esNuevo:             document.getElementById('f-nuevo').checked,
+        esBestSeller:        document.getElementById('f-bestseller').checked,
+        esDestacado:         document.getElementById('f-destacado').checked,
+        activo:              document.getElementById('f-activo').checked,
+        imagenPrincipalUrl:  imageState.principal || null,
+        imagenesExtra:       imageState.galeria.length ? JSON.stringify(imageState.galeria) : null,
+        variantes:           getVariants(),
     };
-
-    console.log('Enviando producto:', productData);
 
     try {
         if (editingId) {
-            const existing = productosGlobal.find(p => p.productoId === editingId);
-            await updateProducto(existing.id, productData);
+            const existing = productosGlobal.find(p => p.productId === editingId);
+            await updateProducto(existing.id, data);
             showToast('Producto actualizado', '#4caf50');
         } else {
-            await createProducto(productData);
+            await createProducto(data);
             showToast('Producto creado', '#4caf50');
         }
+        bootstrap.Modal.getInstance(document.getElementById('prod-modal'))?.hide();
         await cargarProductos();
         renderTable(productosGlobal);
-        closeDrawer();
-    } catch (error) {
-        console.error('Error:', error);
-        let errorMsg = error.message;
-        if (error.message.includes('401')) {
-            errorMsg = 'Sesión expirada. Vuelve a iniciar sesión.';
-            setTimeout(() => {
-                window.location.href = '/pages/cuenta.html';
-            }, 2000);
-        }
-        showToast('Error: ' + errorMsg, '#E1222B');
+    } catch (e) {
+        console.error('Error guardando producto:', e);
+        showToast('Error: ' + e.message, '#E1222B');
     }
 }
 
-// =====================================================
-// TOAST
-// =====================================================
-function showToast(msg, color) {
-    const toastEl = document.getElementById('adm-toast');
-    const dot = document.getElementById('toast-dot');
-    const msgEl = document.getElementById('toast-msg');
-    if (!toastEl) return;
-    if (msgEl) msgEl.textContent = msg;
-    if (dot) dot.style.background = color;
-    const bsToast = bootstrap.Toast.getOrCreateInstance(toastEl, { delay: 3000 });
-    bsToast.show();
+/* ══════════════════════════════════════
+   ELIMINAR / TOGGLE
+══════════════════════════════════════ */
+
+async function deleteProduct(productoId) {
+    if (!confirm('¿Eliminar este producto? Esta acción no se puede deshacer.')) return;
+    try {
+        const p = productosGlobal.find(p => p.productId === productoId);
+        await deleteProducto(p.id);
+        showToast('Producto eliminado', '#4caf50');
+        await cargarProductos();
+        renderTable(productosGlobal);
+    } catch (e) {
+        showToast('Error al eliminar: ' + e.message, '#E1222B');
+    }
+}
+
+async function toggleActivo(productoId, activo) {
+    try {
+        const p = productosGlobal.find(p => p.productId === productoId);
+        await updateProducto(p.id, { ...p, activo });
+        showToast(activo ? 'Producto activado' : 'Producto desactivado', '#4caf50');
+        await cargarProductos();
+        renderTable(productosGlobal);
+    } catch (e) {
+        showToast('Error al actualizar: ' + e.message, '#E1222B');
+    }
 }

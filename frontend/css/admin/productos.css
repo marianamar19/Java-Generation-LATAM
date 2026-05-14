@@ -1,30 +1,15 @@
 /* ============================================================
    productos.css — HERA Admin
    Descripción: Estilos exclusivos de la página de gestión
-                de productos del panel admin. Cubre la barra
-                de acciones, tabla de productos, badges de
-                disponibilidad, drawer de formulario y
-                overrides de Bootstrap para el formulario HERA.
-   Comportamiento por breakpoint:
-     Desktop  (>1024px): layout completo, drawer de 520px.
-     Tablet   (≤1024px): drawer de 90vw.
-     Móvil    (≤768px):  barra de acciones en columna, drawer fullscreen.
+                de productos. Cubre la barra de acciones,
+                overrides de tabla para productos, badges de
+                disponibilidad, modal de formulario y
+                tipografía de celdas.
+   Nota: Bootstrap overrides globales viven en base-admin.css.
+         Toast y adm-card-table viven en components-admin.css.
+         Topbar variants viven en layout-admin.css.
    Usado por:   pages/admin/productos.html
    ============================================================ */
-
-/* ── Sección: Variable exclusiva de esta página ─────────────── */
-:root {
-  --adm-drawer-w: 520px;
-}
-
-/* ── Sección: Topbar — variantes de esta página ─────────────── */
-/* El topbar base vive en layout-admin.css. Aquí solo la variante
-   con layout izquierda (título + conteo) en lugar del título solo */
-.adm-topbar-left  { display: flex; align-items: center; gap: 16px; }
-.adm-topbar-count { font-size: 11px; color: var(--adm-muted); }
-
-/* ── Sección: Avatar — sin border-radius (override Bootstrap) ── */
-.adm-avatar { border-radius: 0 !important; }
 
 /* ── Sección: Barra de acciones ─────────────────────────────── */
 .adm-actions {
@@ -36,151 +21,85 @@
   flex-wrap:       wrap;
 }
 
-/* ── Sección: Card contenedor de tabla ──────────────────────── */
-.adm-card-table {
-  background: #FFF;
-  border:     1px solid var(--adm-border);
-}
-
-/* ── Sección: Tabla — overrides de columnas de productos ─────── */
-/* Las reglas base de .adm-table viven en components-admin.css */
+/* ── Sección: Tabla — overrides exclusivos de productos ──────── */
 .adm-table tbody td { font-size: 12px; color: var(--adm-text); vertical-align: middle; }
 .table-hover > tbody > tr:hover > * { background-color: rgba(225,34,43,.02) !important; }
 
-.adm-prod-name  { font-weight: 600; font-size: 12px; }
-.adm-prod-brand { font-size: 10px; color: var(--adm-muted); margin-top: 1px; }
-.adm-prod-id    { font-size: 10px; color: var(--adm-muted); font-family: monospace; }
+.adm-prod-name     { font-weight: 600; font-size: 12px; }
+.adm-prod-brand    { font-size: 10px; color: var(--adm-muted); margin-top: 1px; }
+.adm-prod-id       { font-size: 10px; color: var(--adm-muted); font-family: monospace; }
+.adm-prod-cell     { display: flex; align-items: center; gap: 10px; }
+.adm-prod-thumb    {
+  width: 40px; height: 40px; flex-shrink: 0;
+  border: 1px solid var(--adm-border);
+  background: #FAFAFA;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.adm-prod-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.adm-variantes-count { font-size: 11px; font-weight: 500; color: var(--adm-muted); }
+.adm-prod-info { flex: 1; min-width: 0; }
 
 /* ── Sección: Badges de disponibilidad ──────────────────────── */
 .adm-nivel {
-  font-size:      9px !important;
+  display:        inline-block;
+  font-size:      9px;
   font-weight:    700;
   letter-spacing: .10em;
   text-transform: uppercase;
   white-space:    nowrap;
+  padding:        3px 8px;
+  border:         1px solid;
 }
-.adm-nivel.green  { background: rgba(76,175,80,.10)  !important; color: #2e7d32       !important; border: 1px solid #4caf50; }
-.adm-nivel.yellow { background: rgba(249,168,37,.10) !important; color: #9a6800       !important; border: 1px solid #f9a825; }
-.adm-nivel.red    { background: rgba(225,34,43,.06)  !important; color: var(--adm-red) !important; border: 1px solid var(--adm-red); }
+.adm-nivel.green  { background: rgba(76,175,80,.10);   color: #2e7d32;        border-color: #4caf50; }
+.adm-nivel.yellow { background: rgba(249,168,37,.10);  color: #9a6800;        border-color: #f9a825; }
+.adm-nivel.red    { background: rgba(225,34,43,.06);   color: var(--adm-red); border-color: var(--adm-red); }
 
-/* ── Sección: Drawer overlay ────────────────────────────────── */
-.adm-drawer-overlay {
-  position:       fixed;
-  inset:          0;
-  background:     rgba(15,15,15,.45);
-  z-index:        400;
-  opacity:        0;
-  visibility:     hidden;
-  pointer-events: none;
-  transition:     opacity .3s, visibility .3s;
+/* ── Sección: Flags de producto ─────────────────────────────── */
+.adm-flag {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            3px;
+  font-size:      9px;
+  font-weight:    600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding:        2px 6px;
+  margin-right:   3px;
 }
-.adm-drawer-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+.adm-flag-nuevo  { background: rgba(26,111,196,.08);  color: #1a6fc4; }
+.adm-flag-best   { background: rgba(249,168,37,.10);  color: #9a6800; }
+.adm-flag-dest   { background: rgba(83,74,183,.08);   color: #534AB7; }
 
-/* ── Sección: Drawer panel ──────────────────────────────────── */
-.adm-drawer {
-  position:       fixed;
-  top:            0;
-  right:          0;
-  bottom:         0;
-  width:          var(--adm-drawer-w);
-  background:     #F9F9F9;
-  z-index:        500;
-  transform:      translateX(100%);
-  transition:     transform .35s cubic-bezier(.4,0,.2,1);
-  display:        flex;
-  flex-direction: column;
-  box-shadow:     -8px 0 40px rgba(15,15,15,.12);
+/* ── Sección: Modal de producto — overrides Bootstrap ────────── */
+.adm-modal .modal-dialog  { max-width: var(--adm-modal-w); }
+.adm-modal .modal-content { border-radius: 0; border: 1px solid var(--adm-border); }
+.adm-modal .modal-header  {
+  padding:       16px 24px;
+  border-bottom: 1px solid var(--adm-border);
+  background:    var(--adm-card-bg);
 }
-.adm-drawer.open { transform: translateX(0); }
-
-.adm-drawer-header {
-  display:         flex;
-  align-items:     center;
-  justify-content: space-between;
-  padding:         20px 24px;
-  background:      #FFF;
-  border-bottom:   1px solid var(--adm-border);
-  flex-shrink:     0;
-}
-.adm-drawer-title {
-  font-size:      13px;
+.adm-modal .modal-title {
+  font-size:      11px;
   font-weight:    700;
-  letter-spacing: .08em;
+  letter-spacing: .16em;
   text-transform: uppercase;
   color:          var(--adm-text);
 }
-.adm-drawer-close {
-  width:           32px;
-  height:          32px;
-  background:      none;
-  border:          1px solid var(--adm-border);
-  cursor:          pointer;
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-  color:           var(--adm-muted);
-  transition:      color .15s, border-color .15s;
+.adm-modal .modal-body    { padding: 0; background: #F9F9F9; }
+.adm-modal .modal-footer  {
+  padding:    14px 24px;
+  border-top: 1px solid var(--adm-border);
+  background: var(--adm-card-bg);
 }
-.adm-drawer-close:hover { color: var(--adm-text); border-color: #ccc; }
+.adm-modal .nav-tabs       { padding: 0 24px; background: var(--adm-card-bg); border-bottom: 1px solid var(--adm-border); }
+.adm-modal .nav-link       { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--adm-muted); padding: 12px 16px; border: none; border-bottom: 2px solid transparent; }
+.adm-modal .nav-link.active { color: var(--adm-red); border-bottom-color: var(--adm-red); background: none; }
+.adm-modal .nav-link:hover  { color: var(--adm-text); border-bottom-color: var(--adm-border); }
+.adm-modal .tab-content     { padding: 24px; }
 
-.adm-drawer-body   { flex: 1; overflow-y: auto; padding: 20px 24px; }
-.adm-drawer-footer {
-  display:     flex;
-  gap:         10px;
-  padding:     16px 24px;
-  background:  #FFF;
-  border-top:  1px solid var(--adm-border);
-  flex-shrink: 0;
-}
-
-/* ── Sección: Etiqueta de variante ──────────────────────────── */
-.adm-variant-label-small {
-  font-size:      9px;
-  font-weight:    600;
-  letter-spacing: .10em;
-  text-transform: uppercase;
-  color:          var(--adm-muted);
-  white-space:    nowrap;
-}
-
-/* ── Sección: Bootstrap overrides — formulario HERA ─────────── */
-/* Tipografía en form controls */
-.form-control, .form-select, .form-label,
-.form-check-label, .btn, .card-header {
-  font-family: 'Instrument Sans', sans-serif;
-}
-.form-control, .form-select { font-size: 13px; }
-
-/* Focus ring — rojo HERA, sin azul Bootstrap */
-.form-control:focus, .form-select:focus {
-  border-color: var(--adm-red);
-  box-shadow:   0 0 0 .25rem rgba(225,34,43,.15);
-}
-.form-check-input:focus {
-  border-color: var(--adm-red);
-  box-shadow:   0 0 0 .25rem rgba(225,34,43,.15);
-}
-
-/* Form-switch checked — verde HERA */
-.form-check-input:checked {
-  background-color: var(--adm-green);
-  border-color:     var(--adm-green);
-}
-
-/* Card header — secciones del formulario */
-.adm-drawer-body .card-header {
-  font-size:      9px;
-  font-weight:    700;
-  letter-spacing: .20em;
-  text-transform: uppercase;
-  color:          var(--adm-muted);
-  background:     #FAFAFA;
-  padding:        8px 16px;
-}
-.adm-drawer-body .card { border-color: var(--adm-border); }
-
-/* Form label — estilo HERA */
-.adm-drawer-body .form-label {
+/* ── Sección: Form labels dentro del modal ───────────────────── */
+.adm-modal .form-label {
   font-size:      10px;
   font-weight:    600;
   letter-spacing: .12em;
@@ -188,41 +107,84 @@
   color:          var(--adm-text);
   margin-bottom:  4px;
 }
-.adm-drawer-body .form-label .req { color: var(--adm-red); margin-left: 2px; }
+.adm-modal .form-label .req { color: var(--adm-red); margin-left: 2px; }
 
-/* Botón primario — rojo HERA */
-.btn-primary {
-  --bs-btn-bg:                  var(--adm-red);
-  --bs-btn-border-color:        var(--adm-red);
-  --bs-btn-hover-bg:            var(--adm-red-hover);
-  --bs-btn-hover-border-color:  var(--adm-red-hover);
-  --bs-btn-active-bg:           var(--adm-red-hover);
-  --bs-btn-active-border-color: var(--adm-red-hover);
-  --bs-btn-focus-shadow-rgb:    225, 34, 43;
-  font-size:      11px;
-  font-weight:    700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
+/* ── Sección: Imagen principal — preview ────────────────────── */
+.adm-img-preview {
+  width: 100%; aspect-ratio: 3/4;
+  background: #FAFAFA;
+  border: 1px dashed var(--adm-border);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 6px; color: var(--adm-muted);
+  overflow: hidden; margin-bottom: 8px;
+  font-size: 11px;
+}
+.adm-img-preview img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ── Sección: Galería — thumbnails ──────────────────────────── */
+.adm-gallery-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; min-height: 40px; }
+.adm-gallery-thumb {
+  width: 40px; height: 40px;
+  border: 1px solid var(--adm-border);
+  background: #FAFAFA;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: relative; flex-shrink: 0;
+}
+.adm-gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.adm-gallery-thumb-remove {
+  position: absolute; top: 1px; right: 1px;
+  width: 16px; height: 16px;
+  background: rgba(0,0,0,.6); color: #fff;
+  border: none; cursor: pointer;
+  font-size: 9px; display: flex;
+  align-items: center; justify-content: center;
 }
 
-/* ── Sección: Toast ─────────────────────────────────────────── */
-#adm-toast {
-  font-family: 'Instrument Sans', sans-serif;
-  font-size:   12px;
-  background:  #0F0F0F;
+/* ── Sección: Variantes ─────────────────────────────────────── */
+.adm-variant-row { display: grid; grid-template-columns: 1fr 1fr 32px; gap: 8px; align-items: center; margin-bottom: 8px; }
+.adm-variant-label-small {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: .10em; text-transform: uppercase;
+  color: var(--adm-muted); white-space: nowrap;
+}
+
+/* ── Sección: Drag & drop de imágenes ───────────────────────── */
+.adm-drop-zone.drag-over {
+  border-color: var(--adm-red) !important;
+  background:   rgba(225,34,43,.04) !important;
+}
+.adm-gallery-thumb[draggable="true"] { cursor: grab; }
+.adm-gallery-thumb.dragging          { opacity: .4; cursor: grabbing; }
+.adm-img-remove-principal {
+  position:        absolute;
+  top:             4px;
+  right:           4px;
+  width:           20px;
+  height:          20px;
+  background:      rgba(0,0,0,.65);
+  color:           #fff;
+  border:          none;
+  cursor:          pointer;
+  font-size:       11px;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  z-index:         1;
 }
 
 /* ═══════════════════════════════════════
    BREAKPOINT: TABLET — ≤1024px
 ═══════════════════════════════════════ */
 @media (max-width: 1024px) {
-  :root { --adm-drawer-w: 90vw; }
+  .adm-modal .modal-dialog { max-width: 95vw; }
 }
 
 /* ═══════════════════════════════════════
    BREAKPOINT: MÓVIL — ≤768px
 ═══════════════════════════════════════ */
 @media (max-width: 768px) {
-  :root { --adm-drawer-w: 100vw; }
   .adm-actions { flex-direction: column; align-items: stretch; }
+  .adm-modal .modal-dialog { max-width: 100vw; margin: 0; }
+  .adm-modal .modal-content { min-height: 100vh; }
 }

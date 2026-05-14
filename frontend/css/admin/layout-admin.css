@@ -172,6 +172,10 @@
   color:     var(--adm-muted);
 }
 
+/* ── Sección: Topbar — variante con título + conteo ─────────── */
+.adm-topbar-left  { display: flex; align-items: center; gap: 16px; }
+.adm-topbar-count { font-size: 11px; color: var(--adm-muted); }
+
 /* ── Sección: Avatar del administrador ──────────────────────── */
 .adm-avatar {
   width:          32px;

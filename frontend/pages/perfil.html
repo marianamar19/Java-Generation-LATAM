@@ -131,7 +131,11 @@
               </div>
               <div class="perfil-form-field">
                 <label class="perfil-form-label" for="infoTel">Teléfono</label>
-                <input class="perfil-input" type="tel" id="infoTel" placeholder="+52 33 0000 0000" autocomplete="tel">
+                <div class="perfil-tel-wrap">
+                  <span class="perfil-tel-prefix">+52</span>
+                  <input class="perfil-input perfil-tel-input" type="tel" id="infoTel"
+                        placeholder="33 1005 0843" autocomplete="tel" maxlength="12">
+                </div>
               </div>
               <div class="perfil-form-field">
                 <label class="perfil-form-label" for="infoNacimiento">Fecha de nacimiento</label>
@@ -309,7 +313,10 @@
               </div>
               <div class="perfil-form-field">
                 <label class="perfil-form-label" for="addrTel">Teléfono de contacto</label>
-                <input class="perfil-input" type="tel" id="addrTel" placeholder="+52 33 0000 0000" autocomplete="tel">
+                <div class="perfil-tel-wrap">
+                  <span class="perfil-tel-prefix">+52</span>
+                  <input class="perfil-input perfil-tel-input" type="tel" id="addrTel" placeholder="33 0000 0000" autocomplete="tel" maxlength="12">
+                </div>
               </div>
             </div>
  

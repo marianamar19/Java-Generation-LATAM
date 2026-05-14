@@ -37,3 +37,37 @@ body {
 /* El Design System HERA no usa bordes redondeados */
 .rounded, .rounded-1, .rounded-2,
 .rounded-3, .rounded-circle { border-radius: 0 !important; }
+
+/* ── Sección: Bootstrap overrides — formularios HERA ────────── */
+.form-control, .form-select, .form-label,
+.form-check-label, .btn, .card-header,
+.modal-title, .nav-link {
+  font-family: 'Instrument Sans', sans-serif;
+}
+.form-control, .form-select { font-size: 13px; }
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--adm-red);
+  box-shadow:   0 0 0 .25rem rgba(225,34,43,.15);
+}
+.form-check-input:focus {
+  border-color: var(--adm-red);
+  box-shadow:   0 0 0 .25rem rgba(225,34,43,.15);
+}
+.form-check-input:checked {
+  background-color: var(--adm-green);
+  border-color:     var(--adm-green);
+}
+.btn-primary {
+  --bs-btn-bg:                  var(--adm-red);
+  --bs-btn-border-color:        var(--adm-red);
+  --bs-btn-hover-bg:            var(--adm-red-hover);
+  --bs-btn-hover-border-color:  var(--adm-red-hover);
+  --bs-btn-active-bg:           var(--adm-red-hover);
+  --bs-btn-active-border-color: var(--adm-red-hover);
+  --bs-btn-focus-shadow-rgb:    225, 34, 43;
+  font-size:      11px;
+  font-weight:    700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}

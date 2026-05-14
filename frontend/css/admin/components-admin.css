@@ -206,3 +206,16 @@
   color:      var(--adm-muted);
   text-align: center;
 }
+
+/* ── Sección: Card contenedor de tabla ──────────────────────── */
+.adm-card-table {
+  background: var(--adm-card-bg);
+  border:     1px solid var(--adm-border);
+}
+
+/* ── Sección: Toast ─────────────────────────────────────────── */
+#adm-toast {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size:   12px;
+  background:  #0F0F0F;
+}
