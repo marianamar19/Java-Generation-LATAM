@@ -135,7 +135,7 @@ async function addItemToCart(varianteId) {
  * @returns {HTMLElement} div.cart-item listo para insertar
  */
 function _buildCartItemEl(data) {
-  const { brand, name, priceDisplay, volVal, nivelVal, nLabel, cartId, qty } = data;
+  const { brand, name, priceDisplay, volVal, nivelVal, nLabel, cartId, qty, img } = data;
   const volLine = volVal ? '<div class="cart-item-vol">' + volVal + '</div>' : '';
 
   const el          = document.createElement('div');
@@ -144,7 +144,7 @@ function _buildCartItemEl(data) {
   el.innerHTML      =
     '<div class="cart-item-body">' +
       '<div class="cart-item-img">' +
-        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>' +
+        (img ? '<img src="' + img + '" alt="' + name + '">' : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>') +
       '</div>' +
       '<div class="cart-item-info">' +
         '<div class="cart-item-nivel cart-item-nivel--' + nivelVal + '">' +
