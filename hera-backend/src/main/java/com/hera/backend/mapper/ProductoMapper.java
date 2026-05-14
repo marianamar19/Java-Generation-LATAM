@@ -83,6 +83,9 @@ public class ProductoMapper {
                 .temporadas(extraerNombresTemporadas(producto.getTemporadas()))
                 .momentosDia(extraerMomentosDia(producto.getMomentosDia()))
                 .ocasiones(extraerNombresOcasiones(producto.getOcasiones()))
+                .notasSalida(extraerNotasPorTipo(producto.getNotas(), "salida"))
+                .notasCorazon(extraerNotasPorTipo(producto.getNotas(), "corazon"))
+                .notasBase(extraerNotasPorTipo(producto.getNotas(), "base"))
 
                 // Flags de marketing
                 .esNuevo(producto.getEsNuevo())
@@ -176,5 +179,14 @@ public class ProductoMapper {
                         .etiquetaTipo(v.getEtiquetaTipo())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    private List<String> extraerNotasPorTipo(List<ProductoNota> notas, String tipo) {
+        if (notas == null) return List.of();
+        return notas.stream()
+                .filter(pn -> pn.getNota() != null && tipo.equals(pn.getNota().getTipo()))
+                .map(pn -> pn.getNota().getNombre())
+                .collect(Collectors.toList());
+
     }
 }

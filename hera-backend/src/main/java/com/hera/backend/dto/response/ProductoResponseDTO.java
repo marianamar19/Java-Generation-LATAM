@@ -64,6 +64,11 @@ public class ProductoResponseDTO {
     private List<String> momentosDia; // ['dia', 'noche']
     private List<String> ocasiones; // ['cita', 'gala']
 
+    // Notas olfativas separadas por tipo
+    private List<String> notasSalida;
+    private List<String> notasCorazon;
+    private List<String> notasBase;
+
     // Flags
     private Boolean esNuevo;
     private Boolean esBestSeller;
