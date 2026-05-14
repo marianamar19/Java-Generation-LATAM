@@ -113,7 +113,7 @@ function closeCart() {
  * @param {string}        nivel - Nivel de existencia: 'green' | 'yellow' | 'red'
  * @returns {void}
  */
-function addItemToCart(id, brand, name, price, vol, nivel, img) {
+function addItemToCart(id, brand, name, price, vol, nivel) {
   const priceDisplay = normalizePriceMXN(price);
   const nivelVal     = nivel || 'green';
   const volVal       = vol   || '';
@@ -128,7 +128,7 @@ function addItemToCart(id, brand, name, price, vol, nivel, img) {
     qEl.textContent = parseInt(qEl.textContent) + 1;
   } else {
     // Si no existe: crear el item y añadirlo al inicio
-    const item = _buildCartItemEl({ id, brand, name, priceDisplay, volVal, nivelVal, nLabel, cartId, qty: 1, img: img || '' });
+    const item = _buildCartItemEl({ id, brand, name, priceDisplay, volVal, nivelVal, nLabel, cartId, qty: 1 });
     cartItemsList.insertBefore(item, cartItemsList.firstChild);
     _bindCartItem(item);
   }
@@ -153,7 +153,7 @@ function addItemToCart(id, brand, name, price, vol, nivel, img) {
  * @returns {HTMLElement} div.cart-item listo para insertar
  */
 function _buildCartItemEl(data) {
-  const { brand, name, priceDisplay, volVal, nivelVal, nLabel, cartId, qty, img } = data;
+  const { brand, name, priceDisplay, volVal, nivelVal, nLabel, cartId, qty } = data;
   const volLine = volVal ? '<div class="cart-item-vol">' + volVal + '</div>' : '';
 
   const el          = document.createElement('div');
@@ -162,7 +162,7 @@ function _buildCartItemEl(data) {
   el.innerHTML      =
     '<div class="cart-item-body">' +
       '<div class="cart-item-img">' +
-        (img ? '<img src="' + img + '" alt="' + name + '">' : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>') +
+        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>' +
       '</div>' +
       '<div class="cart-item-info">' +
         '<div class="cart-item-nivel cart-item-nivel--' + nivelVal + '">' +
@@ -285,7 +285,6 @@ function _saveCartToStorage() {
       vol:   volEl ? volEl.textContent : '',
       nivel: nivelClass,
       qty:   parseInt(el.querySelector('.qty-num').textContent),
-      img:   el.querySelector('.cart-item-img img')?.src || '',
     });
   });
   setCart(items);
@@ -309,7 +308,7 @@ function _loadCartFromStorage() {
 
       const el = _buildCartItemEl({
         brand: it.brand, name: it.name, priceDisplay,
-        volVal: it.vol || '', nivelVal, nLabel, cartId, qty: it.qty || 1, img: it.img || '',
+        volVal: it.vol || '', nivelVal, nLabel, cartId, qty: it.qty || 1,
       });
       cartItemsList.appendChild(el);
       _bindCartItem(el);

@@ -256,7 +256,7 @@ function construirCardProducto(p) {
     
     return card;
 }
- 
+
 /**
  * Renderiza el grid de productos
  */
