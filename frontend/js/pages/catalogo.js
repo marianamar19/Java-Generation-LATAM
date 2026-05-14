@@ -203,7 +203,7 @@ function construirCardProducto(p) {
         variantesHTML = `
             <div class="ed-vol-label">Presentación</div>
             <div class="ed-vols">
-            ${p.variantes.map((v, i) => `<button class="ed-vol-btn${i === 0 ? ' sel' : ''}" data-precio="${v.precio}" data-variante-id="${v.id}">${v.valor}</button>`).join('')}
+            ${p.variantes.map((v, i) => `<button class="ed-vol-btn${i === 0 ? ' sel' : ''}" data-precio="${v.precio}" data-variante-id="${v.id}">${/^\d+$/.test(String(v.valor)) ? v.valor + ' ml' : v.valor}</button>`).join('')}
             </div>
         `;
     }

@@ -15,4 +15,5 @@ public class VarianteRequest {
     private BigDecimal precio;
     private BigDecimal precioDescuento;
     private String etiquetaTipo;     // "Presentación", "Talla", "Material"
+    private Integer stock;
 }

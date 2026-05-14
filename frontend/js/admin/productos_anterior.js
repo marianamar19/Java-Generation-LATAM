@@ -295,7 +295,7 @@ async function deleteProduct(id) {
 // =====================================================
 // VARIANTES
 // =====================================================
-function addVariantRow(nombreVariante = '', precio = '', stock = 10) {
+function addVariantRow(nombreVariante = '', precio = '') {
     const list = document.getElementById('variants-list');
     if (!list) return;
 
@@ -304,7 +304,6 @@ function addVariantRow(nombreVariante = '', precio = '', stock = 10) {
     row.innerHTML = `
         <input type="text" class="form-control form-control-sm variant-ml" placeholder="Ej: 100 ml, Talla M" value="${escapeHtml(nombreVariante)}" style="flex:2;" />
         <input type="number" class="form-control form-control-sm variant-precio" placeholder="Precio MXN" value="${precio}" style="flex:1;" min="0" step="1" />
-        <input type="number" class="form-control form-control-sm variant-stock" placeholder="Stock" value="${stock}" style="flex:1;" min="0" step="1" />
         <button class="btn btn-sm btn-outline-danger" type="button" aria-label="Eliminar variante">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
@@ -327,9 +326,8 @@ function getVariants() {
     rows.forEach((row) => {
         const nombreVariante = row.querySelector('.variant-ml')?.value.trim() || '';
         const precio = parseFloat(row.querySelector('.variant-precio')?.value) || 0;
-        const stock = parseInt(row.querySelector('.variant-stock')?.value) || 0;
         if (nombreVariante && precio > 0) {
-            variants.push({ nombreVariante, precio, stock, etiquetaTipo: 'Presentación' });
+            variants.push({ nombreVariante, precio, etiquetaTipo: 'Presentación' });
         }
     });
     return variants;
@@ -429,7 +427,7 @@ function populateForm(p) {
     const list = document.getElementById('variants-list');
     if (list) list.innerHTML = '';
     if (p.variantes && p.variantes.length > 0) {
-        p.variantes.forEach(v => addVariantRow(v.valor, v.precio, v.stock ?? 10));
+        p.variantes.forEach(v => addVariantRow(v.valor, v.precio));
     } else {
         addVariantRow();
     }

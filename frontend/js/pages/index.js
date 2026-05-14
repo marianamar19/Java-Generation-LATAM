@@ -142,7 +142,7 @@ async function _renderBestSellers() {
         nivel:     p.nivelDisponibilidad,
         badge:     p.badge || '',
         varianteId: p.variantes && p.variantes[0] ? p.variantes[0].id : null,
-        vols:      p.variantes ? p.variantes.map(v => ({ ml: v.volumen, precio: v.precio })) : [],
+        vols:      p.variantes ? p.variantes.map(v => ({ ml: /^\d+$/.test(String(v.valor)) ? v.valor + ' ml' : v.valor, precio: v.precio })) : [],
       }));
     track.innerHTML = productos.map(renderCard).join('');
     _initCarousel();   // reinicia el carrusel con los nuevos elementos
@@ -181,7 +181,7 @@ async function _renderNovedades() {
         nivel:     p.nivelDisponibilidad,
         badge:     p.badge || '',
         varianteId: p.variantes && p.variantes[0] ? p.variantes[0].id : null,
-        vols:      p.variantes ? p.variantes.map(v => ({ ml: v.volumen, precio: v.precio })) : [],
+        vols:      p.variantes ? p.variantes.map(v => ({ ml: /^\d+$/.test(String(v.valor)) ? v.valor + ' ml' : v.valor, precio: v.precio })) : [],
       }));
     grid.innerHTML = productos.map(renderCardEditorial).join('');
     _initVolButtons();   // reinicia los selectores de volumen con los nuevos elementos

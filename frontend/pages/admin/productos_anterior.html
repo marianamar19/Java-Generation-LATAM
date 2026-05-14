@@ -243,25 +243,8 @@
         </div>
         <div class="row g-3 mb-3">
           <div class="col-12">
-            <label class="form-label mb-0">Variantes (opcional)</label>
-            <!-- Encabezado de columnas -->
-            <div class="d-flex gap-2 mt-2 mb-1 px-1">
-              <span class="adm-variant-label-small" style="flex:2;">Presentación</span>
-              <span class="adm-variant-label-small" style="flex:1;">Precio MXN</span>
-              <span class="adm-variant-label-small" style="flex:1;">Stock</span>
-              <span style="width:30px; flex-shrink:0;"></span>
-            </div>
-            <!-- Filas de variantes — la primera se muestra por defecto; las demás las genera JS -->
-            <div id="variants-list" class="d-flex flex-column gap-2 mb-3">
-              <div class="d-flex align-items-center gap-2">
-                <input type="text" class="form-control form-control-sm variant-ml" placeholder="Ej: 100 ml, Talla M" style="flex:2;" />
-                <input type="number" class="form-control form-control-sm variant-precio" placeholder="Precio MXN" style="flex:1;" min="0" step="1" />
-                <input type="number" class="form-control form-control-sm variant-stock" placeholder="Stock" value="10" style="flex:1;" min="0" step="1" />
-                <button class="btn btn-sm btn-outline-danger" type="button" aria-label="Eliminar variante">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </button>
-              </div>
-            </div>
+            <label class="form-label">Variantes (opcional)</label>
+            <div id="variants-list" class="d-flex flex-column gap-2 mb-3"></div>
             <button class="btn btn-outline-secondary btn-sm w-100" id="btn-add-variant" type="button"
               style="border-style:dashed; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;"
               aria-label="Agregar variante">

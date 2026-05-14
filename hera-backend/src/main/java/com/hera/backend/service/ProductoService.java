@@ -147,6 +147,23 @@ public class ProductoService {
         producto = productoRepository.save(producto);
         log.info("Producto creado con ID: {}", producto.getId());
 
+        // Guardar variantes
+        if (request.getVariantes() != null && !request.getVariantes().isEmpty()) {
+            Producto productoFinal = producto;
+            request.getVariantes().forEach(v -> {
+                VarianteProducto variante = VarianteProducto.builder()
+                        .nombreVariante(v.getNombreVariante())
+                        .precio(v.getPrecio())
+                        .precioDescuento(v.getPrecioDescuento())
+                        .etiquetaTipo(v.getEtiquetaTipo() != null ? v.getEtiquetaTipo() : "Presentación")
+                        .stock(v.getStock() != null ? v.getStock() : 10)
+                        .activo(true)
+                        .producto(productoFinal)
+                        .build();
+                varianteRepository.save(variante);
+            });
+        }
+
         return productoMapper.toDTO(producto);
     }
 
@@ -174,6 +191,25 @@ public class ProductoService {
         if (request.getNivelDisponibilidad() != null) producto.setNivelDisponibilidad(obtenerNivelDisponibilidad(request.getNivelDisponibilidad()));
 
         producto = productoRepository.save(producto);
+
+        // Reemplazar variantes si se envían
+        if (request.getVariantes() != null && !request.getVariantes().isEmpty()) {
+            varianteRepository.deleteByProductoId(producto.getId());
+            Producto productoFinal = producto;
+            request.getVariantes().forEach(v -> {
+                VarianteProducto variante = VarianteProducto.builder()
+                        .nombreVariante(v.getNombreVariante())
+                        .precio(v.getPrecio())
+                        .precioDescuento(v.getPrecioDescuento())
+                        .etiquetaTipo(v.getEtiquetaTipo() != null ? v.getEtiquetaTipo() : "Presentación")
+                        .stock(v.getStock() != null ? v.getStock() : 10)
+                        .activo(true)
+                        .producto(productoFinal)
+                        .build();
+                varianteRepository.save(variante);
+            });
+        }
+
         return productoMapper.toDTO(producto);
     }
 

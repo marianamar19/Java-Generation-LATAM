@@ -161,7 +161,7 @@ export function renderCardEditorial(p) {
   const volBtns = vols.map((v, i) => `
     <button class="ed-vol-btn${i === 0 ? ' sel' : ''}"
       data-ml="${v.ml}"
-      data-precio="${v.precio}">${v.ml}${!p.volLabel ? ' ml' : ''}</button>
+      data-precio="${v.precio}">${v.ml}</button>
   `).join('');
 
   return `
