@@ -332,7 +332,7 @@ function renderGaleria() {
    VARIANTES
 ══════════════════════════════════════ */
 
-function addVariantRow(valor = '', precio = '') {
+function addVariantRow(valor = '', precio = '', stock = 10) {
     const list = document.getElementById('variants-list');
     if (!list) return;
     const row = document.createElement('div');
@@ -340,6 +340,7 @@ function addVariantRow(valor = '', precio = '') {
     row.innerHTML = `
         <input class="form-control form-control-sm" type="text" placeholder="Ej: 50 ml" value="${escapeHtml(valor)}" />
         <input class="form-control form-control-sm" type="number" placeholder="Precio MXN" value="${precio}" min="0" />
+        <input class="form-control form-control-sm" type="number" placeholder="Stock" value="${stock}" min="0" />
         <button class="btn btn-sm btn-outline-danger" type="button" aria-label="Eliminar variante">✕</button>`;
     row.querySelector('button').addEventListener('click', () => row.remove());
     list.appendChild(row);
@@ -348,7 +349,11 @@ function addVariantRow(valor = '', precio = '') {
 function getVariants() {
     return [...document.querySelectorAll('#variants-list .adm-variant-row')].map(row => {
         const inputs = row.querySelectorAll('input');
-        return { valor: inputs[0]?.value.trim() || '', precio: parseFloat(inputs[1]?.value) || 0 };
+        return {
+            valor:  inputs[0]?.value.trim() || '',
+            precio: parseFloat(inputs[1]?.value) || 0,
+            stock:  parseInt(inputs[2]?.value) ?? 10
+        };
     }).filter(v => v.valor);
 }
 
@@ -390,7 +395,7 @@ function populateForm(p) {
 
     const list = document.getElementById('variants-list');
     if (list) list.innerHTML = '';
-    if (p.variantes?.length) p.variantes.forEach(v => addVariantRow(v.valor, v.precio));
+    if (p.variantes?.length) p.variantes.forEach(v => addVariantRow(v.valor, v.precio, v.stock ?? 10));
     else addVariantRow();
 
     imageState.principal = p.imagenPrincipalUrl || null;

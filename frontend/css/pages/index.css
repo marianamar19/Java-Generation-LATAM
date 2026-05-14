@@ -419,6 +419,40 @@ section.hero { padding: 0; }
 /* Barra de progreso del carrusel */
 .carousel-progress { height: 2px; background: var(--lgray); margin-top: 28px; position: relative; }
 .carousel-progress-fill { position: absolute; top: 0; height: 100%; background: var(--red); transition: left .35s ease, width .35s ease; }
+
+/* ── Sección: ed-item dentro del carrusel de bestsellers ─────── */
+
+.carousel-track {
+  gap: 16px;
+  padding: 0 2px;
+  align-items: stretch;
+}
+
+.carousel-track .ed-item {
+  flex:             0 0 calc(25% - 12px);
+  min-width:        0;
+  border:           none;
+  box-shadow:       none;
+  background:       var(--black);
+  border-color:     var(--black);
+}
+
+/* Textos y elementos adaptados al fondo negro permanente */
+.carousel-track .ed-item .ed-brand         { color: rgba(249,249,249,.28); }
+.carousel-track .ed-item .ed-name          { color: var(--cream); }
+.carousel-track .ed-item .ed-vol-label     { color: rgba(249,249,249,.2); }
+.carousel-track .ed-item .ed-vol-btn       { border-color: rgba(249,249,249,.18); color: rgba(249,249,249,.4); }
+.carousel-track .ed-item .ed-vol-btn.sel   { border-color: var(--cream); background: var(--cream); color: var(--black); }
+.carousel-track .ed-item .ed-price         { color: var(--cream); }
+.carousel-track .ed-item .ed-footer        { border-top-color: rgba(249,249,249,.08); }
+.carousel-track .ed-item .ed-cta           { color: rgba(249,249,249,.3); }
+.carousel-track .ed-item .ed-cta:hover     { color: var(--red); }
+.carousel-track .ed-item .ed-img-placeholder { background: var(--dgray); border-color: rgba(249,249,249,.1); }
+.carousel-track .ed-item .ed-img-placeholder svg  { color: rgba(249,249,249,.4); opacity: 1; }
+.carousel-track .ed-item .ed-img-placeholder span { color: rgba(249,249,249,.25); }
+.carousel-track .ed-item .fav-btn          { color: rgba(249,249,249,.35); }
+.carousel-track .ed-item .fav-btn:hover    { color: rgba(249,249,249,.9); }
+.carousel-track .ed-item::before           { display: none; }
  
 /* ── Sección: Brand editorial — dos columnas visual + texto ──── */
 /* Desktop  (>1024px): grid 2×1, min-height 580px.
@@ -785,6 +819,7 @@ section.hero { padding: 0; }
   /* NOVEDADES — Tablet: 2 columnas */
   .editorial-grid      { grid-template-columns: repeat(2, 1fr); padding: 8px 48px 24px; gap: 12px; }
   .editorial-header    { padding: 48px 48px 36px; }
+  .carousel-track .ed-item { flex: 0 0 calc(33.33% - 11px); }
 }
  
 /* ── Sección: Responsivo — Móvil ≤768px ────────────────────── */
@@ -812,6 +847,7 @@ section.hero { padding: 0; }
   /* BESTSELLERS — controles apilados */
   .products-header     { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
   .carousel-controls   { align-self: flex-end; }
+  .carousel-track .ed-item { flex: 0 0 calc(50% - 8px); }
  
   /* TESTIMONIALS */
   .test-grid           { grid-template-columns: 1fr; }
