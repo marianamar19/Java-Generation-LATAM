@@ -23,18 +23,22 @@ public class ProductoCreateRequest {
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
 
-    @NotBlank(message = "El ID de producto es obligatorio")
-    private String productoId;
-
-    @NotBlank(message = "El slug es obligatorio")
-    private String slug;
-
     @NotBlank(message = "El tipo es obligatorio (perfumes/joyeria)")
     private String tipo;
 
     @NotNull(message = "El precio base es obligatorio")
     @Positive(message = "El precio debe ser mayor a 0")
     private BigDecimal precioBase;
+
+    // ========== IDENTIFICADORES (generados automáticamente en backend) ==========
+
+    private String productoId; // ignorado al crear, generado por el service
+    private String slug;       // ignorado al crear, generado por el service
+
+    // ========== CONCENTRACIÓN / MATERIAL ==========
+
+    private String concentracion; // EDP, EDT, EDC, PAR, ELI, FRA — solo perfumes
+    private String material;      // PLT, ORO — solo joyería
 
     // ========== CAMPOS OPCIONALES ==========
 
@@ -44,27 +48,27 @@ public class ProductoCreateRequest {
     private String paisOrigen;
     private String badge;
     private String imagenPrincipalUrl;
+    private String imagenesExtra;
 
     // ========== FLAGS ==========
 
     private Boolean esNuevo;
     private Boolean esBestSeller;
     private Boolean esDestacado;
+    private Boolean activo;
 
-    // ========== RELACIONES (por nombre - más fácil para el frontend) ==========
+    // ========== RELACIONES ==========
 
     private String marca;
     private String categoria;
     private String genero;
     private String familiaOlfativa;
-    private String nivelDisponibilidad;  // green, yellow, red
+    private String nivelDisponibilidad;
 
-    // ========== LISTAS (relaciones N:M y dependencias) ==========
+    // ========== LISTAS ==========
 
     private List<VarianteRequest> variantes;
     private List<ImagenRequest> imagenes;
-
-    // IDs de catálogos (para relaciones N:M)
     private List<Integer> temporadas;
     private List<Integer> momentosDia;
     private List<Integer> ocasiones;

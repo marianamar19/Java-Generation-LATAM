@@ -22,6 +22,9 @@ public class Marca {
     @Column(nullable = false, length = 100)
     private String nombre;
 
+    @Column(name = "codigo_abreviado", length = 10)
+    private String codigoAbreviado; // "JPG", "D", "HRA", "CK", "GA", "YSL"
+
     @Column(nullable = false, unique = true, length = 100)
     private String slug;
 

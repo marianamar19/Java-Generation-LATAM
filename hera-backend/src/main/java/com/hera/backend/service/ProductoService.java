@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.Normalizer;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,51 +63,40 @@ public class ProductoService {
         return productoMapper.toDTO(producto);
     }
 
-    // MÉTODO - Buscar por productId (String) y devolver la ENTIDAD
     @Transactional(readOnly = true)
     public Producto obtenerPorProductId(String productId) {
-        log.debug("Buscando producto por productId: {}", productId);
-
         return productoRepository.findByProductoId(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Producto", "productId", productId));
     }
 
-    //  Método auxiliar  - Si se necesita el DTO también
     @Transactional(readOnly = true)
     public ProductoResponseDTO obtenerPorProductIdDTO(String productId) {
-        Producto producto = obtenerPorProductId(productId);
-        return productoMapper.toDTO(producto);
+        return productoMapper.toDTO(obtenerPorProductId(productId));
     }
 
     @Transactional(readOnly = true)
     public List<ProductoResponseDTO> listarDestacados() {
         return productoRepository.findByEsDestacadoTrueAndActivoTrue().stream()
-                .map(productoMapper::toDTO)
-                .collect(Collectors.toList());
+                .map(productoMapper::toDTO).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public List<ProductoResponseDTO> listarBestsellers() {
         return productoRepository.findByEsBestSellerTrueAndActivoTrue().stream()
-                .map(productoMapper::toDTO)
-                .collect(Collectors.toList());
+                .map(productoMapper::toDTO).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public List<ProductoResponseDTO> listarNuevos() {
         return productoRepository.findByEsNuevoTrueAndActivoTrue().stream()
-                .map(productoMapper::toDTO)
-                .collect(Collectors.toList());
+                .map(productoMapper::toDTO).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public List<ProductoResponseDTO> buscar(String keyword) {
-        if (keyword == null || keyword.trim().isEmpty()) {
-            return listarTodos();
-        }
+        if (keyword == null || keyword.trim().isEmpty()) return listarTodos();
         return productoRepository.buscarPorKeyword(keyword).stream()
-                .map(productoMapper::toDTO)
-                .collect(Collectors.toList());
+                .map(productoMapper::toDTO).collect(Collectors.toList());
     }
 
     // ========== MÉTODOS DE ADMIN (solo para administradores) ==========
@@ -115,37 +105,48 @@ public class ProductoService {
     public ProductoResponseDTO crearProducto(ProductoCreateRequest request) {
         log.info("Creando producto: {}", request.getNombre());
 
-        // Validar unicidad
-        validarProductoUnico(request);
-
-        // Obtener o crear relaciones
-        Marca marca = obtenerOCrearMarca(request.getMarca());
+        Marca marca         = obtenerOCrearMarca(request.getMarca());
         Categoria categoria = obtenerOCrearCategoria(request.getCategoria(), request.getTipo());
-        Genero genero = obtenerGenero(request.getGenero());
+        Genero genero       = obtenerGenero(request.getGenero());
         NivelDisponibilidad nivel = obtenerNivelDisponibilidad(request.getNivelDisponibilidad());
 
-        // Crear producto
+        // Generar ID y slug automáticamente
+        long consecutivo = productoRepository.count() + 1;
+        String productoId = generarProductoId(request, marca, categoria, genero, consecutivo);
+        String slug       = generarSlug(request);
+
+        // Resolver colisiones
+        while (productoRepository.findByProductoId(productoId).isPresent()) {
+            consecutivo++;
+            productoId = generarProductoId(request, marca, categoria, genero, consecutivo);
+        }
+        while (productoRepository.findBySlug(slug).isPresent()) {
+            slug = slug + "-" + consecutivo;
+        }
+
         Producto producto = Producto.builder()
-                .productoId(request.getProductoId())
-                .slug(request.getSlug())
+                .productoId(productoId)
+                .slug(slug)
                 .nombre(request.getNombre())
                 .tipo(request.getTipo())
                 .precioBase(request.getPrecioBase())
                 .descripcion(request.getDescripcion())
                 .badge(request.getBadge())
                 .imagenPrincipalUrl(request.getImagenPrincipalUrl())
-                .esNuevo(request.getEsNuevo() != null ? request.getEsNuevo() : false)
-                .esBestSeller(request.getEsBestSeller() != null ? request.getEsBestSeller() : false)
-                .esDestacado(request.getEsDestacado() != null ? request.getEsDestacado() : false)
+                .concentracion(request.getConcentracion())
+                .material(request.getMaterial())
+                .esNuevo(Boolean.TRUE.equals(request.getEsNuevo()))
+                .esBestSeller(Boolean.TRUE.equals(request.getEsBestSeller()))
+                .esDestacado(Boolean.TRUE.equals(request.getEsDestacado()))
+                .activo(request.getActivo() != null ? request.getActivo() : true)
                 .marca(marca)
                 .categoria(categoria)
                 .genero(genero)
                 .nivelDisponibilidad(nivel)
-                .activo(true)
                 .build();
 
         producto = productoRepository.save(producto);
-        log.info("Producto creado con ID: {}", producto.getId());
+        log.info("Producto creado — productoId: {}, slug: {}", producto.getProductoId(), producto.getSlug());
 
         return productoMapper.toDTO(producto);
     }
@@ -157,20 +158,21 @@ public class ProductoService {
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Producto", "id", id));
 
-        // Actualizar campos básicos
-        if (request.getNombre() != null) producto.setNombre(request.getNombre());
-        if (request.getPrecioBase() != null) producto.setPrecioBase(request.getPrecioBase());
-        if (request.getDescripcion() != null) producto.setDescripcion(request.getDescripcion());
-        if (request.getBadge() != null) producto.setBadge(request.getBadge());
+        if (request.getNombre() != null)             producto.setNombre(request.getNombre());
+        if (request.getPrecioBase() != null)         producto.setPrecioBase(request.getPrecioBase());
+        if (request.getDescripcion() != null)        producto.setDescripcion(request.getDescripcion());
+        if (request.getBadge() != null)              producto.setBadge(request.getBadge());
         if (request.getImagenPrincipalUrl() != null) producto.setImagenPrincipalUrl(request.getImagenPrincipalUrl());
-        if (request.getEsNuevo() != null) producto.setEsNuevo(request.getEsNuevo());
-        if (request.getEsBestSeller() != null) producto.setEsBestSeller(request.getEsBestSeller());
-        if (request.getEsDestacado() != null) producto.setEsDestacado(request.getEsDestacado());
+        if (request.getConcentracion() != null)      producto.setConcentracion(request.getConcentracion());
+        if (request.getMaterial() != null)           producto.setMaterial(request.getMaterial());
+        if (request.getEsNuevo() != null)            producto.setEsNuevo(request.getEsNuevo());
+        if (request.getEsBestSeller() != null)       producto.setEsBestSeller(request.getEsBestSeller());
+        if (request.getEsDestacado() != null)        producto.setEsDestacado(request.getEsDestacado());
+        if (request.getActivo() != null)             producto.setActivo(request.getActivo());
 
-        // Actualizar relaciones
-        if (request.getMarca() != null) producto.setMarca(obtenerOCrearMarca(request.getMarca()));
-        if (request.getCategoria() != null) producto.setCategoria(obtenerOCrearCategoria(request.getCategoria(), request.getTipo()));
-        if (request.getGenero() != null) producto.setGenero(obtenerGenero(request.getGenero()));
+        if (request.getMarca() != null)               producto.setMarca(obtenerOCrearMarca(request.getMarca()));
+        if (request.getCategoria() != null)           producto.setCategoria(obtenerOCrearCategoria(request.getCategoria(), request.getTipo()));
+        if (request.getGenero() != null)              producto.setGenero(obtenerGenero(request.getGenero()));
         if (request.getNivelDisponibilidad() != null) producto.setNivelDisponibilidad(obtenerNivelDisponibilidad(request.getNivelDisponibilidad()));
 
         producto = productoRepository.save(producto);
@@ -179,11 +181,8 @@ public class ProductoService {
 
     @Transactional
     public void eliminarProducto(Long id) {
-        log.info("Eliminando producto ID: {}", id);
-
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Producto", "id", id));
-
         producto.setActivo(false);
         productoRepository.save(producto);
     }
@@ -192,46 +191,118 @@ public class ProductoService {
     public ProductoResponseDTO toggleDestacado(Long id) {
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Producto", "id", id));
-
         producto.setEsDestacado(!producto.getEsDestacado());
-        producto = productoRepository.save(producto);
-        return productoMapper.toDTO(producto);
+        return productoMapper.toDTO(productoRepository.save(producto));
     }
 
-    // ========== MÉTODOS PRIVADOS AUXILIARES ==========
+    // ========== GENERACIÓN DE ID Y SLUG ==========
 
-    private void validarProductoUnico(ProductoCreateRequest request) {
-        if (productoRepository.findByProductoId(request.getProductoId()).isPresent()) {
-            throw new BusinessException("Ya existe un producto con el ID: " + request.getProductoId());
-        }
-        if (productoRepository.findBySlug(request.getSlug()).isPresent()) {
-            throw new BusinessException("Ya existe un producto con el slug: " + request.getSlug());
+    private String generarProductoId(ProductoCreateRequest request, Marca marca,
+                                     Categoria categoria, Genero genero, long consecutivo) {
+        String tipoCodigo = "perfumes".equalsIgnoreCase(request.getTipo()) ? "HP" : "HJ";
+        String marcaCodigo = getMarcaCodigo(marca);
+        String prodCodigo  = getProdCodigo(request.getNombre());
+        String generoCodigo = getGeneroCodigo(genero);
+        String consec = String.format("%04d", consecutivo);
+
+        if ("HP".equals(tipoCodigo)) {
+            String conc = normalizar(request.getConcentracion());
+            return String.join("-", tipoCodigo, marcaCodigo, prodCodigo, conc, generoCodigo, consec);
+        } else {
+            String catCodigo = getCategoriaCodigo(categoria);
+            String mat = normalizar(request.getMaterial());
+            return String.join("-", tipoCodigo, marcaCodigo, catCodigo, prodCodigo, mat, generoCodigo, consec);
         }
     }
+
+    private String generarSlug(ProductoCreateRequest request) {
+        String extra = "perfumes".equalsIgnoreCase(request.getTipo())
+                ? (request.getConcentracion() != null ? request.getConcentracion() : "")
+                : (request.getMaterial() != null ? request.getMaterial() : "");
+
+        String base = (request.getMarca() + " " + request.getNombre() + " " + extra)
+                .trim().toLowerCase();
+
+        return Normalizer.normalize(base, Normalizer.Form.NFD)
+                .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
+                .replaceAll("[^a-z0-9\\s-]", "")
+                .replaceAll("\\s+", "-")
+                .replaceAll("-+", "-")
+                .replaceAll("^-|-$", "");
+    }
+
+    // ========== MÉTODOS AUXILIARES DE CODIFICACIÓN ==========
+
+    private String getMarcaCodigo(Marca marca) {
+        if (marca == null) return "UNKN";
+        if (marca.getCodigoAbreviado() != null && !marca.getCodigoAbreviado().isBlank())
+            return marca.getCodigoAbreviado().toUpperCase();
+        // Fallback: iniciales de cada palabra
+        String norm = Normalizer.normalize(marca.getNombre().trim(), Normalizer.Form.NFD)
+                .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
+                .toUpperCase().replaceAll("[^A-Z\\s]", "");
+        StringBuilder sb = new StringBuilder();
+        for (String p : norm.trim().split("\\s+"))
+            if (!p.isEmpty()) sb.append(p.charAt(0));
+        return sb.toString();
+    }
+
+    private String getProdCodigo(String nombre) {
+        if (nombre == null || nombre.isBlank()) return "UNKN";
+        return Normalizer.normalize(nombre.trim(), Normalizer.Form.NFD)
+                .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
+                .toUpperCase().replaceAll("[^A-Z0-9]", "")
+                .substring(0, Math.min(4, Normalizer.normalize(nombre.trim(), Normalizer.Form.NFD)
+                        .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
+                        .toUpperCase().replaceAll("[^A-Z0-9]", "").length()));
+    }
+
+    private String getGeneroCodigo(Genero genero) {
+        if (genero == null) return "U";
+        return switch (genero.getNombre().toLowerCase()) {
+            case "masculino" -> "M";
+            case "femenino"  -> "F";
+            default          -> "U";
+        };
+    }
+
+    private String getCategoriaCodigo(Categoria categoria) {
+        if (categoria == null) return "";
+        return switch (categoria.getNombre().toUpperCase().trim()) {
+            case "COLLARES", "COLLAR"     -> "CLLR";
+            case "ARETES", "ARETE"        -> "ART";
+            case "ANILLOS", "ANILLO"      -> "ALLO";
+            case "PULSOS", "PULSO"        -> "PLSO";
+            case "ESCLAVAS", "ESCLAVA"    -> "ESCL";
+            case "BRAZALETES", "BRAZALETE"-> "BRZL";
+            default -> normalizar(categoria.getNombre())
+                    .substring(0, Math.min(4, normalizar(categoria.getNombre()).length()));
+        };
+    }
+
+    private String normalizar(String texto) {
+        if (texto == null || texto.isBlank()) return "";
+        return Normalizer.normalize(texto.trim(), Normalizer.Form.NFD)
+                .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
+                .toUpperCase().replaceAll("[^A-Z0-9]", "");
+    }
+
+    // ========== AUXILIARES DE RELACIONES ==========
 
     private Marca obtenerOCrearMarca(String nombreMarca) {
         return marcaRepository.findByNombre(nombreMarca)
-                .orElseGet(() -> {
-                    Marca nueva = Marca.builder()
-                            .nombre(nombreMarca)
-                            .slug(nombreMarca.toLowerCase().replace(" ", "-"))
-                            .activo(true)
-                            .build();
-                    return marcaRepository.save(nueva);
-                });
+                .orElseGet(() -> marcaRepository.save(Marca.builder()
+                        .nombre(nombreMarca)
+                        .slug(nombreMarca.toLowerCase().replace(" ", "-"))
+                        .activo(true).build()));
     }
 
     private Categoria obtenerOCrearCategoria(String nombreCategoria, String tipo) {
         return categoriaRepository.findByNombre(nombreCategoria)
-                .orElseGet(() -> {
-                    Categoria nueva = Categoria.builder()
-                            .nombre(nombreCategoria)
-                            .slug(nombreCategoria.toLowerCase().replace(" ", "-"))
-                            .tipo(tipo)
-                            .activo(true)
-                            .build();
-                    return categoriaRepository.save(nueva);
-                });
+                .orElseGet(() -> categoriaRepository.save(Categoria.builder()
+                        .nombre(nombreCategoria)
+                        .slug(nombreCategoria.toLowerCase().replace(" ", "-"))
+                        .tipo(tipo).activo(true).build()));
     }
 
     private Genero obtenerGenero(String nombreGenero) {

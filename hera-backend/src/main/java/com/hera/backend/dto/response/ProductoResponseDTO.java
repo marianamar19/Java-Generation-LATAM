@@ -26,6 +26,7 @@ import java.util.List;
 public class ProductoResponseDTO {
 
     // Identificación
+    private Long id;          // ID interno de la base de datos
     private String productId;   // ID único para el front
     private String slug;        // URL amigable
     private String nombre;      // Nombre del producto
@@ -44,6 +45,8 @@ public class ProductoResponseDTO {
     private String nivelDisponibilidad; // 'green', 'yellow', 'red'
     private String genero;      // 'masculino', 'femenino', 'unisex'
     private String familiaOlfativa; // 'floral', 'oriental', etc.
+    private String concentracion; // EDP, EDT, etc. — solo perfumes
+    private String material;      // PLT, ORO — solo joyería
 
     //Contenido
     private String descripcion;
