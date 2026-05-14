@@ -72,4 +72,9 @@ public class ProductoCreateRequest {
     private List<Integer> temporadas;
     private List<Integer> momentosDia;
     private List<Integer> ocasiones;
+    private Integer longevidad;
+    private Integer estela;
+    private List<String> notasSalida;
+    private List<String> notasCorazon;
+    private List<String> notasBase;
 }

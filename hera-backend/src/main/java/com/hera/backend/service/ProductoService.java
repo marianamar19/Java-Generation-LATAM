@@ -16,13 +16,6 @@ import java.text.Normalizer;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Servicio para gestión del catálogo de productos
- *
- * ¿QUÉ hace? Consulta productos con filtros y los convierte a DTO
- * ¿PARA QUÉ sirve? Mostrar productos en catálogo, búsquedas y páginas individuales
- * ¿DÓNDE se usa? En ProductoController (endpoints /api/productos/*)
- */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -30,8 +23,6 @@ public class ProductoService {
 
     private final ProductoRepository productoRepository;
     private final ProductoMapper productoMapper;
-
-    // Repositorios adicionales para crear productos
     private final MarcaRepository marcaRepository;
     private final CategoriaRepository categoriaRepository;
     private final GeneroRepository generoRepository;
@@ -39,21 +30,22 @@ public class ProductoService {
     private final NivelDisponibilidadRepository nivelDisponibilidadRepository;
     private final VarianteProductoRepository varianteRepository;
     private final ImagenProductoRepository imagenRepository;
-
-    // ========== MÉTODOS PÚBLICOS (lectura) ==========
+    private final TemporadaRepository temporadaRepository;
+    private final MomentoDiaRepository momentoDiaRepository;
+    private final OcasionRepository ocasionRepository;
+    private final NotaOlfativaRepository notaOlfativaRepository;
+    private final ProductoRendimientoRepository rendimientoRepository;
 
     @Transactional(readOnly = true)
     public List<ProductoResponseDTO> listarTodos() {
         return productoRepository.findByActivoTrue().stream()
-                .map(productoMapper::toDTO)
-                .collect(Collectors.toList());
+                .map(productoMapper::toDTO).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public List<ProductoResponseDTO> listarPorTipo(String tipo) {
         return productoRepository.findByTipoAndActivoTrue(tipo).stream()
-                .map(productoMapper::toDTO)
-                .collect(Collectors.toList());
+                .map(productoMapper::toDTO).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
@@ -99,23 +91,19 @@ public class ProductoService {
                 .map(productoMapper::toDTO).collect(Collectors.toList());
     }
 
-    // ========== MÉTODOS DE ADMIN (solo para administradores) ==========
-
     @Transactional
     public ProductoResponseDTO crearProducto(ProductoCreateRequest request) {
         log.info("Creando producto: {}", request.getNombre());
 
-        Marca marca         = obtenerOCrearMarca(request.getMarca());
-        Categoria categoria = obtenerOCrearCategoria(request.getCategoria(), request.getTipo());
-        Genero genero       = obtenerGenero(request.getGenero());
+        Marca marca               = obtenerOCrearMarca(request.getMarca());
+        Categoria categoria       = obtenerOCrearCategoria(request.getCategoria(), request.getTipo());
+        Genero genero             = obtenerGenero(request.getGenero());
         NivelDisponibilidad nivel = obtenerNivelDisponibilidad(request.getNivelDisponibilidad());
 
-        // Generar ID y slug automáticamente
-        long consecutivo = productoRepository.count() + 1;
+        long consecutivo  = productoRepository.count() + 1;
         String productoId = generarProductoId(request, marca, categoria, genero, consecutivo);
         String slug       = generarSlug(request);
 
-        // Resolver colisiones
         while (productoRepository.findByProductoId(productoId).isPresent()) {
             consecutivo++;
             productoId = generarProductoId(request, marca, categoria, genero, consecutivo);
@@ -131,6 +119,9 @@ public class ProductoService {
                 .tipo(request.getTipo())
                 .precioBase(request.getPrecioBase())
                 .descripcion(request.getDescripcion())
+                .perfumista(request.getPerfumista())
+                .anioLanzamiento(request.getAnioLanzamiento())
+                .paisOrigen(request.getPaisOrigen())
                 .badge(request.getBadge())
                 .imagenPrincipalUrl(request.getImagenPrincipalUrl())
                 .concentracion(request.getConcentracion())
@@ -145,10 +136,70 @@ public class ProductoService {
                 .nivelDisponibilidad(nivel)
                 .build();
 
-        producto = productoRepository.save(producto);
-        log.info("Producto creado — productoId: {}, slug: {}", producto.getProductoId(), producto.getSlug());
+        final Producto p1 = productoRepository.save(producto);
+        log.info("Producto creado — productoId: {}, slug: {}", p1.getProductoId(), p1.getSlug());
 
-        return productoMapper.toDTO(producto);
+        // Rendimiento
+        if (request.getLongevidad() != null || request.getEstela() != null) {
+            ProductoRendimiento rendimiento = ProductoRendimiento.builder()
+                    .producto(p1)
+                    .longevidad(request.getLongevidad())
+                    .estela(request.getEstela())
+                    .build();
+            rendimientoRepository.save(rendimiento);
+        }
+
+        // Temporadas
+        if (request.getTemporadas() != null) {
+            for (Integer tempId : request.getTemporadas()) {
+                final Long tid = Long.valueOf(tempId);
+                temporadaRepository.findById(tid).ifPresent(temporada -> {
+                    ProductoTemporada pt = new ProductoTemporada();
+                    pt.setId(new ProductoTemporadaId(p1.getId(), temporada.getId()));
+                    pt.setProducto(p1);
+                    pt.setTemporada(temporada);
+                    p1.getTemporadas().add(pt);
+                });
+            }
+            productoRepository.save(p1);
+        }
+
+        // Momentos del día
+        if (request.getMomentosDia() != null) {
+            for (Integer momId : request.getMomentosDia()) {
+                final Long mid = Long.valueOf(momId);
+                momentoDiaRepository.findById(mid).ifPresent(momento -> {
+                    ProductoMomentoDia pm = new ProductoMomentoDia();
+                    pm.setId(new ProductoMomentoDiaId(p1.getId(), momento.getId()));
+                    pm.setProducto(p1);
+                    pm.setMomento(momento);
+                    p1.getMomentosDia().add(pm);
+                });
+            }
+            productoRepository.save(p1);
+        }
+
+        // Ocasiones
+        if (request.getOcasiones() != null) {
+            for (Integer ocaId : request.getOcasiones()) {
+                final Long oid = Long.valueOf(ocaId);
+                ocasionRepository.findById(oid).ifPresent(ocasion -> {
+                    ProductoOcasion po = new ProductoOcasion();
+                    po.setId(new ProductoOcasionId(p1.getId(), ocasion.getId()));
+                    po.setProducto(p1);
+                    po.setOcasion(ocasion);
+                    p1.getOcasiones().add(po);
+                });
+            }
+            productoRepository.save(p1);
+        }
+
+        // Notas olfativas
+        guardarNotas(p1, request.getNotasSalida(), "salida");
+        guardarNotas(p1, request.getNotasCorazon(), "corazon");
+        guardarNotas(p1, request.getNotasBase(), "base");
+
+        return productoMapper.toDTO(p1);
     }
 
     @Transactional
@@ -161,6 +212,9 @@ public class ProductoService {
         if (request.getNombre() != null)             producto.setNombre(request.getNombre());
         if (request.getPrecioBase() != null)         producto.setPrecioBase(request.getPrecioBase());
         if (request.getDescripcion() != null)        producto.setDescripcion(request.getDescripcion());
+        if (request.getPerfumista() != null)         producto.setPerfumista(request.getPerfumista());
+        if (request.getAnioLanzamiento() != null)    producto.setAnioLanzamiento(request.getAnioLanzamiento());
+        if (request.getPaisOrigen() != null)         producto.setPaisOrigen(request.getPaisOrigen());
         if (request.getBadge() != null)              producto.setBadge(request.getBadge());
         if (request.getImagenPrincipalUrl() != null) producto.setImagenPrincipalUrl(request.getImagenPrincipalUrl());
         if (request.getConcentracion() != null)      producto.setConcentracion(request.getConcentracion());
@@ -174,9 +228,84 @@ public class ProductoService {
         if (request.getCategoria() != null)           producto.setCategoria(obtenerOCrearCategoria(request.getCategoria(), request.getTipo()));
         if (request.getGenero() != null)              producto.setGenero(obtenerGenero(request.getGenero()));
         if (request.getNivelDisponibilidad() != null) producto.setNivelDisponibilidad(obtenerNivelDisponibilidad(request.getNivelDisponibilidad()));
+        if (request.getFamiliaOlfativa() != null) {
+            familiaOlfativaRepository.findByNombre(request.getFamiliaOlfativa())
+                    .ifPresent(producto::setFamiliaOlfativa);
+        }
+        
+        final Producto p2 = productoRepository.save(producto);
 
-        producto = productoRepository.save(producto);
-        return productoMapper.toDTO(producto);
+        // Rendimiento
+        if (request.getLongevidad() != null || request.getEstela() != null) {
+            ProductoRendimiento rend = p2.getRendimiento() != null
+                    ? p2.getRendimiento()
+                    : ProductoRendimiento.builder().producto(p2).build();
+            if (request.getLongevidad() != null) rend.setLongevidad(request.getLongevidad());
+            if (request.getEstela() != null)     rend.setEstela(request.getEstela());
+            rendimientoRepository.save(rend);
+        }
+
+        // Temporadas
+        if (request.getTemporadas() != null) {
+            p2.getTemporadas().clear();
+            productoRepository.save(p2);
+            for (Integer tempId : request.getTemporadas()) {
+                final Long tid = Long.valueOf(tempId);
+                temporadaRepository.findById(tid).ifPresent(temporada -> {
+                    ProductoTemporada pt = new ProductoTemporada();
+                    pt.setId(new ProductoTemporadaId(p2.getId(), temporada.getId()));
+                    pt.setProducto(p2);
+                    pt.setTemporada(temporada);
+                    p2.getTemporadas().add(pt);
+                });
+            }
+            productoRepository.save(p2);
+        }
+
+        // Momentos del día
+        if (request.getMomentosDia() != null) {
+            p2.getMomentosDia().clear();
+            productoRepository.save(p2);
+            for (Integer momId : request.getMomentosDia()) {
+                final Long mid = Long.valueOf(momId);
+                momentoDiaRepository.findById(mid).ifPresent(momento -> {
+                    ProductoMomentoDia pm = new ProductoMomentoDia();
+                    pm.setId(new ProductoMomentoDiaId(p2.getId(), momento.getId()));
+                    pm.setProducto(p2);
+                    pm.setMomento(momento);
+                    p2.getMomentosDia().add(pm);
+                });
+            }
+            productoRepository.save(p2);
+        }
+
+        // Ocasiones
+        if (request.getOcasiones() != null) {
+            p2.getOcasiones().clear();
+            productoRepository.save(p2);
+            for (Integer ocaId : request.getOcasiones()) {
+                final Long oid = Long.valueOf(ocaId);
+                ocasionRepository.findById(oid).ifPresent(ocasion -> {
+                    ProductoOcasion po = new ProductoOcasion();
+                    po.setId(new ProductoOcasionId(p2.getId(), ocasion.getId()));
+                    po.setProducto(p2);
+                    po.setOcasion(ocasion);
+                    p2.getOcasiones().add(po);
+                });
+            }
+            productoRepository.save(p2);
+        }
+
+        // Notas
+        if (request.getNotasSalida() != null || request.getNotasCorazon() != null || request.getNotasBase() != null) {
+            p2.getNotas().clear();
+            productoRepository.save(p2);
+            guardarNotas(p2, request.getNotasSalida(), "salida");
+            guardarNotas(p2, request.getNotasCorazon(), "corazon");
+            guardarNotas(p2, request.getNotasBase(), "base");
+        }
+
+        return productoMapper.toDTO(p2);
     }
 
     @Transactional
@@ -195,23 +324,33 @@ public class ProductoService {
         return productoMapper.toDTO(productoRepository.save(producto));
     }
 
-    // ========== GENERACIÓN DE ID Y SLUG ==========
+    private void guardarNotas(Producto producto, List<String> nombres, String tipo) {
+        if (nombres == null || nombres.isEmpty()) return;
+        for (String nombre : nombres) {
+            final String n = nombre;
+            NotaOlfativa nota = notaOlfativaRepository.findByNombre(n)
+                    .orElseGet(() -> notaOlfativaRepository.save(
+                            NotaOlfativa.builder().nombre(n).tipo(tipo).build()));
+            ProductoNota pn = new ProductoNota();
+            pn.setId(new ProductoNotaId(producto.getId(), nota.getId()));
+            pn.setProducto(producto);
+            pn.setNota(nota);
+            producto.getNotas().add(pn);
+        }
+        productoRepository.save(producto);
+    }
 
     private String generarProductoId(ProductoCreateRequest request, Marca marca,
                                      Categoria categoria, Genero genero, long consecutivo) {
-        String tipoCodigo = "perfumes".equalsIgnoreCase(request.getTipo()) ? "HP" : "HJ";
-        String marcaCodigo = getMarcaCodigo(marca);
-        String prodCodigo  = getProdCodigo(request.getNombre());
+        String tipoCodigo   = "perfumes".equalsIgnoreCase(request.getTipo()) ? "HP" : "HJ";
+        String marcaCodigo  = getMarcaCodigo(marca);
+        String prodCodigo   = getProdCodigo(request.getNombre());
         String generoCodigo = getGeneroCodigo(genero);
-        String consec = String.format("%04d", consecutivo);
-
+        String consec       = String.format("%04d", consecutivo);
         if ("HP".equals(tipoCodigo)) {
-            String conc = normalizar(request.getConcentracion());
-            return String.join("-", tipoCodigo, marcaCodigo, prodCodigo, conc, generoCodigo, consec);
+            return String.join("-", tipoCodigo, marcaCodigo, prodCodigo, normalizar(request.getConcentracion()), generoCodigo, consec);
         } else {
-            String catCodigo = getCategoriaCodigo(categoria);
-            String mat = normalizar(request.getMaterial());
-            return String.join("-", tipoCodigo, marcaCodigo, catCodigo, prodCodigo, mat, generoCodigo, consec);
+            return String.join("-", tipoCodigo, marcaCodigo, getCategoriaCodigo(categoria), prodCodigo, normalizar(request.getMaterial()), generoCodigo, consec);
         }
     }
 
@@ -219,10 +358,7 @@ public class ProductoService {
         String extra = "perfumes".equalsIgnoreCase(request.getTipo())
                 ? (request.getConcentracion() != null ? request.getConcentracion() : "")
                 : (request.getMaterial() != null ? request.getMaterial() : "");
-
-        String base = (request.getMarca() + " " + request.getNombre() + " " + extra)
-                .trim().toLowerCase();
-
+        String base = (request.getMarca() + " " + request.getNombre() + " " + extra).trim().toLowerCase();
         return Normalizer.normalize(base, Normalizer.Form.NFD)
                 .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
                 .replaceAll("[^a-z0-9\\s-]", "")
@@ -231,13 +367,10 @@ public class ProductoService {
                 .replaceAll("^-|-$", "");
     }
 
-    // ========== MÉTODOS AUXILIARES DE CODIFICACIÓN ==========
-
     private String getMarcaCodigo(Marca marca) {
         if (marca == null) return "UNKN";
         if (marca.getCodigoAbreviado() != null && !marca.getCodigoAbreviado().isBlank())
             return marca.getCodigoAbreviado().toUpperCase();
-        // Fallback: iniciales de cada palabra
         String norm = Normalizer.normalize(marca.getNombre().trim(), Normalizer.Form.NFD)
                 .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
                 .toUpperCase().replaceAll("[^A-Z\\s]", "");
@@ -249,12 +382,10 @@ public class ProductoService {
 
     private String getProdCodigo(String nombre) {
         if (nombre == null || nombre.isBlank()) return "UNKN";
-        return Normalizer.normalize(nombre.trim(), Normalizer.Form.NFD)
+        String clean = Normalizer.normalize(nombre.trim(), Normalizer.Form.NFD)
                 .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
-                .toUpperCase().replaceAll("[^A-Z0-9]", "")
-                .substring(0, Math.min(4, Normalizer.normalize(nombre.trim(), Normalizer.Form.NFD)
-                        .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
-                        .toUpperCase().replaceAll("[^A-Z0-9]", "").length()));
+                .toUpperCase().replaceAll("[^A-Z0-9]", "");
+        return clean.substring(0, Math.min(4, clean.length()));
     }
 
     private String getGeneroCodigo(Genero genero) {
@@ -269,14 +400,13 @@ public class ProductoService {
     private String getCategoriaCodigo(Categoria categoria) {
         if (categoria == null) return "";
         return switch (categoria.getNombre().toUpperCase().trim()) {
-            case "COLLARES", "COLLAR"     -> "CLLR";
-            case "ARETES", "ARETE"        -> "ART";
-            case "ANILLOS", "ANILLO"      -> "ALLO";
-            case "PULSOS", "PULSO"        -> "PLSO";
-            case "ESCLAVAS", "ESCLAVA"    -> "ESCL";
-            case "BRAZALETES", "BRAZALETE"-> "BRZL";
-            default -> normalizar(categoria.getNombre())
-                    .substring(0, Math.min(4, normalizar(categoria.getNombre()).length()));
+            case "COLLARES", "COLLAR"      -> "CLLR";
+            case "ARETES", "ARETE"         -> "ART";
+            case "ANILLOS", "ANILLO"       -> "ALLO";
+            case "PULSOS", "PULSO"         -> "PLSO";
+            case "ESCLAVAS", "ESCLAVA"     -> "ESCL";
+            case "BRAZALETES", "BRAZALETE" -> "BRZL";
+            default -> normalizar(categoria.getNombre()).substring(0, Math.min(4, normalizar(categoria.getNombre()).length()));
         };
     }
 
@@ -286,8 +416,6 @@ public class ProductoService {
                 .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
                 .toUpperCase().replaceAll("[^A-Z0-9]", "");
     }
-
-    // ========== AUXILIARES DE RELACIONES ==========
 
     private Marca obtenerOCrearMarca(String nombreMarca) {
         return marcaRepository.findByNombre(nombreMarca)
