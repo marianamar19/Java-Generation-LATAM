@@ -118,7 +118,6 @@
         <div class="tab-content">
 
           <!-- TAB: IDENTIDAD -->
-          <!-- TAB: IDENTIDAD -->
           <div class="tab-pane fade show active" id="tab-identidad" role="tabpanel">
             <div class="d-flex gap-3" style="align-items:start;">
 
@@ -303,9 +302,102 @@
 
           <!-- TAB: CONTEXTO -->
           <div class="tab-pane fade" id="tab-contexto" role="tabpanel">
-            <p class="text-muted" style="font-size:12px;">
-              Próximamente — temporadas, momentos del día, ocasiones y notas olfativas.
-            </p>
+
+            <div class="row g-3 mb-4">
+              <div class="col-6">
+                <label class="form-label" for="f-perfumista">Perfumista</label>
+                <input class="form-control form-control-sm" type="text" id="f-perfumista" placeholder="Ej: François Demachy" />
+              </div>
+            </div>
+
+            <hr class="my-3" />
+
+            <div class="mb-4">
+              <div class="form-label fw-semibold mb-2" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;">Notas olfativas</div>
+              <div class="row g-3">
+                <div class="col-4">
+                  <label class="form-label" style="font-size:11px;color:var(--adm-muted);">Salida (Head)</label>
+                  <div class="adm-tags-input" id="tags-head">
+                    <div class="adm-tags-list" id="tags-head-list"></div>
+                    <input class="adm-tags-field" type="text" id="tags-head-input" placeholder="Escribe y Enter..." />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label class="form-label" style="font-size:11px;color:var(--adm-muted);">Corazón (Heart)</label>
+                  <div class="adm-tags-input" id="tags-heart">
+                    <div class="adm-tags-list" id="tags-heart-list"></div>
+                    <input class="adm-tags-field" type="text" id="tags-heart-input" placeholder="Escribe y Enter..." />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label class="form-label" style="font-size:11px;color:var(--adm-muted);">Base</label>
+                  <div class="adm-tags-input" id="tags-base">
+                    <div class="adm-tags-list" id="tags-base-list"></div>
+                    <input class="adm-tags-field" type="text" id="tags-base-input" placeholder="Escribe y Enter..." />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-3" />
+
+            <div class="mb-4">
+              <div class="form-label fw-semibold mb-3" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;">Rendimiento</div>
+              <div class="row g-4">
+                <div class="col-6">
+                  <label class="form-label d-flex justify-content-between" for="f-longevidad">
+                    <span>Longevidad</span><span class="adm-slider-val" id="val-longevidad">3</span>
+                  </label>
+                  <input type="range" class="form-range" id="f-longevidad" min="1" max="5" step="1" value="3" />
+                  <div class="d-flex justify-content-between" style="font-size:10px;color:var(--adm-muted);">
+                    <span>Efímero</span><span>Excepcional</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label d-flex justify-content-between" for="f-estela">
+                    <span>Estela (Sillage)</span><span class="adm-slider-val" id="val-estela">3</span>
+                  </label>
+                  <input type="range" class="form-range" id="f-estela" min="1" max="5" step="1" value="3" />
+                  <div class="d-flex justify-content-between" style="font-size:10px;color:var(--adm-muted);">
+                    <span>Íntimo</span><span>Invasivo</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-3" />
+
+            <div class="mb-4">
+              <div class="form-label fw-semibold mb-2" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;">Temporadas</div>
+              <div class="d-flex flex-wrap gap-2" id="ctx-temporadas">
+                <label class="adm-ctx-chip"><input type="checkbox" value="1" /> Primavera</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="2" /> Verano</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="3" /> Otoño</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="4" /> Invierno</label>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <div class="form-label fw-semibold mb-2" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;">Momentos del día</div>
+              <div class="d-flex flex-wrap gap-2" id="ctx-momentos">
+                <label class="adm-ctx-chip"><input type="checkbox" value="1" /> Día</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="2" /> Noche</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="3" /> Todo el día</label>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <div class="form-label fw-semibold mb-2" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;">Ocasiones</div>
+              <div class="d-flex flex-wrap gap-2" id="ctx-ocasiones">
+                <label class="adm-ctx-chip"><input type="checkbox" value="1" /> Casual</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="2" /> Trabajo</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="3" /> Cita</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="4" /> Gala / Evento</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="5" /> Deportivo</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="6" /> Vacaciones</label>
+              </div>
+            </div>
+
           </div>
 
         </div>

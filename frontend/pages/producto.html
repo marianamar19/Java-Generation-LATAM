@@ -6,21 +6,18 @@
   <title id="page-title">Producto — HERA Perfumes &amp; Joyería</title>
   <meta name="description" id="meta-description" content="Detalles del producto en HERA." />
 
-  <!-- CSS Base -->
   <link rel="stylesheet" href="../css/base/tokens.css" />
   <link rel="stylesheet" href="../css/base/reset.css" />
   <link rel="stylesheet" href="../css/base/typography.css" />
   <link rel="stylesheet" href="../css/base/buttons.css" />
   <link rel="stylesheet" href="../css/base/layout.css" />
 
-  <!-- Componentes universales -->
   <link rel="stylesheet" href="../css/components/navbar.css" />
   <link rel="stylesheet" href="../css/components/drawer.css" />
   <link rel="stylesheet" href="../css/components/product-card.css" />
   <link rel="stylesheet" href="../css/components/newsletter.css" />
   <link rel="stylesheet" href="../css/components/footer.css" />
 
-  <!-- Estilos exclusivos de producto -->
   <link rel="stylesheet" href="../css/pages/producto.css" />
 </head>
 <body>
@@ -32,7 +29,6 @@
   <section class="product-stage">
     <div class="product-layout">
 
-      <!-- Galería de imágenes (dinámica) -->
       <div class="product-gallery">
         <div class="product-thumbs-wrap">
           <button class="thumb-nav-btn" id="thumb-prev" disabled>
@@ -52,7 +48,6 @@
         </div>
       </div>
 
-      <!-- Información del producto (dinámica) -->
       <div class="product-info">
         <div class="product-badge" id="prod-badge"></div>
         <div class="product-brand-tag" id="prod-brand"></div>
@@ -86,26 +81,26 @@
     </div>
   </section>
 
-  <!-- Notas olfativas (dinámico) -->
+  <!-- Notas olfativas -->
   <section class="product-notes-section">
     <div class="notes-section-header reveal">
       <div class="notes-section-eyebrow">Composición</div>
       <div class="notes-section-title">Notas <em>olfativas</em></div>
     </div>
     <div class="notes-cols reveal" id="notes-cols">
-      <div class="notes-col"><div class="notes-col-label">Salida</div><ul id="notes-head"></ul></div>
-      <div class="notes-col"><div class="notes-col-label">Corazón</div><ul id="notes-heart"></ul></div>
-      <div class="notes-col"><div class="notes-col-label">Base</div><ul id="notes-base"></ul></div>
+      <div class="notes-col"><div class="notes-col-label">Salida</div><ul id="notes-head" class="notes-list"></ul></div>
+      <div class="notes-col"><div class="notes-col-label">Corazón</div><ul id="notes-heart" class="notes-list"></ul></div>
+      <div class="notes-col"><div class="notes-col-label">Base</div><ul id="notes-base" class="notes-list"></ul></div>
     </div>
   </section>
 
-  <!-- Ficha técnica (dinámica) -->
+  <!-- Ficha técnica -->
   <section class="product-details">
     <div class="details-eyebrow reveal">Perfil del perfume</div>
     <div class="details-grid" id="details-grid"></div>
   </section>
 
-  <!-- Performance (dinámico) -->
+  <!-- Performance -->
   <section class="product-performance">
     <div class="perf-header reveal">
       <div><div class="perf-section-label">Desempeño</div><div class="perf-title">¿Cómo se <em>comporta?</em></div></div>
@@ -113,13 +108,13 @@
     <div class="perf-grid" id="perf-grid"></div>
   </section>
 
-  <!-- Contexto de uso (dinámico) -->
+  <!-- Contexto de uso -->
   <section class="product-context">
     <div class="context-eyebrow reveal">Cuándo usarlo</div>
     <div id="context-container"></div>
   </section>
 
-  <!-- Familia del perfume (dinámico) -->
+  <!-- Familia del perfume -->
   <section class="product-family" id="family-section">
     <div class="family-header reveal">
       <div class="family-eyebrow">La familia</div>
@@ -128,13 +123,57 @@
     <div class="family-grid reveal" id="family-scroll"></div>
   </section>
 
-  <!-- Reseñas (dinámico) -->
+  <!-- Reseñas -->
   <section class="product-reviews" id="reviews-section">
     <div class="reviews-eyebrow reveal">Lo que dicen</div>
-    <div class="reviews-layout" id="reviews-layout"></div>
+    <div class="reviews-layout">
+
+      <div class="reviews-summary">
+        <div class="reviews-big-num" id="rev-big-num">0</div>
+        <div class="reviews-big-label">De 5 estrellas</div>
+        <div class="reviews-stars-lg" id="rev-stars-lg"></div>
+        <div id="review-dist"></div>
+      </div>
+
+      <div class="review-form-col">
+        <div class="review-form-title">Deja tu reseña</div>
+        <div class="review-form-group">
+          <label class="review-form-label">Tu calificación</label>
+          <div class="review-star-input" id="star-input">
+            <span data-val="1">★</span>
+            <span data-val="2">★</span>
+            <span data-val="3">★</span>
+            <span data-val="4">★</span>
+            <span data-val="5">★</span>
+          </div>
+        </div>
+        <div class="review-form-group">
+          <label class="review-form-label">Nombre</label>
+          <input class="review-form-input" type="text" id="rev-name" placeholder="Ej. Carlos M." />
+        </div>
+        <div class="review-form-group">
+          <label class="review-form-label">Ciudad</label>
+          <input class="review-form-input" type="text" id="rev-city" placeholder="Ej. Guadalajara, Jal." />
+        </div>
+        <div class="review-form-group">
+          <label class="review-form-label">Tu comentario</label>
+          <textarea class="review-form-textarea" id="rev-text" placeholder="Cuéntanos tu experiencia con este perfume..."></textarea>
+        </div>
+        <button class="review-form-btn" id="rev-submit">Publicar reseña</button>
+        <div class="review-form-success" id="rev-success">¡Gracias por tu reseña!</div>
+      </div>
+
+      <div class="review-list-col">
+        <div class="review-list-col-title" id="rev-list-count"></div>
+        <div class="review-list-scroll">
+          <div id="review-list"></div>
+        </div>
+      </div>
+
+    </div>
   </section>
 
-  <!-- Productos similares (dinámico) -->
+  <!-- Productos similares -->
   <section class="product-similar">
     <div class="similar-eyebrow">Quizás también</div>
     <div class="similar-title"><strong>También te</strong> podría gustar</div>

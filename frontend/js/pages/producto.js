@@ -34,97 +34,132 @@ function saveReviews(productId, reviews) {
 /* ── Fecha en español — formatter.js no exporta formatDateES ── */
 function formatDateES(date = new Date()) {
   const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
-                 'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+                'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
   return meses[date.getMonth()] + ' ' + date.getFullYear();
 }
- 
+
 /* ── getFavorites — fav-drawer.js no exporta el array interno ── */
 // Lee directamente desde localStorage para verificar estado inicial
 function getFavorites() { return getFavs(); }
 
 /* ══════════════════════════════════════════════════════════════
-   PRODUCT DATA
-   ── TEMPORAL — hardcodeado por ausencia de backend
-      Reemplazar por fetch() GET /api/productos/:id
-      (leer ?id= del query string para cargar el producto correcto)
-   ══════════════════════════════════════════════════════════════ */
-const PRODUCT = {
-  id: 'dior-sauvage-edp', brand: 'Dior', name: 'Sauvage', concentration: 'Eau de Parfum',
-  category: 'Diseñador', gender: 'Masculino', country: 'Francia',
-  perfumer: 'François Demachy', family_olfativa: 'Aromática amaderada', launch: 2018,
-  badge: 'Más vendido',
-  description: 'Una fuerza de la naturaleza hecha perfume. Sauvage EDP profundiza la tradición con una apertura de lavanda silvestre y pimienta de Sichuan, mientras una base de sándalo de Mysore y ámbar gris le otorgan una durabilidad excepcional. Un clásico contemporáneo.',
-  headNotes:  ['Lavanda silvestre', 'Pimienta de Sichuan'],
-  heartNotes: ['Lavanda', 'Geranio', 'Vetiver'],
-  baseNotes:  ['Sándalo de Mysore', 'Ámbar gris', 'Cedro', 'Vainilla ahumada'],
-  accords: [
-    { name: 'Amaderado', pct: 92 }, { name: 'Lavanda', pct: 86 },
-    { name: 'Especiado', pct: 74 }, { name: 'Fresco',  pct: 68 },
-    { name: 'Vainilla',  pct: 48 }, { name: 'Terroso', pct: 36 },
-  ],
-  longevity: 4, sillage: 4, rating: 4.4, reviewCount: 124,
-  seasons: ['otono', 'invierno'], timeOfDay: ['noche'], occasions: ['cita', 'gala', 'casual'],
-  sizes: [
-    { ml: 60,  price: '$1,890 MXN', value: 1890, img: 'https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777440279/WhatsApp_Image_2026-04-28_at_10.27.02_PM_3_bocruu.jpg'},
-    { ml: 100, price: '$2,490 MXN', value: 2490, img: 'https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777440284/WhatsApp_Image_2026-04-28_at_10.27.03_PM_kukzvv.jpg'},
-    { ml: 200, price: '$3,290 MXN', value: 3290, img: 'https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777440281/WhatsApp_Image_2026-04-28_at_10.27.03_PM_1_m37zng.jpg'},
-  ],
-  activeSize: 1, nivel: 'red', volLabel: 'Presentación',
-  tipo: 'perfumes', cat: 'diseñador', gen: 'masculino',
-  family: [
-    { name: 'Sauvage EDT',       concentration: 'Eau de Toilette', img: 'https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dw378b49e0/images/41676579/large/41676579_x1.jpg?sw=2200&sh=2500', price: '$1,690 MXN', vol: '100 ml', nivel: 'red' },
-    { name: 'Sauvage EDP',       concentration: 'Eau de Parfum', img: 'https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dwdbe214e2/images/39882541/large/39882541_x1.jpg?sw=2200&sh=2500',  price: '$2,490 MXN', vol: '100 ml', nivel: 'red', current: true },
-    { name: 'Sauvage Parfum',    concentration: 'Parfum',   img: 'https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dwb13a66e5/images/40397845/large/40397845_x1.jpg?sw=2200&sh=2500',        price: '$3,190 MXN', vol: '75 ml',  nivel: 'red' },
-    { name: 'Sauvage Elixir',    concentration: 'Elixir',    img: 'https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dw9b91bf30/images/42786853/large/42786853_x1.jpg?sw=2200&sh=2500',       price: '$3,890 MXN', vol: '60 ml',  nivel: 'red' },
-    { name: 'Sauvage Eau Forte', concentration: 'Eau Forte',   img: 'https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dw2b04f8f5/images/44123188/large/44123188_x1.jpg?sw=2200&sh=2500',     price: '$2,190 MXN', vol: '100 ml', nivel: 'red' },
-  ],
-  reviews: [
-    { author: 'Carlos M.',  city: 'Guadalajara, Jal.', rating: 5, text: 'Increíble duración. Lo uso para salidas nocturnas y al día siguiente sigue presente. Definitivamente el mejor de la colección Sauvage.', date: 'Marzo 2025' },
-    { author: 'Sofía R.',   city: 'Ciudad de México',  rating: 4, text: 'Mi favorito desde hace años. La diferencia con el EDT es notable: más profundo y elegante. Ideal para eventos formales y cenas.', date: 'Enero 2025' },
-    { author: 'Andrés T.',  city: 'Monterrey, N.L.',   rating: 5, text: 'Perfecto para cenas y eventos formales. Recibo comentarios cada vez que lo uso. La botella también es muy elegante.', date: 'Febrero 2025' },
-    { author: 'Luis G.',    city: 'Puebla, Pue.',      rating: 4, text: 'Muy buen perfume. La estela es notable sin ser agresiva. Lo compré para el invierno y es perfecta para la temporada fría.', date: 'Diciembre 2024' },
-    { author: 'Mariana V.', city: 'Guadalajara, Jal.', rating: 5, text: 'Se lo compré a mi pareja y me encantó tanto que ya quiero uno para mí. Unisex en todo sentido. Excelente compra.', date: 'Noviembre 2024' },
-  ],
-  ratingDist: [82, 28, 10, 3, 1],
-  similar: [
-    { id: 'bleu-chanel',   tipo: 'perfumes', cat: 'diseñador', gen: 'masculino', brand: 'Chanel', name: 'Bleu de Chanel EDP', img: 'https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dwb06470b3/images/31531703/large/31531703_x1.jpg?sw=2200&sh=2500', price: '$2,890 MXN', badge: null,    nivel: 'red',    volLabel: 'Presentación', vols: [{ ml: 50, precio: 2890 }, { ml: 100, precio: 4200 }] },
-    { id: 'ysl-myslf',     tipo: 'perfumes', cat: 'diseñador', gen: 'masculino', brand: 'YSL',   name: 'Myself EDP', img: 'https://www.yslbeauty.com.mx/dw/image/v2/AATL_PRD/on/demandware.static/-/Sites-ysl-master-catalog/es_MX/dwea5d1bb8/2024/pdp/fragancia/YSLM-51115YSL/3614273852821%20(60ML)/ysl_dmi_fram_myslf_edp_packshot_front_60ml_3000x3000px_3614273852821_rgb.jpg?sw=1536&sh=1536&sm=cut&sfrm=jpeg&q=85',       price: '$1,990 MXN', badge: 'Nuevo',  nivel: 'yellow', volLabel: 'Presentación', vols: [{ ml: 60, precio: 1990 }, { ml: 100, precio: 2890 }] },
-    { id: 'aventus-creed', tipo: 'perfumes', cat: 'nicho',     gen: 'masculino', brand: 'Creed', name: 'Aventus EDP',  img: 'https://www.elpalaciodehierro.com/dw/image/v2/BDKB_PRD/on/demandware.static/-/Sites-palacio-master-catalog/default/dw06b20c29/images/40626051/large/40626051_x1.jpg?sw=2200&sh=2500',     price: '$4,290 MXN', badge: 'Nicho',  nivel: 'red',    volLabel: 'Presentación', vols: [{ ml: 50, precio: 4290 }, { ml: 75,  precio: 5890 }] },
-  ],
-  imgs: [
-    'https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777440282/WhatsApp_Image_2026-04-28_at_10.27.02_PM_cx55jc.jpg',
-    'https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777440278/WhatsApp_Image_2026-04-28_at_10.27.02_PM_2_ohxcbl.jpg',
-    'https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777440277/WhatsApp_Image_2026-04-28_at_10.27.02_PM_1_hij9ew.jpg',
-  ],
-};
- 
+  PRODUCT DATA
+  ── TEMPORAL — hardcodeado por ausencia de backend
+    Reemplazar por fetch() GET /api/productos/:id
+    (leer ?id= del query string para cargar el producto correcto)
+  ══════════════════════════════════════════════════════════════ */
+let PRODUCT = null;
+
+function getQueryParam(name) {
+    return new URLSearchParams(window.location.search).get(name);
+}
+
+function mapProducto(dto) {
+    const sizes = dto.variantes?.map(v => ({
+        ml: v.valor || '',
+        price: v.precio ? `$${Number(v.precio).toLocaleString('es-MX')} MXN` : (dto.precio || ''),
+        value: Number(v.precio) || 0,
+        img: dto.imagenPrincipalUrl || ''
+    })) || [];
+
+    return {
+        id:             dto.slug || dto.productId,
+        brand:          dto.marca || '',
+        name:           dto.nombre || '',
+        concentration:  dto.concentracion || dto.material || '',
+        category:       dto.categoria || '',
+        gender:         dto.genero || '',
+        country:        dto.paisOrigen || '',
+        perfumer:       dto.perfumista || '',
+        family_olfativa:dto.familiaOlfativa || '',
+        launch:         dto.anioLanzamiento || '',
+        badge:          dto.badge || '',
+        description:    dto.descripcion || '',
+        headNotes:  dto.notasSalida  || [],
+        heartNotes: dto.notasCorazon || [],
+        baseNotes:  dto.notasBase    || [],
+        accords: [],
+        longevity:      dto.longevidad || 0,
+        sillage:        dto.estela || 0,
+        rating:         dto.puntuacionGeneral || 0,
+        reviewCount:    0,
+        seasons:        dto.temporadas || [],
+        timeOfDay: (dto.momentosDia || []).map(m => {
+            const map = { 'día': 'dia', 'noche': 'noche', 'todo el día': 'dia' };
+            return map[m] || m;
+        }),
+        occasions: (dto.ocasiones || []).map(o => {
+            const map = {
+                'casual': 'casual',
+                'trabajo': 'oficina',
+                'cita': 'cita',
+                'gala / evento': 'gala',
+                'deportivo': 'gym',
+                'vacaciones': 'playa'
+            };
+            return map[o] || o;
+        }),
+        sizes,
+        activeSize: 0,
+        precio:         dto.precio || '',
+        nivel:          dto.nivelDisponibilidad || 'green',
+        volLabel:       'Presentación',
+        tipo:           dto.tipo || 'perfumes',
+        cat:            (dto.categoria || '').toLowerCase(),
+        gen:            (dto.genero || '').toLowerCase(),
+        family: [],
+        reviews: [],
+        ratingDist: [0, 0, 0, 0, 0],
+        similar: [],
+        imgs: [
+            ...(dto.imagenPrincipalUrl ? [dto.imagenPrincipalUrl] : []),
+            ...(dto.imagenes || [])
+        ],
+    };
+}
+
 /* ══════════════════════════════════════════════════════════════
    BOOTSTRAP — carga componentes universales y luego la página
    ══════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', async () => {
-  // Cada fetch en su propio try/catch: si navbar o cart-drawer fallan,
-  // el resto de la página sigue inicializándose correctamente
-  try { await loadNavbar(); }      catch (e) { console.warn('[navbar]', e); }
-  loadFooter();
-  try { await loadCartDrawer(); }  catch (e) { console.warn('[cart]', e); }
- 
-  // initFavDrawer recibe addItemToCart como callback para evitar
-  // dependencia circular entre fav-drawer y cart-drawer
-  initFavDrawer();
- 
-  // Inicializa todas las secciones exclusivas de la página
-  initSizeSelector();
-  initNivelBadge();
-  initMainActions();
-  initGallery();
-  initNotes();
-  initAccords();
-  initPerformanceDots();
-  initContextCards();
-  initFamilyGrid();
-  initReviews();
-  initSimilarGrid();
-  initScrollReveal();
+    try { await loadNavbar(); }     catch (e) { console.warn('[navbar]', e); }
+    loadFooter();
+    try { await loadCartDrawer(); } catch (e) { console.warn('[cart]', e); }
+    initFavDrawer();
+
+   const slug = getQueryParam('slug') || sessionStorage.getItem('productoSlug');
+    if (slug) sessionStorage.removeItem('productoSlug');
+    if (!slug) {
+        console.error('URL sin parámetro ?slug=');
+        document.querySelector('.product-info')?.insertAdjacentHTML('afterbegin',
+            '<p style="color:red;padding:20px;">No se especificó un producto. Usa ?slug=nombre-del-producto</p>');
+        return;
+    }
+
+    try {
+        const res = await fetch(`http://localhost:8080/api/productos/slug/${slug}`);
+        if (!res.ok) throw new Error(`Producto no encontrado: ${slug}`);
+        const dto = await res.json();
+        PRODUCT = mapProducto(dto);
+    } catch (e) {
+        console.error('Error cargando producto:', e);
+        return;
+    }
+
+    initProductHeader();
+    initSizeSelector();
+    initNivelBadge();
+    initMainActions();
+    initGallery();
+    initDetails();
+    initNotes();
+    initAccords();
+    initPerformanceDots();
+    initContextCards();
+    initFamilyGrid();
+    initReviews();
+    initSimilarGrid();
+    initScrollReveal();
 });
  
 /* ══════════════════════════════════════════════════════════════
@@ -177,7 +212,7 @@ function _toggleFav(btn) {
    SELECTOR DE TALLAS (exclusive)
    ══════════════════════════════════════════════════════════════ */
  
-let selectedSizeIdx = PRODUCT.activeSize;
+let selectedSizeIdx = 0;
  
 /**
  * Renderiza los botones de talla y actualiza el precio al
@@ -210,6 +245,37 @@ function initSizeSelector() {
   });
 }
 
+function initDetails() {
+    const grid = document.getElementById('details-grid');
+    if (!grid) return;
+
+    const items = [
+        { label: 'Perfumista',         value: PRODUCT.perfumer,        icon: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>' },
+        { label: 'País de origen',     value: PRODUCT.country,         icon: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>' },
+        { label: 'Familia olfativa',   value: PRODUCT.family_olfativa,  icon: '<path d="M12 22V12M12 12C12 6 6 3 6 3s0 4 3 7M12 12c0-6 6-9 6-9s0 4-3 7"/><path d="M5 18c1-2 3-3 7-4"/><path d="M19 18c-1-2-3-3-7-4"/>' },
+        { label: 'Año de lanzamiento', value: PRODUCT.launch,          icon: '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>' },
+        { label: 'Categoría',          value: PRODUCT.category,        icon: '<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>' },
+        { label: 'Género',             value: PRODUCT.gender,          icon: '<circle cx="12" cy="11" r="3"/><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z"/>' },
+    ].filter(d => d.value);
+
+    // Distribuir en 3 columnas de 2 items
+    const cols = [items.slice(0,2), items.slice(2,4), items.slice(4,6)];
+    grid.innerHTML = cols.map(col => `
+        <div>
+            ${col.map(d => `
+                <div class="intel-row">
+                    <div class="intel-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${d.icon}</svg>
+                    </div>
+                    <div>
+                        <div class="intel-text-label">${d.label}</div>
+                        <div class="intel-text-value">${d.value}</div>
+                    </div>
+                </div>`).join('')}
+        </div>`
+    ).join('');
+}
+
 /* ══════════════════════════════════════════════════════════════
    NIVEL BADGE (exclusive)
    ══════════════════════════════════════════════════════════════ */
@@ -227,7 +293,63 @@ function initNivelBadge() {
   badge.className = 'prod-nivel-badge ' + n;
   labelEl.textContent = labels[n] || n;
 }
- 
+
+/* ══════════════════════════════════════════════════════════════
+   Header el producto
+   ══════════════════════════════════════════════════════════════ */
+
+function initProductHeader() {
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val || ''; };
+    const setHTML = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val || ''; };
+
+    // Badge
+    const badgeEl = document.getElementById('prod-badge');
+    if (badgeEl) {
+        badgeEl.textContent = PRODUCT.badge ? PRODUCT.badge.toUpperCase() : '';
+        badgeEl.style.display = PRODUCT.badge ? 'inline-block' : 'none';
+    }
+
+    set('prod-brand',         PRODUCT.brand);
+    set('prod-name',          PRODUCT.name);
+    set('prod-concentration', PRODUCT.concentration);
+    set('prod-rating',        PRODUCT.rating);
+    set('prod-desc',          PRODUCT.description);
+
+    // Review count
+    const countEl = document.getElementById('prod-review-count');
+    if (countEl) countEl.textContent = PRODUCT.reviewCount ? `${PRODUCT.reviewCount} reseñas` : '';
+
+    // Stars
+    const starsEl = document.getElementById('prod-stars-display');
+    if (starsEl) {
+        const r = PRODUCT.rating || 0;
+        starsEl.innerHTML = Array.from({length:5}, (_,i) =>
+            `<span style="opacity:${i < Math.round(r) ? '1' : '.25'}">★</span>`
+        ).join('');
+    }
+
+    // Price inicial
+    const priceEl = document.getElementById('prod-price');
+    if (priceEl) {
+        priceEl.textContent = PRODUCT.sizes?.length
+            ? PRODUCT.sizes[PRODUCT.activeSize || 0]?.price || ''
+            : PRODUCT.precio || '';
+    }
+
+    // Chips categoría + género
+    const chipsEl = document.getElementById('prod-chips');
+    if (chipsEl) {
+        const chips = [PRODUCT.category, PRODUCT.gender].filter(Boolean);
+        chipsEl.innerHTML = chips.map(c =>
+            `<span class="product-meta-chip">${c.toUpperCase()}</span>`
+        ).join('');
+    }
+
+    // Page title
+    const titleEl = document.getElementById('page-title');
+    if (titleEl) titleEl.textContent = `${PRODUCT.brand} ${PRODUCT.name} — HERA Perfumes & Joyería`;
+}
+
 /* ══════════════════════════════════════════════════════════════
    BOTONES PRINCIPALES — Add to cart y Favorito (exclusive)
    ══════════════════════════════════════════════════════════════ */
@@ -248,19 +370,21 @@ function initMainActions() {
  
   // Botón principal "Añadir al carrito"
   const mainAddCartBtn = document.getElementById('btn-add-cart-main');
-  if (mainAddCartBtn) {
+if (mainAddCartBtn) {
     mainAddCartBtn.addEventListener('click', () => {
       const size = PRODUCT.sizes[selectedSizeIdx];
+      const priceTxt = size?.price || PRODUCT.precio || '';
+      const mlTxt    = size?.ml    || '';
       addItemToCart(
         PRODUCT.id,
         PRODUCT.brand,
-        `${PRODUCT.name} EDP ${size.ml}ml`,
-        size.price,
-        `${size.ml} ml`,
+        mlTxt ? `${PRODUCT.name} ${mlTxt}ml` : PRODUCT.name,
+        priceTxt,
+        mlTxt ? `${mlTxt} ml` : '',
         PRODUCT.nivel || 'green'
       );
     });
-  }
+}
  
   // Botón grande de favoritos del hero
   const mainFavBtn = document.getElementById('btn-fav-main');
@@ -277,13 +401,13 @@ function initMainActions() {
       mainFavBtn.dataset.productId = PRODUCT.id;
       mainFavBtn.dataset.brand     = PRODUCT.brand;
       mainFavBtn.dataset.name      = `${PRODUCT.name} EDP`;
-      mainFavBtn.dataset.price     = selSize.price;
+      mainFavBtn.dataset.price = selSize?.price || PRODUCT.sizes[0]?.price || '';
       mainFavBtn.dataset.nivel     = PRODUCT.nivel || 'green';
       mainFavBtn.dataset.volLabel  = PRODUCT.volLabel || 'Presentación';
       mainFavBtn.dataset.tipo      = PRODUCT.tipo || 'perfumes';
       mainFavBtn.dataset.cat       = PRODUCT.cat || '';
       mainFavBtn.dataset.gen       = PRODUCT.gen || '';
-      mainFavBtn.dataset.vol       = `${selSize.ml} ml`;
+      mainFavBtn.dataset.vol = selSize?.ml ? `${selSize.ml} ml` : '';
       _toggleFav(mainFavBtn);
       // btn-fav-main usa clase .btn-fav-lg, no .fav-btn —
       // _toggleFav no lo alcanza con su querySelectorAll;
@@ -304,92 +428,78 @@ function initMainActions() {
  * vertical y ajuste de la imagen principal al viewport.
  */
 function initGallery() {
-  const galleryThumbs     = Array.from(document.querySelectorAll('.product-thumb'));
-  const galleryThumbsCont = document.querySelector('.product-thumbs');
-  const galleryImgMain    = document.querySelector('.product-img-main');
-  const thumbPrevBtn      = document.getElementById('thumb-prev');
-  const thumbNextBtn      = document.getElementById('thumb-next');
- 
-  const THUMB_W       = 62;
-  const THUMB_GAP     = 8;
-  const THUMB_VISIBLE = 3;
-  const THUMB_H       = Math.round(THUMB_W * 4 / 3);
-  let thumbOffset     = 0;
-  const thumbMaxOffset = Math.max(0, galleryThumbs.length - THUMB_VISIBLE);
+    const thumbsCont    = document.getElementById('product-thumbs');
+    const mainImg       = document.getElementById('main-product-img');
+    const thumbPrevBtn  = document.getElementById('thumb-prev');
+    const thumbNextBtn  = document.getElementById('thumb-next');
+    if (!thumbsCont || !mainImg) return;
 
-  // ── Poblar galería con imágenes de PRODUCT.imgs ──────────────
-const mainImg = document.getElementById('main-product-img');
+    const imgs = PRODUCT.imgs?.length ? PRODUCT.imgs
+               : PRODUCT.sizes?.map(s => s.img).filter(Boolean) || [];
 
-if (PRODUCT.imgs && PRODUCT.imgs.length) {
-  // Imagen principal: arranca con la primera
-  if (mainImg) mainImg.src = PRODUCT.imgs[0];
+    // Imagen principal inicial
+    if (imgs.length) mainImg.src = imgs[0];
 
-  // Thumbs: reemplaza el SVG placeholder por un <img> real
-  galleryThumbs.forEach((thumb, i) => {
-    if (PRODUCT.imgs[i]) {
-      thumb.innerHTML = `<img src="${PRODUCT.imgs[i]}"
-        style="width:100%; height:100%; object-fit:contain;" />`;
-    }
-  });
-}
- 
-  galleryThumbs.forEach((thumb, i) => {
-    thumb.addEventListener('click', () => {
-      galleryThumbs.forEach(t => t.classList.remove('active'));
-      thumb.classList.add('active');
-
-      if (mainImg && PRODUCT.imgs && PRODUCT.imgs[i]) {
-      mainImg.style.opacity = '0';
-      setTimeout(() => {
-        mainImg.src = PRODUCT.imgs[i];
-        mainImg.style.opacity = '1';
-      }, 150);
-    }
+    // Crear thumbnails dinámicamente
+    thumbsCont.innerHTML = '';
+    imgs.forEach((src, i) => {
+        const thumb = document.createElement('div');
+        thumb.className = 'product-thumb' + (i === 0 ? ' active' : '');
+        thumb.innerHTML = `<img src="${src}" style="width:100%;height:100%;object-fit:contain;" />`;
+        thumb.addEventListener('click', () => {
+            document.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+            mainImg.style.opacity = '0';
+            setTimeout(() => { mainImg.src = src; mainImg.style.opacity = '1'; }, 150);
+        });
+        thumbsCont.appendChild(thumb);
     });
-  });
- 
-  function setThumbContainerHeight() {
-    const visible = Math.min(THUMB_VISIBLE, galleryThumbs.length);
-    const h = (visible * THUMB_H) + (visible - 1) * THUMB_GAP;
-    galleryThumbsCont.style.height = h + 'px';
-  }
- 
-  function updateThumbCarousel() {
-    const step = THUMB_H + THUMB_GAP;
-    galleryThumbsCont.style.transform = `translateY(-${thumbOffset * step}px)`;
-    thumbPrevBtn.disabled = thumbOffset === 0;
-    thumbNextBtn.disabled = thumbOffset >= thumbMaxOffset;
-  }
- 
-  thumbPrevBtn.addEventListener('click', () => { if (thumbOffset > 0)              { thumbOffset--; updateThumbCarousel(); } });
-  thumbNextBtn.addEventListener('click', () => { if (thumbOffset < thumbMaxOffset) { thumbOffset++; updateThumbCarousel(); } });
- 
-  // Oculta los botones de navegación si no hay suficientes thumbs
-  if (thumbMaxOffset === 0) {
-    thumbPrevBtn.style.display = 'none';
-    thumbNextBtn.style.display = 'none';
-  }
- 
-  function fitGallery() {
-    // En tablet/móvil el CSS controla el tamaño; no se calcula aquí
-    if (window.innerWidth <= 1024) return;
-    const THUMB_STRIP = THUMB_W + 10;
-    const CHROME      = 200;
-    const colW        = galleryImgMain.closest('.product-gallery').offsetWidth || (window.innerWidth / 2 - 120);
-    const availW      = colW - THUMB_STRIP;
-    const naturalH    = availW * (4 / 3);
-    const maxH        = window.innerHeight - CHROME;
-    const finalH      = Math.min(maxH, naturalH);
-    const finalW      = finalH * (3 / 4);
-    galleryImgMain.style.width  = finalW + 'px';
-    galleryImgMain.style.height = finalH + 'px';
-    setThumbContainerHeight();
-    updateThumbCarousel();
-  }
- 
-  window.addEventListener('resize', fitGallery);
-  window.addEventListener('load',   fitGallery);
-  requestAnimationFrame(fitGallery);
+
+    const galleryThumbs  = Array.from(document.querySelectorAll('.product-thumb'));
+    const galleryImgMain = document.querySelector('.product-img-main');
+    const THUMB_W        = 62;
+    const THUMB_GAP      = 8;
+    const THUMB_VISIBLE  = 3;
+    const THUMB_H        = Math.round(THUMB_W * 4 / 3);
+    let   thumbOffset    = 0;
+    const thumbMaxOffset = Math.max(0, galleryThumbs.length - THUMB_VISIBLE);
+
+    function setThumbContainerHeight() {
+        const visible = Math.min(THUMB_VISIBLE, galleryThumbs.length);
+        thumbsCont.style.height = ((visible * THUMB_H) + (visible - 1) * THUMB_GAP) + 'px';
+    }
+
+    function updateThumbCarousel() {
+        thumbsCont.style.transform = `translateY(-${thumbOffset * (THUMB_H + THUMB_GAP)}px)`;
+        if (thumbPrevBtn) thumbPrevBtn.disabled = thumbOffset === 0;
+        if (thumbNextBtn) thumbNextBtn.disabled = thumbOffset >= thumbMaxOffset;
+    }
+
+    if (thumbPrevBtn) thumbPrevBtn.addEventListener('click', () => { if (thumbOffset > 0) { thumbOffset--; updateThumbCarousel(); } });
+    if (thumbNextBtn) thumbNextBtn.addEventListener('click', () => { if (thumbOffset < thumbMaxOffset) { thumbOffset++; updateThumbCarousel(); } });
+
+    if (thumbMaxOffset === 0) {
+        if (thumbPrevBtn) thumbPrevBtn.style.display = 'none';
+        if (thumbNextBtn) thumbNextBtn.style.display = 'none';
+    }
+
+    function fitGallery() {
+        if (window.innerWidth <= 1024 || !galleryImgMain) return;
+        const THUMB_STRIP = THUMB_W + 10;
+        const colW   = galleryImgMain.closest('.product-gallery')?.offsetWidth || (window.innerWidth / 2 - 120);
+        const availW = colW - THUMB_STRIP;
+        const maxH   = window.innerHeight - 200;
+        const finalH = Math.min(maxH, availW * (4/3));
+        const finalW = finalH * (3/4);
+        galleryImgMain.style.width  = finalW + 'px';
+        galleryImgMain.style.height = finalH + 'px';
+        setThumbContainerHeight();
+        updateThumbCarousel();
+    }
+
+    window.addEventListener('resize', fitGallery);
+    window.addEventListener('load',   fitGallery);
+    requestAnimationFrame(fitGallery);
 }
  
 /* ══════════════════════════════════════════════════════════════
@@ -401,6 +511,7 @@ if (PRODUCT.imgs && PRODUCT.imgs.length) {
  * los datos de PRODUCT.
  */
 function initNotes() {
+  console.log('headNotes:', PRODUCT.headNotes, 'heartNotes:', PRODUCT.heartNotes, 'baseNotes:', PRODUCT.baseNotes);
   const map = {
     'notes-head':  PRODUCT.headNotes,
     'notes-heart': PRODUCT.heartNotes,
@@ -477,30 +588,75 @@ const LEVEL_LABELS = ['', 'Escasa', 'Media', 'Moderada', 'Alta', 'Excepcional'];
  * Dibuja los puntos de performance para longevidad y estela.
  */
 function initPerformanceDots() {
-  /**
-   * Llena el contenedor con dots, coloreando los que corresponden
-   * al valor dado.
-   * @param {string} containerId
-   * @param {number} val - Valor de 1 a 5.
-   */
-  function renderDots(containerId, val) {
-    const c = document.getElementById(containerId);
-    if (!c) return;
-    c.innerHTML = '';
-    for (let i = 1; i <= 5; i++) {
-      const d = document.createElement('div');
-      d.className = 'perf-dot' + (i <= val ? ' filled' : '');
-      c.appendChild(d);
+    const perfGrid = document.getElementById('perf-grid');
+    if (!perfGrid) return;
+
+    const perf = document.querySelector('.perf-header');
+    if (perf) {
+        perf.innerHTML = `
+            <div>
+                <div class="perf-section-label">Desempeño</div>
+                <div class="perf-title">¿Cómo se <em style="font-family:var(--serif);font-style:italic;font-weight:300;color:rgba(249,249,249,.35);">comporta?</em></div>
+            </div>
+            <div class="perf-subtitle">Basado en las opiniones de nuestra comunidad de compradores.</div>`;
     }
-  }
- 
-  renderDots('longevity-dots', PRODUCT.longevity);
-  renderDots('sillage-dots',   PRODUCT.sillage);
- 
-  const lonEl = document.getElementById('longevity-level');
-  const silEl = document.getElementById('sillage-level');
-  if (lonEl) lonEl.textContent = LEVEL_LABELS[PRODUCT.longevity];
-  if (silEl) silEl.textContent = LEVEL_LABELS[PRODUCT.sillage];
+
+    const LEVEL_DESC = {
+        1: { lon: 'Dura menos de 2 horas en piel.',             sil: 'Solo tú lo percibes.' },
+        2: { lon: 'Dura entre 2 y 4 horas en piel.',            sil: 'Quienes estén muy cerca lo notarán.' },
+        3: { lon: 'Dura entre 4 y 8 horas en piel.',            sil: 'Quienes te rodean lo percibirán.' },
+        4: { lon: 'La fragancia permanece perceptible durante 8 a 12 horas en piel.', sil: 'Se proyecta a una distancia notable; quienes te rodean lo percibirán.' },
+        5: { lon: 'Excepcional duración, más de 12 horas.',     sil: 'Proyección invasiva, se percibe a gran distancia.' },
+    };
+
+    const lon = PRODUCT.longevity || 0;
+    const est = PRODUCT.sillage   || 0;
+    const rat = PRODUCT.rating    || 0;
+
+    const items = [
+        {
+            label: 'Longevidad',
+            val: lon,
+            desc: LEVEL_DESC[lon]?.lon || '',
+        },
+        {
+            label: 'Estela (Sillage)',
+            val: est,
+            desc: LEVEL_DESC[est]?.sil || '',
+        },
+    ];
+
+    const dotsHTML = (val) => Array.from({length:5}, (_,i) =>
+        `<div class="perf-dot${i < val ? ' filled' : ''}"></div>`
+    ).join('');
+
+    let html = items.map(item => `
+        <div class="perf-item">
+            <div class="perf-item-label">${item.label.toUpperCase()}</div>
+            <div class="perf-dots">${dotsHTML(item.val)}</div>
+            <div class="perf-level">${LEVEL_LABELS[item.val] || ''}</div>
+            ${item.desc ? `<div class="perf-desc">${item.desc}</div>` : ''}
+        </div>`
+    ).join('');
+
+    // Tercer card: puntuación general
+    if (rat > 0) {
+        const stars = Array.from({length:5}, (_,i) =>
+            `<span${i >= Math.round(rat) ? ' class="empty"' : ''}>★</span>`
+        ).join('');
+        html += `
+            <div class="perf-item">
+                <div class="perf-item-label">Puntuación general</div>
+                <div class="perf-rating-big">
+                    <span class="perf-rating-num">${rat.toFixed(1)}</span>
+                    <span class="perf-rating-max">/ 5</span>
+                </div>
+                <div class="perf-stars-display">${stars}</div>
+                <div class="perf-review-count">Basado en ${PRODUCT.reviewCount || 0} reseñas verificadas</div>
+            </div>`;
+    }
+
+    perfGrid.innerHTML = html;
 }
  
 /* ══════════════════════════════════════════════════════════════
@@ -531,27 +687,42 @@ const OCCASIONS_DATA = [
  * marcando como .active las que aplican al producto.
  */
 function initContextCards() {
-  /**
-   * @param {string}   containerId - ID del contenedor destino.
-   * @param {Object[]} data        - Array de definición de tarjetas.
-   * @param {string[]} activeList  - IDs que deben marcarse como activos.
-   */
-  function renderContextCards(containerId, data, activeList) {
-    const cont = document.getElementById(containerId);
-    if (!cont) return;
-    data.forEach(item => {
-      const active = activeList.includes(item.id);
-      const card   = document.createElement('div');
-      card.className = 'ctx-card' + (active ? ' active' : '');
-      card.innerHTML = `
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">${item.icon}</svg>
-        <span class="ctx-card-name">${item.label}</span>`;
-      cont.appendChild(card);
-    });
-  }
-  renderContextCards('season-cards',   SEASONS_DATA,   PRODUCT.seasons);
-  renderContextCards('time-cards',     TIMES_DATA,     PRODUCT.timeOfDay);
-  renderContextCards('occasion-cards', OCCASIONS_DATA, PRODUCT.occasions);
+    const container = document.getElementById('context-container');
+    if (!container) return;
+
+    const momentoCards = TIMES_DATA.map(item => `
+        <div class="ctx-card${PRODUCT.timeOfDay.includes(item.id) ? ' active' : ''}">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">${item.icon}</svg>
+            <span class="ctx-card-name">${item.label}</span>
+        </div>`).join('');
+
+    const temporadaCards = SEASONS_DATA.map(item => `
+        <div class="ctx-card${PRODUCT.seasons.includes(item.id) ? ' active' : ''}">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">${item.icon}</svg>
+            <span class="ctx-card-name">${item.label}</span>
+        </div>`).join('');
+
+    const ocasionCards = OCCASIONS_DATA.map(item => `
+        <div class="ctx-card${PRODUCT.occasions.includes(item.id) ? ' active' : ''}">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">${item.icon}</svg>
+            <span class="ctx-card-name">${item.label}</span>
+        </div>`).join('');
+
+    container.innerHTML = `
+        <div class="context-row-1">
+            <div class="context-block">
+                <div class="context-label">Momento del día</div>
+                <div class="context-cards">${momentoCards}</div>
+            </div>
+            <div class="context-block-wide">
+                <div class="context-label">Temporada recomendada</div>
+                <div class="context-cards">${temporadaCards}</div>
+            </div>
+        </div>
+        <div>
+            <div class="context-label">Ocasión ideal</div>
+            <div class="context-cards">${ocasionCards}</div>
+        </div>`;
 }
  
 /* ══════════════════════════════════════════════════════════════
@@ -640,6 +811,15 @@ function initReviews() {
     return [...PRODUCT.reviews, ...getReviews(PRODUCT.id)];
   }
  
+  const bigNum = document.getElementById('rev-big-num');
+  const starsLg = document.getElementById('rev-stars-lg');
+  if (bigNum) bigNum.textContent = PRODUCT.rating ? PRODUCT.rating.toFixed(1) : '0';
+  if (starsLg) {
+      starsLg.innerHTML = Array.from({length:5}, (_,i) =>
+          `<span${i >= Math.round(PRODUCT.rating || 0) ? ' class="empty"' : ''}>★</span>`
+      ).join('');
+  }
+
   /**
    * Construye el elemento DOM de una tarjeta de reseña.
    * @param {Object} r - Objeto de reseña.

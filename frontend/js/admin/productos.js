@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initFilters();
     initImagenes();
     initConcentracionMaterial();
+    initContexto();
 });
 
 /* ══════════════════════════════════════
@@ -397,6 +398,37 @@ function populateForm(p) {
     renderPrincipal();
     renderGaleria();
     clearErrors();
+
+    // Contexto
+    const setV = (id, val) => { const el = document.getElementById(id); if (el) el.value = val ?? ''; };
+    setV('f-perfumista', p.perfumista || '');
+    const lon = p.longevidad || 3, est = p.estela || 3;
+    const lonEl = document.getElementById('f-longevidad');
+    const estEl = document.getElementById('f-estela');
+    if (lonEl) lonEl.value = lon;
+    if (estEl) estEl.value = est;
+    const valLon = document.getElementById('val-longevidad');
+    const valEst = document.getElementById('val-estela');
+    if (valLon) valLon.textContent = lon;
+    if (valEst) valEst.textContent = est;
+    notasState.head  = p.notasSalida  || [];
+    notasState.heart = p.notasCorazon || [];
+    notasState.base  = p.notasBase    || [];
+    renderTags(document.getElementById('tags-head-list'),  notasState, 'head');
+    renderTags(document.getElementById('tags-heart-list'), notasState, 'heart');
+    renderTags(document.getElementById('tags-base-list'),  notasState, 'base');
+    const TEMP_MAP = { primavera:1, verano:2, 'otoño':3, invierno:4 };
+    const MOM_MAP  = { 'día':1, noche:2, 'todo el día':3 };
+    const OCA_MAP  = { casual:1, trabajo:2, cita:3, 'gala / evento':4, deportivo:5, vacaciones:6 };
+    const setChk = (cid, vals, map) => {
+        document.querySelectorAll(`#${cid} input`).forEach(cb => {
+            cb.checked = (vals || []).map(v => map[v?.toLowerCase()]).includes(parseInt(cb.value));
+        });
+    };
+    setChk('ctx-temporadas', p.temporadas,  TEMP_MAP);
+    setChk('ctx-momentos',   p.momentosDia, MOM_MAP);
+    setChk('ctx-ocasiones',  p.ocasiones,   OCA_MAP);
+
 }
 
 function resetForm() {
@@ -424,7 +456,30 @@ function resetForm() {
 
     // Resetear campo a concentración por defecto
     updateConcMatField('perfumes');
+
+    // Contexto
+    const perfEl = document.getElementById('f-perfumista');
+    if (perfEl) perfEl.value = '';
+    const lonEl = document.getElementById('f-longevidad');
+    if (lonEl) lonEl.value = 3;
+    const estEl = document.getElementById('f-estela');
+    if (estEl) estEl.value = 3;
+    const valLon = document.getElementById('val-longevidad');
+    if (valLon) valLon.textContent = '3';
+    const valEst = document.getElementById('val-estela');
+    if (valEst) valEst.textContent = '3';
+    notasState.head = []; notasState.heart = []; notasState.base = [];
+    ['tags-head-list','tags-heart-list','tags-base-list'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.innerHTML = '';
+    });
+    ['tags-head-input','tags-heart-input','tags-base-input'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.value = '';
+    });
+    ['ctx-temporadas','ctx-momentos','ctx-ocasiones'].forEach(cid => {
+        document.querySelectorAll(`#${cid} input`).forEach(cb => cb.checked = false);
+    });
 }
+
 
 function validateForm() {
     let ok = true;
@@ -477,6 +532,15 @@ async function saveProduct() {
         imagenPrincipalUrl:  imageState.principal || null,
         imagenesExtra:       imageState.galeria.length ? JSON.stringify(imageState.galeria) : null,
         variantes:           getVariants(),
+        perfumista:          document.getElementById('f-perfumista')?.value.trim() || null,
+        longevidad:          parseInt(document.getElementById('f-longevidad')?.value) || null,
+        estela:              parseInt(document.getElementById('f-estela')?.value)     || null,
+        notasSalida:         [...notasState.head],
+        notasCorazon:        [...notasState.heart],
+        notasBase:           [...notasState.base],
+        temporadas:          [...document.querySelectorAll('#ctx-temporadas input:checked')].map(cb => parseInt(cb.value)),
+        momentosDia:         [...document.querySelectorAll('#ctx-momentos input:checked')].map(cb => parseInt(cb.value)),
+        ocasiones:           [...document.querySelectorAll('#ctx-ocasiones input:checked')].map(cb => parseInt(cb.value)),
     };
 
     try {
@@ -524,4 +588,57 @@ async function toggleActivo(productoId, activo) {
     } catch (e) {
         showToast('Error al actualizar: ' + e.message, '#E1222B');
     }
+}
+
+/* ══════════════════════════════════════
+   CONTEXTO — Notas olfativas
+══════════════════════════════════════ */
+
+const notasState = { head: [], heart: [], base: [] };
+
+function initContexto() {
+    [['f-longevidad','val-longevidad'],['f-estela','val-estela']].forEach(([sid, vid]) => {
+        const s = document.getElementById(sid), v = document.getElementById(vid);
+        if(s && v) s.addEventListener('input', () => v.textContent = s.value);
+    });
+    initTagsInput('tags-head-input',  'tags-head-list',  'head');
+    initTagsInput('tags-heart-input', 'tags-heart-list', 'heart');
+    initTagsInput('tags-base-input',  'tags-base-list',  'base');
+}
+
+function initTagsInput(inputId, listId, key) {
+    const input = document.getElementById(inputId);
+    const list  = document.getElementById(listId);
+    if (!input || !list) return;
+    input.closest('.adm-tags-input')?.addEventListener('click', () => input.focus());
+    input.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ',') {
+            e.preventDefault();
+            const val = input.value.trim().replace(/,$/, '');
+            if (val && !notasState[key].includes(val)) {
+                notasState[key].push(val);
+                renderTags(list, notasState, key);
+            }
+            input.value = '';
+        }
+        if (e.key === 'Backspace' && input.value === '' && notasState[key].length > 0) {
+            notasState[key].pop();
+            renderTags(list, notasState, key);
+        }
+    });
+}
+
+function renderTags(listEl, state, key) {
+    if (!listEl) return;
+    listEl.innerHTML = state[key].map((tag, i) => `
+        <span class="adm-tag">
+            ${tag}
+            <button class="adm-tag-remove" data-key="${key}" data-index="${i}" type="button">×</button>
+        </span>`).join('');
+    listEl.querySelectorAll('.adm-tag-remove').forEach(btn => {
+        btn.addEventListener('click', () => {
+            notasState[btn.dataset.key].splice(parseInt(btn.dataset.index), 1);
+            renderTags(listEl, notasState, btn.dataset.key);
+        });
+    });
 }
