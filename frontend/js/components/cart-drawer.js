@@ -284,7 +284,7 @@ async function _loadCartFromAPI() {
         const priceDisplay = normalizePriceMXN(it.precioUnitario);
         const el = _buildCartItemEl({
           brand: it.marca, name: it.nombre, priceDisplay,
-          volVal: it.variante || '', nivelVal, nLabel,
+          volVal: it.variante ? (/^\d+$/.test(String(it.variante)) ? it.variante + ' ml' : it.variante) : '', nivelVal, nLabel,
           cartId: it.id,        // ID real del item en BD
           qty: it.cantidad || 1,
         });
