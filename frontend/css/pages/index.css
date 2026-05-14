@@ -453,7 +453,15 @@ section.hero { padding: 0; }
 .carousel-track .ed-item .fav-btn          { color: rgba(249,249,249,.35); }
 .carousel-track .ed-item .fav-btn:hover    { color: rgba(249,249,249,.9); }
 .carousel-track .ed-item::before           { display: none; }
- 
+.carousel-track .ed-item .ed-img-zone { aspect-ratio: 3/4; height: auto; overflow: hidden; }
+.carousel-track .ed-item .ed-img-zone img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
 /* ── Sección: Brand editorial — dos columnas visual + texto ──── */
 /* Desktop  (>1024px): grid 2×1, min-height 580px.
   Tablet   (≤1024px): grid 2×1, padding reducido.

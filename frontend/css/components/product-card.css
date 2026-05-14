@@ -209,6 +209,13 @@
  
 /* ── Sección: Editorial item — zona de imagen ───────────────── */
 .ed-img-zone { position: relative; }
+
+.ed-img-zone img {
+  width:        100%;
+  aspect-ratio: 3/4;
+  object-fit:   cover;
+  display:      block;
+}
  
 .ed-img-placeholder {
   width:           100%;

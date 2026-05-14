@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async function() {
  
   // Render de secciones dinámicas — antes de init para que los
   // elementos existan cuando los listeners se enlacen
-  _renderHeroCard();
+  await _renderHeroCard();
   await _renderBestSellers();
   await _renderNovedades();
   initFavDrawer();
@@ -57,49 +57,64 @@ document.addEventListener('DOMContentLoaded', async function() {
  * los elementos de texto de la hero card en el DOM.
  * @returns {void}
  */
-function _renderHeroCard() {
-  const p = CATALOG.find(p => p.heroDestacado);
-  if (!p) return;
- 
-  const vol = p.vols && p.vols[0]
-    ? `${p.vols[0].ml}${!p.volLabel ? ' ml' : ''}`
-    : '';
-  const volLabel = p.volLabel || 'Presentación';
- 
-  const nameEl     = document.querySelector('.hero-card-name');
-  const volEl      = document.querySelector('.hero-card-vol');
-  const volLabelEl = document.querySelector('.hero-card-vol-label');
-  const priceEl    = document.querySelector('.hero-card-price');
-  const nivelEl    = document.querySelector('.hero-card-nivel');
-  const ctaEl      = document.querySelector('.hero-card-cta');
- 
-  if (nameEl)     nameEl.textContent     = p.name + ' by ' + p.brand;
-  if (volEl)      volEl.textContent      = vol;
-  if (volLabelEl) volLabelEl.textContent = volLabel;
-  if (priceEl)    priceEl.textContent    = p.price;
-  if (ctaEl)      ctaEl.href             = `producto.html?id=${p.id}`;
- 
-  if (nivelEl) {
-    const labels = { green: 'En existencia', yellow: 'Disp. limitada', red: 'Sin existencia' };
-    nivelEl.className = `hero-card-nivel ${p.nivel}`;
-    const dot = nivelEl.querySelector('.hero-card-nivel-dot');
-    nivelEl.textContent = labels[p.nivel] || '';
-    if (dot) nivelEl.prepend(dot);
-  }
- 
-  const favBtn = document.querySelector('.hero-card-fav');
-  if (favBtn) {
-    favBtn.dataset.productId = p.id;
-    favBtn.dataset.tipo      = p.tipo;
-    favBtn.dataset.cat       = p.cat;
-    favBtn.dataset.gen       = p.gen;
-    favBtn.dataset.nivel     = p.nivel;
-    favBtn.dataset.vol       = vol;
-    favBtn.dataset.volLabel  = volLabel;
-    favBtn.dataset.brand     = p.brand;
-    favBtn.dataset.name      = p.name;
-    favBtn.dataset.price     = p.price;
-    favBtn.dataset.img       = p.img || '';
+async function _renderHeroCard() {
+  try {
+    const raw = await getProductos();
+    const p   = raw.find(p => p.esDestacado);
+    if (!p) return;
+
+    const variantes = p.variantes || [];
+    const vol       = variantes[0]?.valor
+      ? (/^\d+$/.test(String(variantes[0].valor))
+          ? variantes[0].valor + ' ml'
+          : variantes[0].valor)
+      : '';
+    const volLabel = variantes[0]?.etiquetaTipo || 'Presentación';
+
+    // Imagen — usa IDs del HTML
+    const img         = document.getElementById('heroCardImg');
+    const placeholder = document.getElementById('heroCardPlaceholder');
+    if (img && p.imagenPrincipalUrl) {
+      img.src           = p.imagenPrincipalUrl;
+      img.alt           = p.nombre;
+      img.style.display = 'block';
+      if (placeholder) placeholder.style.display = 'none';
+    }
+
+    const nameEl     = document.getElementById('heroCardName');
+    const volEl      = document.getElementById('heroCardVol');
+    const volLabelEl = document.getElementById('heroCardVolLabel');
+    const priceEl    = document.getElementById('heroCardPrice');
+    const ctaEl      = document.getElementById('heroCardCta');
+    const nivelEl    = document.getElementById('heroCardNivel');
+
+    if (nameEl)     nameEl.textContent     = p.nombre + ' by ' + p.marca;
+    if (volEl)      volEl.textContent      = vol;
+    if (volLabelEl) volLabelEl.textContent = volLabel;
+    if (priceEl)    priceEl.textContent    = p.precio;
+    if (ctaEl)      ctaEl.href             = `producto.html?id=${p.productId}`;
+
+    if (nivelEl) {
+      const labels = { green: 'En existencia', yellow: 'Disp. limitada', red: 'Sin existencia' };
+      nivelEl.className = `hero-card-nivel ${p.nivelDisponibilidad}`;
+      const dot = nivelEl.querySelector('.hero-card-nivel-dot');
+      nivelEl.textContent = labels[p.nivelDisponibilidad] || '';
+      if (dot) nivelEl.prepend(dot);
+    }
+
+    const favBtn = document.querySelector('.hero-card-fav');
+    if (favBtn) {
+      favBtn.dataset.productId = p.productId;
+      favBtn.dataset.nivel     = p.nivelDisponibilidad;
+      favBtn.dataset.vol       = vol;
+      favBtn.dataset.volLabel  = volLabel;
+      favBtn.dataset.brand     = p.marca;
+      favBtn.dataset.name      = p.nombre;
+      favBtn.dataset.price     = p.precio;
+      favBtn.dataset.img       = p.imagenPrincipalUrl || '';
+    }
+  } catch (e) {
+    console.error('Error cargando hero card:', e);
   }
 }
  
@@ -128,6 +143,7 @@ async function _renderBestSellers() {
         price:      p.precio,
         nivel:      p.nivelDisponibilidad,
         badge:      p.badge || '',
+        img:        p.imagenPrincipalUrl || '',
         varianteId: p.variantes && p.variantes[0] ? p.variantes[0].id : null,
         vols:       p.variantes ? p.variantes.map(v => ({
           ml:     /^\d+$/.test(String(v.valor)) ? v.valor + ' ml' : v.valor,
@@ -168,6 +184,7 @@ async function _renderNovedades() {
         price:      p.precio,
         nivel:      p.nivelDisponibilidad,
         badge:      p.badge || '',
+        img:        p.imagenPrincipalUrl || '',
         varianteId: p.variantes && p.variantes[0] ? p.variantes[0].id : null,
         vols:       p.variantes ? p.variantes.map(v => ({
           ml:     /^\d+$/.test(String(v.valor)) ? v.valor + ' ml' : v.valor,
