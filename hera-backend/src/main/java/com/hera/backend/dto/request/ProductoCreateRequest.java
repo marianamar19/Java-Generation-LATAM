@@ -26,7 +26,6 @@ public class ProductoCreateRequest {
     @NotBlank(message = "El tipo es obligatorio (perfumes/joyeria)")
     private String tipo;
 
-    @NotNull(message = "El precio base es obligatorio")
     @Positive(message = "El precio debe ser mayor a 0")
     private BigDecimal precioBase;
 
