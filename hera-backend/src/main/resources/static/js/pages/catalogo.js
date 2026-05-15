@@ -229,7 +229,7 @@ function construirCardProducto(p) {
         ${variantesHTML}
         <div class="ed-footer">
             <div class="ed-price">${p.precio || `$${p.precioNumerico?.toLocaleString('es-MX')} MXN`}</div>
-            <a href="producto.html?slug=${p.slug}" class="ed-cta">Ver producto <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+            <a href="/pages/producto.html?slug=${p.slug}" class="ed-cta">Ver producto <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
         </div>
         <div class="ed-nivel ${nivel}"><span class="ed-nivel-dot"></span>${nivelLabels[nivel]}</div>
     `;

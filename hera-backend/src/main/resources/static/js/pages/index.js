@@ -114,7 +114,7 @@ async function _renderHeroCard() {
     }
 }
     if (ctaEl) {
-    ctaEl.href = 'producto.html';
+    ctaEl.href = '/pages/producto.html';
     ctaEl.addEventListener('click', () => {
         sessionStorage.setItem('productoSlug', p.slug);
     });

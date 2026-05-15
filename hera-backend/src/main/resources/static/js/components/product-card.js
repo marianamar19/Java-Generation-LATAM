@@ -141,7 +141,7 @@ export function renderCard(p) {
       <div class="ed-vols">${volBtns}</div>
       <div class="ed-footer">
         <div class="ed-price">${vols.length > 0 ? '$' + Math.round(vols[0].precio).toLocaleString('es-MX') + ' MXN' : p.price}</div>
-        <a href="producto.html" class="ed-cta"
+        <a href="/pages/producto.html" class="ed-cta"
           onclick="sessionStorage.setItem('productoSlug','${p.slug}')">Ver producto ${SVG_ARROW}</a>
       </div>
       ${nivelHtml}
@@ -223,7 +223,7 @@ export function renderCardEditorial(p) {
       <div class="ed-vols">${volBtns}</div>
       <div class="ed-footer">
         <div class="ed-price">${p.price}</div>
-        <a href="producto.html" class="ed-cta"
+        <a href="/pages/producto.html" class="ed-cta"
           onclick="sessionStorage.setItem('productoSlug','${p.slug}')">Ver producto ${SVG_ARROW}</a>
       </div>
       ${nivelHtml}
