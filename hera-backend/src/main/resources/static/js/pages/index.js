@@ -17,8 +17,8 @@ import { loadCartDrawer, addItemToCart } from '../components/cart-drawer.js';
 import { initFavDrawer }                 from '../components/fav-drawer.js';
 import { loadNewsletter }                from '../components/newsletter.js';
 import { loadFooter }                    from '../components/footer.js';
-import { CATALOG }                       from '../../../../../../../frontend/js/utils/catalog.js';
-import { getProductos }                  from '../../../../../../../frontend/js/utils/api.js';
+import { CATALOG }    from '../utils/catalog.js';
+import { getProductos } from '../utils/api.js';
 import { renderCard, renderCardEditorial } from '../components/product-card.js';
  
 /* ══════════════════════════════════════════════════════════════

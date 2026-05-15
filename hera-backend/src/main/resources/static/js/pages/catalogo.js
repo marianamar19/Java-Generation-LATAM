@@ -10,7 +10,7 @@ import { loadNavbar } from '../components/navbar.js';
 import { loadFooter } from '../components/footer.js';
 import { loadCartDrawer, addItemToCart } from '../components/cart-drawer.js';
 import { initFavDrawer, getFavorites } from '../components/fav-drawer.js';
-import { getProductos, getProductosByTipo, searchProductos } from '../../../../../../../frontend/js/utils/api.js';
+import { getProductos, getProductosByTipo, searchProductos } from '../utils/api.js';
 
 // =====================================================
 // ESTADO GLOBAL

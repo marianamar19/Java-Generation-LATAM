@@ -77,7 +77,8 @@ public class SecurityConfig {
                                 "/css/**",
                                 "/js/**",
                                 "/pages/**",
-                                "/components/**"
+                                "/components/**",
+                                "/utils/**"
                         ).permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
