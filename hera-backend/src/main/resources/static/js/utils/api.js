@@ -1,5 +1,5 @@
 // js/utils/api.js
-const API_BASE_URL = 'http://localhost:8080';
+import {API_BASE_URL} from './config.js';
 
 // Usar sessionStorage (más seguro que localStorage)
 let authToken = sessionStorage.getItem('hera_token');
@@ -340,4 +340,32 @@ export async function getBestsellers() {
 export async function getNuevos() {
     const response = await fetch(`${API_BASE_URL}/api/productos/nuevos`);
     return response.json();
+}
+
+// ========== ENVÍOS ==========
+
+export async function getCarriers(cp) {
+    const response = await fetch(`${API_BASE_URL}/api/envio/carriers?cp=${cp}`);
+    if (!response.ok) throw new Error(`Error ${response.status}`);
+    return response.json();
+}
+
+export async function getEnvioGratisMinimo() {
+    const response = await fetch(`${API_BASE_URL}/api/envio/minimo-envio-gratis`);
+    if (!response.ok) throw new Error(`Error ${response.status}`);
+    return response.json();
+}
+
+// ========== PEDIDOS ==========
+
+export async function createPedido(pedidoData) {
+    return post('/api/pedidos', pedidoData);
+}
+
+export async function getPedidos() {
+    return get('/api/pedidos');
+}
+
+export async function getPedidoByNumero(numeroPedido) {
+    return get(`/api/pedidos/${numeroPedido}`);
 }
