@@ -228,7 +228,7 @@ async function submitForm(type) {
             sessionStorage.removeItem('redirectAfterLogin');
             window.location.href = redirect;
           } else {
-            window.location.href = '/pages/index.html';
+            window.location.href = '/index.html';
           }
         }
       }, 2000);
