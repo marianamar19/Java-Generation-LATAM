@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   if (!numeroPedido) {
     // Alguien llegó a esta página sin número de orden en la URL
-    window.location.href = 'index.html';
+    window.location.href = '/index.html';
     return;
   }
 

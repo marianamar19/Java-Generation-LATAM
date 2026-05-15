@@ -241,14 +241,14 @@ async function submitForm(type) {
       cleanup();
       showSuccessOverlay('Cuenta creada', `Bienvenido a HERA, ${user.nombre}`);
       setTimeout(() => {
-        window.location.href = '/pages/index.html';
+        window.location.href = '/index.html';
       }, 2000);
     } else if (type === 'guest') {
       clearAuth();
       cleanup();
       showSuccessOverlay('Modo invitado', 'Explorando como invitado.', false);
       setTimeout(() => {
-        window.location.href = '/pages/index.html';
+        window.location.href = '/index.html';
       }, 2000);
     }
   } catch (error) {
@@ -331,7 +331,7 @@ async function initCuentaPage() {
       if (user.rol === 'ADMIN') {
         window.location.replace('/pages/admin/dashboard.html');
       } else {
-        window.location.replace('/pages/index.html');
+        window.location.replace('/index.html');
       }
     } catch (e) {
       // Si hay error, no redirigir

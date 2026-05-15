@@ -264,7 +264,7 @@ function construirCardProducto(p) {
             ctaBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 sessionStorage.setItem('productoSlug', p.slug);
-                window.location.href = 'producto.html';
+                window.location.href = '/pages/producto.html';
             });
         }
 

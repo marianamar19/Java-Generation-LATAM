@@ -389,7 +389,7 @@ function _initStepNav() {
   document.getElementById('btnStep2Back').addEventListener('click', function() { goToStep(1); });
   document.getElementById('btnStep2Next').addEventListener('click', function() { nextStep(2); });
   document.getElementById('btnStep3Back').addEventListener('click', function() { goToStep(2); });
-  document.getElementById('btnBackToCatalog').addEventListener('click', function() { window.location.href = 'catalogo.html'; });
+  document.getElementById('btnBackToCatalog').addEventListener('click', function() { window.location.href = '/pages/catalogo.html'; });
   document.getElementById('payBtn').addEventListener('click', submitCheckout);
   document.getElementById('promoBtn').addEventListener('click', applyPromo);
 
@@ -683,7 +683,7 @@ function submitCheckout() {
     };
     try { localStorage.setItem('hera_last_order', JSON.stringify(orderData)); } catch(e) {}
     localStorage.removeItem('hera_cart');
-    window.location.href = 'confirmacion.html';
+    window.location.href = '/pages/confirmacion.html';
   }, 2200);
 }
 

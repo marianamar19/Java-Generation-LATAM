@@ -283,7 +283,7 @@ async function _loadCartFromAPI() {
  * @returns {void}
  */
 function _goToCheckout() {
-  window.location.href = 'checkout.html';
+  window.location.href = '/pages/checkout.html';
 }
 
 export { loadCartDrawer, initCartDrawer, addItemToCart, openCart };

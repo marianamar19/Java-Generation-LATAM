@@ -411,13 +411,13 @@ function _initCatCards() {
  
   if (catCardPerfumes) {
     catCardPerfumes.addEventListener('click', function() {
-      location.href = 'catalogo.html?tab=perfumes';
+      location.href = '/pages/catalogo.html?tab=perfumes';
     });
   }
  
   if (catCardJoyeria) {
     catCardJoyeria.addEventListener('click', function() {
-      location.href = 'catalogo.html?tab=joyeria';
+      location.href = '/pages/catalogo.html?tab=joyeria';
     });
   }
 }
