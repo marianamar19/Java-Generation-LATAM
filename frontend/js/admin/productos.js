@@ -4,7 +4,7 @@
  */
 
 import { guardAdmin, initLogout, loadAdminSidebar, buildEmptyState, escapeHtml, capitalize, showToast } from './admin-utils.js';
-import { getProductos, getAdminProductos, createProducto, updateProducto, deleteProducto } from '../utils/api.js';
+import { getProductos, getAdminProductos, createProducto, updateProducto, deleteProducto, authFetch } from '../utils/api.js';
 
 guardAdmin();
 
@@ -583,15 +583,16 @@ async function deleteProduct(productoId) {
     }
 }
 
-async function toggleActivo(productoId, activo) {
+async function toggleActivo(id, activo) {
     try {
-        const p = productosGlobal.find(p => p.productId === productoId);
-        await updateProducto(p.id, { ...p, activo });
-        showToast(activo ? 'Producto activado' : 'Producto desactivado', '#4caf50');
+        const producto = productosGlobal.find(p => p.productId === id);
+        if (!producto) return;
+        await authFetch(`/api/productos/${producto.id}/activo?activo=${activo}`, { method: 'PATCH' });
         await cargarProductos();
         renderTable(productosGlobal);
-    } catch (e) {
-        showToast('Error al actualizar: ' + e.message, '#E1222B');
+        showToast(activo ? 'Producto activado' : 'Producto desactivado', '#4caf50');
+    } catch (error) {
+        showToast('Error: ' + error.message, '#E1222B');
     }
 }
 
