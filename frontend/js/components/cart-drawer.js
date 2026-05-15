@@ -11,7 +11,7 @@
  * Importado por: js/pages/index.js
  */
 
-import { getCarrito, addToCart, updateCartItem, removeCartItem}            from '../utils/api.js';
+import { getCarrito, addToCart, updateCartItem, removeCartItem } from '../utils/api.js';
 import { normalizePriceMXN, parseMXN } from '../utils/formatter.js';
 
 /* Umbral para envío gratis (MXN) */
@@ -102,21 +102,10 @@ function closeCart() {
 
 /* ── Agregar al carrito ─────────────────────────────────────── */
 
-/**
- * Agrega un producto al carrito o incrementa su cantidad si ya existe.
- * Persiste el estado, actualiza totales y abre el drawer.
- * @param {string}        id    - ID único del producto
- * @param {string}        brand - Marca del producto
- * @param {string}        name  - Nombre del producto
- * @param {string|number} price - Precio en cualquier formato
- * @param {string}        vol   - Presentación (volumen o talla)
- * @param {string}        nivel - Nivel de existencia: 'green' | 'yellow' | 'red'
- * @returns {void}
- */
 async function addItemToCart(varianteId) {
   try {
-    await addToCart(varianteId, 1);       // POST /api/carrito/items
-    await _loadCartFromAPI();             // recarga el drawer con el estado real de la BD
+    await addToCart(varianteId, 1);
+    await _loadCartFromAPI();
     cartBadge.style.transform = 'scale(1.5)';
     setTimeout(function() { cartBadge.style.transform = 'scale(1)'; }, 200);
     openCart();
@@ -216,10 +205,6 @@ function _bindCartItem(item) {
 
 /* ── Totales y barra de envío ────────────────────────────────── */
 
-/**
- * Recalcula total, count, badge, barra de envío gratis y visibilidad del footer.
- * @returns {void}
- */
 function _updateCartTotals() {
   const items = cartItemsList.querySelectorAll('.cart-item');
   let total   = 0;
@@ -265,18 +250,11 @@ function _updateCartTotals() {
  * @returns {void}
  */
 
-
-/**
- * Lee los items de localStorage y reconstruye el DOM del carrito.
- * Llamado al cargar la página para restaurar el estado previo.
- * @returns {void}
- */
-
+// Carrito autenticado — backend
 async function _loadCartFromAPI() {
   try {
-    const carrito = await getCarrito();           // GET /api/carrito
+    const carrito = await getCarrito();
     cartItemsList.innerHTML = '';
-
     if (carrito.items && carrito.items.length) {
       carrito.items.forEach(function(it) {
         const nivelVal     = it.nivelDisponibilidad || 'green';
@@ -284,11 +262,11 @@ async function _loadCartFromAPI() {
         const priceDisplay = normalizePriceMXN(it.precioUnitario);
         const el = _buildCartItemEl({
           brand: it.marca, name: it.nombre, priceDisplay,
-          volVal: it.variante ? (/^\d+$/.test(String(it.variante)) ? it.variante + ' ml' : it.variante) : '', nivelVal, nLabel,
-          cartId: it.id,        // ID real del item en BD
-          qty: it.cantidad || 1,
+          volVal: it.variante ? (/^\d+$/.test(String(it.variante)) ? it.variante + ' ml' : it.variante) : '',
+          nivelVal, nLabel, cartId: it.id, qty: it.cantidad || 1,
+          img: it.imagen || ''
         });
-        el.dataset.itemId = it.id;   // guardamos el ID para las llamadas a la API
+        el.dataset.itemId = it.id;
         cartItemsList.appendChild(el);
         _bindCartItem(el);
       });

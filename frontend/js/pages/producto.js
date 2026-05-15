@@ -56,6 +56,7 @@ function getQueryParam(name) {
 
 function mapProducto(dto) {
     const sizes = dto.variantes?.map(v => ({
+        id: v.id,
         ml: v.valor || '',
         price: v.precio ? `$${Number(v.precio).toLocaleString('es-MX')} MXN` : (dto.precio || ''),
         value: Number(v.precio) || 0,
@@ -375,14 +376,7 @@ if (mainAddCartBtn) {
       const size = PRODUCT.sizes[selectedSizeIdx];
       const priceTxt = size?.price || PRODUCT.precio || '';
       const mlTxt    = size?.ml    || '';
-      addItemToCart(
-        PRODUCT.id,
-        PRODUCT.brand,
-        mlTxt ? `${PRODUCT.name} ${mlTxt}ml` : PRODUCT.name,
-        priceTxt,
-        mlTxt ? `${mlTxt} ml` : '',
-        PRODUCT.nivel || 'green'
-      );
+      addItemToCart(size?.id);
     });
 }
  
@@ -1032,7 +1026,7 @@ function initSimilarGrid() {
         // presentaciones se acumulen en el mismo item del carrito
         const uniqueId = ml ? `${p.id}-${ml}ml` : p.id;
         const fullName = volStr ? `${p.name} ${volStr}` : p.name;
-        addItemToCart(uniqueId, p.brand, fullName, priceStr, volStr, p.nivel || 'green');
+        addItemToCart(p.varianteId || uniqueId);
       });
     }
  

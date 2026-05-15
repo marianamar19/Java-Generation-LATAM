@@ -1,5 +1,5 @@
 /**
- * storage_v1.js — HERA
+ * storage.js — HERA
  *
  * Descripción: Wrapper sobre localStorage para todas las claves del proyecto.
  *              Centraliza los nombres de clave, maneja errores de parsing

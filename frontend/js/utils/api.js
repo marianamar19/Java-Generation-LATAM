@@ -31,6 +31,10 @@ export function isAdmin() {
     return currentUser && currentUser.rol === 'ADMIN';
 }
 
+const GUEST_TOKEN_KEY = 'hera_carrito_token';
+export function getGuestCartToken() { return localStorage.getItem(GUEST_TOKEN_KEY); }
+export function saveGuestCartToken(token) { if (token) localStorage.setItem(GUEST_TOKEN_KEY, token); }
+
 export async function authFetch(endpoint, options = {}) {
     const url = endpoint.startsWith('http') ? endpoint : `${API_BASE_URL}${endpoint}`;
     
@@ -43,11 +47,19 @@ export async function authFetch(endpoint, options = {}) {
         headers['Authorization'] = `Bearer ${authToken}`;
     }
     
+    const guestToken = getGuestCartToken();
+    if (!authToken && guestToken) {
+        headers['X-Carrito-Token'] = guestToken;
+    }
+
     const config = { ...options, headers };
     
     try {
         const response = await fetch(url, config);
         
+    const newToken = response.headers.get('X-Carrito-Token');
+    if (newToken) saveGuestCartToken(newToken);
+
         if (response.status === 401) {
             console.warn('Token expirado. Redirigiendo a login...');
             clearAuth();
@@ -76,7 +88,8 @@ export async function post(endpoint, data) {
         method: 'POST',
         body: JSON.stringify(data)
     });
-    return response.json();
+    const text = await response.text();
+    return text ? JSON.parse(text) : null;
 }
 
 export async function put(endpoint, data) {
