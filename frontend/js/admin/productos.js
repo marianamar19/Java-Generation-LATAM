@@ -4,7 +4,7 @@
  */
 
 import { guardAdmin, initLogout, loadAdminSidebar, buildEmptyState, escapeHtml, capitalize, showToast } from './admin-utils.js';
-import { getProductos, createProducto, updateProducto, deleteProducto } from '../utils/api.js';
+import { getProductos, getAdminProductos, createProducto, updateProducto, deleteProducto } from '../utils/api.js';
 
 guardAdmin();
 
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function cargarProductos() {
     try {
-        productosGlobal = await getProductos();
+        productosGlobal = await getAdminProductos();
         updateCount();
     } catch (e) {
         console.error('Error cargando productos:', e);

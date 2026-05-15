@@ -246,7 +246,7 @@ export async function deleteProducto(id) {
 }
 
 export async function getAdminProductos() {
-    return get('/api/admin/productos');
+    return get('/api/productos/admin/todos');
 }
 
 // ========== NUEVOS MÉTODOS PARA PRODUCTO DETALLE ==========
