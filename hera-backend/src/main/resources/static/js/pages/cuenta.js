@@ -14,7 +14,7 @@ import { loadNavbar } from '../components/navbar.js';
 import { loadFooterMinimo } from '../components/footer-minimo.js';
 import { loadCartDrawer } from '../components/cart-drawer.js';
 import { initFavDrawer } from '../components/fav-drawer.js';
-import { login, isAuthenticated, clearAuth } from '../utils/api.js';
+import { login, register, isAuthenticated, clearAuth } from '../utils/api.js';
 
 /* ══════════════════════════════════════
   AUTH SCENE — track deslizante

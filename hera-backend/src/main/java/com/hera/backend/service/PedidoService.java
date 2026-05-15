@@ -189,6 +189,8 @@ public class PedidoService {
                         .cantidad(detalle.getCantidad())
                         .precioUnitario(detalle.getPrecioUnitario())
                         .subtotal(detalle.getSubtotal())
+                        .imagen(detalle.getVariante() != null && detalle.getVariante().getProducto() != null
+                                ? detalle.getVariante().getProducto().getImagenPrincipalUrl() : null)
                         .build())
                 .collect(Collectors.toList());
 

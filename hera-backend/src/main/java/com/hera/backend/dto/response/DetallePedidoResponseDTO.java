@@ -18,4 +18,5 @@ public class DetallePedidoResponseDTO {
     private Integer cantidad;
     private BigDecimal precioUnitario;
     private BigDecimal subtotal;
+    private String imagen;
 }

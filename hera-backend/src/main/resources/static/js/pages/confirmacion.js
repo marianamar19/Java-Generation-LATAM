@@ -226,15 +226,11 @@ function _renderOrder(order) {
         (it.variante ? ' ' + it.variante : '');
 
       html +=
-        '<div class="order-item reveal">' +
-          '<div class="order-item-img">' +
-            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" ' +
-            'stroke="rgba(15,15,15,.2)" stroke-width="1.5">' +
-              '<rect x="3" y="3" width="18" height="18" rx="1"/>' +
-              '<circle cx="8.5" cy="8.5" r="1.5"/>' +
-              '<path d="m21 15-5-5L5 21"/>' +
-            '</svg>' +
-          '</div>' +
+        '<div class="order-item-img">' +
+  (it.imagen 
+    ? '<img src="' + it.imagen + '" alt="' + nombreCompleto + '" style="width:100%;height:100%;object-fit:cover;">'
+    : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>') +
+'</div>' +
           '<div class="order-item-body">' +
             '<div class="order-item-name">'  + nombreCompleto + '</div>' +
             '<div class="order-item-meta">' +

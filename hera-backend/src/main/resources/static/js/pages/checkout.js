@@ -255,9 +255,11 @@ async function loadCart() {
           name:       it.nombre,
           price:      '$' + it.precioUnitario + ' MXN',
           qty:        it.cantidad || 1,
-          nivel:      it.nivelDisponibilidad || 'green'
+          nivel:      it.nivelDisponibilidad || 'green',
+          img:        it.imagen || ''
         };
       });
+      console.log('Primer item del carrito:', JSON.stringify(carrito.items[0]));
     }
   } catch(e) {
     console.error('Error cargando carrito:', e);
@@ -292,7 +294,9 @@ function renderItems() {
     el.className = 'summary-item';
     el.innerHTML =
       '<div class="summary-item-img">' +
-        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,0.2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>' +
+        (item.img 
+          ? '<img src="' + item.img + '" alt="' + item.name + '" style="width:100%;height:100%;object-fit:cover;">'
+          : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,0.2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>') +
         '<span class="item-qty-badge">' + item.qty + '</span>' +
       '</div>' +
       '<div class="summary-item-info">' +
