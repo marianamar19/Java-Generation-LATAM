@@ -64,6 +64,7 @@ public class SecurityConfig {
                         .requestMatchers("/",
                                 "/api/auth/**",
                                 "/api/productos/**",
+                                "/api/carrito/**",
                                 "/api/carriers/**",
                                 "/api/contacto/**",
                                 "/api/test/**",
@@ -124,7 +125,7 @@ public class SecurityConfig {
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowCredentials(true);
-        config.setExposedHeaders(Arrays.asList("Authorization", "Set-Cookie"));
+        config.setExposedHeaders(Arrays.asList("Authorization", "Set-Cookie", "X-Carrito-Token"));
         config.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
