@@ -1,0 +1,668 @@
+/* ============================================================
+  catalogo.css — HERA Pages
+  Descripción: Estilos exclusivos de la página catálogo.
+              Incluye: header editorial, tabs de categoría,
+              layout sidebar/main, sidebar de filtros, grid de
+              productos, topbar, chips de filtros activos,
+              estado vacío, load-more y filter drawer mobile.
+              NO incluye estilos de navbar, footer, drawer de
+              carrito, announce-bar ni product-card (ya globales).
+  Usado por: pages/catalogo.html
+  ============================================================ */
+
+/* ── Sección: Catalog header — editorial oscuro ─────────────── */
+/* ── CATALOG-HEADER — comportamiento por breakpoint
+  Desktop  (>1024px): fondo negro, padding 52px 80px 0, título clamp hasta 64px
+  Tablet   (≤1024px): padding reducido a 36px 24px 0
+  Móvil    (≤768px):  padding 32px 24px 0, título clamp hasta 48px
+── */
+.catalog-header {
+  background: var(--black);
+  padding:    52px 80px 0;
+}
+
+.catalog-eyebrow {
+  font-size:      11px;
+  font-weight:    600;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color:          var(--red);
+  margin-bottom:  20px;
+  display:        flex;
+  align-items:    center;
+  gap:            12px;
+}
+
+.catalog-eyebrow::before {
+  content:    '';
+  display:    block;
+  width:      28px;
+  height:     1px;
+  background: var(--red);
+}
+
+.catalog-title {
+  font-family:    var(--sans);
+  font-size:      clamp(36px, 5vw, 64px);
+  font-weight:    700;
+  letter-spacing: -.02em;
+  line-height:    .95;
+  color:          var(--cream);
+}
+
+.catalog-title em {
+  font-family: var(--serif);
+  font-style:  italic;
+  font-weight: 300;
+  color:       rgba(249, 249, 249, .42);
+  display:     block;
+}
+
+/* ── Sección: Category tabs ─────────────────────────────────── */
+.catalog-tabs {
+  display:         flex;
+  align-items:     flex-end;
+  justify-content: center;
+  gap:             0;
+  margin-top:      36px;
+  border-top:      1px solid rgba(249, 249, 249, .07);
+}
+
+.catalog-tab-btn {
+  font-size:       11px;
+  font-weight:     600;
+  letter-spacing:  .14em;
+  text-transform:  uppercase;
+  color:           rgba(249, 249, 249, .32);
+  background:      transparent;
+  border:          none;
+  border-bottom:   2px solid transparent;
+  padding:         16px 28px 14px;
+  cursor:          pointer;
+  transition:      color .2s, border-color .2s;
+  position:        relative;
+  bottom:          -1px;
+}
+
+.catalog-tab-btn:hover  { color: rgba(249, 249, 249, .65); }
+.catalog-tab-btn.active { color: var(--cream); border-bottom-color: var(--red); }
+
+/* ── Sección: Catalog layout — sidebar + main ───────────────── */
+/* ── CATALOG-LAYOUT — comportamiento por breakpoint
+   Desktop  (>1024px): grid 2 columnas (240px sidebar + 1fr main)
+   Tablet   (≤1024px): sidebar oculto, 1 columna, barra de filtros móvil visible
+   Móvil    (≤768px):  1 columna, padding reducido
+── */
+.catalog-layout {
+  display:               grid;
+  grid-template-columns: 240px 1fr;
+  min-height:            70vh;
+}
+
+/* ── Sección: Sidebar de filtros (desktop) ───────────────────── */
+.catalog-sidebar {
+  padding:    28px 24px 40px;
+  border-right: 1px solid var(--lgray);
+  position:   sticky;
+  top:        64px;
+  height:     calc(100vh - 64px);
+  overflow-y: auto;
+  background: var(--cream);
+}
+
+.sidebar-head {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-bottom:   28px;
+  padding-bottom:  16px;
+  border-bottom:   2px solid var(--black);
+}
+
+.sidebar-title {
+  font-size:      11px;
+  font-weight:    700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color:          var(--black);
+}
+
+.sidebar-clear-all {
+  font-size:      9px;
+  font-weight:    700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color:          rgba(15, 15, 15, .28);
+  border:         none;
+  background:     none;
+  cursor:         pointer;
+  padding:        0;
+  transition:     color .2s;
+}
+
+.sidebar-clear-all:hover { color: var(--red); }
+
+.filter-section {
+  margin-bottom:  22px;
+  padding-bottom: 22px;
+  border-bottom:  1px solid var(--lgray);
+}
+
+.filter-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.filter-section-title {
+  font-size:      9px;
+  font-weight:    700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color:          rgba(15, 15, 15, .35);
+  margin-bottom:  13px;
+  padding-left:   10px;
+  border-left:    2px solid var(--red);
+}
+
+.filter-option {
+  display:     flex;
+  align-items: center;
+  gap:         9px;
+  margin-bottom: 8px;
+  cursor:      pointer;
+}
+
+.filter-option input[type="checkbox"] {
+  appearance:         none;
+  -webkit-appearance: none;
+  width:              14px;
+  height:             14px;
+  border:             1.5px solid rgba(15, 15, 15, .22);
+  background:         transparent;
+  cursor:             pointer;
+  flex-shrink:        0;
+  position:           relative;
+  transition:         background .15s, border-color .15s;
+}
+
+.filter-option input[type="checkbox"]:checked {
+  background:   var(--red);
+  border-color: var(--red);
+}
+
+.filter-option input[type="checkbox"]:checked::after {
+  content:     '';
+  position:    absolute;
+  left:        3px;
+  top:         0;
+  width:       5px;
+  height:      9px;
+  border:      2px solid #fff;
+  border-top:  none;
+  border-left: none;
+  transform:   rotate(45deg);
+}
+
+.filter-option input[type="checkbox"]:hover:not(:checked) { border-color: rgba(15, 15, 15, .45); }
+
+.filter-option label {
+  font-size:   13px;
+  color:       var(--dgray);
+  cursor:      pointer;
+  transition:  color .15s;
+  flex:        1;
+  user-select: none;
+}
+
+.filter-option:hover label { color: var(--black); }
+
+.filter-count {
+  font-size:  10px;
+  color:      rgba(15, 15, 15, .28);
+  flex-shrink: 0;
+}
+
+.price-inputs {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   8px;
+  margin-top:            10px;
+}
+
+.price-input {
+  width:       100%;
+  border:      1px solid var(--lgray);
+  background:  transparent;
+  padding:     7px 10px;
+  font-family: var(--sans);
+  font-size:   12px;
+  color:       var(--black);
+  outline:     none;
+  transition:  border-color .2s;
+}
+
+.price-input:focus { border-color: var(--black); }
+
+/* ── Sección: Catalog main ───────────────────────────────────── */
+/* ── CATALOG-MAIN — comportamiento por breakpoint
+  Desktop  (>1024px): padding 24px 32px 60px, fondo lgray
+  Tablet   (≤1024px): padding 16px 20px 48px
+  Móvil    (≤768px):  padding 12px 12px 40px
+── */
+.catalog-main {
+  padding:    24px 32px 60px;
+  background: var(--lgray);
+}
+
+.catalog-topbar {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-bottom:   16px;
+  gap:             16px;
+  flex-wrap:       wrap;
+}
+
+.catalog-count {
+  font-size:      12px;
+  color:          rgba(15, 15, 15, .42);
+  letter-spacing: .04em;
+}
+
+.catalog-sort-wrap {
+  display:     flex;
+  align-items: center;
+  gap:         10px;
+}
+
+.sort-label {
+  font-size:      10px;
+  font-weight:    700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color:          rgba(15, 15, 15, .38);
+}
+
+.sort-select {
+  border:              1px solid var(--lgray);
+  background:          var(--cream);
+  padding:             8px 32px 8px 12px;
+  font-family:         var(--sans);
+  font-size:           12px;
+  color:               var(--dgray);
+  cursor:              pointer;
+  outline:             none;
+  transition:          border-color .2s;
+  appearance:          none;
+  -webkit-appearance:  none;
+  background-image:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%232E2E2E' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:   no-repeat;
+  background-position: right 8px center;
+}
+
+.sort-select:focus { border-color: var(--black); }
+
+/* ── Sección: Active filter chips ────────────────────────────── */
+.active-chips-row {
+  display:       flex;
+  align-items:   center;
+  gap:           8px;
+  flex-wrap:     wrap;
+  margin-bottom: 20px;
+  min-height:    0;
+}
+
+.active-chip {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            5px;
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border:         1px solid var(--black);
+  background:     var(--black);
+  color:          var(--cream);
+  padding:        5px 10px;
+  cursor:         pointer;
+  transition:     background .15s, color .15s;
+}
+
+.active-chip:hover { background: var(--red); border-color: var(--red); }
+
+.chip-x { font-size: 11px; opacity: .7; }
+
+.chips-clear-all {
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color:          rgba(15, 15, 15, .35);
+  border:         none;
+  background:     none;
+  cursor:         pointer;
+  padding:        5px 0;
+  transition:     color .2s;
+  margin-left:    4px;
+}
+
+.chips-clear-all:hover { color: var(--red); }
+
+/* ── Sección: Product grid ───────────────────────────────────── */
+.product-grid {
+  display:               grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   20px;
+}
+
+/* ── Sección: Load more ──────────────────────────────────────── */
+.load-more-wrap { text-align: center; padding: 48px 0 16px; }
+
+.load-more-btn {
+  background:     transparent;
+  color:          var(--black);
+  border:         1px solid var(--lgray);
+  padding:        14px 48px;
+  font-family:    var(--sans);
+  font-size:      11px;
+  font-weight:    700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  cursor:         pointer;
+  transition:     border-color .2s, background .2s, color .2s;
+  display:        none;
+}
+
+.load-more-btn:hover { border-color: var(--black); background: var(--black); color: var(--cream); }
+
+/* ── Sección: Empty state ────────────────────────────────────── */
+.catalog-empty {
+  grid-column: 1 / -1;
+  padding:     80px 40px;
+  text-align:  center;
+  display:     none;
+}
+
+.catalog-empty.visible { display: block; }
+
+.catalog-empty svg { opacity: .14; margin: 0 auto 20px; display: block; }
+
+.catalog-empty-title {
+  font-family: var(--serif);
+  font-size:   26px;
+  font-style:  italic;
+  font-weight: 300;
+  color:       rgba(15, 15, 15, .5);
+  margin-bottom: 10px;
+}
+
+.catalog-empty-sub {
+  font-size:      11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color:          rgba(15, 15, 15, .32);
+  margin-bottom:  28px;
+}
+
+/* ── Sección: Mobile filter bar ─────────────────────────────── */
+/* ── FILTER-MOBILE-BAR — comportamiento por breakpoint
+  Desktop  (>1024px): oculta (display:none)
+  Tablet   (≤1024px): visible, sticky a top:64px
+  Móvil    (≤768px):  sticky a top:56px, padding reducido
+── */
+.filter-mobile-bar {
+  display:                   none;
+  position:                  sticky;
+  top:                       64px;
+  z-index:                   90;
+  background:                var(--cream);
+  border-bottom:             1px solid var(--lgray);
+  padding:                   10px 20px;
+  gap:                       8px;
+  align-items:               center;
+  overflow-x:                auto;
+  white-space:               nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filter-mobile-bar::-webkit-scrollbar { display: none; }
+
+.filter-mobile-btn {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            6px;
+  font-size:      10px;
+  font-weight:    700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border:         1px solid var(--lgray);
+  background:     var(--cream);
+  color:          var(--dgray);
+  padding:        7px 14px;
+  cursor:         pointer;
+  transition:     border-color .2s;
+  flex-shrink:    0;
+  white-space:    nowrap;
+}
+
+.filter-mobile-btn:hover { border-color: var(--black); }
+
+.filter-mobile-chip {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            5px;
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  border:         1px solid var(--black);
+  background:     var(--black);
+  color:          var(--cream);
+  padding:        6px 10px;
+  cursor:         pointer;
+  flex-shrink:    0;
+  white-space:    nowrap;
+  transition:     background .15s;
+}
+
+.filter-mobile-chip:hover { background: var(--red); border-color: var(--red); }
+
+.sort-mobile-btn {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            6px;
+  font-size:      10px;
+  font-weight:    700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border:         1px solid var(--lgray);
+  background:     var(--cream);
+  color:          var(--dgray);
+  padding:        7px 14px;
+  cursor:         pointer;
+  flex-shrink:    0;
+  margin-left:    auto;
+  white-space:    nowrap;
+}
+
+.filter-badge {
+  background:    var(--red);
+  color:         #fff;
+  border-radius: 50%;
+  width:         14px;
+  height:        14px;
+  font-size:     8px;
+  font-weight:   700;
+  display:       none;
+  align-items:   center;
+  justify-content: center;
+}
+
+/* ── Sección: Filter drawer (mobile) ────────────────────────── */
+/* ── FILTER-DRAWER — comportamiento por breakpoint
+  Desktop  (>1024px): nunca se abre (sidebar siempre visible)
+  Tablet   (≤1024px): panel derecho de 340px con overlay
+  Móvil    (≤768px):  panel derecho hasta 90vw
+── */
+.filter-drawer-overlay {
+  position:       fixed;
+  inset:          0;
+  background:     rgba(15, 15, 15, .45);
+  z-index:        800;
+  opacity:        0;
+  visibility:     hidden;
+  pointer-events: none;
+  transition:     opacity .3s, visibility .3s;
+}
+
+.filter-drawer-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+
+.filter-drawer {
+  position:       fixed;
+  top:            0;
+  right:          0;
+  bottom:         0;
+  width:          min(340px, 90vw);
+  background:     var(--cream);
+  z-index:        900;
+  transform:      translateX(100%);
+  transition:     transform .35s cubic-bezier(.4, 0, .2, 1);
+  display:        flex;
+  flex-direction: column;
+}
+
+.filter-drawer.open { transform: translateX(0); }
+
+.filter-drawer-header {
+  padding:         20px 24px;
+  border-bottom:   1px solid var(--lgray);
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  flex-shrink:     0;
+}
+
+.filter-drawer-title {
+  font-size:      12px;
+  font-weight:    700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color:          var(--black);
+}
+
+.filter-drawer-close {
+  background:  none;
+  border:      none;
+  cursor:      pointer;
+  color:       var(--dgray);
+  padding:     4px;
+  display:     flex;
+  align-items: center;
+  transition:  color .2s;
+}
+
+.filter-drawer-close:hover { color: var(--red); }
+
+.filter-drawer-body { flex: 1; overflow-y: auto; padding: 0 24px 24px; }
+
+.filter-drawer-section { padding: 20px 0; border-bottom: 1px solid var(--lgray); }
+.filter-drawer-section:last-child { border-bottom: none; }
+
+.filter-drawer-section-title {
+  font-size:      10px;
+  font-weight:    700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color:          rgba(15, 15, 15, .38);
+  margin-bottom:  14px;
+}
+
+.filter-drawer-footer {
+  padding:               16px 24px;
+  border-top:            1px solid var(--lgray);
+  flex-shrink:           0;
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   10px;
+}
+
+.filter-apply-btn {
+  background:     var(--black);
+  color:          var(--cream);
+  border:         none;
+  padding:        14px;
+  font-family:    var(--sans);
+  font-size:      11px;
+  font-weight:    700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor:         pointer;
+  transition:     background .2s;
+}
+
+.filter-apply-btn:hover { background: var(--red); }
+
+.filter-reset-btn {
+  background:     transparent;
+  color:          var(--black);
+  border:         1px solid var(--lgray);
+  padding:        14px;
+  font-family:    var(--sans);
+  font-size:      11px;
+  font-weight:    700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor:         pointer;
+  transition:     border-color .2s;
+}
+
+.filter-reset-btn:hover { border-color: var(--black); }
+
+/* ── Sección: Volumen — variante ed-vol-more exclusiva del catálogo ── */
+/* ed-vol-btn y ed-item ya están en product-card.css;
+   ed-vol-more es un link que el catálogo agrega cuando hay >3 vols. */
+.ed-vol-more {
+  font-size:      9px;
+  font-weight:    600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color:          rgba(15, 15, 15, .3);
+  text-decoration: none;
+  padding:        4px 6px;
+  transition:     color .2s;
+  cursor:         pointer;
+  white-space:    nowrap;
+}
+
+.ed-item:hover .ed-vol-more { color: rgba(249, 249, 249, .35); }
+.ed-vol-more:hover           { color: var(--red) !important; }
+
+/* ── Sección: Touch UX global ────────────────────────────────── */
+button, a,
+.filter-option, .catalog-tab-btn {
+  -webkit-tap-highlight-color: transparent;
+  touch-action:                manipulation;
+}
+
+/* ══════════════════════════════════════
+  BREAKPOINTS
+══════════════════════════════════════ */
+
+/* ── Tablet ≤1024px ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .catalog-header          { padding: 36px 24px 0; }
+  .catalog-layout          { grid-template-columns: 1fr; }
+  .catalog-sidebar         { display: none; }
+  .filter-mobile-bar       { display: flex; }
+  .catalog-main            { padding: 16px 20px 48px; }
+  .product-grid            { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+}
+
+/* ── Móvil ≤768px ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .catalog-header          { padding: 32px 24px 0; }
+  .catalog-title           { font-size: clamp(28px, 9vw, 48px); }
+  .catalog-tabs            { gap: 0; }
+  .catalog-tab-btn         { font-size: 10px; padding: 14px 18px 12px; }
+  .catalog-tab-btn:first-child { padding-left: 0; }
+  .catalog-main            { padding: 12px 12px 40px; }
+  .filter-mobile-bar       { top: 56px; padding: 9px 16px; }
+  .product-grid            { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}

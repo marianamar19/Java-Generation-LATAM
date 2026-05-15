@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo de Perfumes y Joyería — HERA Perfumes &amp; Joyería</title>
+  <meta name="description" content="Descubre nuestra colección de perfumes 100% originales. Diseñador, nicho, árabes, testers y decants. Joyería exclusiva. Filtra por categoría, género y precio. Envío a todo México." />
+
+  <!-- ── CSS Base (Design System) ── -->
+  <link rel="stylesheet" href="../css/base/tokens.css" />
+  <link rel="stylesheet" href="../css/base/reset.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/buttons.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
+
+  <!-- ── CSS Componentes universales ── -->
+  <link rel="stylesheet" href="../css/components/announce-bar.css" />
+  <link rel="stylesheet" href="../css/components/navbar.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+  <link rel="stylesheet" href="../css/components/drawer.css" />
+  <link rel="stylesheet" href="../css/components/product-card.css" />
+
+  <!-- ── CSS Exclusivo de esta página (siempre al final) ── -->
+  <link rel="stylesheet" href="../css/pages/catalogo.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     NAVBAR — inyectado vía fetch por navbar.js
+══════════════════════════════════════ -->
+<div id="navbar-placeholder"></div>
+
+<!-- ══════════════════════════════════════
+     SITE-WRAP
+══════════════════════════════════════ -->
+<div class="site-wrap">
+
+  <!-- ══════════════════════════════════════
+      CATALOG HEADER — editorial oscuro
+  ══════════════════════════════════════ -->
+  <div class="catalog-header">
+    <div class="catalog-eyebrow reveal">Catálogo</div>
+    <h1 class="catalog-title reveal reveal-delay-1">
+      <span id="catalog-title-pre">Nuestros</span>
+      <em id="catalog-title-em">perfumes.</em>
+    </h1>
+    <div class="catalog-tabs reveal reveal-delay-2">
+      <button class="catalog-tab-btn active" data-tab="perfumes">Perfumes</button>
+      <button class="catalog-tab-btn" data-tab="joyeria">Joyería</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+      ANNOUNCE BAR — inyectado vía fetch
+  ══════════════════════════════════════ -->
+  <div id="announce-bar-placeholder"></div>
+
+  <!-- ══════════════════════════════════════
+      MOBILE FILTER BAR — sticky, solo visible en ≤1024px
+  ══════════════════════════════════════ -->
+  <div class="filter-mobile-bar" id="filterMobileBar">
+    <button class="filter-mobile-btn" id="filterOpenBtn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+      Filtrar
+      <span id="filter-badge" class="filter-badge">0</span>
+    </button>
+    <div id="mobile-active-chips"></div>
+    <button class="sort-mobile-btn" id="sortMobileBtn">
+      Ordenar
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+  </div>
+
+  <!-- ══════════════════════════════════════
+      CATALOG LAYOUT — sidebar + main
+  ══════════════════════════════════════ -->
+  <div class="catalog-layout">
+
+    <!-- SIDEBAR (desktop) -->
+    <aside class="catalog-sidebar" id="catalogSidebar">
+      <div class="sidebar-head">
+        <span class="sidebar-title">Filtros</span>
+        <button class="sidebar-clear-all" id="sidebarClearAll">Limpiar todo</button>
+      </div>
+
+      <div class="filter-section" data-tabs="todos perfumes">
+        <div class="filter-section-title">Categoría</div>
+        <div class="filter-option"><input type="checkbox" id="f-diseñador"  data-group="cat" value="diseñador"><label for="f-diseñador">Diseñador</label><span class="filter-count">5</span></div>
+        <div class="filter-option"><input type="checkbox" id="f-nicho"      data-group="cat" value="nicho"><label for="f-nicho">Nicho</label><span class="filter-count">4</span></div>
+        <div class="filter-option"><input type="checkbox" id="f-arabes"     data-group="cat" value="arabes"><label for="f-arabes">Árabes</label><span class="filter-count">3</span></div>
+        <div class="filter-option"><input type="checkbox" id="f-body-mist"  data-group="cat" value="body-mist"><label for="f-body-mist">Body Mist</label><span class="filter-count">0</span></div>
+        <div class="filter-option"><input type="checkbox" id="f-testers"    data-group="cat" value="testers"><label for="f-testers">Testers</label><span class="filter-count">2</span></div>
+        <div class="filter-option"><input type="checkbox" id="f-decants"    data-group="cat" value="decants"><label for="f-decants">Decants</label><span class="filter-count">1</span></div>
+        <div class="filter-option"><input type="checkbox" id="f-sets"       data-group="cat" value="sets"><label for="f-sets">Sets</label><span class="filter-count">2</span></div>
+      </div>
+
+      <div class="filter-section" data-tabs="todos joyeria">
+        <div class="filter-section-title">Tipo de joya</div>
+        <div class="filter-option"><input type="checkbox" id="f-anillos"    data-group="cat" value="anillos"><label for="f-anillos">Anillos</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-aretes"     data-group="cat" value="aretes"><label for="f-aretes">Aretes</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-collares"   data-group="cat" value="collares"><label for="f-collares">Collares</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-brazaletes" data-group="cat" value="brazaletes"><label for="f-brazaletes">Brazaletes</label></div>
+      </div>
+
+      <div class="filter-section" data-tabs="todos perfumes joyeria">
+        <div class="filter-section-title">Género</div>
+        <div class="filter-option"><input type="checkbox" id="f-masculino"  data-group="gen" value="masculino"><label for="f-masculino">Masculino</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-femenino"   data-group="gen" value="femenino"><label for="f-femenino">Femenino</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-unisex"     data-group="gen" value="unisex"><label for="f-unisex">Unisex</label></div>
+      </div>
+
+      <div class="filter-section" data-tabs="todos perfumes">
+        <div class="filter-section-title">Familia olfativa</div>
+        <div class="filter-option"><input type="checkbox" id="f-floral"     data-group="fam" value="floral"><label for="f-floral">Floral</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-oriental"   data-group="fam" value="oriental"><label for="f-oriental">Oriental</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-amaderado"  data-group="fam" value="amaderado"><label for="f-amaderado">Amaderado</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-fresco"     data-group="fam" value="fresco"><label for="f-fresco">Fresco</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-gourmand"   data-group="fam" value="gourmand"><label for="f-gourmand">Gourmand</label></div>
+      </div>
+
+      <div class="filter-section" data-tabs="todos perfumes joyeria">
+        <div class="filter-section-title">Rango de precio (MXN)</div>
+        <div class="price-inputs">
+          <input class="price-input" type="number" id="f-precio-min" placeholder="Mín" min="0">
+          <input class="price-input" type="number" id="f-precio-max" placeholder="Máx" min="0">
+        </div>
+      </div>
+
+      <div class="filter-section" data-tabs="todos perfumes">
+        <div class="filter-section-title">Marca</div>
+        <div class="filter-option"><input type="checkbox" id="f-jenny"       data-group="marca" value="jenny-rivera"><label for="f-jenny">Jenny Rivera</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-abercrombie" data-group="marca" value="abercrombie"><label for="f-abercrombie">Abercrombie &amp; Fitch</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-hera-excl"   data-group="marca" value="hera-exclusivo"><label for="f-hera-excl">HERA Exclusivo</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-hera-arabe"  data-group="marca" value="hera-arabe"><label for="f-hera-arabe">HERA Árabe</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-dior"        data-group="marca" value="dior"><label for="f-dior">Dior</label></div>
+        <div class="filter-option"><input type="checkbox" id="f-byredo"      data-group="marca" value="byredo"><label for="f-byredo">Byredo</label></div>
+      </div>
+
+      <div class="filter-section" data-tabs="todos joyeria">
+        <div class="filter-section-title">Colección</div>
+        <div class="filter-option"><input type="checkbox" id="f-hera-joy" data-group="marca" value="hera-joyeria"><label for="f-hera-joy">HERA Joyería</label></div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="catalog-main">
+
+      <div class="catalog-topbar">
+        <span class="catalog-count" id="catalog-count">Mostrando 12 de 17 productos</span>
+        <div class="catalog-sort-wrap">
+          <span class="sort-label">Ordenar:</span>
+          <select class="sort-select" id="sort-select">
+            <option value="relevancia">Relevancia</option>
+            <option value="precio-asc">Precio: menor a mayor</option>
+            <option value="precio-desc">Precio: mayor a menor</option>
+            <option value="novedades">Novedades primero</option>
+            <option value="bestsellers">Más vendidos</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="active-chips-row" id="active-chips-row"></div>
+      <div class="product-grid" id="product-grid"></div>
+
+      <div class="catalog-empty" id="catalog-empty">
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M8 11h6" opacity=".5"/></svg>
+        <div class="catalog-empty-title">Sin resultados</div>
+        <div class="catalog-empty-sub">Ningún producto coincide con los filtros aplicados</div>
+        <button class="btn-primary" id="emptyStateClearBtn">Limpiar filtros</button>
+      </div>
+
+      <div class="load-more-wrap">
+        <button class="load-more-btn" id="loadMoreBtn">Cargar más productos</button>
+      </div>
+
+    </main>
+  </div><!-- /catalog-layout -->
+
+  <!-- ══════════════════════════════════════
+      FOOTER — inyectado vía fetch por footer.js
+  ══════════════════════════════════════ -->
+  <div id="footer-placeholder"></div>
+
+</div><!-- /site-wrap -->
+
+<!-- ══════════════════════════════════════
+    CART DRAWER — inyectado vía fetch por cart-drawer.js
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
+
+<!-- ══════════════════════════════════════
+    FILTER DRAWER (mobile) — exclusivo de esta página
+══════════════════════════════════════ -->
+<div class="filter-drawer-overlay" id="filterDrawerOverlay"></div>
+<div class="filter-drawer" id="filterDrawer">
+  <div class="filter-drawer-header">
+    <span class="filter-drawer-title">Filtros</span>
+    <button class="filter-drawer-close" id="filterDrawerClose">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="filter-drawer-body">
+    <div class="filter-drawer-section">
+      <div class="filter-drawer-section-title">Categoría</div>
+      <div class="filter-option"><input type="checkbox" id="dm-diseñador" data-group="cat" value="diseñador"><label for="dm-diseñador">Diseñador</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-nicho"     data-group="cat" value="nicho"><label for="dm-nicho">Nicho</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-arabes"    data-group="cat" value="arabes"><label for="dm-arabes">Árabes</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-testers"   data-group="cat" value="testers"><label for="dm-testers">Testers</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-decants"   data-group="cat" value="decants"><label for="dm-decants">Decants</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-sets"      data-group="cat" value="sets"><label for="dm-sets">Sets</label></div>
+    </div>
+    <div class="filter-drawer-section">
+      <div class="filter-drawer-section-title">Género</div>
+      <div class="filter-option"><input type="checkbox" id="dm-masculino" data-group="gen" value="masculino"><label for="dm-masculino">Masculino</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-femenino"  data-group="gen" value="femenino"><label for="dm-femenino">Femenino</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-unisex"    data-group="gen" value="unisex"><label for="dm-unisex">Unisex</label></div>
+    </div>
+    <div class="filter-drawer-section">
+      <div class="filter-drawer-section-title">Familia olfativa</div>
+      <div class="filter-option"><input type="checkbox" id="dm-floral"    data-group="fam" value="floral"><label for="dm-floral">Floral</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-oriental"  data-group="fam" value="oriental"><label for="dm-oriental">Oriental</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-amaderado" data-group="fam" value="amaderado"><label for="dm-amaderado">Amaderado</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-fresco"    data-group="fam" value="fresco"><label for="dm-fresco">Fresco</label></div>
+      <div class="filter-option"><input type="checkbox" id="dm-gourmand"  data-group="fam" value="gourmand"><label for="dm-gourmand">Gourmand</label></div>
+    </div>
+    <div class="filter-drawer-section">
+      <div class="filter-drawer-section-title">Rango de precio</div>
+      <div class="price-inputs">
+        <input class="price-input" type="number" id="dm-precio-min" placeholder="Mín" min="0">
+        <input class="price-input" type="number" id="dm-precio-max" placeholder="Máx" min="0">
+      </div>
+    </div>
+  </div>
+  <div class="filter-drawer-footer">
+    <button class="filter-reset-btn" id="filterDrawerReset">Limpiar</button>
+    <button class="filter-apply-btn" id="filterDrawerApply">Aplicar</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+    SCRIPT — ES Module, único punto de entrada
+══════════════════════════════════════ -->
+<script type="module" src="../js/pages/catalogo.js"></script>
+
+</body>
+</html>

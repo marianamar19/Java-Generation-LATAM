@@ -1,0 +1,867 @@
+/* ============================================================
+  contacto.css — HERA Design System
+  Descripción: Estilos exclusivos de la página Contacto.
+              Cubre tres secciones: (1) hero negro con avatar
+              circular animado y scroll hint, (2) split de dos
+              columnas con info de contacto y formulario, y
+              (3) strip de datos rápidos sobre fondo rojo.
+              Los estilos de navbar, footer, cart drawer, fav
+              rows y scroll reveal viven en sus archivos de
+              componente correspondientes.
+  Usado por:   pages/contacto.html
+   ============================================================ */
+
+/* ══════════════════════════════════════════════════
+  SECCIÓN 1 — HERO (NEGRO)
+  ── CONTACT HERO — comportamiento por breakpoint
+    Desktop  (>1024px): centrado, avatar circular, headline grande
+    Tablet   (≤1024px): mismo layout, sin cambios visuales
+    Móvil    (≤768px):  padding reducido, tipografía ajustada
+  ──
+══════════════════════════════════════════════════ */
+
+/* ── Sección: Contenedor del hero ──────────────────────────── */
+.contact-hero {
+  background: var(--black);
+  padding: 96px 40px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gradiente radial sutil en la parte superior — evoca una luz sobre el avatar */
+.contact-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(225, 34, 43, .07) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+/* ── Sección: Avatar circular ──────────────────────────────── */
+.avatar-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  z-index: 1;
+}
+
+.avatar-ring {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Círculo interior con gradiente de sombra en la parte baja */
+.avatar-circle {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  background: var(--dgray);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Vignette inferior — da profundidad al placeholder del avatar */
+.avatar-circle::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: linear-gradient(to bottom, transparent, rgba(15, 15, 15, .6));
+}
+
+.avatar-circle svg {
+  opacity: .35;
+  position: relative;
+  z-index: 1;
+}
+
+.avatar-circle-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(249, 249, 249, .3);
+  position: relative;
+  z-index: 1;
+}
+
+/*Adaptación del avatar a imagen*/
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top; /* prioriza la cara */
+  border-radius: 50%;
+  display: block;
+}
+
+/* ── Sección: Indicador de estado "En línea" ────────────────── */
+.avatar-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(249, 249, 249, .06);
+  border: 1px solid rgba(249, 249, 249, .12);
+  padding: 6px 14px 6px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(249, 249, 249, .65);
+  margin-top: 16px;
+}
+
+/* Punto verde pulsante — señal visual de disponibilidad en tiempo real */
+.avatar-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: statusPulse 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes statusPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, .5); }
+  50%       { box-shadow: 0 0 0 4px rgba(34, 197, 94, 0); }
+}
+
+.avatar-name {
+  margin-top: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(249, 249, 249, .5);
+  text-align: center;
+}
+
+.avatar-role {
+  margin-top: 4px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(249, 249, 249, .25);
+  text-align: center;
+}
+
+/* ── Sección: Headline del hero ─────────────────────────────── */
+.contact-hero-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--red);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  z-index: 1;
+}
+
+/* Líneas decorativas a ambos lados del eyebrow */
+.contact-hero-eyebrow::before,
+.contact-hero-eyebrow::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1.5px;
+  background: var(--red);
+}
+
+.contact-hero-title {
+  font-family: var(--sans);
+  font-size: clamp(42px, 6vw, 82px);
+  font-weight: 700;
+  letter-spacing: -.025em;
+  line-height: .95;
+  color: var(--cream);
+  margin-bottom: 18px;
+  z-index: 1;
+}
+
+.contact-hero-title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(249, 249, 249, .3);
+  display: block;
+}
+
+.contact-hero-sub {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-style: italic;
+  color: rgba(249, 249, 249, .4);
+  max-width: 440px;
+  line-height: 1.6;
+  z-index: 1;
+  margin-bottom: 0;
+}
+
+/* ── Sección: Scroll hint animado ──────────────────────────── */
+/* Flecha vertical animada que guía al usuario hacia abajo */
+.contact-scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(249, 249, 249, .2);
+}
+
+/* Línea que se anima como una flecha deslizante hacia abajo */
+.contact-scroll-arrow {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(249, 249, 249, .2), transparent);
+  animation: scrollArrow 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollArrow {
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ══════════════════════════════════════════════════
+  SECCIÓN 2 — SPLIT (CREAM)
+  ── CONTACT SPLIT — comportamiento por breakpoint
+    Desktop  (>1024px): dos columnas iguales, info izq, form der
+    Tablet   (≤1024px): dos columnas, padding reducido
+    Móvil    (≤768px):  columna única, info arriba, formulario abajo
+  ──
+══════════════════════════════════════════════════ */
+
+/* ── Sección: Contenedor split ─────────────────────────────── */
+.contact-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 600px;
+  background: var(--cream);
+}
+
+/* ── Sección: Columna izquierda — info de contacto ─────────── */
+.contact-info {
+  padding: 80px 64px 80px 80px;
+  border-right: 1px solid var(--lgray);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contact-info-top {}
+
+.contact-info-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 20px;
+}
+
+.contact-info-title {
+  font-family: var(--sans);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.05;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+
+.contact-info-title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(15, 15, 15, .3);
+}
+
+.contact-info-desc {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(15, 15, 15, .55);
+  line-height: 1.65;
+  margin-bottom: 48px;
+  max-width: 360px;
+}
+
+/* ── Sección: Items de contacto (email, teléfono, ubicación, horario) */
+.contact-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 48px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--lgray);
+  transition: background .2s;
+}
+
+.contact-item:first-child { border-top: 1px solid var(--lgray); }
+
+/* Ícono cuadrado rojo — consistente con el Design System */
+.contact-item-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.contact-item-body {}
+
+.contact-item-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(15, 15, 15, .35);
+  margin-bottom: 4px;
+}
+
+.contact-item-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.contact-item-sub {
+  font-size: 12px;
+  color: rgba(15, 15, 15, .45);
+  margin-top: 2px;
+}
+
+.contact-item-link {
+  color: var(--black);
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.contact-item-link:hover { color: var(--red); }
+
+/* ── Sección: Redes sociales (info col) ────────────────────── */
+.contact-socials {
+  display: flex;
+  gap: 0;
+}
+
+/* Botones con borde compartido (margin-right: -1px) para aspecto de grupo */
+.contact-social-btn {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--lgray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dgray);
+  text-decoration: none;
+  transition: all .2s;
+  margin-right: -1px;
+}
+
+.contact-social-btn:hover {
+  background: var(--black);
+  color: #fff;
+  border-color: var(--black);
+  z-index: 1;
+}
+
+.contact-socials-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(15, 15, 15, .3);
+  margin-bottom: 14px;
+}
+
+/* ── Sección: Columna derecha — formulario ─────────────────── */
+.contact-form-col {
+  padding: 80px 80px 80px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.contact-form-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(15, 15, 15, .35);
+  margin-bottom: 20px;
+}
+
+.contact-form-title {
+  font-family: var(--sans);
+  font-size: clamp(24px, 2.5vw, 34px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.1;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+
+.contact-form-title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(15, 15, 15, .3);
+}
+
+.contact-form-desc {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: rgba(15, 15, 15, .45);
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+/* ── Sección: Campos del formulario ────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+/* Cada campo usa un borde-bottom en lugar de un box tradicional —
+   produce la estética de formulario editorial minimalista */
+.form-field {
+  position: relative;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--lgray);
+}
+
+/* En una fila de dos columnas, solo la primera tiene borde derecho */
+.form-row .form-field:first-child { border-right: 1px solid var(--lgray); }
+
+.form-field label {
+  display: block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(15, 15, 15, .4);
+  margin-bottom: 0;
+  padding: 18px 20px 0;
+  pointer-events: none;
+  transition: color .2s;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  display: block;
+  width: 100%;
+  padding: 6px 20px 16px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--black);
+  resize: none;
+  -webkit-appearance: none;
+}
+
+.form-field textarea {
+  min-height: 140px;
+  padding-top: 8px;
+}
+
+/* Línea roja animada en focus — reemplaza el outline del navegador */
+.form-field::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+}
+
+.form-field:focus-within::after { transform: scaleX(1); }
+.form-field:focus-within label  { color: var(--red); }
+
+/* Al enfocarse, el borde inferior del campo cede a la línea animada */
+.form-field:focus-within { border-bottom-color: transparent; }
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: rgba(15, 15, 15, .22);
+}
+
+/* ── Sección: Selector de asunto ────────────────────────────── */
+/* Botones visuales tipo chip — alternativa accesible a un <select> */
+.asunto-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  padding: 8px 20px 14px;
+}
+
+.asunto-opt {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border: 1px solid var(--lgray);
+  cursor: pointer;
+  color: rgba(15, 15, 15, .4);
+  background: transparent;
+  transition: all .18s;
+  margin: 0 -1px -1px 0;
+  user-select: none;
+  position: relative;
+}
+
+.asunto-opt:hover {
+  border-color: var(--black);
+  color: var(--black);
+  z-index: 1;
+}
+
+.asunto-opt.selected {
+  background: var(--black);
+  color: #fff;
+  border-color: var(--black);
+  z-index: 2;
+}
+
+/* Borde superior del bloque de asunto — separa visualmente de la fila anterior */
+.form-border-top { border-top: 1px solid var(--lgray); }
+
+/* ── Overrides de bordes por ID — ajustan el flujo de líneas del formulario */
+#field-telefono { flex: 1; }
+#field-asunto   { border-bottom: 1px solid var(--lgray); }
+#field-mensaje  { border-bottom: none; }
+
+/* ── Sección: Botón de envío ────────────────────────────────── */
+.btn-submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 22px 28px;
+  background: var(--black);
+  border: none;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #fff;
+  transition: background .22s;
+  gap: 16px;
+  margin-top: 0;
+}
+
+.btn-submit:hover { background: var(--red); }
+
+/* La flecha se desliza hacia la derecha en hover — refuerza la acción */
+.btn-submit svg { transition: transform .22s; }
+.btn-submit:hover svg { transform: translateX(4px); }
+
+/* ── Sección: Estados de error en campos ────────────────────── */
+.field-error {
+  font-size: 10px;
+  color: var(--red);
+  font-weight: 600;
+  letter-spacing: .06em;
+  padding: 4px 20px 8px;
+  display: none;
+}
+
+/* El error solo se muestra cuando el campo tiene la clase .has-error */
+.form-field.has-error .field-error          { display: block; }
+.form-field.has-error::after                { transform: scaleX(1); background: var(--red); }
+
+/* ── Sección: Estado de éxito post-envío ───────────────────── */
+.form-success {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+  gap: 20px;
+  border: 1px solid var(--lgray);
+}
+
+.form-success.show { display: flex; }
+
+.form-success-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.form-success-title {
+  font-family: var(--sans);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--black);
+}
+
+.form-success-title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(15, 15, 15, .35);
+}
+
+.form-success-sub  { font-family: var(--serif); font-size: 15px; color: rgba(15, 15, 15, .5); }
+
+.form-success-back {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(15, 15, 15, .4);
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: color .2s;
+  padding: 0;
+}
+
+.form-success-back:hover { color: var(--red); }
+
+/* ══════════════════════════════════════════════════
+  SECCIÓN 3 — DATOS RÁPIDOS (ROJO)
+  ── CONTACT STRIP — comportamiento por breakpoint
+    Desktop  (>1024px): grid 3 columnas, separadores verticales
+    Tablet   (≤1024px): columna única, separadores horizontales, centrado
+    Móvil    (≤768px):  columna única, mismo que tablet, padding reducido
+  ──
+══════════════════════════════════════════════════ */
+
+/* ── Sección: Strip rojo de estadísticas ───────────────────── */
+.contact-strip {
+  background: var(--red);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid rgba(249, 249, 249, .06);
+}
+
+.contact-strip-item {
+  padding: 52px 48px;
+  border-right: 1px solid rgba(249, 249, 249, .15);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-strip-item:last-child { border-right: none; }
+
+/* Número grande — impacto visual de los datos rápidos */
+.strip-num {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -.03em;
+  color: #fff;
+  line-height: 1;
+}
+
+/* Unidad del número en serif italic — contraste tipográfico */
+.strip-num span {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255, 255, 255, .55);
+  font-size: .55em;
+}
+
+.strip-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .65);
+}
+
+.strip-sub {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: rgba(255, 255, 255, .7);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════
+  BREAKPOINT: TABLET — ≤1024px
+═══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  /* ── CONTACT SPLIT — padding reducido en tablet ── */
+  .contact-info     { padding: 64px 40px; }
+  .contact-form-col { padding: 64px 40px; }
+
+  /* ── CONTACT STRIP — columna única en tablet, centrado ── */
+  .contact-strip { grid-template-columns: 1fr; }
+  .contact-strip-item {
+    border-right: none;
+    border-bottom: 1px solid rgba(249, 249, 249, .15);
+    padding: 36px 40px;
+    text-align: center;
+    align-items: center;
+  }
+  .contact-strip-item:last-child { border-bottom: none; }
+}
+
+/* ═══════════════════════════════════════
+  BREAKPOINT: MÓVIL — ≤768px
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* ── CONTACT HERO ── */
+  .contact-hero       { padding: 72px 24px 64px; }
+  .contact-hero-title { font-size: clamp(36px, 10vw, 56px); }
+  .avatar-wrap        { margin-bottom: 32px; }
+
+  /* ── CONTACT SPLIT — columna única, info arriba / form abajo ── */
+  .contact-split { grid-template-columns: 1fr; }
+
+  .contact-info {
+    padding: 48px 24px 40px;
+    border-right: none;
+    border-bottom: 1px solid var(--lgray);
+    align-items: center;
+    text-align: center;
+  }
+
+  /* En móvil los textos se centran pero los items de contacto quedan alineados */
+  .contact-info-eyebrow  { text-align: center; }
+  .contact-info-title    { text-align: center; }
+  .contact-info-desc     { text-align: center; max-width: 100%; }
+  .contact-items         { width: 100%; }
+
+  .contact-item {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    justify-content: flex-start;
+  }
+
+  .contact-item-body { text-align: left; }
+
+  .contact-socials {
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* En móvil los social buttons se separan para mejor touch target */
+  .contact-social-btn { width: 48px; height: 48px; margin-right: 0; }
+
+  /* ── FORM — centrado en móvil ── */
+  .contact-form-col {
+    padding: 48px 24px 56px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .contact-form-eyebrow { text-align: center; }
+  .contact-form-title   { text-align: center; }
+  .contact-form-desc    { text-align: center; }
+  #formWrapper          { width: 100%; }
+
+  /* Las filas de dos columnas se apilan verticalmente */
+  .form-row { grid-template-columns: 1fr; }
+  .form-row .form-field:first-child { border-right: none; }
+
+  /* Los campos mantienen alineación a la izquierda para legibilidad */
+  .form-field label    { text-align: left; }
+  .form-field input,
+  .form-field textarea { text-align: left; }
+
+  /* Los botones de asunto pasan a grid 2×2 para mejor touch */
+  .asunto-opts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 12px 20px 16px;
+  }
+
+  .asunto-opt {
+    margin: 0;
+    padding: 12px 10px;
+    text-align: center;
+    font-size: 10px;
+    border: 1px solid var(--lgray);
+  }
+
+  /* Si el número de opciones es impar, el último ocupa toda la fila */
+  .asunto-opt:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+
+/* ═══════════════════════════════════════
+  BREAKPOINT: MÓVIL PEQUEÑO — ≤480px
+═══════════════════════════════════════ */
+@media (max-width: 480px) {
+  .contact-hero       { padding: 60px 16px 56px; }
+  .contact-info       { padding: 40px 16px 32px; }
+  .contact-form-col   { padding: 40px 16px 48px; }
+
+  /* En pantallas muy pequeñas el asunto pasa a columna única */
+  .asunto-opts { grid-template-columns: 1fr; }
+  .asunto-opt:last-child:nth-child(odd) { grid-column: auto; }
+
+  .contact-strip-item { padding: 40px 24px; }
+  .strip-num          { font-size: 48px; }
+}

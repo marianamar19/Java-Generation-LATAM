@@ -1,0 +1,159 @@
+/* ============================================================
+  404.css — HERA Design System
+  Descripción: Estilos exclusivos de la página de error 404.
+              Contiene el hero de pantalla completa sobre fondo
+              negro, el número decorativo superpuesto, los
+              elementos editoriales de contenido y el decorador
+              de pie. El scroll reveal se controla desde Layout.css
+              pero los tokens .reveal ya están en el contexto global.
+  Usado por:   pages/404.html
+   ============================================================ */
+
+/* ══════════════════════════════════════════════════
+  HERO 404
+  ── HERO 404 — comportamiento por breakpoint
+    Desktop  (>1024px): pantalla completa menos nav, padding 100px 80px
+    Tablet   (≤1024px): padding 72px 48px, número decorativo reducido
+    Móvil    (≤768px):  número decorativo oculto, padding 80px 20px
+  ──
+══════════════════════════════════════════════════ */
+
+/* ── Sección: Contenedor principal ─────────────────────────── */
+.hero-404 {
+  background: var(--black);
+  position: relative;
+}
+
+.hero-404-inner {
+  position: relative;
+  padding: 100px 80px 80px;
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ── Sección: Número decorativo de fondo ───────────────────── */
+/* Solo visual — pointer-events y user-select deshabilitados
+   para que no interfiera con la interacción del usuario */
+.num-deco {
+  position: absolute;
+  left: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--sans);
+  font-size: clamp(180px, 20vw, 280px);
+  font-weight: 700;
+  letter-spacing: -.05em;
+  line-height: 1;
+  color: rgba(249, 249, 249, .04);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* ── Sección: Contenido editorial ──────────────────────────── */
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+}
+
+/* Título principal — sans para "Esta página", serif italic para "no existe." */
+.hero-h1-404 {
+  font-family: var(--sans);
+  font-size: clamp(44px, 5.5vw, 72px);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: .94;
+  color: var(--cream);
+  margin-bottom: 28px;
+}
+
+.hero-h1-404 em {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(249, 249, 249, .38);
+}
+
+/* Subtítulo informativo — guía al usuario hacia la acción */
+.hero-sub-404 {
+  font-family: var(--serif);
+  font-size: clamp(17px, 1.8vw, 20px);
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(249, 249, 249, .42);
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 44px;
+}
+
+/* Texto de invitación — tono más suave, dirige al nav/footer */
+.hero-invite {
+  font-family: var(--serif);
+  font-size: clamp(14px, 1.4vw, 16px);
+  font-style: italic;
+  color: rgba(249, 249, 249, .22);
+  line-height: 1.7;
+  margin-top: 32px;
+}
+
+/* ── Sección: Decorador de pie ─────────────────────────────── */
+/* Elemento visual fijo en la esquina inferior izquierda
+   del hero — línea + label técnico del error */
+.hero-deco-foot {
+  position: absolute;
+  bottom: 44px;
+  left: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1;
+}
+
+.hero-deco-line {
+  width: 60px;
+  height: 1px;
+  background: rgba(249, 249, 249, .08);
+}
+
+.hero-deco-label {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(249, 249, 249, .2);
+}
+
+/* ═══════════════════════════════════════
+  BREAKPOINT: TABLET — ≤1024px
+═══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  /* ── HERO 404 — tablet ── */
+  .hero-404-inner {
+    padding: 72px 48px 80px;
+    min-height: calc(100vh - 64px);
+  }
+
+  /* Número decorativo reducido en tablet para no ocupar demasiado espacio */
+  .num-deco { font-size: clamp(120px, 14vw, 200px); }
+
+  .hero-deco-foot { left: 48px; }
+}
+
+/* ═══════════════════════════════════════
+  BREAKPOINT: MÓVIL — ≤768px
+═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* ── HERO 404 — móvil ── */
+  .hero-404-inner {
+    padding: 80px 20px 60px;
+    /* En móvil se elimina min-height para no forzar scroll innecesario */
+    min-height: auto;
+  }
+
+  /* Número decorativo oculto en móvil — demasiado grande para el viewport */
+  .num-deco { display: none; }
+
+  .hero-deco-foot { left: 20px; bottom: 28px; }
+}

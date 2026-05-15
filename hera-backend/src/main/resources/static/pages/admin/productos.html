@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Productos — HERA Admin</title>
+
+  <link rel="stylesheet" href="../../css/base/typography.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <link rel="stylesheet" href="../../css/admin/tokens-admin.css" />
+  <link rel="stylesheet" href="../../css/admin/base-admin.css" />
+  <link rel="stylesheet" href="../../css/admin/layout-admin.css" />
+  <link rel="stylesheet" href="../../css/admin/components-admin.css" />
+  <link rel="stylesheet" href="../../css/admin/productos.css" />
+</head>
+<body>
+
+<div class="adm-wrap">
+
+  <div id="adm-sidebar-placeholder"></div>
+
+  <div class="adm-main">
+
+    <header class="adm-topbar">
+      <div class="adm-topbar-left">
+        <h1 class="adm-topbar-title">Productos</h1>
+        <span class="adm-topbar-count" id="prod-count"></span>
+      </div>
+      <div class="adm-avatar" aria-label="Usuario administrador">AD</div>
+    </header>
+
+    <main class="adm-content">
+
+      <!-- BARRA DE ACCIONES -->
+      <div class="adm-actions">
+        <div class="d-flex gap-2 flex-wrap align-items-center flex-fill">
+          <div class="input-group input-group-sm" style="max-width:280px;">
+            <input type="text" class="form-control" id="prod-search"
+              placeholder="Buscar por nombre o marca..." />
+            <button class="btn btn-outline-secondary" type="button">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
+          </div>
+          <select class="form-select form-select-sm" id="filter-tipo" style="max-width:150px;">
+            <option value="">Todos los tipos</option>
+            <option value="perfumes">Perfumes</option>
+            <option value="joyeria">Joyería</option>
+          </select>
+          <select class="form-select form-select-sm" id="filter-nivel" style="max-width:170px;">
+            <option value="">Toda disponibilidad</option>
+            <option value="green">En existencia</option>
+            <option value="yellow">Disp. limitada</option>
+            <option value="red">Pieza exclusiva</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-sm" id="btn-nuevo">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nuevo producto
+        </button>
+      </div>
+
+      <!-- TABLA -->
+      <div class="adm-card-table">
+        <table class="table table-hover adm-table mb-0">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Tipo / Género</th>
+              <th>Categoría</th>
+              <th>Conc/Mat</th>
+              <th>Precio base</th>
+              <th>Variantes</th>
+              <th>Flags</th>
+              <th>Disponibilidad</th>
+              <th>Activo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="prod-tbody"></tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL — Formulario de producto
+══════════════════════════════════════ -->
+<div class="modal fade adm-modal" id="prod-modal" tabindex="-1"
+     aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">Nuevo producto</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <!-- TABS -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-identidad" type="button" role="tab">Identidad</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-precio" type="button" role="tab">Precio y variantes</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-merch" type="button" role="tab">Merchandising</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-contexto" type="button" role="tab">Contexto</button>
+        </li>
+      </ul>
+
+      <div class="modal-body">
+        <div class="tab-content">
+
+          <!-- TAB: IDENTIDAD -->
+          <div class="tab-pane fade show active" id="tab-identidad" role="tabpanel">
+            <div class="d-flex gap-3" style="align-items:start;">
+
+              <!-- Columna izquierda: imágenes -->
+              <div style="width:150px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;">
+                <div class="adm-img-preview adm-drop-zone" id="img-preview" style="position:relative;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                  <span>Arrastra aquí</span>
+                </div>
+                <div class="adm-gallery-grid" id="galeria-imagenes-list">
+                  <span style="font-size:10px;color:var(--adm-muted);">Galería vacía</span>
+                </div>
+                <div class="input-group input-group-sm">
+                  <input class="form-control" type="text" id="f-imagen-url" placeholder="URL imagen..." />
+                  <button class="btn btn-outline-secondary" type="button" id="btn-agregar-imagen">+</button>
+                </div>
+              </div>
+
+              <!-- Columna derecha: campos -->
+              <div class="flex-fill">
+
+                <div class="row g-2 mb-2">
+                  <div class="col-4">
+                    <label class="form-label" for="f-brand">Marca <span class="req">*</span></label>
+                    <input class="form-control form-control-sm" type="text" id="f-brand" placeholder="Ej: Dior" />
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" for="f-name">Nombre <span class="req">*</span></label>
+                    <input class="form-control form-control-sm" type="text" id="f-name" placeholder="Ej: Sauvage" />
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" id="lbl-conc-mat" for="f-conc-mat">Concentración <span class="req">*</span></label>
+                    <select class="form-select form-select-sm" id="f-conc-mat">
+                      <option value="">Seleccionar</option>
+                      <option value="EDP">EDP</option>
+                      <option value="EDT">EDT</option>
+                      <option value="EDC">EDC</option>
+                      <option value="PAR">Parfum</option>
+                      <option value="ELI">Elixir</option>
+                      <option value="FRA">Fragancia (Body Mist)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row g-2 mb-2">
+                  <div class="col-4">
+                    <label class="form-label" for="f-tipo">Tipo <span class="req">*</span></label>
+                    <select class="form-select form-select-sm" id="f-tipo">
+                      <option value="">Seleccionar</option>
+                      <option value="perfumes">Perfumes</option>
+                      <option value="joyeria">Joyería</option>
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" for="f-cat">Categoría <span class="req">*</span></label>
+                    <select class="form-select form-select-sm" id="f-cat">
+                      <option value="">Seleccionar</option>
+                      <option value="Diseñador">Diseñador</option>
+                      <option value="Árabe">Árabe</option>
+                      <option value="Nicho">Nicho</option>
+                      <option value="Exclusivo">Exclusivo</option>
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" for="f-gen">Género <span class="req">*</span></label>
+                    <select class="form-select form-select-sm" id="f-gen">
+                      <option value="">Seleccionar</option>
+                      <option value="masculino">Masculino</option>
+                      <option value="femenino">Femenino</option>
+                      <option value="unisex">Unisex</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row g-2 mb-2">
+                  <div class="col-4">
+                    <label class="form-label" for="f-fam">Familia olfativa</label>
+                    <select class="form-select form-select-sm" id="f-fam">
+                      <option value="">Sin familia</option>
+                      <option value="floral">Floral</option>
+                      <option value="oriental">Oriental</option>
+                      <option value="amaderado">Amaderado</option>
+                      <option value="fresco">Fresco</option>
+                      <option value="gourmand">Gourmand</option>
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" for="f-pais">País de origen</label>
+                    <input class="form-control form-control-sm" type="text" id="f-pais" placeholder="Ej: Francia" />
+                  </div>
+                  <div class="col-4">
+                    <label class="form-label" for="f-anio">Año de lanzamiento</label>
+                    <input class="form-control form-control-sm" type="number" id="f-anio" placeholder="Ej: 2015" />
+                  </div>
+                </div>
+
+                <div class="row g-2">
+                  <div class="col-12">
+                    <label class="form-label" for="f-descripcion">Descripción</label>
+                    <textarea class="form-control form-control-sm" id="f-descripcion"
+                      rows="5" placeholder="Describe el producto..."></textarea>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: PRECIO Y VARIANTES -->
+          <div class="tab-pane fade" id="tab-precio" role="tabpanel">
+            <div class="row g-3 mb-3">
+              <div class="col-6">
+                <label class="form-label" for="f-precio-base">Precio base (MXN) <span class="req">*</span></label>
+                <input class="form-control" type="number" id="f-precio-base"
+                  placeholder="Ej: 2490" min="1" step="1" readonly/>
+              </div>
+            </div>
+            <label class="form-label">Variantes</label>
+              <div class="d-flex gap-2 mt-1 mb-1 px-1" style="font-size:10px;color:var(--adm-muted);text-transform:uppercase;letter-spacing:.06em;">
+                <span style="flex:2;">Presentación</span>
+                <span style="flex:1;">Precio MXN</span>
+                <span style="flex:1;">Stock</span>
+                <span style="width:30px;flex-shrink:0;"></span>
+              </div>
+              <div id="variants-list" class="d-flex flex-column gap-2 mb-3"></div>
+            <button class="btn btn-outline-secondary btn-sm w-100" id="btn-add-variant" type="button"
+              style="border-style:dashed;font-size:11px;letter-spacing:.06em;text-transform:uppercase;">
+              + Agregar variante
+            </button>
+          </div>
+
+          <!-- TAB: MERCHANDISING -->
+          <div class="tab-pane fade" id="tab-merch" role="tabpanel">
+            <div class="row g-3 mb-3">
+              <div class="col-6">
+                <label class="form-label" for="f-nivel">Disponibilidad <span class="req">*</span></label>
+                <select class="form-select" id="f-nivel">
+                  <option value="">Seleccionar</option>
+                  <option value="green">En existencia</option>
+                  <option value="yellow">Disponibilidad limitada</option>
+                  <option value="red">Pieza exclusiva</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label" for="f-badge">Badge</label>
+                <input class="form-control" type="text" id="f-badge" placeholder="Ej: -20%, Más vendido" />
+              </div>
+            </div>
+            <div class="d-flex flex-column gap-1">
+              <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                <div>
+                  <div class="form-label mb-0">Marcar como nuevo</div>
+                  <div class="form-text">Aparece en sección "Novedades" del index</div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" id="f-nuevo" role="switch" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                <div>
+                  <div class="form-label mb-0">Marcar como bestseller</div>
+                  <div class="form-text">Aparece en el carrusel del index</div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" id="f-bestseller" role="switch" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                <div>
+                  <div class="form-label mb-0">Marcar como destacado</div>
+                  <div class="form-text">Aparece en la hero card del index</div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" id="f-destacado" role="switch" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center py-2">
+                <div>
+                  <div class="form-label mb-0">Producto activo en el sitio</div>
+                  <div class="form-text">Visible para los clientes</div>
+                </div>
+                <div class="form-check form-switch mb-0">
+                  <input class="form-check-input" type="checkbox" id="f-activo" role="switch" checked />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB: CONTEXTO -->
+          <div class="tab-pane fade" id="tab-contexto" role="tabpanel">
+
+            <div class="row g-3 mb-4">
+              <div class="col-6">
+                <label class="form-label" for="f-perfumista">Perfumista</label>
+                <input class="form-control form-control-sm" type="text" id="f-perfumista" placeholder="Ej: François Demachy" />
+              </div>
+            </div>
+
+            <hr class="my-3" />
+
+            <div class="mb-4">
+              <div class="form-label fw-semibold mb-2" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;">Notas olfativas</div>
+              <div class="row g-3">
+                <div class="col-4">
+                  <label class="form-label" style="font-size:11px;color:var(--adm-muted);">Salida (Head)</label>
+                  <div class="adm-tags-input" id="tags-head">
+                    <div class="adm-tags-list" id="tags-head-list"></div>
+                    <input class="adm-tags-field" type="text" id="tags-head-input" placeholder="Escribe y Enter..." />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label class="form-label" style="font-size:11px;color:var(--adm-muted);">Corazón (Heart)</label>
+                  <div class="adm-tags-input" id="tags-heart">
+                    <div class="adm-tags-list" id="tags-heart-list"></div>
+                    <input class="adm-tags-field" type="text" id="tags-heart-input" placeholder="Escribe y Enter..." />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label class="form-label" style="font-size:11px;color:var(--adm-muted);">Base</label>
+                  <div class="adm-tags-input" id="tags-base">
+                    <div class="adm-tags-list" id="tags-base-list"></div>
+                    <input class="adm-tags-field" type="text" id="tags-base-input" placeholder="Escribe y Enter..." />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-3" />
+
+            <div class="mb-4">
+              <div class="form-label fw-semibold mb-3" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;">Rendimiento</div>
+              <div class="row g-4">
+                <div class="col-6">
+                  <label class="form-label d-flex justify-content-between" for="f-longevidad">
+                    <span>Longevidad</span><span class="adm-slider-val" id="val-longevidad">3</span>
+                  </label>
+                  <input type="range" class="form-range" id="f-longevidad" min="1" max="5" step="1" value="3" />
+                  <div class="d-flex justify-content-between" style="font-size:10px;color:var(--adm-muted);">
+                    <span>Efímero</span><span>Excepcional</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label d-flex justify-content-between" for="f-estela">
+                    <span>Estela (Sillage)</span><span class="adm-slider-val" id="val-estela">3</span>
+                  </label>
+                  <input type="range" class="form-range" id="f-estela" min="1" max="5" step="1" value="3" />
+                  <div class="d-flex justify-content-between" style="font-size:10px;color:var(--adm-muted);">
+                    <span>Íntimo</span><span>Invasivo</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-3" />
+
+            <div class="mb-4">
+              <div class="form-label fw-semibold mb-2" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;">Temporadas</div>
+              <div class="d-flex flex-wrap gap-2" id="ctx-temporadas">
+                <label class="adm-ctx-chip"><input type="checkbox" value="1" /> Primavera</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="2" /> Verano</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="3" /> Otoño</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="4" /> Invierno</label>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <div class="form-label fw-semibold mb-2" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;">Momentos del día</div>
+              <div class="d-flex flex-wrap gap-2" id="ctx-momentos">
+                <label class="adm-ctx-chip"><input type="checkbox" value="1" /> Día</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="2" /> Noche</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="3" /> Todo el día</label>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <div class="form-label fw-semibold mb-2" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;">Ocasiones</div>
+              <div class="d-flex flex-wrap gap-2" id="ctx-ocasiones">
+                <label class="adm-ctx-chip"><input type="checkbox" value="1" /> Casual</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="2" /> Trabajo</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="3" /> Cita</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="4" /> Gala / Evento</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="5" /> Deportivo</label>
+                <label class="adm-ctx-chip"><input type="checkbox" value="6" /> Vacaciones</label>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="btn-save-product">Guardar producto</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index:9999;">
+  <div id="adm-toast" class="toast text-white border-0" role="status" aria-live="polite">
+    <div class="d-flex align-items-center">
+      <div class="toast-body d-flex align-items-center gap-2">
+        <span id="toast-dot" style="width:7px;height:7px;border-radius:50%;flex-shrink:0;display:inline-block;"></span>
+        <span id="toast-msg"></span>
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 ms-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="../../js/admin/productos.js"></script>
+
+</body>
+</html>

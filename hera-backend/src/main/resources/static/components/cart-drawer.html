@@ -1,0 +1,37 @@
+<div class="cart-overlay" id="cart-overlay"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-header">
+    <span class="cart-drawer-title">Tu carrito <span id="cart-drawer-count">(0)</span></span>
+    <button class="cart-drawer-close" id="cart-close" aria-label="Cerrar carrito">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+  <div class="cart-items" id="cart-items-list"></div>
+  <div class="cart-empty" id="cart-empty">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+    </svg>
+    <p>Tu carrito está vacío.<br>Explora nuestra colección.</p>
+    <button class="btn-primary btn-primary--sm" id="cart-empty-cta">Explorar perfumes</button>
+  </div>
+  <div class="cart-footer" id="cart-footer">
+    <div class="cart-shipping-wrap">
+      <div class="cart-shipping-row">
+        <span class="cart-shipping-label">Envío gratis a partir de</span>
+        <span class="cart-shipping-value">$1,500 MXN</span>
+      </div>
+      <div class="cart-shipping-track"><div id="shipping-bar"></div></div>
+      <p id="shipping-msg"></p>
+    </div>
+    <div class="cart-subtotal">
+      <span class="cart-subtotal-label">Subtotal</span>
+      <span class="cart-subtotal-value" id="cart-total">$0 MXN</span>
+    </div>
+    <p class="cart-disclaimer">Impuestos e información de envío calculados al finalizar.</p>
+    <button class="cart-checkout-btn" id="cart-checkout-btn">Proceder al pago →</button>
+    <button class="cart-continue-btn" id="cart-continue-btn">Seguir comprando</button>
+  </div>
+</div>

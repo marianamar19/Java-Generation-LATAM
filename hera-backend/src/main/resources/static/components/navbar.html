@@ -1,0 +1,292 @@
+<!-- ══════════════════════════════════════
+    COMPONENTE: navbar.html
+    Fragmento HTML del navbar universal.
+    Inyectado en todas las páginas vía loadNavbar() desde js/components/navbar.js.
+    Incluye: overlay móvil, panel lateral, nav desktop y search overlay.
+══════════════════════════════════════ -->
+
+<!-- ══════════════════════════════════════
+    SECCIÓN: Overlay del menú móvil
+    position:fixed — no afecta el flujo del layout
+══════════════════════════════════════ -->
+<div class="nav-mobile-overlay" id="navMobileOverlay"></div>
+
+<!-- ══════════════════════════════════════
+    SECCIÓN: Panel de navegación móvil
+    Desliza desde la izquierda al abrir el hamburger
+══════════════════════════════════════ -->
+<div class="nav-mobile-panel" id="navMobilePanel">
+  <div class="nav-mobile-header">
+    <div class="nav-mobile-spacer"></div>
+    <!-- Logo centrado — reemplaza con <img src="../assets/images/logo.svg" alt="HERA"> -->
+      <div class="nav-mobile-logo-wrap">
+        <img
+          src="https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777263736/Isologo_negativo_qvddrn.svg"
+          alt="HERA"
+          id="nav-mobile-logo-img"
+        >
+      </div>
+    <button class="nav-mobile-close" id="navMobileClose" aria-label="Cerrar menú">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="nav-mobile-links">
+    <!-- Link inicio — la página activa se marca con .active desde el script de cada página -->
+    <a href="/index.html" class="nav-mobile-link">Inicio</a>
+
+    <!-- Acordeón de Productos -->
+    <div class="nav-mobile-link" id="mobileProductosToggle">
+      Productos
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m6 9 6 6 6-6"/>
+      </svg>
+    </div>
+    <!--ERROR - RUTA DE PRODUCTOS, PRODUCTOS/PERFUMES, PRODUCTOS/JOYERIA-->
+    <div class="nav-mobile-sub" id="mobileProductosSub">
+      <div class="nav-mobile-sub-label">Perfumes</div>
+      <a href="/pages/catalogo.html?cat=diseñador">Diseñador</a>
+      <a href="/pages/catalogo.html?cat=nicho">Nicho</a>
+      <a href="/pages/catalogo.html?cat=arabes">Árabes</a>
+      <a href="/pages/catalogo.html?cat=body-mist">Body Mist</a>
+      <a href="/pages/catalogo.html?cat=testers">Testers</a>
+      <a href="/pages/catalogo.html?cat=decants">Decants</a>
+      <a href="/pages/catalogo.html?cat=sets">Sets</a>
+      <div class="nav-mobile-sub-label nav-mobile-sub-label--separated">Joyería</div>
+      <a href="/pages/catalogo.html?tab=joyeria&cat=anillos">Anillos</a>
+      <a href="/pages/catalogo.html?tab=joyeria&cat=brazaletes">Brazaletes</a>
+      <a href="/pages/catalogo.html?tab=joyeria&cat=aretes">Aretes</a>
+      <a href="/pages/catalogo.html?tab=joyeria&cat=collares">Collares</a>
+    </div>
+
+    <a href="/pages/nosotros.html" class="nav-mobile-link">Nosotros</a>
+
+    <!-- MI CUENTA — JS alterna display entre login-link y el acordeón según sesión -->
+    <a href="/pages/cuenta.html" class="nav-mobile-link" id="mobileCuentaLoginLink">
+      Iniciar sesión
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m9 18 6-6-6-6"/>
+      </svg>
+    </a>
+    <div class="nav-mobile-link" id="mobileCuentaToggle">
+      Mi cuenta
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m6 9 6 6 6-6"/>
+      </svg>
+    </div>
+    <div class="nav-mobile-sub" id="mobileCuentaSub">
+      <a href="/pages/perfil.html#pedidos" class="nav-mobile-account-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+        Mis pedidos
+      </a>
+      <a href="/pages/perfil.html#info" class="nav-mobile-account-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
+        Datos personales
+      </a>
+      <a href="/pages/perfil.html#direcciones" class="nav-mobile-account-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Direcciones guardadas
+      </a>
+      <a href="#" id="btn-logout-mobile" class="nav-mobile-account-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Cerrar sesión
+      </a>
+    </div>
+
+    <!-- FAVORITOS en el panel móvil — lista compacta -->
+    <div class="nav-mobile-favs-header">
+      <span class="nav-mobile-favs-title">Mis favoritos</span>
+      <span id="fav-count-mobile">0 productos</span>
+    </div>
+    <div id="fav-list-mobile">
+      <div id="fav-empty-mobile">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,0.2)" stroke-width="1.5" class="fav-empty-icon">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        <p class="fav-empty-text">Aún no tienes favoritos</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+    SECCIÓN: Navbar principal
+    Desktop: links visibles + dropdowns hover.
+    Móvil:   hamburger visible, links ocultos.
+══════════════════════════════════════ -->
+<nav>
+  <button class="nav-hamburger" id="navHamburger" type="button" aria-label="Abrir menú de navegación">
+    <span></span><span></span><span></span>
+  </button>
+
+  <ul class="nav-links">
+    <!--Ruta a index.html-->
+    <li><a href="/index.html">Inicio</a></li>
+    <li class="nav-item">
+      <a href="#">
+        Productos
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </a>
+      <div class="nav-dropdown">
+        <!-- Perfumes: click en el item padre navega al catálogo, links van a cada categoría -->
+        <div class="nav-dropdown-item" id="nav-item-perfumes">
+          Perfumes
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          <div class="nav-flyout">
+            <div class="nav-flyout-label">Categorías</div>
+            <a href="/pages/catalogo.html?cat=diseñador">Diseñador</a>
+            <a href="/pages/catalogo.html?cat=nicho">Nicho</a>
+            <a href="/pages/catalogo.html?cat=arabes">Árabes</a>
+            <a href="/pages/catalogo.html?cat=body-mist">Body Mist</a>
+            <a href="/pages/catalogo.html?cat=testers">Testers</a>
+            <a href="/pages/catalogo.html?cat=decants">Decants</a>
+            <a href="/pages/catalogo.html?cat=sets">Sets</a>
+          </div>
+        </div>
+        <!-- Joyería: mismo patrón -->
+        <div class="nav-dropdown-item" id="nav-item-joyeria">
+          Joyería
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          <div class="nav-flyout">
+            <div class="nav-flyout-label">Categorías</div>
+            <a href="/pages/catalogo.html?tab=joyeria&cat=anillos">Anillos</a>
+            <a href="/pages/catalogo.html?tab=joyeria&cat=brazaletes">Brazaletes</a>
+            <a href="/pages/catalogo.html?tab=joyeria&cat=aretes">Aretes</a>
+            <a href="/pages/catalogo.html?tab=joyeria&cat=collares">Collares</a>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li><a href="/pages/nosotros.html">Nosotros</a></li>
+  </ul>
+
+  <!-- Logo centrado — reemplaza con <img src="../assets/images/logo.svg" alt="HERA"> -->
+  <a href="index.html" class="nav-logo" id="nav-logo-link">
+    <img
+      src="https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777268632/logo_navbar_desktop_ppkotl.svg"
+      alt="HERA Perfumes & Joyería"
+      id="nav-logo-img"
+    >
+  </a>
+
+  <div class="nav-icons">
+    <!-- Búsqueda — visible en todos los breakpoints -->
+    <button id="search-btn" aria-label="Abrir buscador">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+    </button>
+
+    <!-- Cuenta — solo desktop (hide-mobile lo oculta en móvil) -->
+    <div id="account-menu-wrap" class="hide-mobile">
+      <!-- Sin sesión: link directo a cuenta.html — JS controla display -->
+      <a href="/pages/cuenta.html" id="account-login-btn" aria-label="Iniciar sesión">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/>
+        </svg>
+      </a>
+      <!-- Con sesión: dropdown de cuenta — JS controla display -->
+      <button id="account-toggle" aria-label="Mi cuenta">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/>
+        </svg>
+      </button>
+      <div id="account-dropdown">
+        <a href="/pages/perfil.html#pedidos" class="account-dropdown-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+          Mis pedidos
+        </a>
+        <a href="/pages/perfil.html#info" class="account-dropdown-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
+          Datos personales
+        </a>
+        <a href="/pages/perfil.html#direcciones" class="account-dropdown-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Direcciones guardadas
+        </a>
+        <a href="#" id="btn-logout" class="account-dropdown-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Cerrar sesión
+        </a>
+      </div>
+    </div>
+
+    <!-- Favoritos desktop — JS oculta esto en móvil -->
+    <div id="fav-menu-wrap" class="hide-mobile">
+      <button aria-label="Ver mis favoritos" id="fav-toggle">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        <span id="fav-count">0</span>
+      </button>
+      <div id="fav-dropdown">
+        <div class="fav-dropdown-header">
+          <span class="fav-dropdown-title">Mis favoritos</span>
+          <span id="fav-count-label">0 productos</span>
+        </div>
+        <div id="fav-list">
+          <div id="fav-empty">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,0.2)" stroke-width="1.5" class="fav-empty-icon-lg">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+            <p class="fav-empty-text">Aún no tienes favoritos</p>
+          </div>
+        </div>
+        <div id="fav-add-all">
+          <button id="fav-add-all-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            Agregar todo al carrito
+          </button>
+          <a href="/pages/favoritos.html" id="fav-ver-todos">Ver mis favoritos →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carrito — visible en todos los breakpoints -->
+    <button id="cart-btn" aria-label="Abrir carrito de compras">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      <span id="cart-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+    SECCIÓN: Search overlay
+    position:fixed — se abre desde el botón de búsqueda del nav
+══════════════════════════════════════ -->
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-input-row">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Buscar perfumes, marcas..."
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+      />
+      <button id="search-close-btn" aria-label="Cerrar buscador">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div id="search-results">
+      <p class="search-hint">Busca por nombre o marca</p>
+    </div>
+  </div>
+</div>

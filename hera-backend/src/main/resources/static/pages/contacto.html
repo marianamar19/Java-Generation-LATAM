@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contáctanos por correo, teléfono o WhatsApp. El equipo de HERA Perfumes &amp; Joyería responde en menos de 24 horas, de lunes a sábado." />
+  <title>Contacto — HERA Perfumes &amp; Joyería</title>
+
+  <!-- ── Base: Design System ── -->
+  <link rel="stylesheet" href="../css/base/tokens.css" />
+  <link rel="stylesheet" href="../css/base/reset.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/buttons.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
+
+  <!-- ── Componentes universales ── -->
+  <link rel="stylesheet" href="../css/components/navbar.css" />
+  <link rel="stylesheet" href="../css/components/drawer.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+
+  <!-- ── Página exclusiva ── -->
+  <link rel="stylesheet" href="../css/pages/contacto.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+    [UNIVERSAL] NAVBAR + SEARCH + MENÚ MÓVIL
+    Inyectado dinámicamente desde components/navbar.html
+══════════════════════════════════════ -->
+<div id="navbar-placeholder"></div>
+
+<div class="site-wrap">
+
+  <!-- ══════════════════════════════════════
+      SECCIÓN 1 — HERO (NEGRO)
+  ══════════════════════════════════════ -->
+  <section class="contact-hero">
+
+
+    <div class="avatar-wrap reveal">
+  <div class="avatar-ring">
+    <div class="avatar-circle">
+      <img
+        src="https://res.cloudinary.com/dgvvsw6fs/image/upload/q_auto/f_auto/v1777265016/Logo_ack4xu.svg"
+        alt="Foto del equipo HERA"
+        class="avatar-img"
+        width="80"
+        height="80"
+      />
+    </div>
+  </div>
+
+  <!-- Indicador de disponibilidad — el punto verde pulsa con CSS -->
+  <div class="avatar-status">
+    <span class="avatar-status-dot"></span>
+    En línea
+  </div>
+  <div class="avatar-name">Equipo HERA</div>
+  <div class="avatar-role">Perfumes &amp; Joyería</div>
+</div>
+
+
+    <!-- Avatar circular — placeholder hasta que exista imagen real del equipo -->
+    <!--
+    <div class="avatar-wrap reveal">
+      <div class="avatar-ring">
+        <div class="avatar-circle">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(249,249,249,0.55)" stroke-width="1.2">
+            <circle cx="12" cy="8" r="4.5"/>
+            <path d="M3 22c0-5 3.8-8 9-8s9 3 9 8"/>
+          </svg>
+          <span class="avatar-circle-label">Tu foto</span>
+        </div>
+      </div>
+    -->
+      <!-- Indicador de disponibilidad — el punto verde pulsa con CSS -->
+    <!--
+      <div class="avatar-status">
+        <span class="avatar-status-dot"></span>
+        En línea
+      </div>
+      <div class="avatar-name">Equipo HERA</div>
+      <div class="avatar-role">Perfumes &amp; Joyería</div>
+    </div>
+    -->
+
+    
+
+    <p class="contact-hero-eyebrow reveal reveal-delay-1">Contacto</p>
+    <h1 class="contact-hero-title reveal reveal-delay-2">
+      Hablemos de<br><em>lo que necesitas.</em>
+    </h1>
+    <p class="contact-hero-sub reveal reveal-delay-3">
+      Detrás de HERA hay personas reales. Sin bots, sin formularios perdidos.
+    </p>
+
+    <!-- Flecha animada que invita a hacer scroll — solo visual -->
+    <div class="contact-scroll-hint" aria-hidden="true">
+      <div class="contact-scroll-arrow"></div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════
+      SECCIÓN 2 — SPLIT (CREAM)
+      Izquierda: info de contacto
+      Derecha: formulario de contacto
+  ══════════════════════════════════════ -->
+  <section class="contact-split">
+
+    <!-- LEFT: Info de contacto -->
+    <div class="contact-info">
+      <div class="contact-info-top">
+        <p class="contact-info-eyebrow reveal">Cómo encontrarnos</p>
+        <h2 class="contact-info-title reveal reveal-delay-1">
+          Siempre<br>disponibles <em>para ti.</em>
+        </h2>
+        <p class="contact-info-desc reveal reveal-delay-2">
+          Escríbenos por el canal que prefieras. Te respondemos en menos de 24 horas, de lunes a sábado.
+        </p>
+
+        <div class="contact-items reveal reveal-delay-3">
+
+          <!-- TEMPORAL — dirección hardcodeada. Reemplazar con dato real del backend.
+              Endpoint esperado: GET /api/config → { email_contacto: string } -->
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="contact-item-body">
+              <div class="contact-item-label">Correo electrónico</div>
+              <a href="mailto:hola@heraperfumes.com" class="contact-item-value contact-item-link">hola@heraperfumes.com</a>
+              <div class="contact-item-sub">Respuesta en menos de 24 h</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.86a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            <div class="contact-item-body">
+              <div class="contact-item-label">Teléfono &amp; WhatsApp</div>
+              <a href="tel:+5213310050843" class="contact-item-value contact-item-link">+52 1 33 1005 0843</a>
+              <div class="contact-item-sub">Lun–Sáb · 10:00–19:00 h</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="contact-item-body">
+              <div class="contact-item-label">Ubicación</div>
+              <span class="contact-item-value">Guadalajara, Jalisco</span>
+              <div class="contact-item-sub">México · Zona Centro</div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="contact-item-body">
+              <div class="contact-item-label">Horario de atención</div>
+              <span class="contact-item-value">Lun – Sáb</span>
+              <div class="contact-item-sub">10:00 – 19:00 h CST</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Redes sociales -->
+      <div>
+        <p class="contact-socials-label reveal">Síguenos</p>
+        <div class="contact-socials reveal reveal-delay-1">
+          <a class="contact-social-btn" href="#" aria-label="Instagram">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a class="contact-social-btn" href="#" aria-label="TikTok">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+          </a>
+          <a class="contact-social-btn" href="#" aria-label="Facebook">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a class="contact-social-btn" href="#" aria-label="WhatsApp">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Formulario de contacto -->
+    <div class="contact-form-col">
+      <p class="contact-form-eyebrow reveal">Envíanos un mensaje</p>
+      <h2 class="contact-form-title reveal reveal-delay-1">
+        ¿En qué podemos<br><em>ayudarte?</em>
+      </h2>
+      <p class="contact-form-desc reveal reveal-delay-2">Cuéntanos lo que necesitas y te respondemos a la brevedad.</p>
+
+      <!-- FORM WRAPPER — se oculta al enviar para mostrar el estado de éxito -->
+      <div id="formWrapper" class="reveal reveal-delay-3">
+        <form class="form form-border-top" id="contactForm" novalidate>
+
+          <!-- Fila 1: Nombre + Email -->
+          <div class="form-row">
+            <div class="form-field" id="field-nombre">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" autocomplete="name" />
+              <span class="field-error">Este campo es requerido</span>
+            </div>
+            <div class="form-field" id="field-email">
+              <label for="email">Correo electrónico</label>
+              <input type="email" id="email" name="email" placeholder="tu@correo.com" autocomplete="email" />
+              <span class="field-error">Ingresa un correo válido</span>
+            </div>
+          </div>
+
+          <!-- Fila 2: Teléfono (opcional) -->
+          <div class="form-row">
+            <div class="form-field" id="field-telefono">
+              <label for="telefono">Número de teléfono</label>
+              <input type="tel" id="telefono" name="telefono" placeholder="Ej. +52 1 33 1005 0843" autocomplete="tel" />
+              <span class="field-error">Ingresa un número válido</span>
+            </div>
+          </div>
+
+          <!-- Asunto — selector visual de chips -->
+          <div class="form-field" id="field-asunto">
+            <label>Asunto</label>
+            <!-- El value de este input hidden lo gestiona _initAsuntoSelector() -->
+            <input type="hidden" id="asunto" name="asunto" value="" />
+            <div class="asunto-opts" id="asuntoOpts">
+              <button type="button" class="asunto-opt" data-val="pedido">Mi pedido</button>
+              <button type="button" class="asunto-opt" data-val="producto">Producto</button>
+              <button type="button" class="asunto-opt" data-val="devolucion">Devolución</button>
+              <button type="button" class="asunto-opt" data-val="mayoreo">Mayoreo</button>
+              <button type="button" class="asunto-opt" data-val="otro">Otro</button>
+            </div>
+            <span class="field-error">Selecciona un asunto</span>
+          </div>
+
+          <!-- Mensaje -->
+          <div class="form-field" id="field-mensaje">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" placeholder="Escribe aquí tu consulta, duda o comentario…"></textarea>
+            <span class="field-error">Escribe tu mensaje</span>
+          </div>
+
+          <!-- Enviar -->
+          <!-- TEMPORAL — onsubmit simula envío con setTimeout. Reemplazar con fetch() al endpoint real.
+              Endpoint esperado: POST /api/contacto → { ok: true } -->
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <span id="submitText">Enviar mensaje</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+
+        </form>
+      </div>
+
+      <!-- ESTADO DE ÉXITO — visible tras el envío simulado -->
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <div class="form-success-title">Mensaje enviado <em>con éxito.</em></div>
+        <p class="form-success-sub">Te respondemos en menos de 24 horas, de lunes a sábado.</p>
+        <button class="form-success-back" id="formReset">← Enviar otro mensaje</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+      SECCIÓN 3 — DATOS RÁPIDOS (ROJO)
+  ══════════════════════════════════════ -->
+  <section class="contact-strip">
+    <div class="contact-strip-item reveal">
+      <div class="strip-num">24<span>h</span></div>
+      <div class="strip-label">Tiempo de respuesta</div>
+      <p class="strip-sub">Garantizamos respuesta en menos de 24 horas en días hábiles.</p>
+    </div>
+    <div class="contact-strip-item reveal reveal-delay-1">
+      <div class="strip-num">100<span>%</span></div>
+      <div class="strip-label">Atención humana</div>
+      <p class="strip-sub">Ningún bot, ninguna respuesta automática. Personas reales detrás de cada mensaje.</p>
+    </div>
+    <div class="contact-strip-item reveal reveal-delay-2">
+      <div class="strip-num">100<span>%</span></div>
+      <div class="strip-label">Productos auténticos</div>
+      <p class="strip-sub">Cada perfume y joya pasa por verificación de autenticidad. Garantizamos que lo que recibes es 100% original.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+      [UNIVERSAL] FOOTER
+      Inyectado dinámicamente desde components/footer.html
+  ══════════════════════════════════════ -->
+  <div id="footer-placeholder"></div>
+
+</div><!-- /.site-wrap -->
+
+<!-- ══════════════════════════════════════
+    CART DRAWER — inyectado vía fetch por cart-drawer.js
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
+
+<!-- ══════════════════════════════════════
+    Entry point de la página — type="module"
+    Importa y orquesta todos los componentes.
+══════════════════════════════════════ -->
+<script type="module" src="../js/pages/contacto.js"></script>
+
+</body>
+</html>

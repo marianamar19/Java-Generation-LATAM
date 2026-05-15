@@ -1,0 +1,247 @@
+/* ============================================================
+  aviso-privacidad.css — HERA
+  Descripción: Estilos exclusivos de la página Aviso de Privacidad.
+              No incluye nada que ya viva en tokens, reset, navbar,
+              footer, drawer, announce-bar ni scroll-reveal.
+  Usado por:   pages/aviso-privacidad.html
+   ============================================================ */
+
+/* ── Headings ────────────────────────────────────────────────── */
+.heading-dark {
+  font-family: var(--sans);
+  font-size: clamp(34px, 4.5vw, 56px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: .96;
+  color: var(--cream);
+  margin-bottom: 20px;
+}
+
+.heading-dark em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(249,249,249,.38);
+}
+
+.heading-light {
+  font-family: var(--sans);
+  font-size: clamp(30px, 4vw, 50px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.02;
+  color: var(--black);
+  margin-bottom: 20px;
+}
+
+.heading-light em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--dgray);
+}
+
+/* ── Page hero ───────────────────────────────────────────────── */
+.page-hero       { background: var(--black); padding: 100px 80px 48px; }
+.page-hero-inner { max-width: 760px; }
+
+.hero-h1 {
+  font-family: var(--sans);
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: .92;
+  color: var(--cream);
+  margin-bottom: 28px;
+}
+
+.hero-h1 em {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(249,249,249,.38);
+}
+
+.hero-sub {
+  font-family: var(--serif);
+  font-size: clamp(17px, 1.8vw, 20px);
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(249,249,249,.42);
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+.hero-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: stretch;
+  margin-top: 56px;
+  border: 1px solid rgba(249,249,249,.10);
+  width: 100%;
+}
+
+.hero-meta-item {
+  padding: 40px 48px 56px;
+  border-right: 1px solid rgba(249,249,249,.10);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero-meta-item:last-child { border-right: none; }
+
+.hero-meta-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(249,249,249,.45);
+}
+
+.hero-meta-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(249,249,249,.92);
+  letter-spacing: -.02em;
+  line-height: 1;
+}
+
+.hero-meta-note {
+  font-size: 15px;
+  color: rgba(249,249,249,.50);
+  font-style: italic;
+  font-family: var(--serif);
+  line-height: 1.5;
+}
+
+/* ── Secciones de contenido ──────────────────────────────────── */
+.priv-light { background: var(--cream); padding: 80px; }
+.priv-dark  { background: var(--black); padding: 80px; }
+
+.priv-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  margin-top: 48px;
+  align-items: start;
+}
+
+/* Columna intro izquierda */
+.priv-intro-light p {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 400;
+  color: rgba(15,15,15,.6);
+  line-height: 1.75;
+}
+
+.priv-intro-dark p {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 400;
+  color: rgba(249,249,249,.45);
+  line-height: 1.75;
+}
+
+/* Columna de contenido derecha */
+.priv-content { display: flex; flex-direction: column; gap: 32px; }
+
+/* Bloque de dato — light */
+.priv-block           { border-left: 2px solid var(--lgray); padding-left: 24px; }
+.priv-block-title     { font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(15,15,15,.35); margin-bottom: 10px; }
+.priv-block p         { font-size: 14px; line-height: 1.8; color: var(--dgray); }
+.priv-block strong    { color: var(--black); }
+
+/* Bloque de dato — dark */
+.priv-block-dark          { border-left: 2px solid rgba(249,249,249,.1); padding-left: 24px; }
+.priv-block-title-dark    { font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(249,249,249,.3); margin-bottom: 10px; }
+.priv-block-dark p        { font-size: 14px; line-height: 1.8; color: rgba(249,249,249,.55); }
+.priv-block-dark strong   { color: var(--cream); }
+
+/* Placeholder highlight — campos pendientes de completar */
+.ph {
+  background: rgba(225,34,43,.1);
+  color: var(--red);
+  font-weight: 700;
+  padding: 1px 6px;
+  font-style: normal;
+  font-family: var(--sans);
+  font-size: .85em;
+  letter-spacing: .04em;
+}
+
+/* Lista dentro de bloques — light */
+.priv-list               { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.priv-list li            { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.7; color: var(--dgray); }
+.priv-list li::before    { content: ''; width: 4px; height: 4px; background: var(--red); border-radius: 50%; flex-shrink: 0; margin-top: 8px; }
+
+/* Lista dentro de bloques — dark */
+.priv-list-dark          { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.priv-list-dark li       { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.7; color: rgba(249,249,249,.55); }
+.priv-list-dark li::before { content: ''; width: 4px; height: 4px; background: var(--red); border-radius: 50%; flex-shrink: 0; margin-top: 8px; }
+
+/* CTA de contacto en secciones */
+.priv-cta { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; }
+
+.priv-cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--red);
+  text-decoration: none;
+  transition: opacity .2s;
+}
+
+.priv-cta a:hover          { opacity: .7; }
+.priv-cta-dark a           { color: rgba(249,249,249,.7); transition: color .2s; }
+.priv-cta-dark a:hover     { color: var(--red); opacity: 1; }
+
+/* Links de texto dentro de bloques */
+.priv-block a {
+  color: var(--red);
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity .2s;
+}
+
+.priv-block a:hover { opacity: .7; }
+
+/* Nota al pie de bloque (ej: cancelación newsletter) */
+.priv-note {
+  margin-top: 12px;
+  font-size: 13px;
+  color: rgba(15,15,15,.5);
+}
+
+/* ── Responsive — Tablet ≤1024px ────────────────────────────── */
+@media (max-width: 1024px) {
+  .page-hero                { padding: 60px 40px 32px; }
+  .hero-meta                { grid-template-columns: 1fr; }
+  .hero-meta-item           { border-right: none; border-bottom: 1px solid rgba(249,249,249,.10); padding: 28px 40px; }
+  .hero-meta-item:last-child { border-bottom: none; }
+  .priv-light,
+  .priv-dark                { padding: 60px 40px; }
+  .priv-layout              { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* ── Responsive — Móvil ≤768px ──────────────────────────────── */
+@media (max-width: 768px) {
+  .page-hero      { padding: 60px 24px 0; }
+  .hero-meta-item { padding: 24px 20px; }
+  .priv-light,
+  .priv-dark      { padding: 44px 20px; }
+}
+
+/* ── Responsive — Móvil pequeño ≤480px ──────────────────────── */
+@media (max-width: 480px) {
+  .page-hero      { padding: 48px 16px 0; }
+  .hero-meta-item { padding: 20px 16px; }
+  .priv-light,
+  .priv-dark      { padding: 36px 16px; }
+  .priv-layout    { gap: 28px; }
+}

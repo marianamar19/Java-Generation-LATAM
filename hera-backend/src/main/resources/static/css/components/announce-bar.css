@@ -1,0 +1,83 @@
+/* ============================================================
+  announce-bar.css — HERA Design System
+  Descripción: Barra de anuncios animada (marquee) en la parte
+              superior del site-wrap. También incluye el segundo
+              marquee decorativo que aparece entre el hero y la
+              sección de confianza. Ambos comparten la animación.
+  Usado por: components/announce-bar.html (marquee superior) y,
+            pages/index.html (marquee intermedio).
+  ============================================================ */
+
+/* ── Sección: Announce bar — contenedor principal ──────────── */
+.announce {
+  background:  var(--red);
+  overflow:    hidden;
+  padding:     14px 0;
+  display:     flex;
+  width:       100%;
+}
+
+/* ── Sección: Announce track — pista animada ────────────────── */
+.announce-track {
+  display:    flex;
+  animation:  marquee 36s linear infinite;
+  white-space: nowrap;
+}
+
+.announce-track span {
+  font-size:      12px;
+  font-weight:    600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color:          #fff;
+  padding:        0 40px;
+}
+
+/* Separador decorativo entre items del marquee */
+.announce-track span.dot {
+  color:   rgba(255, 255, 255, .45);
+  padding: 0;
+}
+
+/* ── Sección: Marquee decorativo — entre hero y trust ───────── */
+.marquee-wrap {
+  background:  var(--red);
+  overflow:    hidden;
+  padding:     14px 0;
+  display:     flex;
+  width:       100%;
+}
+
+.marquee-track {
+  display:    flex;
+  animation:  marquee 32s linear infinite;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.marquee-track span {
+  font-size:      12px;
+  font-weight:    600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color:          #fff;
+  padding:        0 40px;
+  white-space:    nowrap;
+}
+
+.marquee-track span.dot {
+  color:   rgba(255, 255, 255, .45);
+  padding: 0;
+}
+
+/* ── Sección: Animación marquee (compartida) ────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0);     }
+  to   { transform: translateX(-50%);  }
+}
+
+/* ── Sección: Responsivo — ≤480px ──────────────────────────── */
+@media (max-width: 480px) {
+  .announce-track span { font-size: 11px; padding: 0 24px; }
+  .marquee-track span  { font-size: 11px; padding: 0 24px; }
+}

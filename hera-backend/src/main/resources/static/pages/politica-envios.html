@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Política de Envíos — HERA Perfumes &amp; Joyería</title>
+  <meta name="description" content="Conoce cómo funcionan los envíos en HERA: ciclo semanal de pedidos, entregas en la ZMG sin costo, envíos foráneos vía Skydropx y disponibilidad de productos." />
+
+  <!-- ── CSS Base (Design System) ── -->
+  <link rel="stylesheet" href="../css/base/tokens.css" />
+  <link rel="stylesheet" href="../css/base/reset.css" />
+  <link rel="stylesheet" href="../css/base/typography.css" />
+  <link rel="stylesheet" href="../css/base/buttons.css" />
+  <link rel="stylesheet" href="../css/base/layout.css" />
+
+  <!-- ── Estilos universales ── -->
+
+  <!-- ── CSS Componentes universales ── -->
+  <link rel="stylesheet" href="../css/components/announce-bar.css" />
+  <link rel="stylesheet" href="../css/components/navbar.css" />
+  <link rel="stylesheet" href="../css/components/footer.css" />
+  <link rel="stylesheet" href="../css/components/drawer.css" />
+
+  <!-- ── CSS Exclusivo de esta página (siempre al final) ── -->
+  <link rel="stylesheet" href="../css/pages/politica-envios.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+    NAVBAR — inyectado vía fetch por navbar.js
+══════════════════════════════════════ -->
+<div id="navbar-placeholder"></div>
+
+<div class="site-wrap">
+
+  <!-- ═══════════════════════════════════════════
+      S1 — HERO  |  negro
+  ═══════════════════════════════════════════ -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow-light reveal">Cómo manejamos tus pedidos</div>
+      <h1 class="hero-h1 reveal">
+        Política de <em>envíos.</em>
+      </h1>
+      <p class="hero-sub reveal reveal-delay-1">
+        Trabajamos con un ciclo semanal de pedidos. Antes de ordenar, te explicamos exactamente cómo funciona para que no haya sorpresas.
+      </p>
+      <div class="hero-meta reveal reveal-delay-2">
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Entregas locales</span>
+          <span class="hero-meta-value">ZMG sin costo</span>
+          <span class="hero-meta-note">Punto de encuentro o Casa Blanca Paquetería</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Corte semanal</span>
+          <span class="hero-meta-value">Miércoles 12:00 p.m.</span>
+          <span class="hero-meta-note">Pedidos posteriores, siguiente semana</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Envíos foráneos</span>
+          <span class="hero-meta-value">Vía Skydropx</span>
+          <span class="hero-meta-note">Costo calculado al confirmar el pedido</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+      S2 — CICLO DE PEDIDOS  |  cream
+  ═══════════════════════════════════════════ -->
+  <div class="cycle-section">
+    <div class="eyebrow reveal">Cómo funciona</div>
+    <h2 class="heading-light reveal">El ciclo <em>semanal.</em></h2>
+    <div class="cycle-layout">
+      <div class="cycle-text reveal">
+        <p>Operamos con un modelo de pedidos por semana. Esto nos permite verificar existencias con el proveedor antes de confirmar cada orden y garantizarte que lo que pediste sí está disponible.</p>
+        <p>No confirmamos pedidos en automático. Cada orden pasa por una revisión antes de procesarse.</p>
+        <div class="cycle-alert">
+          <div class="cycle-alert-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div>
+            <div class="cycle-alert-title">Fecha de corte</div>
+            <div class="cycle-alert-body">Los pedidos recibidos después del miércoles a las 12:00 p.m. se procesan en el siguiente ciclo semanal.</div>
+          </div>
+        </div>
+      </div>
+      <div class="cycle-steps reveal reveal-delay-1">
+        <div class="cycle-step">
+          <div class="cycle-step-day">
+            <span class="cycle-step-day-name">Lun–Mié</span>
+            <div class="cycle-step-day-dot active"></div>
+          </div>
+          <div class="cycle-step-body">
+            <div class="cycle-step-title">Recibes tu pedido</div>
+            <div class="cycle-step-desc">Realizas tu orden en el sitio. Revisamos existencias y te confirmamos por WhatsApp antes del cierre del miércoles.</div>
+            <span class="cycle-step-tag">Corte: miércoles 12:00 p.m.</span>
+          </div>
+        </div>
+        <div class="cycle-step">
+          <div class="cycle-step-day">
+            <span class="cycle-step-day-name">Viernes</span>
+            <div class="cycle-step-day-dot active"></div>
+          </div>
+          <div class="cycle-step-body">
+            <div class="cycle-step-title">Surtido del proveedor</div>
+            <div class="cycle-step-desc">El proveedor nos surte y envía los productos confirmados. Preparamos cada paquete con revisión de autenticidad incluida.</div>
+          </div>
+        </div>
+        <div class="cycle-step">
+          <div class="cycle-step-day">
+            <span class="cycle-step-day-name">Sábado</span>
+            <div class="cycle-step-day-dot active"></div>
+          </div>
+          <div class="cycle-step-body">
+            <div class="cycle-step-title">Recibimos y despachamos</div>
+            <div class="cycle-step-desc">Recibimos el surtido, empacamos y coordinamos las entregas del mismo día para Guadalajara. Los envíos foráneos salen el lunes vía Skydropx.</div>
+            <span class="cycle-step-tag">Entregas GDL ese mismo día</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+      S3 — CÓMO TE LLEGA  |  negro
+  ═══════════════════════════════════════════ -->
+  <div class="delivery-section">
+    <div class="eyebrow-light reveal">Opciones de entrega</div>
+    <h2 class="heading-dark reveal">Tres formas de <em>llegar a ti.</em></h2>
+    <div class="delivery-grid">
+
+      <!-- ZMG — Punto de encuentro -->
+      <div class="delivery-card reveal">
+        <div class="delivery-card-zone">ZMG — Zona Metropolitana de Guadalajara</div>
+        <div class="delivery-card-title">Punto de encuentro</div>
+        <div class="delivery-card-price free">Sin costo de envío</div>
+        <div class="delivery-divider"></div>
+        <div class="delivery-features">
+          <div class="delivery-feature">
+            <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            <div class="delivery-feature-text">Coordinamos el punto por <strong>WhatsApp</strong> al confirmar. Puntos habituales en estaciones del Tren Ligero según tu municipio.</div>
+          </div>
+          <div class="delivery-feature">
+            <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div class="delivery-feature-text">Cobertura en toda la ZMG: <strong>Guadalajara, Zapopan, Tlaquepaque, Tlajomulco, Tonalá</strong> y municipios conurbados.</div>
+          </div>
+          <div class="delivery-feature">
+            <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <div class="delivery-feature-text">Entrega el <strong>sábado</strong>, el mismo día que recibimos del proveedor.</div>
+          </div>
+        </div>
+        <div class="delivery-note">Pago vía Mercado Pago previo a la entrega. En casos puntuales, entrega a domicilio — se define al coordinar.</div>
+      </div>
+
+      <!-- ZMG — Casa Blanca -->
+      <div class="delivery-card reveal reveal-delay-1">
+        <div class="delivery-card-zone">ZMG — Zona Metropolitana de Guadalajara</div>
+        <div class="delivery-card-title">Casa Blanca Paquetería</div>
+        <div class="delivery-card-price free">Sin costo de envío</div>
+        <div class="delivery-divider"></div>
+        <div class="delivery-features">
+          <div class="delivery-feature">
+            <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div class="delivery-feature-text">Paquetería local con <strong>9 sucursales en la ZMG</strong>. El cliente recoge en la más cercana cuando le convenga, sin necesidad de coincidir con nosotros.</div>
+          </div>
+          <div class="delivery-feature">
+            <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+            <div class="delivery-feature-text">Te enviamos un <strong>folio digital</strong> para recoger. Disponible al día hábil siguiente de haberlo depositado, después de las 2:00 p.m.</div>
+          </div>
+          <div class="delivery-feature">
+            <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <div class="delivery-feature-text">Horario de recogida: <strong>lunes a viernes de 11 a.m. a 8 p.m.</strong>, sábados de 10 a.m. a 5 p.m.</div>
+          </div>
+        </div>
+        <div class="delivery-branches">
+          <span class="delivery-branch">Centro</span><span class="delivery-branch">Per. Norte</span>
+          <span class="delivery-branch">Sur</span><span class="delivery-branch">Oblatos</span>
+          <span class="delivery-branch">Tetlán</span><span class="delivery-branch">Tonalá</span>
+          <span class="delivery-branch">Aviación</span><span class="delivery-branch">Tlaquepaque</span>
+          <span class="delivery-branch">Tlajomulco</span>
+        </div>
+        <div class="delivery-note">El paquete puede permanecer en sucursal hasta 8 semanas. Pago vía Mercado Pago previo al depósito en Casa Blanca.</div>
+      </div>
+
+      <!-- Foráneo — Skydropx -->
+      <div class="delivery-card reveal reveal-delay-2">
+        <div class="delivery-card-zone">Jalisco interior y Guanajuato</div>
+        <div class="delivery-card-title">Envío por Skydropx</div>
+        <div class="delivery-card-price paid">Costo según destino y peso</div>
+        <div class="delivery-divider"></div>
+        <div class="delivery-features">
+          <div class="delivery-feature">
+            <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <div class="delivery-feature-text">Enviamos vía <strong>Skydropx</strong>. Paquetería y costo se calculan según tu código postal al confirmar el pedido.</div>
+          </div>
+          <div class="delivery-feature">
+            <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <div class="delivery-feature-text">El paquete sale el <strong>lunes</strong> siguiente al sábado de recepción. El tiempo de tránsito depende del destino.</div>
+          </div>
+          <div class="delivery-feature">
+            <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div class="delivery-feature-text">Cobertura regular: <strong>Jalisco interior</strong> (fuera de ZMG) y <strong>Guanajuato</strong>. Para otros estados consúltanos antes de ordenar.</div>
+          </div>
+          <div class="delivery-feature">
+            <svg class="delivery-feature-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+            <div class="delivery-feature-text">Te compartimos el <strong>número de guía por WhatsApp</strong> en cuanto el paquete sea recolectado el lunes.</div>
+          </div>
+        </div>
+        <div class="delivery-note">El costo de envío se comunica al confirmar el pedido. No se procesa ningún pago hasta que lo apruebes.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+      S4 — DISPONIBILIDAD  |  cream
+  ═══════════════════════════════════════════ -->
+  <div class="avail-section">
+    <div class="eyebrow reveal">Antes de ordenar</div>
+    <h2 class="heading-light reveal">Disponibilidad <em>de productos.</em></h2>
+    <div class="avail-intro reveal reveal-delay-1">
+      <p>No todos los productos funcionan igual. Dependiendo del artículo, el proceso de confirmación cambia. Revisamos existencias con el proveedor antes de comprometerte con cualquier pedido.</p>
+    </div>
+    <div class="avail-grid">
+      <div class="avail-card reveal">
+        <div class="avail-level">Tipo de producto</div>
+        <div class="avail-indicator"><div class="avail-dot green"></div><div class="avail-name">En existencia</div></div>
+        <div class="avail-desc">Productos que suelen estar disponibles de forma consistente. La confirmación de tu pedido es prácticamente inmediata.</div>
+        <div class="avail-clarify"><strong>Lo que pasa:</strong> Recibes confirmación antes del cierre del miércoles. Si ese viernes el proveedor no tiene existencia, te avisamos de inmediato y acordamos juntos qué hacer.</div>
+        <div class="avail-flow">
+          <div class="avail-flow-step">Ordenas en el sitio</div>
+          <div class="avail-flow-step">Confirmamos antes del miércoles</div>
+          <div class="avail-flow-step">Sale el siguiente sábado</div>
+        </div>
+      </div>
+      <div class="avail-card reveal reveal-delay-1">
+        <div class="avail-level">Tipo de producto</div>
+        <div class="avail-indicator"><div class="avail-dot yellow"></div><div class="avail-name">Disponibilidad limitada</div></div>
+        <div class="avail-desc">Productos que suelen haber pero no siempre. Tu pedido entra como pendiente hasta que verificamos con el proveedor.</div>
+        <div class="avail-clarify"><strong>Lo que pasa:</strong> Te contactamos en menos de 24 horas para confirmar si hay existencia. El pago se procesa <em>después</em> de la confirmación, no antes. Si no hay stock, tu pedido no genera ningún cargo.</div>
+        <div class="avail-flow">
+          <div class="avail-flow-step">Solicitas el producto</div>
+          <div class="avail-flow-step">Verificamos en menos de 24 h</div>
+          <div class="avail-flow-step">Confirmas y pagas</div>
+          <div class="avail-flow-step">Sale el siguiente sábado</div>
+        </div>
+      </div>
+      <div class="avail-card reveal reveal-delay-2">
+        <div class="avail-level">Tipo de producto</div>
+        <div class="avail-indicator"><div class="avail-dot red"></div><div class="avail-name">Pieza exclusiva</div></div>
+        <div class="avail-desc">Productos de alta rotación, ediciones limitadas o artículos que requieren revisión expresa antes de comprometerse.</div>
+        <div class="avail-clarify"><strong>Lo que pasa:</strong> El proceso inicia con una solicitud, no con un pago. Verificamos existencias, te damos precio final y tiempo estimado. Solo entonces procedes si te conviene.</div>
+        <div class="avail-flow">
+          <div class="avail-flow-step">Nos contactas por WhatsApp</div>
+          <div class="avail-flow-step">Verificamos con el proveedor</div>
+          <div class="avail-flow-step">Te damos precio y tiempo</div>
+          <div class="avail-flow-step">Confirmas y pagas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+      S5 — FAQ  |  negro
+  ═══════════════════════════════════════════ -->
+  <div class="faq-section">
+    <div class="eyebrow-light reveal">Preguntas frecuentes</div>
+    <h2 class="heading-dark reveal">Lo que más <em>nos preguntan.</em></h2>
+    <div class="faq-layout">
+      <div class="faq-intro reveal">
+        <p>Si algo no quedó claro o tienes una situación particular, escríbenos. Respondemos por WhatsApp en horario hábil.</p>
+        <div class="faq-contact-note">
+          <div class="faq-contact-note-label">Contacto directo</div>
+          <a href="contacto.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Formulario de contacto
+          </a>
+          <a href="https://wa.me/5213310050843?text=Hola%2C%20tengo%20una%20duda%20sobre%20un%20env%C3%ADo" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            WhatsApp · 33 1005 0843
+          </a>
+        </div>
+      </div>
+      <div class="faq-list reveal reveal-delay-1">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-question-text">Ordené el jueves. ¿Cuándo llega mi pedido?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">Al ordenar después del miércoles al mediodía, tu pedido entra al ciclo de la <strong>siguiente semana</strong>. Lo confirmamos el próximo miércoles, surtimos el viernes y te lo entregamos o enviamos el sábado siguiente. Si estás en Guadalajara, eso son entre 8 y 9 días. Si es foráneo, agrega el tiempo de tránsito de Skydropx.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-question-text">¿Cómo funciona el punto de encuentro en GDL?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">Al confirmar tu pedido te escribimos por WhatsApp para coordinar el punto. Normalmente proponemos una <strong>estación del Tren Ligero</strong> según tu zona. Si ninguna te queda cerca o prefieres otra opción, lo hablamos. La entrega es el sábado.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-question-text">¿Cuánto cuesta el envío a Guanajuato?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">El costo lo calcula <strong>Skydropx</strong> en función de tu código postal y el peso del paquete. Te lo comunicamos al confirmar el pedido, antes de procesar cualquier pago. No hay costos ocultos ni tarifas fijas: pagas exactamente lo que la paquetería cobra.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-question-text">¿Qué pasa si el producto que pedí no tiene existencia?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">Te avisamos antes de que se procese el pago. Para productos de <strong>Disponibilidad limitada</strong> y <strong>Pieza exclusiva</strong>, el cargo nunca ocurre hasta que confirmamos existencia. Para productos <strong>En existencia</strong>, si excepcionalmente no hay stock ese viernes, te contactamos de inmediato: puedes esperar al siguiente ciclo o cancelar sin ningún costo.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-question-text">¿Aceptan pedidos fuera de Jalisco y Guanajuato?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">Por el momento nuestra cobertura regular es <strong>Jalisco y Guanajuato</strong>. Si te encuentras en otro estado, escríbenos antes de ordenar. Evaluamos el envío caso por caso y te decimos si es posible, cuánto costaría y cuánto tardaría. No garantizamos tiempos ni costos estándar para otras zonas.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-question-text">¿Cómo pago?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">Aceptamos dos métodos de pago. Primero, <strong>tarjeta de crédito o débito</strong> vía Mercado Pago — directamente en el sitio para productos En existencia, o mediante un link de pago que te enviamos por WhatsApp para Disponibilidad limitada y Pieza exclusiva. Segundo, <strong>transferencia SPEI</strong> — sin comisión, se acredita en minutos. Al confirmar tu pedido te compartimos la CLABE interbancaria por WhatsApp. Ambos métodos son válidos para cualquier tipo de pedido.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-question-text">¿El producto llega sellado y original?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">Sí. Todos los productos son <strong>100% originales y sellados de fábrica</strong>. Revisamos cada pieza antes de empacar. Si al recibir tu pedido notas signos de apertura o daño, contáctanos con fotografías antes de abrirlo.</div></div>
+        </div>
+        <div class="faq-more-link">
+          <a href="faq.html">
+            ¿Tu duda es sobre otro tema? Ver todas las preguntas frecuentes
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+      S6 — CTA  |  cream
+  ═══════════════════════════════════════════ -->
+  <div class="cta-section">
+    <div class="eyebrow reveal">¿Listo?</div>
+    <h2 class="heading-light reveal">Siguiente <em>paso.</em></h2>
+    <div class="cta-grid">
+      <a href="catalogo.html" class="cta-card reveal">
+        <div class="cta-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>
+        <div class="cta-card-title">Ver catálogo</div>
+        <div class="cta-card-desc">Explora perfumes y joyería originales. Cada producto indica su tipo de disponibilidad.</div>
+        <div class="cta-card-link">Ir al catálogo <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+      </a>
+      <a href="contacto.html" class="cta-card reveal reveal-delay-1">
+        <div class="cta-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+        <div class="cta-card-title">¿Tienes dudas?</div>
+        <div class="cta-card-desc">Escríbenos antes de ordenar. Te respondemos por WhatsApp en horario hábil.</div>
+        <div class="cta-card-link">Contactar <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+      </a>
+      <a href="cuenta.html" class="cta-card reveal reveal-delay-2">
+        <div class="cta-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg></div>
+        <div class="cta-card-title">Mis pedidos</div>
+        <div class="cta-card-desc">Accede a tu cuenta para ver el estado de tus órdenes y tu historial de compras.</div>
+        <div class="cta-card-link">Ver mi cuenta <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+      FOOTER — inyectado vía fetch por footer.js
+  ══════════════════════════════════════ -->
+  <div id="footer-placeholder"></div>
+
+</div><!-- /site-wrap -->
+
+<!-- ══════════════════════════════════════
+    CART DRAWER — inyectado vía fetch por cart-drawer.js
+══════════════════════════════════════ -->
+<div id="cart-drawer-placeholder"></div>
+
+<!-- ══════════════════════════════════════
+    SCRIPT — ES Module, único punto de entrada
+══════════════════════════════════════ -->
+<script type="module" src="../js/pages/politica-envios.js"></script>
+
+</body>
+</html>

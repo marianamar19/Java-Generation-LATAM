@@ -1,0 +1,32 @@
+/* ============================================================
+  reset.css — HERA Design System
+  Descripción: Reset global de estilos. Normaliza el modelo de caja,
+              márgenes, scroll y scrollbar personalizado.
+  Usado por: Todas las páginas del proyecto.
+            Debe cargarse después de tokens.css.
+  ============================================================ */
+
+/* ── Sección: Modelo de caja universal ─────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin:     0;
+  padding:    0;
+}
+
+/* ── Sección: Documento HTML ────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  overflow-x:      clip;  /* Evita scroll horizontal sin crear un scroll container interno */
+}
+
+/* ── Sección: Cuerpo de página ──────────────────────────────── */
+body {
+  font-family: var(--sans);
+  background:  var(--cream);
+  color:       var(--black);
+}
+
+/* ── Sección: Scrollbar personalizado (WebKit) ──────────────── */
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--red);   }
