@@ -1,9 +1,6 @@
 package com.hera.backend.dto.request;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -51,7 +48,7 @@ public class PedidoRequest {
     private String metodoEnvio;
 
     @NotNull(message = "El costo de envío es obligatorio")
-    @Positive(message = "El costo de envío debe ser positivo")
+    @PositiveOrZero(message = "El costo de envío no puede ser negativo")
     private BigDecimal costoEnvio;
 
     // Pago

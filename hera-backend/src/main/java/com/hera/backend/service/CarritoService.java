@@ -191,6 +191,7 @@ public class CarritoService {
         List<CarritoItemResponseDTO> itemsDTO = items.stream()
                 .map(item -> CarritoItemResponseDTO.builder()
                         .id(String.valueOf(item.getId()))
+                        .varianteId(item.getVariante().getId())
                         .productId(item.getVariante().getProducto().getProductoId())
                         .nombre(item.getVariante().getProducto().getNombre())
                         .marca(item.getVariante().getProducto().getMarca().getNombre())

@@ -255,6 +255,25 @@ async function _loadCartFromAPI() {
   try {
     const carrito = await getCarrito();
     cartItemsList.innerHTML = '';
+
+    // Persistir en localStorage para el checkout
+    if (carrito.items && carrito.items.length) {
+      const cartForCheckout = carrito.items.map(function(it) {
+        return {
+          id:         it.id,
+          varianteId: it.varianteId,
+          brand:      it.marca,
+          name:       it.nombre,
+          price:      '$' + it.precioUnitario + ' MXN',
+          qty:        it.cantidad || 1,
+          nivel:      it.nivelDisponibilidad || 'green'
+        };
+      });
+      localStorage.setItem('hera_cart', JSON.stringify(cartForCheckout));
+    } else {
+      localStorage.removeItem('hera_cart');
+    }
+
     if (carrito.items && carrito.items.length) {
       carrito.items.forEach(function(it) {
         const nivelVal     = it.nivelDisponibilidad || 'green';

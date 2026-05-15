@@ -15,6 +15,7 @@ public class CarritoItemResponseDTO {
 
     private String id;              // ID único para el front (carrito-item-id)
     private String productId;       // ID del producto original
+    private Long varianteId;
     private String nombre;          // Nombre del producto
     private String marca;           // Marca del producto
     private String variante;        // '50 ml', '100 ml'

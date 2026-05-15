@@ -19,6 +19,7 @@
 
 import { loadNavbar }       from '../components/navbar.js';
 import { loadFooterMinimo } from '../components/footer-minimo.js';
+import { getCarrito, createPedido }       from '../utils/api.js';
 
 /* ══════════════════════════════════════════════════════════════
   CONSTANTES
@@ -54,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   _initShipping();
   _initPayment();
   _initScrollReveal();
-  loadCart();
+  await loadCart();
 });
 
 /* ══════════════════════════════════════
@@ -242,16 +243,27 @@ function _createChevron() {
 /* ══════════════════════════════════════
   CART — cargar, renderizar, totales
 ══════════════════════════════════════ */
-function loadCart() {
-  try { var r = localStorage.getItem('hera_cart'); if (r) cartData = JSON.parse(r); } catch(e) { cartData = []; }
-  /* ── TEMPORAL — datos demo cuando localStorage está vacío ── */
-  if (!cartData || !cartData.length) {
-    cartData = [
-      { id:'jenny-1',     brand:'Jenny Rivera',        name:'Inolvidable EDP', price:'$1,210 MXN', qty: 2, nivel: 'green'  },
-      { id:'fierce-2',    brand:'Abercrombie & Fitch',  name:'Fierce EDT',      price:'$786 MXN',   qty: 1, nivel: 'yellow' },
-      { id:'signature-4', brand:'HERA Exclusivo',       name:'Signature Blanc', price:'$1,490 MXN', qty: 1, nivel: 'red'    },
-    ];
+async function loadCart() {
+  try {
+    var carrito = await getCarrito();
+    if (carrito.items && carrito.items.length) {
+      cartData = carrito.items.map(function(it) {
+        return {
+          id:         it.id,
+          varianteId: it.varianteId,
+          brand:      it.marca,
+          name:       it.nombre,
+          price:      '$' + it.precioUnitario + ' MXN',
+          qty:        it.cantidad || 1,
+          nivel:      it.nivelDisponibilidad || 'green'
+        };
+      });
+    }
+  } catch(e) {
+    console.error('Error cargando carrito:', e);
+    cartData = [];
   }
+
   if (!cartData.length) showEmpty(); else showCheckout();
 }
 
@@ -651,6 +663,7 @@ function applyPromo() {
 ══════════════════════════════════════ */
 var pTimer = null;
 function submitCheckout() {
+  console.log('submitCheckout llamado, currentStep:', currentStep); 
   if (currentStep < 3) { showToast('Completa todos los pasos primero.', true); return; }
   var btn = document.getElementById('payBtn');
   var txt = document.getElementById('payBtnText');
@@ -658,32 +671,49 @@ function submitCheckout() {
   var d = 0;
   pTimer = setInterval(function() { d = (d + 1) % 4; txt.textContent = 'PROCESANDO' + '.'.repeat(d); }, 380);
   updateStepIndicator(4);
-  setTimeout(function() {
-    clearInterval(pTimer); btn.disabled = false;
+  setTimeout(async function() {
+    clearInterval(pTimer);
     txt.textContent = 'Pagar ahora — ' + document.getElementById('valTotal').textContent;
-    var orderNum  = 'HERA-' + (Date.now().toString(36) + Math.random().toString(36).slice(2,6)).toUpperCase().slice(0,8);
-    var selMethod = document.querySelector('.payment-option.selected');
-    var orderData = {
-      orderNum:  orderNum,
-      fecha:     new Date().toLocaleDateString('es-MX', { day:'numeric', month:'long', year:'numeric' }),
-      nombre:    document.getElementById('ck-nombre').value.trim() + ' ' + document.getElementById('ck-apellidos').value.trim(),
-      email:     document.getElementById('ck-email').value.trim(),
-      telefono:  document.getElementById('ck-telefono').value.trim(),
-      metodo:    selMethod ? selMethod.dataset.method : 'card',
-      total:     document.getElementById('valTotal').textContent,
-      descuento: document.getElementById('valDiscount').textContent,
-      envio:     document.getElementById('valShipping').textContent,
-      items:     cartData,
-      direccion: {
-        calle:  document.getElementById('ck-calle').value.trim(),
-        ciudad: document.getElementById('ck-ciudad').value.trim(),
-        estado: document.getElementById('ck-estado').value,
-        cp:     document.getElementById('ck-cp').value.trim()
-      }
+
+    var selMethod   = document.querySelector('.payment-option.selected');
+    var selShipping = document.querySelector('.shipping-option.selected');
+
+    var pedidoRequest = {
+      nombreContacto:   document.getElementById('ck-nombre').value.trim() + ' ' + document.getElementById('ck-apellidos').value.trim(),
+      emailContacto:    document.getElementById('ck-email').value.trim(),
+      telefonoContacto: document.getElementById('ck-telefono').value.trim(),
+      direccionCalle:   document.getElementById('ck-calle').value.trim(),
+      ddireccionColonia: document.getElementById('ck-interior').value.trim(),
+      direccionCiudad:  document.getElementById('ck-ciudad').value.trim(),
+      direccionEstado:  document.getElementById('ck-estado').value,
+      direccionCp:      document.getElementById('ck-cp').value.trim(),
+      metodoEnvio:      selShipping ? selShipping.dataset.shipping.toUpperCase() : 'NACIONAL',
+      costoEnvio:       shippingCost,
+      metodoPago:       selMethod ? selMethod.dataset.method.toUpperCase() : 'CARD',
+      subtotal:         getSub(),
+      descuento:        discountAmount,
+      total:            getSub() - discountAmount + shippingCost,
+      items:            cartData.map(function(i) {
+        return {
+          varianteId:     i.varianteId || i.id,
+          cantidad:       i.qty,
+          precioUnitario: parseMXN(i.price)
+        };
+      })
     };
-    try { localStorage.setItem('hera_last_order', JSON.stringify(orderData)); } catch(e) {}
-    localStorage.removeItem('hera_cart');
-    window.location.href = '/pages/confirmacion.html';
+
+    console.log('PedidoRequest:', JSON.stringify(pedidoRequest));
+
+    try {
+      var response = await createPedido(pedidoRequest);
+      console.log('Response del backend:', response);
+      localStorage.removeItem('hera_cart');
+      window.location.href = '/pages/confirmacion.html?orden=' + response.numeroPedido;
+    } catch(err) {
+      console.log('Error:', err);
+      showToast('Error al procesar el pedido: ' + err.message, true);
+      btn.disabled = false;
+    }
   }, 2200);
 }
 
