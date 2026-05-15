@@ -216,10 +216,13 @@ public class ProductoController {
 
     @PatchMapping("/{id}/activo")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Activar/desactivar producto (solo ADMIN)")
     public ResponseEntity<ProductoResponseDTO> toggleActivo(
+            @Parameter(description = "ID del producto", required = true)
             @PathVariable Long id,
+            @Parameter(description = "Estado activo (true/false)", required = true)
             @RequestParam Boolean activo) {
-        log.info("Toggle activo producto ID: {}", id);
+        log.info("Toggle activo producto ID: {} a {}", id, activo);
         return ResponseEntity.ok(productoService.toggleActivo(id, activo));
     }
 
