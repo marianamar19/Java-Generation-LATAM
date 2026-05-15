@@ -1,5 +1,7 @@
 package com.hera.backend.service;
 
+import com.hera.backend.dto.request.VarianteRequest;
+import java.math.BigDecimal;
 import com.hera.backend.dto.request.ProductoCreateRequest;
 import com.hera.backend.dto.response.ProductoResponseDTO;
 import com.hera.backend.entity.*;
@@ -145,6 +147,24 @@ public class ProductoService {
         final Producto p1 = productoRepository.save(producto);
         log.info("Producto creado — productoId: {}, slug: {}", p1.getProductoId(), p1.getSlug());
 
+        // Variantes  ← AGREGAR AQUÍ
+        if (request.getVariantes() != null && !request.getVariantes().isEmpty()) {
+            for (var v : request.getVariantes()) {
+                VarianteProducto variante = VarianteProducto.builder()
+                        .producto(p1)
+                        .nombreVariante(v.getNombreVariante())
+                        .precio(v.getPrecio())
+                        .precioDescuento(v.getPrecioDescuento())
+                        .stock(v.getStock() != null ? v.getStock() : 10)
+                        .etiquetaTipo(v.getEtiquetaTipo() != null ? v.getEtiquetaTipo() : "Presentación")
+                        .activo(true)
+                        .build();
+                varianteRepository.save(variante);
+            }
+            p1.setPrecioBase(calcularPrecioBase(request.getVariantes(), request.getTipo()));
+            productoRepository.save(p1);
+        }
+
         // Rendimiento
         if (request.getLongevidad() != null || request.getEstela() != null) {
             ProductoRendimiento rendimiento = ProductoRendimiento.builder()
@@ -240,6 +260,25 @@ public class ProductoService {
         }
         
         final Producto p2 = productoRepository.save(producto);
+
+        // Variantes
+        if (request.getVariantes() != null) {
+            varianteRepository.deleteByProductoId(p2.getId());
+            for (var v : request.getVariantes()) {
+                VarianteProducto variante = VarianteProducto.builder()
+                        .producto(p2)
+                        .nombreVariante(v.getNombreVariante())
+                        .precio(v.getPrecio())
+                        .precioDescuento(v.getPrecioDescuento())
+                        .stock(v.getStock() != null ? v.getStock() : 10)
+                        .etiquetaTipo(v.getEtiquetaTipo() != null ? v.getEtiquetaTipo() : "Presentación")
+                        .activo(true)
+                        .build();
+                varianteRepository.save(variante);
+            }
+            p2.setPrecioBase(calcularPrecioBase(request.getVariantes(), request.getTipo()));
+            productoRepository.save(p2);
+        }
 
         // Rendimiento
         if (request.getLongevidad() != null || request.getEstela() != null) {
@@ -457,4 +496,32 @@ public class ProductoService {
         return nivelDisponibilidadRepository.findByCodigo(codigo)
                 .orElseThrow(() -> new BusinessException("Nivel de disponibilidad no encontrado: " + codigo));
     }
+
+    private BigDecimal calcularPrecioBase(List<VarianteRequest> variantes, String tipo) {
+        if (variantes == null || variantes.isEmpty()) return BigDecimal.ZERO;
+
+        if ("joyeria".equalsIgnoreCase(tipo)) {
+            // Joyería: precio más caro
+            return variantes.stream()
+                    .map(VarianteRequest::getPrecio)
+                    .filter(p -> p != null)
+                    .max(BigDecimal::compareTo)
+                    .orElse(BigDecimal.ZERO);
+        } else {
+            // Perfumes: buscar variante de 100 ml (estándar)
+            return variantes.stream()
+                    .filter(v -> v.getNombreVariante() != null &&
+                            v.getNombreVariante().trim().replaceAll("\\s+", "").equalsIgnoreCase("100ml"))
+                    .map(VarianteRequest::getPrecio)
+                    .filter(p -> p != null)
+                    .findFirst()
+                    // Si no hay 100ml, usar precio mínimo como fallback
+                    .orElseGet(() -> variantes.stream()
+                            .map(VarianteRequest::getPrecio)
+                            .filter(p -> p != null)
+                            .min(BigDecimal::compareTo)
+                            .orElse(BigDecimal.ZERO));
+        }
+    }
+
 }
