@@ -683,7 +683,7 @@ function submitCheckout() {
       emailContacto:    document.getElementById('ck-email').value.trim(),
       telefonoContacto: document.getElementById('ck-telefono').value.trim(),
       direccionCalle:   document.getElementById('ck-calle').value.trim(),
-      ddireccionColonia: document.getElementById('ck-interior').value.trim(),
+      direccionColonia: document.getElementById('ck-interior').value.trim(),
       direccionCiudad:  document.getElementById('ck-ciudad').value.trim(),
       direccionEstado:  document.getElementById('ck-estado').value,
       direccionCp:      document.getElementById('ck-cp').value.trim(),
