@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   await loadNavbar();
   loadFooter();
   await loadCartDrawer();
-  initFavDrawer();
+  await initFavDrawer();
 
   // Lógica exclusiva de esta página
   _initFlipCards();

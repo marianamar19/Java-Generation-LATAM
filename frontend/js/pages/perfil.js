@@ -418,7 +418,7 @@ async function initPerfilPage() {
   await loadNavbar();
   loadFooterMinimo();
   await loadCartDrawer();
-  initFavDrawer();
+  await initFavDrawer();
 
   _initScrollReveal();
   await cargarPerfil();

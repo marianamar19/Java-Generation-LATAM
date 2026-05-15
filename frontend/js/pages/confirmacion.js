@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   await loadNavbar();
   loadFooter();
   initCartDrawer();
-  initFavDrawer();
+  await initFavDrawer();
 
   /* ── 3. Mensaje de carrito vacío personalizado para esta página ── */
   const cartEmptyEl = document.getElementById('cart-empty');

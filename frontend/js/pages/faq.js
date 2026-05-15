@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   await loadNavbar();      // await OBLIGATORIO
   loadFooter();            // sin await
   await loadCartDrawer();  // await OBLIGATORIO
-  initFavDrawer();         // depende del cart drawer
+  await initFavDrawer();         // depende del cart drawer
 
   // Lógica exclusiva de la página
   _initScrollReveal();

@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   await _renderHeroCard();
   await _renderBestSellers();
   await _renderNovedades();
-  initFavDrawer();
+  await initFavDrawer();
  
   // Lógica exclusiva de esta página
   _initScrollReveal();

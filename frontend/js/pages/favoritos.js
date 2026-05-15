@@ -201,7 +201,7 @@ function buildFavCard(item) {
   });
   card.querySelector('.fav-card-cart-btn').addEventListener('click', function(e){
     e.stopPropagation();
-    addItemToCart(item.id, item.brand, item.name, item.price, item.vol || '', item.nivel || 'green');
+    addItemToCart(item.varianteId);
   });
 
   return card;
@@ -336,7 +336,7 @@ function setFavTab(tab, btn) {
  */
 function addFilteredToCart() {
   getFilteredFavs().forEach(function(f){
-    addItemToCart(f.id, f.brand, f.name, f.price, f.vol || '', f.nivel || 'green');
+    addItemToCart(f.varianteId);
   });
 }
 
@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   // 4. Cargar cart drawer vía fetch e inicializar
   await loadCartDrawer();
-  initFavDrawer();
+  await initFavDrawer();
 
   // 5. Extender renderFavList para sincronizar el grid con el dropdown
   _extendRenderFavList();

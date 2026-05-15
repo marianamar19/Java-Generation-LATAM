@@ -65,6 +65,7 @@ function mapProducto(dto) {
 
     return {
         id:             dto.slug || dto.productId,
+        productId:      dto.productId,
         brand:          dto.marca || '',
         name:           dto.nombre || '',
         concentration:  dto.concentracion || dto.material || '',
@@ -126,7 +127,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try { await loadNavbar(); }     catch (e) { console.warn('[navbar]', e); }
     loadFooter();
     try { await loadCartDrawer(); } catch (e) { console.warn('[cart]', e); }
-    initFavDrawer();
+    await initFavDrawer();
 
    const slug = getQueryParam('slug') || sessionStorage.getItem('productoSlug');
     if (slug) sessionStorage.removeItem('productoSlug');
@@ -188,6 +189,7 @@ function _toggleFav(btn) {
   const cat      = btn.dataset.cat      || '';
   const gen      = btn.dataset.gen      || '';
   const vol      = btn.dataset.vol      || '';
+  const img      = btn.dataset.img || '';
  
   let favs = getFavsList();
   const isActive = btn.classList.contains('active');
@@ -196,7 +198,7 @@ function _toggleFav(btn) {
     favs = favs.filter(f => f.id !== id);
   } else {
     if (!favs.find(f => f.id === id)) {
-      favs.push({ id, brand, name, price, vol, volLabel, nivel, tipo, cat, gen });
+      favs.push({ id, brand, name, price, vol, volLabel, nivel, tipo, cat, gen, img });
     }
   }
  
@@ -384,15 +386,15 @@ if (mainAddCartBtn) {
   const mainFavBtn = document.getElementById('btn-fav-main');
   if (mainFavBtn) {
     // Sincroniza estado inicial con la lista de favoritos persistida
-    if (getFavorites().some(f => f.id === PRODUCT.id)) {
-      mainFavBtn.classList.add('active');
+      if (getFavorites().some(f => f.id === PRODUCT.id || f.id === PRODUCT.productId)) {
+        mainFavBtn.classList.add('active');
     }
     mainFavBtn.addEventListener('click', () => {
       // Dataset siempre actualizado (necesario tanto al añadir como al quitar)
       // para que _toggleFav pueda construir el objeto completo del favorito.
       // NO se toca classList aquí — _toggleFav lo gestiona internamente.
       const selSize = PRODUCT.sizes[selectedSizeIdx];
-      mainFavBtn.dataset.productId = PRODUCT.id;
+      mainFavBtn.dataset.productId = PRODUCT.productId || PRODUCT.id;
       mainFavBtn.dataset.brand     = PRODUCT.brand;
       mainFavBtn.dataset.name      = `${PRODUCT.name} EDP`;
       mainFavBtn.dataset.price = selSize?.price || PRODUCT.sizes[0]?.price || '';
@@ -402,11 +404,13 @@ if (mainAddCartBtn) {
       mainFavBtn.dataset.cat       = PRODUCT.cat || '';
       mainFavBtn.dataset.gen       = PRODUCT.gen || '';
       mainFavBtn.dataset.vol = selSize?.ml ? `${selSize.ml} ml` : '';
+      mainFavBtn.dataset.varianteId = size?.id || '';
+      mainFavBtn.dataset.img = PRODUCT.imgs?.[0] || '';
       _toggleFav(mainFavBtn);
       // btn-fav-main usa clase .btn-fav-lg, no .fav-btn —
       // _toggleFav no lo alcanza con su querySelectorAll;
       // sincronizamos el estado visual del corazón aquí
-      mainFavBtn.classList.toggle('active', getFavorites().some(f => f.id === PRODUCT.id));
+      mainFavBtn.classList.toggle('active', getFavorites().some(f => f.id === PRODUCT.id || f.id === PRODUCT.productId));
     });
   }
 }

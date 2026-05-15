@@ -10,6 +10,7 @@
  * Importado por: js/pages/index.js, js/pages/favoritos.js
  */
 
+import { isAuthenticated, addFavorito, removeFavorito, getFavoritos } from '../utils/api.js';
 import { getFavs, setFavs }  from '../utils/storage.js';
 import { addItemToCart }     from './cart-drawer.js';
 
@@ -58,8 +59,26 @@ let favCountMobile, favListMobile, favEmptyMobile;
  * después de initCartDrawer.
  * @returns {void}
  */
-function initFavDrawer() {
-  favorites = getFavs();
+async function initFavDrawer() {
+  if (isAuthenticated()) {
+    try {
+        const data = await getFavoritos();
+        favorites = data.map(p => ({
+            id: p.productId,
+            varianteId: p.variantes?.[0]?.id || null,
+            brand: p.marca, name: p.nombre, price: p.precio,
+            vol: p.variantes?.[0]?.valor ? p.variantes[0].valor + ' ml' : '',
+            nivel: p.nivelDisponibilidad || 'green',
+            tipo: p.tipo || 'perfumes',
+            cat: p.categoria?.toLowerCase() || '',
+            gen: p.genero || '',
+            img: p.imagenPrincipalUrl || '',
+        }));
+        setFavs(favorites);
+    } catch (e) { favorites = getFavs(); }
+} else {
+    favorites = getFavs();
+}
 
   favCountBadge  = document.getElementById('fav-count');
   favCountLabel  = document.getElementById('fav-count-label');
@@ -69,11 +88,11 @@ function initFavDrawer() {
   favListMobile  = document.getElementById('fav-list-mobile');
   favEmptyMobile = document.getElementById('fav-empty-mobile');
 
-  document.querySelectorAll('.fav-btn').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
+  document.addEventListener('click', function(e) {
+      const btn = e.target.closest('.fav-btn');
+      if (!btn) return;
       e.stopPropagation();
       _toggleFav(btn);
-    });
   });
 
   favorites.forEach(function(f) {
@@ -103,15 +122,19 @@ function _toggleFav(btn) {
   const card      = btn.closest('.ed-item');
   const selVolBtn = card ? card.querySelector('.ed-vol-btn.sel') : null;
   const vol       = selVolBtn ? selVolBtn.textContent.trim() : (btn.dataset.vol || '');
+  const varianteId = selVolBtn?.dataset.varianteId || btn.dataset.varianteId || null;
+  const img = btn.dataset.img || '';
 
   if (btn.classList.contains('active')) {
     btn.classList.remove('active');
     favorites = favorites.filter(function(f) { return f.id !== id; });
+    if (isAuthenticated()) removeFavorito(id).catch(() => {});
   } else {
     btn.classList.add('active');
     if (!favorites.find(function(f) { return f.id === id; })) {
-      favorites.push({ id, brand, name, price, vol, volLabel, nivel, tipo, cat, gen });
+      favorites.push({ id, varianteId, brand, name, price, vol, volLabel, nivel, tipo, cat, gen, img });
     }
+    if (isAuthenticated()) addFavorito(id).catch(() => {});
     if (favCountBadge) {
       favCountBadge.style.transform = 'scale(1.5)';
       setTimeout(function() { favCountBadge.style.transform = 'scale(1)'; }, 200);
@@ -180,7 +203,10 @@ function _buildFavRow(item, isMobile) {
 
   row.innerHTML =
     '<div class="fav-row-img">' +
-      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.25)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>' +
+        (item.img
+            ? '<img src="' + item.img + '" alt="' + item.name + '" style="width:100%;height:100%;object-fit:contain;">'
+            : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(15,15,15,.25)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>'
+        ) +
     '</div>' +
     '<div class="fav-row-body">' +
       '<div class="fav-row-nivel fav-row-nivel--' + nNivel + '">' +
@@ -203,7 +229,7 @@ function _buildFavRow(item, isMobile) {
 
   row.querySelector('[data-add-cart]').addEventListener('click', function(e) {
     e.stopPropagation();
-    addItemToCart(item.id, item.brand, item.name, item.price, item.vol || '', item.nivel || 'green');
+    addItemToCart(item.varianteId);
     const btn = this;
     btn.style.background = '#2e7d32';
     btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>';
@@ -217,6 +243,7 @@ function _buildFavRow(item, isMobile) {
     e.stopPropagation();
     const id = e.currentTarget.dataset.remove;
     favorites = favorites.filter(function(f) { return f.id !== id; });
+    if (isAuthenticated()) removeFavorito(id).catch(() => {});
     document.querySelectorAll('.fav-btn[data-product-id="' + id + '"]')
       .forEach(function(b) { b.classList.remove('active'); });
     renderFavList();
@@ -230,7 +257,7 @@ function _buildFavRow(item, isMobile) {
 function _addAllFavsToCart() {
   if (!favorites.length) return;
   favorites.forEach(function(f) {
-    addItemToCart(f.id, f.brand, f.name, f.price, f.vol || '', f.nivel || 'green');
+    addItemToCart(f.varianteId);
   });
 }
 

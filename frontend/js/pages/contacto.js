@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   await loadCartDrawer();
 
   // Favoritos — enlaza el estado de localStorage y renderiza los dropdowns
-  initFavDrawer();
+  await initFavDrawer();
 
   // Lógica exclusiva de esta página
   _initScrollReveal();

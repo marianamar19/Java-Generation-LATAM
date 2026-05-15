@@ -318,7 +318,7 @@ async function initCuentaPage() {
   await loadNavbar();
   await loadFooterMinimo();
   await loadCartDrawer();
-  initFavDrawer();
+  await initFavDrawer();
   initEventListeners();
 
   // CORREGIDO: Solo redirigir si estamos en cuenta.html y hay sesión
