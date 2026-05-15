@@ -113,7 +113,12 @@ async function _renderHeroCard() {
         priceEl.textContent = '$' + Math.round(firstPrecio).toLocaleString('es-MX') + ' MXN';
     }
 }
-    if (ctaEl)      ctaEl.href             = `producto.html?id=${p.productId}`;
+    if (ctaEl) {
+    ctaEl.href = 'producto.html';
+    ctaEl.addEventListener('click', () => {
+        sessionStorage.setItem('productoSlug', p.slug);
+    });
+}
 
     if (nivelEl) {
       const labels = { green: 'En existencia', yellow: 'Disp. limitada', red: 'Sin existencia' };
