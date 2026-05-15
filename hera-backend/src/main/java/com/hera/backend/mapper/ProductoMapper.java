@@ -91,6 +91,7 @@ public class ProductoMapper {
                 .esNuevo(producto.getEsNuevo())
                 .esBestSeller(producto.getEsBestSeller())
                 .esDestacado(producto.getEsDestacado())
+                .activo(producto.getActivo())
 
                 // Imágenes
                 .imagenPrincipalUrl(producto.getImagenPrincipalUrl())

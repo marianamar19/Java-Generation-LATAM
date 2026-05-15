@@ -213,4 +213,15 @@ public class ProductoController {
         log.info("Toggle destacado producto ID: {}", id);
         return ResponseEntity.ok(productoService.toggleDestacado(id));
     }
+
+    @PatchMapping("/{id}/activo")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ProductoResponseDTO> toggleActivo(
+            @PathVariable Long id,
+            @RequestParam Boolean activo) {
+        log.info("Toggle activo producto ID: {}", id);
+        return ResponseEntity.ok(productoService.toggleActivo(id, activo));
+    }
+
 }
+

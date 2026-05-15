@@ -73,6 +73,7 @@ public class ProductoResponseDTO {
     private Boolean esNuevo;
     private Boolean esBestSeller;
     private Boolean esDestacado;
+    private Boolean activo;
 
     // Imagenes
     private String imagenPrincipalUrl;

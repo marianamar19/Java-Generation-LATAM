@@ -330,6 +330,14 @@ public class ProductoService {
         return productoMapper.toDTO(productoRepository.save(producto));
     }
 
+    @Transactional
+    public ProductoResponseDTO toggleActivo(Long id, Boolean activo) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Producto", "id", id));
+        producto.setActivo(activo);
+        return productoMapper.toDTO(productoRepository.save(producto));
+    }
+
     private void guardarNotas(Producto producto, List<String> nombres, String tipo) {
         if (nombres == null || nombres.isEmpty()) return;
         for (String nombre : nombres) {
