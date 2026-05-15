@@ -144,7 +144,7 @@ public class Producto {
     @Builder.Default
     private List<ProductoMomentoDia> momentosDia = new ArrayList<>();
 
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     @Builder.Default
     private List<ProductoNota> notas = new ArrayList<>();
 

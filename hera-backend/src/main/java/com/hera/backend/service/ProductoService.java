@@ -85,6 +85,12 @@ public class ProductoService {
     }
 
     @Transactional(readOnly = true)
+    public List<ProductoResponseDTO> listarTodosAdmin() {
+        return productoRepository.findAll().stream()
+                .map(productoMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public List<ProductoResponseDTO> buscar(String keyword) {
         if (keyword == null || keyword.trim().isEmpty()) return listarTodos();
         return productoRepository.buscarPorKeyword(keyword).stream()
@@ -299,7 +305,7 @@ public class ProductoService {
         // Notas
         if (request.getNotasSalida() != null || request.getNotasCorazon() != null || request.getNotasBase() != null) {
             p2.getNotas().clear();
-            productoRepository.save(p2);
+            productoRepository.saveAndFlush(p2);
             guardarNotas(p2, request.getNotasSalida(), "salida");
             guardarNotas(p2, request.getNotasCorazon(), "corazon");
             guardarNotas(p2, request.getNotasBase(), "base");

@@ -122,6 +122,13 @@ public class ProductoController {
         return ResponseEntity.ok(productoService.buscar(q));
     }
 
+    @GetMapping("/admin/todos")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<ProductoResponseDTO>> listarTodosAdmin() {
+        log.info("Admin: listando todos los productos");
+        return ResponseEntity.ok(productoService.listarTodosAdmin());
+    }
+
     // ==================== ENDPOINTS DE ADMIN (requieren token JWT y rol ADMIN) ====================
 
     @PostMapping
