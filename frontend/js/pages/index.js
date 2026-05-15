@@ -82,16 +82,37 @@ async function _renderHeroCard() {
     }
 
     const nameEl     = document.getElementById('heroCardName');
-    const volEl      = document.getElementById('heroCardVol');
     const volLabelEl = document.getElementById('heroCardVolLabel');
+    const volsEl = document.getElementById('heroCardVols');
     const priceEl    = document.getElementById('heroCardPrice');
     const ctaEl      = document.getElementById('heroCardCta');
     const nivelEl    = document.getElementById('heroCardNivel');
 
     if (nameEl)     nameEl.textContent     = p.nombre + ' by ' + p.marca;
-    if (volEl)      volEl.textContent      = vol;
     if (volLabelEl) volLabelEl.textContent = volLabel;
-    if (priceEl)    priceEl.textContent    = p.precio;
+    if (volsEl && variantes.length > 0) {
+    volsEl.innerHTML = variantes.map((v, i) => {
+        const label = /^\d+$/.test(String(v.valor))
+            ? v.valor + ' ml' : v.valor;
+        return `<button class="hero-card-vol-btn${i === 0 ? ' sel' : ''}"
+            data-precio="${v.precio}">${label}</button>`;
+    }).join('');
+
+    volsEl.querySelectorAll('.hero-card-vol-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            volsEl.querySelectorAll('.hero-card-vol-btn').forEach(b => b.classList.remove('sel'));
+            btn.classList.add('sel');
+            if (priceEl && btn.dataset.precio) {
+                priceEl.textContent = '$' + Math.round(btn.dataset.precio).toLocaleString('es-MX') + ' MXN';
+            }
+        });
+    });
+
+    const firstPrecio = variantes[0]?.precio;
+    if (priceEl && firstPrecio) {
+        priceEl.textContent = '$' + Math.round(firstPrecio).toLocaleString('es-MX') + ' MXN';
+    }
+}
     if (ctaEl)      ctaEl.href             = `producto.html?id=${p.productId}`;
 
     if (nivelEl) {

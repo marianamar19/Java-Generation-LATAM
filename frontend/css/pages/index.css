@@ -323,7 +323,29 @@ section.hero { padding: 0; }
   letter-spacing: .05em;
   padding:     3px 9px;
 }
- 
+
+/* ── Hero card — botones de variante ── */
+.hero-card-vols { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+
+.hero-card-vol-btn {
+    border:         1px solid rgba(249,249,249,.25);
+    background:     transparent;
+    color:          rgba(249,249,249,.5);
+    font-family:    var(--sans);
+    font-size:      9px;
+    font-weight:    700;
+    letter-spacing: .05em;
+    padding:        4px 10px;
+    cursor:         pointer;
+    transition:     border-color .2s, background .2s, color .2s;
+}
+
+.hero-card-vol-btn.sel {
+    border-color: var(--cream);
+    background:   var(--cream);
+    color:        var(--black);
+}
+
 .hero-card-nivel {
   display:        inline-flex;
   align-items:    center;

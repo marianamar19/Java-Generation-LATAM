@@ -21,6 +21,28 @@
   flex-wrap:       wrap;
 }
 
+/* ── Sección: Barra de búsqueda ─────────────────────────────── */
+#prod-search {
+    font-family:    var(--adm-font, inherit);
+    font-size:      12px;
+    color:          var(--adm-text);
+    letter-spacing: .02em;
+}
+
+#prod-search::placeholder {
+    font-size:   12px;
+    color:       var(--adm-muted);
+    font-style:  normal;
+}
+
+#filter-tipo,
+#filter-nivel {
+    font-family:    var(--adm-font, inherit);
+    font-size:      12px;
+    color:          var(--adm-text);
+    letter-spacing: .02em;
+}
+
 /* ── Sección: Tabla — overrides exclusivos de productos ──────── */
 .adm-table tbody td { font-size: 12px; color: var(--adm-text); vertical-align: middle; }
 .table-hover > tbody > tr:hover > * { background-color: rgba(225,34,43,.02) !important; }
@@ -98,6 +120,27 @@
 .adm-modal .nav-link:hover  { color: var(--adm-text); border-bottom-color: var(--adm-border); }
 .adm-modal .tab-content     { padding: 24px; }
 
+.adm-modal .modal-footer .btn {
+  height:         40px;
+  min-width:      120px;
+  font-size:      11px;
+  font-weight:    700;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  border-radius:  0;
+}
+
+.adm-modal .modal-footer .btn-primary {
+  background:   var(--adm-red);
+  border-color: var(--adm-red);
+  min-width:    160px;
+  color:        #fff;
+}
+
+.adm-modal .modal-footer .btn-outline-secondary {
+  color:        var(--adm-text);
+  border-color: var(--adm-border);
+}
 /* ── Sección: Form labels dentro del modal ───────────────────── */
 .adm-modal .form-label {
   font-size:      10px;
@@ -140,7 +183,18 @@
   font-size: 9px; display: flex;
   align-items: center; justify-content: center;
 }
+#f-imagen-url {
+    font-family:    var(--adm-font, inherit);
+    font-size:      12px;
+    color:          var(--adm-text);
+    letter-spacing: .02em;
+}
 
+#f-imagen-url::placeholder {
+    font-size:  12px;
+    color:      var(--adm-muted);
+    font-style: normal;
+}
 /* ── Sección: Variantes ─────────────────────────────────────── */
 .adm-variant-row { display: grid; grid-template-columns: 1fr 1fr 32px; gap: 8px; align-items: center; margin-bottom: 8px; }
 .adm-variant-label-small {

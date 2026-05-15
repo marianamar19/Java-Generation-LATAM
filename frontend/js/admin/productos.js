@@ -12,7 +12,7 @@ let productosGlobal = [];
 let editingId       = null;
 let imageState      = { principal: null, galeria: [] };
 
-const REQUIRED_FIELDS = ['f-brand', 'f-name', 'f-conc-mat', 'f-tipo', 'f-cat', 'f-gen', 'f-nivel', 'f-precio-base'];
+const REQUIRED_FIELDS = ['f-brand', 'f-name', 'f-conc-mat', 'f-tipo', 'f-cat', 'f-gen', 'f-nivel', ];
 
 /* ══════════════════════════════════════
    INICIALIZACIÓN
@@ -61,7 +61,7 @@ function renderTable(list) {
     if (!tbody) return;
 
     if (!list || list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9">${buildEmptyState('Sin productos', 'box')}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="10">${buildEmptyState('Sin productos', 'box')}</td></tr>`;
         return;
     }
 
@@ -332,29 +332,46 @@ function renderGaleria() {
    VARIANTES
 ══════════════════════════════════════ */
 
-function addVariantRow(valor = '', precio = '', stock = 10) {
+function addVariantRow(nombreVariante = '', precio = '', stock = 10) {
     const list = document.getElementById('variants-list');
     if (!list) return;
+
     const row = document.createElement('div');
-    row.className = 'adm-variant-row';
+    row.className = 'd-flex align-items-center gap-2 mb-2';
     row.innerHTML = `
-        <input class="form-control form-control-sm" type="text" placeholder="Ej: 50 ml" value="${escapeHtml(valor)}" />
-        <input class="form-control form-control-sm" type="number" placeholder="Precio MXN" value="${precio}" min="0" />
-        <input class="form-control form-control-sm" type="number" placeholder="Stock" value="${stock}" min="0" />
-        <button class="btn btn-sm btn-outline-danger" type="button" aria-label="Eliminar variante">✕</button>`;
-    row.querySelector('button').addEventListener('click', () => row.remove());
+        <input type="text" class="form-control form-control-sm variant-ml"
+            placeholder="Ej: 100 ml, Talla M" value="${escapeHtml(nombreVariante || '')}" style="flex:2;" />
+        <input type="number" class="form-control form-control-sm variant-precio"
+            placeholder="Precio MXN" value="${precio}" style="flex:1;" min="0" step="1" />
+        <input type="number" class="form-control form-control-sm variant-stock"
+            placeholder="Stock" value="${stock}" style="flex:1;" min="0" step="1" />
+        <button class="btn btn-sm btn-outline-danger" type="button" aria-label="Eliminar variante">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+    `;
+
+    row.querySelector('.btn-outline-danger').addEventListener('click', () => {
+        if (list.querySelectorAll('.d-flex').length > 1) {
+            row.remove();
+        } else {
+            showToast('Debe haber al menos una variante', '#f9a825');
+        }
+    });
+
     list.appendChild(row);
 }
 
 function getVariants() {
-    return [...document.querySelectorAll('#variants-list .adm-variant-row')].map(row => {
-        const inputs = row.querySelectorAll('input');
+    return [...document.querySelectorAll('#variants-list .d-flex')].map(row => {
         return {
-            valor:  inputs[0]?.value.trim() || '',
-            precio: parseFloat(inputs[1]?.value) || 0,
-            stock:  parseInt(inputs[2]?.value) ?? 10
+            nombreVariante: row.querySelector('.variant-ml')?.value.trim() || '',
+            precio:         parseFloat(row.querySelector('.variant-precio')?.value) || 0,
+            stock:          parseInt(row.querySelector('.variant-stock')?.value) || 0,
+            etiquetaTipo:   'Presentación'
         };
-    }).filter(v => v.valor);
+    }).filter(v => v.nombreVariante && v.precio > 0);
 }
 
 document.getElementById('btn-add-variant')?.addEventListener('click', () => addVariantRow());
@@ -438,7 +455,7 @@ function populateForm(p) {
 
 function resetForm() {
     ['f-brand','f-name','f-tipo','f-cat','f-gen','f-fam',
-     'f-pais','f-anio','f-descripcion','f-nivel','f-badge','f-precio-base'
+     'f-pais','f-anio','f-descripcion','f-nivel','f-badge'
     ].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
 
     const concMat = document.getElementById('f-conc-mat');
@@ -493,10 +510,6 @@ function validateForm() {
         if (!el?.value?.trim()) { el?.classList.add('is-invalid'); ok = false; }
         else el?.classList.remove('is-invalid');
     });
-    const precio = document.getElementById('f-precio-base');
-    if (precio && parseFloat(precio.value) <= 0) {
-        precio.classList.add('is-invalid'); ok = false;
-    }
     return ok;
 }
 
@@ -527,7 +540,6 @@ async function saveProduct() {
         paisOrigen:          document.getElementById('f-pais').value.trim() || null,
         anioLanzamiento:     parseInt(document.getElementById('f-anio').value) || null,
         descripcion:         document.getElementById('f-descripcion').value.trim() || null,
-        precioBase:          parseFloat(document.getElementById('f-precio-base').value),
         nivelDisponibilidad: document.getElementById('f-nivel').value,
         badge:               document.getElementById('f-badge').value.trim() || null,
         esNuevo:             document.getElementById('f-nuevo').checked,

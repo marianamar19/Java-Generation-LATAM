@@ -140,7 +140,7 @@ export function renderCard(p) {
       <div class="ed-vol-label">${volLabel}</div>
       <div class="ed-vols">${volBtns}</div>
       <div class="ed-footer">
-        <div class="ed-price">${p.price}</div>
+        <div class="ed-price">${vols.length > 0 ? '$' + Math.round(vols[0].precio).toLocaleString('es-MX') + ' MXN' : p.price}</div>
         <a href="producto.html?id=${p.id}" class="ed-cta">Ver producto ${SVG_ARROW}</a>
       </div>
       ${nivelHtml}
