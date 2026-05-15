@@ -64,7 +64,8 @@ async function initFavDrawer() {
     try {
         const data = await getFavoritos();
         favorites = data.map(p => ({
-            id: p.productId,
+            id: p.variantes?.[0]?.id || p.productId,
+            productId: p.productId,
             varianteId: p.variantes?.[0]?.id || null,
             brand: p.marca, name: p.nombre, price: p.precio,
             vol: p.variantes?.[0]?.valor ? p.variantes[0].valor + ' ml' : '',
@@ -95,9 +96,29 @@ async function initFavDrawer() {
       _toggleFav(btn);
   });
 
+  document.addEventListener('click', function(e) {
+      const volBtn = e.target.closest('.ed-vol-btn');
+      if (!volBtn) return;
+      const card = volBtn.closest('.ed-item');
+      if (!card) return;
+      const favBtn = card.querySelector('.fav-btn');
+      if (!favBtn) return;
+      setTimeout(function() {
+          const selVol = card.querySelector('.ed-vol-btn.sel');
+          const varId  = selVol?.dataset.varianteId || favBtn.dataset.varianteId || null;
+          const key    = varId || favBtn.dataset.productId;
+          favBtn.classList.toggle('active', favorites.some(function(f) { return f.id == key; }));
+      }, 0);
+  });
+
   favorites.forEach(function(f) {
-    document.querySelectorAll('.fav-btn[data-product-id="' + f.id + '"]')
-      .forEach(function(b) { b.classList.add('active'); });
+      const pid = f.productId || f.id;
+      document.querySelectorAll('.fav-btn[data-product-id="' + pid + '"]').forEach(function(b) {
+          const bCard = b.closest('.ed-item');
+          const bSelVol = bCard ? bCard.querySelector('.ed-vol-btn.sel') : null;
+          const bVarId = bSelVol?.dataset.varianteId || b.dataset.varianteId || null;
+          if (!bVarId || bVarId == f.id) b.classList.add('active');
+      });
   });
 
   const favAddAllBtn = document.getElementById('fav-add-all-btn');
@@ -109,40 +130,45 @@ async function initFavDrawer() {
 /* ── Toggle de favoritos ─────────────────────────────────────── */
 
 function _toggleFav(btn) {
-  const id       = btn.dataset.productId;
-  const brand    = btn.dataset.brand;
-  const name     = btn.dataset.name;
-  const price    = btn.dataset.price;
-  const nivel    = btn.dataset.nivel    || 'green';
-  const volLabel = btn.dataset.volLabel || 'Presentación';
-  const tipo     = btn.dataset.tipo     || 'perfumes';
-  const cat      = btn.dataset.cat      || '';
-  const gen      = btn.dataset.gen      || '';
+  const productId = btn.dataset.productId;
+  const brand     = btn.dataset.brand;
+  const name      = btn.dataset.name;
+  const price     = btn.dataset.price;
+  const nivel     = btn.dataset.nivel    || 'green';
+  const volLabel  = btn.dataset.volLabel || 'Presentación';
+  const tipo      = btn.dataset.tipo     || 'perfumes';
+  const cat       = btn.dataset.cat      || '';
+  const gen       = btn.dataset.gen      || '';
+  const img       = btn.dataset.img      || '';
 
-  const card      = btn.closest('.ed-item');
-  const selVolBtn = card ? card.querySelector('.ed-vol-btn.sel') : null;
-  const vol       = selVolBtn ? selVolBtn.textContent.trim() : (btn.dataset.vol || '');
+  const card       = btn.closest('.ed-item');
+  const selVolBtn  = card ? card.querySelector('.ed-vol-btn.sel') : null;
+  const vol        = selVolBtn ? selVolBtn.textContent.trim() : (btn.dataset.vol || '');
   const varianteId = selVolBtn?.dataset.varianteId || btn.dataset.varianteId || null;
-  const img = btn.dataset.img || '';
+  const id         = varianteId || productId;
 
   if (btn.classList.contains('active')) {
     btn.classList.remove('active');
     favorites = favorites.filter(function(f) { return f.id !== id; });
-    if (isAuthenticated()) removeFavorito(id).catch(() => {});
+    if (isAuthenticated()) removeFavorito(productId).catch(() => {});
   } else {
     btn.classList.add('active');
     if (!favorites.find(function(f) { return f.id === id; })) {
-      favorites.push({ id, varianteId, brand, name, price, vol, volLabel, nivel, tipo, cat, gen, img });
+      favorites.push({ id, productId, varianteId, brand, name, price, vol, volLabel, nivel, tipo, cat, gen, img });
     }
-    if (isAuthenticated()) addFavorito(id).catch(() => {});
+    if (isAuthenticated()) addFavorito(productId).catch(() => {});
     if (favCountBadge) {
       favCountBadge.style.transform = 'scale(1.5)';
       setTimeout(function() { favCountBadge.style.transform = 'scale(1)'; }, 200);
     }
   }
 
-  document.querySelectorAll('.fav-btn[data-product-id="' + id + '"]').forEach(function(b) {
-    b.classList.toggle('active', favorites.some(function(f) { return f.id === id; }));
+  document.querySelectorAll('.fav-btn[data-product-id="' + productId + '"]').forEach(function(b) {
+    const bCard   = b.closest('.ed-item');
+    const bSelVol = bCard ? bCard.querySelector('.ed-vol-btn.sel') : null;
+    const bVarId  = bSelVol?.dataset.varianteId || b.dataset.varianteId || null;
+    const key     = bVarId || productId;
+    b.classList.toggle('active', favorites.some(function(f) { return f.id == key; }));
   });
 
   renderFavList();
@@ -242,10 +268,12 @@ function _buildFavRow(item, isMobile) {
   row.querySelector('[data-remove]').addEventListener('click', function(e) {
     e.stopPropagation();
     const id = e.currentTarget.dataset.remove;
-    favorites = favorites.filter(function(f) { return f.id !== id; });
-    if (isAuthenticated()) removeFavorito(id).catch(() => {});
-    document.querySelectorAll('.fav-btn[data-product-id="' + id + '"]')
-      .forEach(function(b) { b.classList.remove('active'); });
+    const fav = favorites.find(function(f) { return f.id == id; });
+    const productId = fav?.productId || id;
+      favorites = favorites.filter(function(f) { return f.id !== id; });
+    if (isAuthenticated()) removeFavorito(productId).catch(() => {});
+      document.querySelectorAll('.fav-btn[data-product-id="' + productId + '"]')
+        .forEach(function(b) { b.classList.remove('active'); });
     renderFavList();
   });
 

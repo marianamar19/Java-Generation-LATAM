@@ -198,7 +198,8 @@ function _toggleFav(btn) {
     favs = favs.filter(f => f.id !== id);
   } else {
     if (!favs.find(f => f.id === id)) {
-      favs.push({ id, brand, name, price, vol, volLabel, nivel, tipo, cat, gen, img });
+      const productId = btn.dataset.productId;
+        favs.push({ id, productId, varianteId: id, brand, name, price, vol, volLabel, nivel, tipo, cat, gen, img });
     }
   }
  
@@ -243,6 +244,14 @@ function initSizeSelector() {
           mainImg.style.opacity = '1';
         }, 150);
       }
+      const mainFavBtn = document.getElementById('btn-fav-main');
+        if (mainFavBtn) {
+            mainFavBtn.dataset.productId  = s.id || '';
+            mainFavBtn.dataset.varianteId = s.id || '';
+            mainFavBtn.classList.toggle('active',
+                getFavorites().some(f => f.id == s.id)
+            );
+        }
     });
     cont.appendChild(btn);
   });
@@ -386,8 +395,10 @@ if (mainAddCartBtn) {
   const mainFavBtn = document.getElementById('btn-fav-main');
   if (mainFavBtn) {
     // Sincroniza estado inicial con la lista de favoritos persistida
-      if (getFavorites().some(f => f.id === PRODUCT.id || f.id === PRODUCT.productId)) {
-        mainFavBtn.classList.add('active');
+      const initialSize = PRODUCT.sizes[selectedSizeIdx];
+        if (getFavorites().some(f => f.id == initialSize?.id)) {
+            mainFavBtn.classList.add('active');
+        }
     }
     mainFavBtn.addEventListener('click', () => {
       // Dataset siempre actualizado (necesario tanto al añadir como al quitar)
@@ -410,11 +421,10 @@ if (mainAddCartBtn) {
       // btn-fav-main usa clase .btn-fav-lg, no .fav-btn —
       // _toggleFav no lo alcanza con su querySelectorAll;
       // sincronizamos el estado visual del corazón aquí
-      mainFavBtn.classList.toggle('active', getFavorites().some(f => f.id === PRODUCT.id || f.id === PRODUCT.productId));
+      mainFavBtn.classList.toggle('active', getFavorites().some(f => f.id == selSize?.id));
     });
   }
-}
- 
+
 /* ══════════════════════════════════════════════════════════════
    GALERÍA — fit en viewport + carrusel vertical (exclusive)
    Los style.width / style.height son valores calculados

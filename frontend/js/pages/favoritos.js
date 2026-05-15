@@ -168,38 +168,50 @@ function renderSidebarFilters() {
  */
 function buildFavCard(item) {
   const card = document.createElement('div');
-  card.className = 'fav-card';
+  card.className = 'ed-item';
   card.dataset.id = item.id;
-  const n      = item.nivel || 'green';
-  const nLabel = {green:'En existencia', yellow:'Disp. limitada', red:'Pieza exclusiva'}[n];
-  const imgLabel = (item.tipo||'perfumes')==='joyeria' ? 'Imagen de la pieza' : 'Imagen del perfume';
-  const volLine  = item.vol ? '<div class="fav-card-vol">'+item.vol+'</div>' : '';
 
-  card.innerHTML =
-    '<button class="fav-card-remove" aria-label="Quitar de favoritos"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
-    '<div class="fav-card-img">' +
-      '<div class="fav-card-placeholder">' +
-        '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>' +
-        '<span>'+imgLabel+'</span>' +
-      '</div>' +
-      '<div class="fav-card-overlay">' +
-        '<button class="fav-card-cart-btn">Agregar al carrito</button>' +
-      '</div>' +
-    '</div>' +
-    '<div class="fav-card-brand">'+item.brand+'</div>' +
-    '<div class="fav-card-name">'+item.name+'</div>' +
-    volLine +
-    '<div class="fav-card-footer">' +
-      '<div class="fav-card-price">'+item.price+'</div>' +
-      '<a href="producto.html?id='+item.id+'" class="fav-card-cta">Ver producto <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>' +
-    '</div>' +
-    '<div class="fav-card-nivel '+n+'"><span class="fav-card-nivel-dot"></span>'+nLabel+'</div>';
+  const n = item.nivel || 'green';
+  const nLabel = { green:'En existencia', yellow:'Disp. limitada', red:'Pieza exclusiva' }[n];
+  const volSection = item.vol
+    ? `<div class="ed-vol-label">${item.volLabel || 'Presentación'}</div>
+       <div class="ed-vols"><button class="ed-vol-btn sel">${item.vol}</button></div>`
+    : '';
 
-  card.querySelector('.fav-card-remove').addEventListener('click', function(e){
+  card.innerHTML = `
+    <div class="ed-item-header">
+      <span></span>
+      <button class="fav-card-remove" aria-label="Quitar de favoritos">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="ed-img-zone">
+      ${item.img
+        ? `<img src="${item.img}" alt="${item.name}" class="ed-img">`
+        : `<div class="ed-img-placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>Imagen del perfume</span></div>`
+      }
+      <div class="ed-cart-overlay">
+        <button class="ed-cart-btn fav-card-cart-btn">Agregar al carrito</button>
+      </div>
+    </div>
+    <div class="ed-brand">${item.brand}</div>
+    <div class="ed-name">${item.name}</div>
+    ${volSection}
+    <div class="ed-footer">
+      <div class="ed-price">${item.price}</div>
+      <a href="producto.html?slug=${item.productId || item.id}" class="ed-cta">Ver producto
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+    <div class="ed-nivel ${n}"><span class="ed-nivel-dot"></span>${nLabel}</div>
+  `;
+
+  card.querySelector('.fav-card-remove').addEventListener('click', function(e) {
     e.stopPropagation();
     _removeFromFavs(item.id);
   });
-  card.querySelector('.fav-card-cart-btn').addEventListener('click', function(e){
+
+  card.querySelector('.fav-card-cart-btn').addEventListener('click', function(e) {
     e.stopPropagation();
     addItemToCart(item.varianteId);
   });
@@ -213,7 +225,9 @@ function buildFavCard(item) {
  */
 function _removeFromFavs(id) {
   setFavorites(getFavorites().filter(function(f){ return f.id !== id; }));
-  document.querySelectorAll('.fav-btn[data-product-id="'+id+'"]').forEach(function(b){ b.classList.remove('active'); });
+  const fav = getFavorites().find(function(f){ return f.id === id; });
+  const productId = fav?.productId || id;
+  document.querySelectorAll('.fav-btn[data-product-id="'+productId+'"]').forEach(function(b){ b.classList.remove('active'); });
   // renderFavsPage se llama automáticamente vía el hook registerOnRender
   // que activa fav-drawer.js después de persistir el nuevo estado
   renderFavsPage();

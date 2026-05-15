@@ -178,7 +178,10 @@ function construirCardProducto(p) {
     card.className = 'ed-item';
     card.dataset.id = p.id;
     
-    const isFav = getFavorites().some(f => f.id === p.productId);
+    const firstVarianteId = p.variantes?.[0]?.id;
+    const isFav = getFavorites().some(f =>
+        (firstVarianteId && f.id == firstVarianteId) || f.productId === p.productId
+    );
     const nivelLabels = { green: 'En existencia', yellow: 'Disponibilidad limitada', red: 'Pieza exclusiva' };
     const nivel = p.nivel || 'green';
     
