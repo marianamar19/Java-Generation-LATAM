@@ -16,8 +16,8 @@ import { loadNavbar }     from '../components/navbar.js';
 import { loadFooter }     from '../components/footer.js';
 import { loadCartDrawer, addItemToCart } from '../components/cart-drawer.js';
 import { initFavDrawer, renderFavList, getFavorites as getFavsList, setFavorites } from '../components/fav-drawer.js';
-import { formatMXN, normalizePriceMXN } from '../../../../../../../frontend/js/utils/formatter.js';
-import { getFavs }  from '../../../../../../../frontend/js/utils/storage.js';
+import { formatMXN, normalizePriceMXN } from '../utils/formatter.js';
+import { getFavs }  from '../utils/storage.js';
 
 /* ── Reseñas — storage inline (storage.js no tiene getReviews/saveReviews) ── */
 // Usa la key dinámica hera_reviews_<productId> directamente con KEYS

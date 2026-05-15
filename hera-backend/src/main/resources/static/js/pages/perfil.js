@@ -4,8 +4,8 @@ import { loadFooterMinimo } from '../components/footer-minimo.js';
 import { loadCartDrawer } from '../components/cart-drawer.js';
 import { initFavDrawer } from '../components/fav-drawer.js';
 import { getPerfil, updatePerfil, updateEmail, updatePassword, isAuthenticated, logout, getDirecciones, createDireccion, 
-        updateDireccion, deleteDireccion } from '../../../../../../../frontend/js/utils/api.js';
-import { formatDateLong } from '../../../../../../../frontend/js/utils/formatter.js';
+        updateDireccion, deleteDireccion } from '../utils/api.js';
+import { formatDateLong } from '../utils/formatter.js';
 
 /* ══════════════════════════════════════
   FUNCIONES AUXILIARES

@@ -6,7 +6,7 @@
  *          showToast, renderDate
  */
 
-import { isAuthenticated, getCurrentUser, logout } from '../../../../../../../frontend/js/utils/api.js';
+import { isAuthenticated, getCurrentUser, logout } from '../utils/api.js';
 
 const CUENTA_URL = '/pages/cuenta.html';
 

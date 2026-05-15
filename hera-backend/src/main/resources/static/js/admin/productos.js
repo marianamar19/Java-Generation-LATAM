@@ -4,7 +4,7 @@
  */
 
 import { guardAdmin, initLogout, loadAdminSidebar, buildEmptyState, escapeHtml, capitalize, showToast } from './admin-utils.js';
-import { getProductos, getAdminProductos, createProducto, updateProducto, deleteProducto, authFetch } from '../../../../../../../frontend/js/utils/api.js';
+import { getProductos, getAdminProductos, createProducto, updateProducto, deleteProducto, authFetch } from '../utils/api.js';
 
 guardAdmin();
 
